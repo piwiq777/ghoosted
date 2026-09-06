@@ -329,14 +329,30 @@ img,svg{display:block;max-width:100%}
 .fb-row3{grid-column:span 3;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .fb-row2{grid-column:span 3;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .fb-tile-flat{border-radius:var(--r-lg);background:var(--bg-2);padding:28px;display:flex;align-items:center}
-/* Las dos tarjetas que llevan captura del panel. El texto arriba y la imagen
-   debajo, recortada por la parte de abajo: lo que identifica cada funcion
-   esta en la mitad superior del panel (cabecera, contadores y pestanas), asi
-   que se ancla arriba y se deja caer el resto. */
-.fb-tile-shot{flex-direction:column;align-items:stretch;gap:20px}
-.fb-shot{border-radius:14px;overflow:hidden;background:#0B0A09;aspect-ratio:4/5;max-height:430px}
-.fb-shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-@media (max-width:720px){.fb-shot{aspect-ratio:1/1;max-height:340px}}
+/* Las dos tarjetas que llevan captura del panel.
+   El panel es vertical y la rejilla es horizontal: puesto entero disparaba la
+   fila a 566px y dejaba a las tarjetas vecinas como cajas vacias con el texto
+   flotando en medio. Va como una franja corta, con la misma proporcion que las
+   otras dos capturas de esta rejilla.
+   Y anclada al CENTRO, no arriba: lo que identifica estas dos funciones esta
+   en mitad del panel (las caras con anillo en historias, las filas de aceptar
+   y rechazar en solicitudes). La cabecera no dice nada que no diga el titulo. */
+.fb-tile-shot{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:16px}
+.fb-shot{border-radius:14px;overflow:hidden;background:#0B0A09;aspect-ratio:16/9;flex:none}
+.fb-shot img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+/* Al lado del texto, no debajo: debajo disparaba la fila entera y dejaba a
+   las tarjetas vecinas como cajas vacias con el texto flotando en medio.
+   Asi cada tarjeta crece de 137 a poco mas de 200 y la rejilla sigue pareja. */
+@media (min-width:900px){
+  .fb-tile-shot{flex-direction:row;align-items:center;gap:22px}
+  .fb-tile-shot > div:first-child{flex:1 1 46%;min-width:0}
+  .fb-shot{flex:1 1 54%}
+  /* Historias enseña el panel entero — las caras con anillo se reconocen.
+     Solicitudes va recortada al boton y dos filas: el panel completo no
+     aporta nada aqui y el detalle se lee mejor. */
+  .fb-tile-shot .fb-shot{aspect-ratio:16/10}
+  .fb-tile-shot:last-child .fb-shot{aspect-ratio:855/530}
+}
 .fb-tile-flat h3{font-family:var(--display);font-size:21px;font-weight:500;letter-spacing:-.03em;color:var(--ink);margin:0 0 6px}
 .fb-tile-flat p{font-size:14px;line-height:1.5;color:var(--ink-2);margin:0}
 
