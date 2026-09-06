@@ -77,8 +77,19 @@ puede cerrar.
 ### 4. Empaquetar y publicar
 
     cd Ghosted-Pro
-    zip -qr ../Ghosted-Landing/api/_private/Ghosted-Pro-v<VERSION>.zip . \
-        -x "test/*" "tools/*" "package.json" ".*"
+    node tools/empaquetar-pro.js
+
+Deja el ZIP en `Ghosted-Landing/api/_private/`, que es de donde lo sirve
+`api/download.js` contra la clave. Ofusca el JavaScript por el camino: Pro no
+va a la tienda, asi que puede, y asi cuesta mas desactivar el interruptor de
+licencia. El fuente se queda intacto.
+
+Si un cliente reporta un fallo raro y sospechas de la ofuscacion:
+
+    node tools/empaquetar-pro.js --claro
+
+Empaqueta legible. Sirve para descartar en un minuto si el problema es del
+codigo o de haberlo ofuscado.
 
 Actualiza `latest` en status.json, quita el `notice` y despliega:
 
