@@ -32,6 +32,14 @@ module.exports = async (req, res) => {
     'line_items[0][price]': priceId,
     'line_items[0][quantity]': '1',
     'metadata[plan]': plan,
+    // La cuenta de Stripe se comparte con otro producto, asi que por defecto
+    // el cargo saldria en el extracto con el nombre de esa otra marca. Quien
+    // no reconoce un cargo lo reclama al banco, y una reclamacion cuesta el
+    // importe mas la comision. Aqui se fuerza el nombre correcto.
+    'payment_intent_data[statement_descriptor]': 'GHOOSTED',
+    'payment_intent_data[description]': plan === 'plus'
+      ? 'Ghoosted Plus - licencia de por vida'
+      : 'Ghoosted Pro - licencia de por vida',
     success_url: site + '/success?session_id={CHECKOUT_SESSION_ID}',
     cancel_url: site + '/#pricing',
     allow_promotion_codes: 'true',
