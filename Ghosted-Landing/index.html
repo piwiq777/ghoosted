@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=90">
+  <link rel="stylesheet" href="styles.css?v=91">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -481,6 +481,14 @@
 
     <!-- CTA -->
     <section class="cta-band" id="cta">
+      <!-- La linea recta entre la parte clara y la banda oscura cortaba la
+           pagina en dos. Una ola suave la cose. Va con el color del fondo de
+           arriba, asi que es la parte clara la que se derrama sobre la oscura.
+           preserveAspectRatio="none" para que estire a lo ancho sin deformar
+           la altura, que es fija. -->
+      <svg class="cta-ola" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path d="M0,50 C180,90 340,4 560,26 C760,46 880,92 1080,74 C1230,60 1340,20 1440,34 L1440,0 L0,0 Z" fill="currentColor"/>
+      </svg>
       <div class="field" id="ctaField" aria-hidden="true"></div>
       <h2 data-i18n="cta_title">Stop imagining. See it.</h2>
       <p data-i18n="cta_sub">Add Ghoosted to Chrome and see what your profile data reveals.</p>

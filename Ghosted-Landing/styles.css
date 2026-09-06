@@ -562,6 +562,13 @@ img,svg{display:block;max-width:100%}
    tighter warm core right under it. Nothing competes with the message now. */
 .faq-close{padding-bottom:130px}
 @media (max-width:720px){.faq-close{padding-bottom:88px}}
+/* La ola que cose la parte clara con la banda oscura. Toma el color del
+   fondo de arriba por currentColor, asi que si algun dia cambia --bg no hay
+   que acordarse de tocar el svg. z-index 2: por encima de las fotos que
+   flotan en la banda, por debajo del texto. */
+.cta-ola{position:absolute;top:-1px;left:0;width:100%;height:90px;display:block;
+  color:var(--bg);z-index:2;pointer-events:none}
+@media (max-width:720px){.cta-ola{height:52px}}
 .cta-band{position:relative;text-align:center;padding:150px 24px;color:#F7F5F0;overflow:hidden;isolation:isolate;
   background:
     /* core: sits directly behind the headline+button, brand magenta */
