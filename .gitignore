@@ -40,3 +40,7 @@ Ghosted-Plus/
 .DS_Store
 Thumbs.db
 *.bak
+
+# script que pide claves por teclado: no tiene secretos dentro, pero
+# tampoco pinta en el repositorio
+Ghosted-Landing/poner-claves.sh
