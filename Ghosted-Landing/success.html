@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F5F0">
+  <title>Ghoosted — Activation</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .success{min-height:100vh;display:grid;place-items:center;padding:28px 16px}
+    .success-card{width:min(100%,560px);padding:42px 34px;text-align:center;border:1px solid var(--glass-line);border-radius:28px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);box-shadow:var(--shadow)}
+    .success-mark{width:56px;height:56px;margin:0 auto 18px;border-radius:18px;display:grid;place-items:center;background:var(--ig)}
+    .success-mark svg{width:30px;fill:#fff}
+    .success-card h1{margin:0 0 10px;font-family:var(--display);font-size:clamp(28px,5vw,40px);letter-spacing:-1.4px}
+    .success-card p{color:var(--ink-2);line-height:1.65}
+    .license-key{display:block;margin:22px 0 12px;border:1px dashed var(--accent);border-radius:13px;padding:14px;background:rgba(224,69,154,.10);color:var(--ink);font:800 16px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.7px;word-break:break-all}
+    .copy{border:0;border-radius:11px;background:var(--ink);color:#F7F5F0;padding:11px 16px;font-weight:700;cursor:pointer}
+    .copy:hover{opacity:.9}
+    .hint{font-size:13px;color:var(--ink-3)}
+    .fail{color:var(--alert)}
+    .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(20,18,16,.15);border-top-color:var(--accent);border-radius:50%;vertical-align:-3px;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .dl-block{margin-top:26px;padding-top:24px;border-top:1px solid var(--glass-line);text-align:left}
+    .dl-step{display:flex;gap:12px;margin-bottom:16px}
+    .dl-num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line-2);display:grid;place-items:center;font:800 12.5px/1 var(--font);color:var(--ink)}
+    .dl-step p{margin:0;color:var(--ink);font-size:14px;line-height:1.6}
+    .dl-step code{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font:600 12.5px ui-monospace,monospace}
+    .dl-btn{display:inline-flex;align-items:center;gap:8px;margin:18px 0 6px;border:0;border-radius:12px;background:var(--ig);color:#fff;padding:13px 22px;font-weight:800;font-size:14.5px;text-decoration:none}
+    .dl-btn:hover{opacity:.92}
+    .dl-note{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+  </style>
+</head>
+<body>
+  <main class="success">
+    <section class="success-card">
+      <div class="success-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c-4.1 0-7 3.2-7 7.3V21l2.3-1.6L9.6 21l2.4-1.6L14.4 21l2.3-1.6L19 21V9.3C19 5.2 16.1 2 12 2zM9.3 10.4a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm5.4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/></svg></div>
+      <h1 data-i18n="sx_h1">Payment received</h1>
+      <p id="status"><span class="spinner"></span> <span data-i18n="sx_generating">Generating your unique key…</span></p>
+      <code id="license" class="license-key" hidden></code>
+      <button id="copy" class="copy" hidden data-i18n="sx_copy">Copy key</button>
+
+      <div id="dlBlock" class="dl-block" hidden>
+        <div class="dl-step"><span class="dl-num">1</span><p data-i18n="sx_step1">Download the extension (the button below).</p></div>
+        <div class="dl-step"><span class="dl-num">2</span><p data-i18n-html="sx_step2">Unzip the <code>.zip</code> file into a folder you won't delete.</p></div>
+        <div class="dl-step"><span class="dl-num">3</span><p data-i18n-html="sx_step3">Open <code>chrome://extensions</code> (or <code>edge://extensions</code> / <code>brave://extensions</code>), turn on <b>Developer mode</b> top-right, and click <b>Load unpacked</b>. Select the folder you just unzipped.</p></div>
+        <div class="dl-step"><span class="dl-num">4</span><p data-i18n="sx_step4">Go to Instagram, open Ghoosted (floating icon), tap the ⚙ gear and paste your key to activate it.</p></div>
+        <div style="text-align:center">
+          <a id="dlBtn" class="dl-btn" href="#" download>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/></svg>
+            <span id="dlBtnText">Download Ghoosted</span>
+          </a>
+          <div class="dl-note" data-i18n="sx_dl_note">You don't need the Chrome Web Store — it installs directly from this file.</div>
+        </div>
+      </div>
+
+      <p class="hint" id="genericHint" data-i18n="sx_hint_generic">Go back to Instagram, open Ghoosted and enter this key. It will stay linked to that account.</p>
+    </section>
+  </main>
+  <script>
+    (function () {
+      // Small, self-contained i18n loader for this one page — reuses the same
+      // /locales/<code>.json files and ghosted_lang preference as the rest of
+      // the site, but doesn't depend on GhostedI18n's DOM-snapshot mechanism
+      // (this page's status text is generated dynamically, not sitting in the
+      // DOM at load time, so there's nothing to "snapshot" as the English
+      // default — it's baked into SX_EN below instead, same pattern as the
+      // extension's own i18n.js FALLBACK dict).
+      var SX_EN = {
+        sx_h1: 'Payment received',
+        sx_generating: 'Generating your unique key…',
+        sx_ready: 'Your unique key is ready:',
+        sx_copy: 'Copy key',
+        sx_copied: 'Copied ✓',
+        sx_notfound: "Can't find your purchase. Go back to the Ghoosted page.",
+        sx_pending: 'Payment confirmed, but the key is taking longer than usual. Reload this page in a few seconds.',
+        sx_step1: 'Download the extension (the button below).',
+        sx_step2: "Unzip the <code>.zip</code> file into a folder you won't delete.",
+        sx_step3: 'Open <code>chrome://extensions</code> (or <code>edge://extensions</code> / <code>brave://extensions</code>), turn on <b>Developer mode</b> top-right, and click <b>Load unpacked</b>. Select the folder you just unzipped.',
+        sx_step4: 'Go to Instagram, open Ghoosted (floating icon), tap the ⚙ gear and paste your key to activate it.',
+        sx_dl_note: "You don't need the Chrome Web Store — it installs directly from this file.",
+        sx_hint_generic: 'Go back to Instagram, open Ghoosted and enter this key. It will stay linked to that account.',
+        sx_dl_btn: 'Download $1 (.zip)',
+      };
+      var lang = 'en';
+      try { lang = localStorage.getItem('ghosted_lang') || 'en'; } catch (e) {}
+      var dict = null;
+      function t(key) { return (dict && dict[key] != null) ? dict[key] : SX_EN[key]; }
+      function applyStatic() {
+        document.documentElement.lang = lang;
+        if (lang === 'ar') document.documentElement.dir = 'rtl';
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var v = t(el.getAttribute('data-i18n')); if (v != null) el.textContent = v;
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+          var v = t(el.getAttribute('data-i18n-html')); if (v != null) el.innerHTML = v;
+        });
+      }
+      function boot(cb) {
+        if (lang === 'en') { applyStatic(); cb(); return; }
+        fetch('locales/' + lang + '.json?v=10')
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) { dict = d; applyStatic(); cb(); })
+          .catch(function () { applyStatic(); cb(); });
+      }
+
+      boot(function () {
+        var sessionId = new URLSearchParams(location.search).get('session_id');
+        var status = document.getElementById('status'), license = document.getElementById('license'), copy = document.getElementById('copy');
+        var dlBlock = document.getElementById('dlBlock'), dlBtn = document.getElementById('dlBtn'), dlBtnText = document.getElementById('dlBtnText');
+        var genericHint = document.getElementById('genericHint');
+        if (!sessionId) { status.textContent = t('sx_notfound'); status.className = 'fail'; return; }
+        var tries = 0;
+        function showDownload(url, name, file) {
+          // The URL is now a gated endpoint (api/download?session_id=...), so the
+          // filename has to come from the API rather than the last path segment.
+          dlBtn.href = url; dlBtn.setAttribute('download', file || 'Ghoosted.zip');
+          dlBtnText.textContent = t('sx_dl_btn').replace('$1', name);
+          dlBlock.hidden = false;
+          genericHint.hidden = true;
+        }
+        function poll() {
+          fetch('/api/license/order?session_id=' + encodeURIComponent(sessionId))
+            .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+            .then(function (r) {
+              if (r.ok && r.data.key) {
+                status.textContent = t('sx_ready');
+                license.textContent = r.data.key; license.hidden = false; copy.hidden = false;
+                showDownload(r.data.downloadUrl, r.data.downloadName || 'Ghoosted', r.data.downloadFile);
+                return;
+              }
+              throw new Error('pending');
+            })
+            .catch(function () {
+              tries += 1;
+              // keep quietly retrying for ~4 more minutes — combined with the
+              // server-side self-heal, the key eventually appears on its own
+              if (tries === 12) status.textContent = t('sx_pending');
+              if (tries < 60) return setTimeout(poll, tries < 12 ? 2000 : 5000);
+            });
+        }
+        copy.addEventListener('click', function () {
+          navigator.clipboard.writeText(license.textContent)
+            .then(function () { copy.textContent = t('sx_copied'); })
+            .catch(function () {
+              // clipboard blocked: select the key so a manual Ctrl+C works
+              var r = document.createRange(); r.selectNodeContents(license);
+              var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+            });
+        });
+        poll();
+      });
+    })();
+  </script>
+</body>
+</html>

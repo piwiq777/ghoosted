@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy — Ghoosted</title>
+  <meta name="description" content="Ghoosted's Privacy Policy: what data the extension touches, where it's stored, and your rights.">
+  <meta name="robots" content="index,follow">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="canonical" href="https://ghoosted.net/privacy">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ghoosted">
+  <meta property="og:title" content="Privacy Policy — Ghoosted">
+  <meta property="og:description" content="Ghoosted's Privacy Policy: what data the extension touches, where it's stored, and your rights.">
+  <meta property="og:image" content="https://ghoosted.net/assets/og.png">
+  <meta property="og:url" content="https://ghoosted.net/privacy">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="legal.css?v=4">
+  <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
+  <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
+</head>
+<body>
+  <div class="legal-nav">
+    <a class="brand" href="index.html"><span class="brand-mark sm"><svg viewBox="0 0 24 24"><path d="M12 2c-4.1 0-7 3.2-7 7.3V21l2.3-1.6L9.6 21l2.4-1.6L14.4 21l2.3-1.6L19 21V9.3C19 5.2 16.1 2 12 2zM9.3 10.4a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm5.4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/></svg></span>Ghoosted</a>
+    <div class="lang-wrap" id="langWrap">
+      <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+        <span class="lang-flag" id="langFlag">🌐</span><span class="lang-name" id="langName">English</span><span class="lang-caret">▾</span>
+      </button>
+      <div class="lang-menu" id="langMenu" role="listbox" tabindex="-1"></div>
+    </div>
+    <a class="back" href="index.html">← Home</a>
+  </div>
+
+  <!-- ============ ENGLISH ============ -->
+  <article class="legal lang-en">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 26 July 2026</p>
+    <p class="intro">Short version: Ghoosted keeps your data on your device. We run no server that stores your Instagram data in readable form, we have no account system, and we cannot see what Ghoosted collects for you.</p>
+
+    <h2>1. The core principle</h2>
+    <p>Ghoosted is built to be <strong>local-first</strong>. Everything the Extension gathers — your followers, the accounts you follow, story-viewer lists, timestamps, statistics and settings — is stored only in your browser's local storage (<code>chrome.storage.local</code>) on your own computer. It is never uploaded to us or to any third party in readable form. The only exception is the optional mobile-companion sync described in Section 3, which uploads solely an end-to-end encrypted snapshot that we cannot read.</p>
+
+    <h2>2. Data we collect about you: none (on our side)</h2>
+    <p>The Extension contains no analytics, no telemetry, no tracking pixels and no advertising SDKs. We do not create an account for you and we do not receive your Instagram data, your Instagram password (which we never ask for), or the contents of your Ghoosted lists.</p>
+
+    <h2>3. Network connections Ghoosted makes</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> the Extension reads data directly from your own logged-in session, in your browser, the same way the Instagram website does. This happens between your browser and Instagram — not through us.</li>
+      <li><strong>Ghoosted licence API (on Vercel):</strong> only when you activate a key. The extension sends your licence key and your Instagram numeric account ID to Ghoosted's own licence API to confirm the key is valid and bind it to that account. No Instagram content, followers or messages are ever sent. The result is stored locally in your browser.</li>
+      <li><strong>Mobile companion sync (optional):</strong> if you choose to link a mobile companion by scanning a QR code, the Extension uploads an end-to-end encrypted snapshot of your Ghoosted data to a relay hosted on Vercel and stored in Upstash Redis. The encryption key never reaches us — it exists only inside the QR code itself, passed directly from one of your devices to the other. Neither we, Vercel nor Upstash can read the contents; on our side we only ever see ciphertext. Snapshots are deleted automatically after 7 days. If you never use this feature, nothing is uploaded.</li>
+      <li><strong>Licence email (Resend):</strong> when you purchase Ghoosted Pro, we use Resend to send you the transactional email containing your licence key. Resend processes your email address solely to deliver that message.</li>
+      <li><strong>This website (ghoosted.net):</strong> hosted on Vercel, which may keep standard server logs (such as IP address and request data) for security and operation. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel's Privacy Policy</a>. The site stores your language choice in your browser's local storage; it uses no advertising or tracking cookies.</li>
+      <li><strong>Version check:</strong> every few hours the Extension asks Ghoosted's server whether a newer version exists, so it can tell you when one is out or warn you if yours has stopped working. The request sends no data about you or your account — only the standard server logs described below (IP address and request data) are recorded by Vercel.</li>
+    </ul>
+    <p>In short, the processors we rely on are: <strong>Stripe</strong> (payments), <strong>Vercel</strong> (website hosting and the licence/sync relay), <strong>Upstash</strong> (encrypted sync storage) and <strong>Resend</strong> (transactional licence email). None of them can read your Instagram data.</p>
+
+    <p><strong>International transfers and processor contracts.</strong> Some of these providers (Stripe, Vercel, Upstash, Resend) may process the limited data described above — an email address, an IP address in server logs, or the unreadable encrypted sync blob — on servers in the United States. Where that happens, the transfer is protected by the safeguards of Chapter V GDPR: the EU–US Data Privacy Framework where the provider is certified, or the European Commission's Standard Contractual Clauses. Each provider is bound by a data processing agreement under Article 28 GDPR and cannot use the data for its own purposes.</p>
+
+    <h2>4. Information about other people</h2>
+    <p>Ghoosted shows you information about other Instagram users (for example, who viewed your stories or who unfollowed you). That information is displayed and stored only on your device, under your control. We never receive it in readable form — the sole exception is if you use the optional mobile-companion sync (Section 3), which transmits only an end-to-end encrypted copy that we cannot decrypt. You are responsible for using it lawfully and for personal purposes, in line with the privacy laws that apply to you.</p>
+    <p>This includes <strong>profile pictures</strong>. When someone changes theirs, Ghoosted saves a copy of the image in your browser's local storage so it can show you the before and after, and so the row keeps a face once Instagram's original link expires. These copies never leave your device and are never sent to us. You can erase all of them at any time from <em>Settings → Data → clear saved photos</em>, or by uninstalling the Extension.</p>
+
+    <h2>5. Payment data</h2>
+    <p>When you purchase Ghoosted Pro, your payment is handled on our website by <strong>Stripe</strong>, our payment processor. We never receive or store your card details — Stripe does, under <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe’s Privacy Policy</a>. We only see limited order data (such as your email and licence key) needed to issue and manage your key.</p>
+
+    <h2>6. Your choices and rights</h2>
+    <p>Because we do not hold your Instagram data in readable form on any server, there is very little on our side to export or erase — with two narrow exceptions: the encrypted sync snapshot on our relay, if you have used the mobile-companion sync (it auto-deletes after 7 days, and we can delete it sooner on request, even though we cannot read its contents), and the purchase/order records held by us and by Stripe (see Section 7). You are always in control of the data on your device:</p>
+    <ul>
+      <li><strong>Export</strong> your Ghoosted data anytime from the extension settings ("Export my data").</li>
+      <li><strong>Delete</strong> it anytime via "clear history", "Rebuild baseline", or by uninstalling the Extension (which removes all local data).</li>
+    </ul>
+    <p>For any order/purchase data held by us or by Stripe, or to exercise rights under the GDPR or CCPA, contact <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>The legal bases for the limited processing described above are: performance of a contract (Art. 6(1)(b) GDPR) to issue and manage your licence and the optional sync feature; our legitimate interest (Art. 6(1)(f) GDPR) in preventing fraud and abuse of the licence system; and compliance with a legal obligation (Art. 6(1)(c) GDPR) to keep accounting and tax records. You also have the right to lodge a complaint with the Spanish Data Protection Agency (Agencia Española de Protección de Datos, AEPD) at <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>, or with the supervisory authority of your own EU member state.</p>
+
+    <h2>7. Data retention</h2>
+    <p>Local data stays on your device until you delete it or uninstall. Encrypted sync snapshots (Section 3) are automatically deleted after 7 days, whether or not you have retrieved them on your other device. Purchase/order records are retained by Stripe and by us only as long as needed for accounting and legal obligations — generally between 4 and 6 years under Spanish commercial and tax law.</p>
+
+    <h2>8. Age requirement and children</h2>
+    <p>Ghoosted is not intended for anyone under 18. Do not use it if you are below that age. You also must not use the Extension to monitor, track or collect information about anyone you know or believe to be under 18 — see our <a href="terms.html">Terms of Service</a>.</p>
+
+    <h2>9. Changes and contact</h2>
+    <p>We will update this policy as needed and change the "Last updated" date. The data the Extension reads from Instagram stays on your device and never reaches us, so <strong>you</strong> are the controller of that data. For the little we do handle (a purchase email, a licence key, an encrypted sync snapshot), the controller is <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, address <span class="fillme">[DIRECCIÓN]</span>, the independent developer operating <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Back to Ghoosted</a></p>
+  </article>
+
+  <!-- ============ ESPAÑOL ============ -->
+  <article class="legal lang-es">
+    <h1>Política de privacidad</h1>
+    <p class="updated">Última actualización: 26 de julio de 2026</p>
+    <p class="intro">Versión corta: Ghoosted mantiene tus datos en tu dispositivo. No tenemos ningún servidor que almacene tus datos de Instagram en forma legible, no hay sistema de cuentas y no podemos ver lo que Ghoosted recopila para ti.</p>
+
+    <h2>1. El principio básico</h2>
+    <p>Ghoosted está diseñado para ser <strong>local primero</strong>. Todo lo que la Extensión recopila — tus seguidores, las cuentas que sigues, las listas de espectadores de stories, marcas de tiempo, estadísticas y ajustes — se guarda únicamente en el almacenamiento local de tu navegador (<code>chrome.storage.local</code>), en tu propio ordenador. Nunca se sube a nosotros ni a ningún tercero en forma legible. La única excepción es la sincronización opcional con la app móvil descrita en la Sección 3, que solo sube una instantánea cifrada de extremo a extremo que no podemos leer.</p>
+
+    <h2>2. Datos que recopilamos sobre ti: ninguno (por nuestra parte)</h2>
+    <p>La Extensión no contiene analíticas, ni telemetría, ni píxeles de seguimiento, ni SDK de publicidad. No creamos ninguna cuenta para ti y no recibimos tus datos de Instagram, tu contraseña de Instagram (que nunca pedimos) ni el contenido de tus listas de Ghoosted.</p>
+
+    <h2>3. Conexiones de red que hace Ghoosted</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> la Extensión lee datos directamente desde tu propia sesión iniciada, en tu navegador, igual que hace la web de Instagram. Esto ocurre entre tu navegador e Instagram — no a través de nosotros.</li>
+      <li><strong>API de licencias de Ghoosted (en Vercel):</strong> solo cuando activas una clave. La Extensión envía tu clave de licencia y el ID numérico de tu cuenta de Instagram a la propia API de licencias de Ghoosted para confirmar que la clave es válida y vincularla a esa cuenta. Nunca se envía contenido de Instagram, seguidores ni mensajes. El resultado se guarda localmente en tu navegador.</li>
+      <li><strong>Sincronización opcional con la app móvil:</strong> si eliges vincular una app móvil complementaria escaneando un código QR, la Extensión sube una instantánea cifrada de extremo a extremo de tus datos de Ghoosted a un relay alojado en Vercel y almacenado en Upstash Redis. La clave de cifrado nunca llega hasta nosotros: existe solo dentro del propio código QR, y pasa directamente de uno de tus dispositivos al otro. Ni nosotros, ni Vercel, ni Upstash pueden leer el contenido; por nuestra parte solo vemos texto cifrado. Las instantáneas se eliminan automáticamente a los 7 días. Si nunca usas esta función, no se sube nada.</li>
+      <li><strong>Email de licencia (Resend):</strong> cuando compras Ghoosted Pro, usamos Resend para enviarte el correo transaccional con tu clave de licencia. Resend trata tu email únicamente para enviar ese mensaje.</li>
+      <li><strong>Esta web (ghoosted.net):</strong> alojada en Vercel, que puede conservar registros de servidor estándar (como la dirección IP y datos de la solicitud) por seguridad y funcionamiento. Consulta la <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Política de privacidad de Vercel</a>. La web guarda tu idioma en el almacenamiento local del navegador; no usa cookies de publicidad ni de seguimiento.</li>
+      <li><strong>Comprobación de versión:</strong> cada pocas horas la Extensión pregunta al servidor de Ghoosted si existe una versión más nueva, para poder avisarte cuando salga o advertirte si la tuya ha dejado de funcionar. La petición no envía ningún dato tuyo ni de tu cuenta — solo quedan los registros de servidor estándar que se describen más abajo (dirección IP y datos de la solicitud).</li>
+    </ul>
+    <p>En resumen, los encargados del tratamiento en los que nos apoyamos son: <strong>Stripe</strong> (pagos), <strong>Vercel</strong> (alojamiento de la web y el relay de licencias/sincronización), <strong>Upstash</strong> (almacenamiento cifrado de la sincronización) y <strong>Resend</strong> (email transaccional de licencia). Ninguno de ellos puede leer tus datos de Instagram.</p>
+
+    <p><strong>Transferencias internacionales y contratos de encargo.</strong> Algunos de estos proveedores (Stripe, Vercel, Upstash, Resend) pueden tratar los datos limitados descritos arriba — un email, una IP en registros de servidor o el blob cifrado ilegible de la sincronización — en servidores de Estados Unidos. Cuando ocurre, la transferencia está protegida por las garantías del Capítulo V del RGPD: el Marco de Privacidad de Datos UE–EE. UU. si el proveedor está certificado, o las Cláusulas Contractuales Tipo de la Comisión Europea. Cada proveedor está vinculado por un contrato de encargado del tratamiento conforme al artículo 28 del RGPD y no puede usar los datos para fines propios.</p>
+
+    <h2>4. Información sobre otras personas</h2>
+    <p>Ghoosted te muestra información sobre otros usuarios de Instagram (por ejemplo, quién vio tus stories o quién te dejó de seguir). Esa información se muestra y se guarda solo en tu dispositivo, bajo tu control. Nosotros nunca la recibimos en forma legible — la única excepción es si usas la sincronización opcional con la app móvil (Sección 3), que transmite solo una copia cifrada de extremo a extremo que no podemos descifrar. Eres responsable de usarla de forma lícita y para fines personales, conforme a las leyes de privacidad que te apliquen.</p>
+    <p>Esto incluye las <strong>fotos de perfil</strong>. Cuando alguien cambia la suya, Ghoosted guarda una copia de la imagen en el almacenamiento local de tu navegador para poder enseñarte el antes y el después, y para que la fila conserve una cara cuando el enlace original de Instagram caduque. Esas copias no salen nunca de tu dispositivo y nunca se nos envían. Puedes borrarlas todas cuando quieras desde <em>Ajustes → Datos → vaciar fotos guardadas</em>, o desinstalando la Extensión.</p>
+
+    <h2>5. Datos de pago</h2>
+    <p>Cuando compras Ghoosted Pro, tu pago lo gestiona en nuestra web <strong>Stripe</strong>, nuestro procesador de pagos. Nunca recibimos ni almacenamos los datos de tu tarjeta — lo hace Stripe, según la <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Política de privacidad de Stripe</a>. Solo vemos datos limitados del pedido (como tu email y tu clave de licencia) necesarios para emitir y gestionar tu clave.</p>
+
+    <h2>6. Tus opciones y derechos</h2>
+    <p>Como no guardamos tus datos de Instagram en forma legible en ningún servidor, apenas hay nada que exportar o borrar por nuestra parte — con dos excepciones concretas: la instantánea cifrada de la sincronización en nuestro relay, si has usado la sincronización con la app móvil (se elimina automáticamente a los 7 días, y podemos borrarla antes si lo solicitas, aunque no podamos leer su contenido), y los registros de pedido/compra que conservamos nosotros y Stripe (ver Sección 7). Tú siempre controlas los datos de tu dispositivo:</p>
+    <ul>
+      <li><strong>Exporta</strong> tus datos de Ghoosted cuando quieras desde los ajustes de la extensión ("Exportar mis datos").</li>
+      <li><strong>Bórralos</strong> cuando quieras con "borrar historial", "Rehacer línea base" o desinstalando la Extensión (lo que elimina todos los datos locales).</li>
+    </ul>
+    <p>Para cualquier dato de pedido/compra en poder nuestro o de Stripe, o para ejercer tus derechos bajo el RGPD o la CCPA, escribe a <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>Las bases legales para el tratamiento limitado descrito arriba son: la ejecución de un contrato (art. 6.1.b RGPD) para emitir y gestionar tu licencia y la función opcional de sincronización; nuestro interés legítimo (art. 6.1.f RGPD) en prevenir el fraude y el abuso del sistema de licencias; y el cumplimiento de una obligación legal (art. 6.1.c RGPD) de conservar registros contables y fiscales. También tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (AEPD) en <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>, o ante la autoridad de control de tu propio Estado miembro de la UE.</p>
+
+    <h2>7. Conservación de datos</h2>
+    <p>Los datos locales permanecen en tu dispositivo hasta que los borres o desinstales. Las instantáneas cifradas de sincronización (Sección 3) se eliminan automáticamente a los 7 días, las hayas recuperado o no en tu otro dispositivo. Los registros de pedido/compra los conservan Stripe y nosotros solo el tiempo necesario para obligaciones contables y legales — generalmente entre 4 y 6 años conforme a la normativa mercantil y fiscal española.</p>
+
+    <h2>8. Edad mínima y menores</h2>
+    <p>Ghoosted no está dirigido a menores de 18 años. No lo uses si eres menor de esa edad. Tampoco puedes usar la Extensión para vigilar, rastrear o recopilar información sobre ninguna persona que sepas o creas que es menor de 18 — consulta nuestros <a href="terms.html">Términos del servicio</a>.</p>
+
+    <h2>9. Cambios y contacto</h2>
+    <p>Actualizaremos esta política cuando sea necesario y cambiaremos la fecha de "Última actualización". Los datos que la Extensión lee de Instagram permanecen en tu dispositivo y nunca llegan a nosotros, por lo que <strong>tú</strong> eres el responsable de esos datos. De lo poco que sí tratamos (un email de compra, una clave de licencia, una instantánea cifrada de sincronización), el responsable es <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, domicilio <span class="fillme">[DIRECCIÓN]</span>, el desarrollador independiente que opera <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Volver a Ghoosted</a></p>
+  </article>
+
+  
+  <!-- ============ FRANÇAIS ============ -->
+  <article class="legal lang-fr">
+    <h1>Politique de confidentialité</h1>
+    <p class="updated">Dernière mise à jour : 26 juillet 2026</p>
+    <p class="intro">Version courte : Ghoosted conserve vos données sur votre appareil. Nous n'exploitons aucun serveur qui stocke vos données Instagram sous une forme lisible, nous n'avons aucun système de comptes, et nous ne pouvons pas voir ce que Ghoosted collecte pour vous.</p>
+
+    <h2>1. Le principe fondamental</h2>
+    <p>Ghoosted est conçu pour privilégier le <strong>local</strong> avant tout. Tout ce que l'Extension recueille — vos abonnés, les comptes que vous suivez, les listes de personnes ayant consulté vos stories, les horodatages, les statistiques et les paramètres — est stocké uniquement dans le stockage local de votre navigateur (<code>chrome.storage.local</code>) sur votre propre ordinateur. Ces données ne sont jamais transmises, sous une forme lisible, à nous ni à un tiers. La seule exception est la synchronisation optionnelle avec l'application mobile compagnon décrite à la Section 3, qui ne transmet qu'un instantané chiffré de bout en bout que nous ne pouvons pas lire.</p>
+
+    <h2>2. Données que nous collectons à votre sujet : aucune (de notre côté)</h2>
+    <p>L'Extension ne contient aucun outil d'analyse, aucune télémétrie, aucun pixel de suivi et aucun SDK publicitaire. Nous ne créons pas de compte pour vous et nous ne recevons ni vos données Instagram, ni votre mot de passe Instagram (que nous ne demandons jamais), ni le contenu de vos listes Ghoosted.</p>
+
+    <h2>3. Connexions réseau effectuées par Ghoosted</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com) :</strong> l'Extension lit les données directement depuis votre propre session connectée, dans votre navigateur, de la même manière que le site web Instagram. Cela se produit entre votre navigateur et Instagram — et non par notre intermédiaire.</li>
+      <li><strong>API de licence Ghoosted (sur Vercel) :</strong> uniquement lorsque vous activez une clé. L'extension envoie votre clé de licence et votre identifiant de compte Instagram numérique à l'API de licence propre à Ghoosted afin de confirmer la validité de la clé et de l'associer à ce compte. Aucun contenu Instagram, aucun abonné ni aucun message n'est jamais envoyé. Le résultat est stocké localement dans votre navigateur.</li>
+      <li><strong>Synchronisation optionnelle avec l'application mobile compagnon :</strong> si vous choisissez de relier une application mobile compagnon en scannant un code QR, l'Extension transmet un instantané chiffré de bout en bout de vos données Ghoosted vers un relais hébergé sur Vercel et stocké dans Upstash Redis. La clé de chiffrement ne nous parvient jamais : elle n'existe qu'à l'intérieur du code QR lui-même, transmise directement d'un de vos appareils à l'autre. Ni nous, ni Vercel, ni Upstash ne pouvons lire le contenu ; de notre côté, nous ne voyons que du texte chiffré. Les instantanés sont supprimés automatiquement au bout de 7 jours. Si vous n'utilisez jamais cette fonctionnalité, rien n'est transmis.</li>
+      <li><strong>E-mail de licence (Resend) :</strong> lorsque vous achetez Ghoosted Pro, nous utilisons Resend pour vous envoyer l'e-mail transactionnel contenant votre clé de licence. Resend ne traite votre adresse e-mail que pour délivrer ce message.</li>
+      <li><strong>Ce site web (ghoosted.net) :</strong> hébergé sur Vercel, qui peut conserver des journaux serveur standard (tels que l'adresse IP et les données de requête) à des fins de sécurité et d'exploitation. Voir la <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Politique de confidentialité de Vercel</a>. Le site stocke votre choix de langue dans le stockage local de votre navigateur ; il n'utilise aucun cookie publicitaire ou de suivi.</li>
+      <li><strong>Vérification de version :</strong> toutes les quelques heures, l'Extension demande au serveur de Ghoosted s'il existe une version plus récente, afin de vous prévenir quand elle sort ou si la vôtre a cessé de fonctionner. La requête n'envoie aucune donnée vous concernant — seuls les journaux serveur standard décrits plus bas (adresse IP et données de requête) sont conservés.</li>
+    </ul>
+    <p>En résumé, les sous-traitants sur lesquels nous nous appuyons sont : <strong>Stripe</strong> (paiements), <strong>Vercel</strong> (hébergement du site et relais de licence/synchronisation), <strong>Upstash</strong> (stockage chiffré de la synchronisation) et <strong>Resend</strong> (e-mail transactionnel de licence). Aucun d'entre eux ne peut lire vos données Instagram.</p>
+
+    <p><strong>Transferts internationaux et contrats de sous-traitance.</strong> Certains de ces prestataires (Stripe, Vercel, Upstash, Resend) peuvent traiter les données limitées décrites ci-dessus — une adresse e-mail, une adresse IP dans les journaux serveur, ou le blob chiffré illisible de la synchronisation — sur des serveurs situés aux États-Unis. Le cas échéant, le transfert est protégé par les garanties du chapitre V du RGPD : le cadre de protection des données UE–États-Unis lorsque le prestataire est certifié, ou les clauses contractuelles types de la Commission européenne. Chaque prestataire est lié par un contrat de sous-traitance au titre de l'article 28 du RGPD et ne peut pas utiliser les données à ses propres fins.</p>
+
+    <h2>4. Informations concernant d'autres personnes</h2>
+    <p>Ghoosted vous montre des informations sur d'autres utilisateurs Instagram (par exemple, qui a consulté vos stories ou qui s'est désabonné de vous). Ces informations sont affichées et stockées uniquement sur votre appareil, sous votre contrôle. Nous ne les recevons jamais sous une forme lisible — la seule exception est si vous utilisez la synchronisation optionnelle avec l'application mobile compagnon (Section 3), qui ne transmet qu'une copie chiffrée de bout en bout que nous ne pouvons pas déchiffrer. Vous êtes responsable de leur utilisation licite et à des fins personnelles, conformément aux lois sur la protection de la vie privée qui vous sont applicables.</p>
+    <p>Cela inclut les <strong>photos de profil</strong>. Quand quelqu'un change la sienne, Ghoosted enregistre une copie de l'image dans le stockage local de votre navigateur, afin de vous montrer l'avant et l'après et de garder un visage lorsque le lien d'origine d'Instagram expire. Ces copies ne quittent jamais votre appareil et ne nous sont jamais envoyées. Vous pouvez toutes les effacer à tout moment depuis <em>Réglages → Données → vider les photos enregistrées</em>, ou en désinstallant l'Extension.</p>
+
+    <h2>5. Données de paiement</h2>
+    <p>Lorsque vous achetez Ghoosted Pro, votre paiement est traité sur notre site web par <strong>Stripe</strong>, notre prestataire de paiement. Nous ne recevons ni ne stockons jamais les détails de votre carte — Stripe s'en charge, conformément à la <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Politique de confidentialité de Stripe</a>. Nous ne voyons que des données de commande limitées (telles que votre e-mail et votre clé de licence) nécessaires pour émettre et gérer votre clé.</p>
+
+    <h2>6. Vos choix et vos droits</h2>
+    <p>Étant donné que nous ne détenons pas vos données Instagram sous une forme lisible sur un serveur, il y a très peu de choses de notre côté à exporter ou à effacer — avec deux exceptions limitées : l'instantané chiffré de synchronisation sur notre relais, si vous avez utilisé la synchronisation avec l'application mobile compagnon (il est supprimé automatiquement au bout de 7 jours, et nous pouvons le supprimer plus tôt sur demande, même si nous ne pouvons pas en lire le contenu), et les enregistrements de commande/achat conservés par nous et par Stripe (voir Section 7). Vous gardez toujours le contrôle des données présentes sur votre appareil :</p>
+    <ul>
+      <li><strong>Exportez</strong> vos données Ghoosted à tout moment depuis les paramètres de l'extension (« Exporter mes données »).</li>
+      <li><strong>Supprimez</strong>-les à tout moment via « effacer l'historique », « Reconstruire la base de référence », ou en désinstallant l'Extension (ce qui supprime toutes les données locales).</li>
+    </ul>
+    <p>Pour toute donnée de commande/achat détenue par nous ou par Stripe, ou pour exercer vos droits au titre du RGPD ou du CCPA, contactez <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>Les bases légales du traitement limité décrit ci-dessus sont : l'exécution d'un contrat (art. 6.1.b du RGPD) pour émettre et gérer votre licence ainsi que la fonctionnalité optionnelle de synchronisation ; notre intérêt légitime (art. 6.1.f du RGPD) à prévenir la fraude et l'abus du système de licences ; et le respect d'une obligation légale (art. 6.1.c du RGPD) de conserver des registres comptables et fiscaux. Vous avez également le droit d'introduire une réclamation auprès de l'Agence espagnole de protection des données (Agencia Española de Protección de Datos, AEPD) à l'adresse <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>, ou auprès de l'autorité de contrôle de votre propre État membre de l'UE.</p>
+
+    <h2>7. Conservation des données</h2>
+    <p>Les données locales restent sur votre appareil jusqu'à ce que vous les supprimiez ou que vous désinstalliez l'Extension. Les instantanés chiffrés de synchronisation (Section 3) sont supprimés automatiquement au bout de 7 jours, que vous les ayez récupérés ou non sur votre autre appareil. Les enregistrements de commande/achat sont conservés par Stripe et par nous uniquement aussi longtemps que nécessaire à des fins comptables et légales — généralement entre 4 et 6 ans en vertu du droit commercial et fiscal espagnol.</p>
+
+    <h2>8. Condition d'âge et enfants</h2>
+    <p>Ghoosted n'est pas destiné aux personnes de moins de 18 ans. Ne l'utilisez pas si vous avez moins de cet âge. Vous ne devez pas non plus utiliser l'Extension pour surveiller, suivre ou collecter des informations sur une personne que vous connaissez ou que vous croyez être âgée de moins de 18 ans — voir nos <a href="terms.html">Conditions d'utilisation</a>.</p>
+
+    <h2>9. Modifications et contact</h2>
+    <p>Nous mettrons à jour cette politique si nécessaire et modifierons la date de « Dernière mise à jour ». Les données que l'Extension lit depuis Instagram restent sur votre appareil et ne nous parviennent jamais ; <strong>vous</strong> êtes donc le responsable du traitement de ces données. Pour le peu que nous traitons nous-mêmes (un e-mail d'achat, une clé de licence, un instantané chiffré de synchronisation), le responsable du traitement est <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, adresse <span class="fillme">[DIRECCIÓN]</span>, le développeur indépendant exploitant <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Retour à Ghoosted</a></p>
+  </article>
+
+  <!-- ============ DEUTSCH ============ -->
+  <article class="legal lang-de">
+    <h1>Datenschutzerklärung</h1>
+    <p class="updated">Zuletzt aktualisiert: 26. Juli 2026</p>
+    <p class="intro">Kurzfassung: Ghoosted behält Ihre Daten auf Ihrem Gerät. Wir betreiben keinen Server, der Ihre Instagram-Daten in lesbarer Form speichert, wir haben kein Kontosystem, und wir können nicht einsehen, was Ghoosted für Sie sammelt.</p>
+
+    <h2>1. Das Grundprinzip</h2>
+    <p>Ghoosted ist als <strong>„local-first"</strong>-Anwendung konzipiert. Alles, was die Erweiterung erfasst — Ihre Follower, die Konten, denen Sie folgen, Listen der Story-Betrachter, Zeitstempel, Statistiken und Einstellungen — wird ausschließlich im lokalen Speicher Ihres Browsers (<code>chrome.storage.local</code>) auf Ihrem eigenen Computer gespeichert. Es wird niemals in lesbarer Form an uns oder an Dritte übermittelt. Die einzige Ausnahme ist die optionale Synchronisierung mit der mobilen Begleit-App gemäß Abschnitt 3, bei der ausschließlich ein Ende-zu-Ende-verschlüsselter Snapshot übertragen wird, den wir nicht lesen können.</p>
+
+    <h2>2. Daten, die wir über Sie erheben: keine (unsererseits)</h2>
+    <p>Die Erweiterung enthält keine Analysetools, keine Telemetrie, keine Tracking-Pixel und keine Werbe-SDKs. Wir legen kein Konto für Sie an und erhalten weder Ihre Instagram-Daten noch Ihr Instagram-Passwort (nach dem wir niemals fragen) noch den Inhalt Ihrer Ghoosted-Listen.</p>
+
+    <h2>3. Netzwerkverbindungen, die Ghoosted herstellt</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> Die Erweiterung liest Daten direkt aus Ihrer eigenen, angemeldeten Sitzung in Ihrem Browser aus, auf dieselbe Weise wie die Instagram-Website selbst. Dies geschieht zwischen Ihrem Browser und Instagram — nicht über uns.</li>
+      <li><strong>Ghoosted-Lizenz-API (auf Vercel):</strong> nur wenn Sie einen Schlüssel aktivieren. Die Erweiterung sendet Ihren Lizenzschlüssel und Ihre numerische Instagram-Konto-ID an die eigene Lizenz-API von Ghoosted, um zu bestätigen, dass der Schlüssel gültig ist, und ihn an dieses Konto zu binden. Es werden niemals Instagram-Inhalte, Follower oder Nachrichten übermittelt. Das Ergebnis wird lokal in Ihrem Browser gespeichert.</li>
+      <li><strong>Optionale Synchronisierung mit der mobilen Begleit-App:</strong> Wenn Sie sich entscheiden, eine mobile Begleit-App durch Scannen eines QR-Codes zu verknüpfen, überträgt die Erweiterung einen Ende-zu-Ende-verschlüsselten Snapshot Ihrer Ghoosted-Daten an ein Relay, das auf Vercel gehostet und in Upstash Redis gespeichert wird. Der Verschlüsselungscode erreicht uns niemals — er existiert nur innerhalb des QR-Codes selbst und wird direkt von einem Ihrer Geräte zum anderen übertragen. Weder wir noch Vercel noch Upstash können den Inhalt lesen; auf unserer Seite sehen wir ausschließlich Chiffretext. Snapshots werden automatisch nach 7 Tagen gelöscht. Wenn Sie diese Funktion nie nutzen, wird nichts übertragen.</li>
+      <li><strong>Lizenz-E-Mail (Resend):</strong> Wenn Sie Ghoosted Pro kaufen, nutzen wir Resend, um Ihnen die Transaktions-E-Mail mit Ihrem Lizenzschlüssel zuzusenden. Resend verarbeitet Ihre E-Mail-Adresse ausschließlich zur Zustellung dieser Nachricht.</li>
+      <li><strong>Diese Website (ghoosted.net):</strong> gehostet auf Vercel, das für Sicherheit und Betrieb standardmäßige Server-Protokolle (etwa IP-Adresse und Anfragedaten) aufbewahren kann. Siehe die <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Datenschutzerklärung von Vercel</a>. Die Website speichert Ihre Sprachauswahl im lokalen Speicher Ihres Browsers; sie verwendet weder Werbe- noch Tracking-Cookies.</li>
+      <li><strong>Versionsprüfung:</strong> alle paar Stunden fragt die Erweiterung den Ghoosted-Server, ob eine neuere Version vorliegt, um dich zu informieren oder zu warnen, falls deine nicht mehr funktioniert. Die Anfrage sendet keine Daten über dich oder dein Konto — nur die unten beschriebenen Standard-Serverprotokolle (IP-Adresse und Anfragedaten) werden gespeichert.</li>
+    </ul>
+    <p>Zusammengefasst nutzen wir folgende Auftragsverarbeiter: <strong>Stripe</strong> (Zahlungen), <strong>Vercel</strong> (Website-Hosting sowie Lizenz-/Sync-Relay), <strong>Upstash</strong> (verschlüsselter Sync-Speicher) und <strong>Resend</strong> (Lizenz-Transaktions-E-Mail). Keiner von ihnen kann Ihre Instagram-Daten lesen.</p>
+
+    <p><strong>Internationale Übermittlungen und Auftragsverarbeitungsverträge.</strong> Einige dieser Anbieter (Stripe, Vercel, Upstash, Resend) können die oben beschriebenen begrenzten Daten — eine E-Mail-Adresse, eine IP-Adresse in Server-Protokollen oder den unlesbaren verschlüsselten Sync-Blob — auf Servern in den USA verarbeiten. In diesem Fall ist die Übermittlung durch die Garantien des Kapitels V DSGVO geschützt: das EU-US-Datenschutzrahmenwerk, sofern der Anbieter zertifiziert ist, oder die Standardvertragsklauseln der Europäischen Kommission. Jeder Anbieter ist durch einen Auftragsverarbeitungsvertrag nach Artikel 28 DSGVO gebunden und darf die Daten nicht für eigene Zwecke nutzen.</p>
+
+    <h2>4. Informationen über andere Personen</h2>
+    <p>Ghoosted zeigt Ihnen Informationen über andere Instagram-Nutzer an (zum Beispiel, wer Ihre Storys angesehen hat oder wer Ihnen entfolgt ist). Diese Informationen werden ausschließlich auf Ihrem Gerät und unter Ihrer Kontrolle angezeigt und gespeichert. Wir erhalten sie niemals in lesbarer Form — die einzige Ausnahme ist, wenn Sie die optionale Synchronisierung mit der mobilen Begleit-App nutzen (Abschnitt 3), bei der lediglich eine Ende-zu-Ende-verschlüsselte Kopie übertragen wird, die wir nicht entschlüsseln können. Sie sind dafür verantwortlich, sie rechtmäßig und zu persönlichen Zwecken zu nutzen, im Einklang mit den für Sie geltenden Datenschutzgesetzen.</p>
+    <p>Dazu gehören <strong>Profilbilder</strong>. Wenn jemand seines ändert, speichert Ghoosted eine Kopie des Bildes im lokalen Speicher deines Browsers, um dir Vorher und Nachher zeigen zu können und damit die Zeile ein Gesicht behält, wenn der ursprüngliche Instagram-Link abläuft. Diese Kopien verlassen dein Gerät nie und werden uns nie übermittelt. Du kannst sie jederzeit unter <em>Einstellungen → Daten → gespeicherte Fotos löschen</em> entfernen oder die Erweiterung deinstallieren.</p>
+
+    <h2>5. Zahlungsdaten</h2>
+    <p>Wenn Sie Ghoosted Pro kaufen, wird Ihre Zahlung auf unserer Website von <strong>Stripe</strong>, unserem Zahlungsdienstleister, abgewickelt. Wir erhalten oder speichern Ihre Kartendaten niemals — das tut Stripe, gemäß der <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Datenschutzerklärung von Stripe</a>. Wir sehen lediglich eingeschränkte Bestelldaten (etwa Ihre E-Mail-Adresse und Ihren Lizenzschlüssel), die zur Ausstellung und Verwaltung Ihres Schlüssels erforderlich sind.</p>
+
+    <h2>6. Ihre Wahlmöglichkeiten und Rechte</h2>
+    <p>Da wir Ihre Instagram-Daten auf keinem Server in lesbarer Form vorhalten, gibt es unsererseits nur sehr wenig zu exportieren oder zu löschen — mit zwei engen Ausnahmen: dem verschlüsselten Sync-Snapshot auf unserem Relay, falls Sie die Synchronisierung mit der mobilen Begleit-App genutzt haben (er wird automatisch nach 7 Tagen gelöscht, und wir können ihn auf Anfrage auch früher löschen, obwohl wir seinen Inhalt nicht lesen können), sowie den Bestell-/Kaufunterlagen, die von uns und von Stripe aufbewahrt werden (siehe Abschnitt 7). Sie behalten stets die Kontrolle über die Daten auf Ihrem Gerät:</p>
+    <ul>
+      <li><strong>Exportieren</strong> Sie Ihre Ghoosted-Daten jederzeit über die Einstellungen der Erweiterung („Meine Daten exportieren").</li>
+      <li><strong>Löschen</strong> Sie sie jederzeit über „Verlauf löschen", „Baseline neu erstellen" oder durch Deinstallation der Erweiterung (wodurch alle lokalen Daten entfernt werden).</li>
+    </ul>
+    <p>Für Bestell-/Kaufdaten, die von uns oder von Stripe gespeichert werden, oder um Rechte nach der DSGVO oder dem CCPA geltend zu machen, kontaktieren Sie <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>Die Rechtsgrundlagen für die oben beschriebene begrenzte Verarbeitung sind: die Erfüllung eines Vertrags (Art. 6 Abs. 1 lit. b DSGVO) zur Ausstellung und Verwaltung Ihrer Lizenz sowie der optionalen Sync-Funktion; unser berechtigtes Interesse (Art. 6 Abs. 1 lit. f DSGVO) an der Verhinderung von Betrug und Missbrauch des Lizenzsystems; sowie die Erfüllung einer rechtlichen Verpflichtung (Art. 6 Abs. 1 lit. c DSGVO) zur Führung von Buchhaltungs- und Steuerunterlagen. Sie haben außerdem das Recht, sich bei der spanischen Datenschutzbehörde (Agencia Española de Protección de Datos, AEPD) unter <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a> zu beschweren, oder bei der Aufsichtsbehörde Ihres eigenen EU-Mitgliedstaats.</p>
+
+    <h2>7. Datenspeicherung</h2>
+    <p>Lokale Daten verbleiben auf Ihrem Gerät, bis Sie sie löschen oder die Erweiterung deinstallieren. Verschlüsselte Sync-Snapshots (Abschnitt 3) werden automatisch nach 7 Tagen gelöscht, unabhängig davon, ob Sie sie auf Ihrem anderen Gerät abgerufen haben. Bestell-/Kaufunterlagen werden von Stripe und von uns nur so lange aufbewahrt, wie es für buchhalterische und gesetzliche Pflichten erforderlich ist — nach spanischem Handels- und Steuerrecht in der Regel zwischen 4 und 6 Jahren.</p>
+
+    <h2>8. Altersanforderung und Minderjährige</h2>
+    <p>Ghoosted ist nicht für Personen unter 18 Jahren bestimmt. Nutzen Sie die Erweiterung nicht, wenn Sie dieses Alter noch nicht erreicht haben. Sie dürfen die Erweiterung außerdem nicht verwenden, um Informationen über Personen zu überwachen, zu verfolgen oder zu sammeln, von denen Sie wissen oder annehmen, dass sie unter 18 Jahre alt sind — siehe unsere <a href="terms.html">Nutzungsbedingungen</a>.</p>
+
+    <h2>9. Änderungen und Kontakt</h2>
+    <p>Wir werden diese Richtlinie bei Bedarf aktualisieren und das Datum „Zuletzt aktualisiert" ändern. Die Daten, die die Erweiterung von Instagram ausliest, verbleiben auf Ihrem Gerät und erreichen uns niemals, sodass <strong>Sie</strong> der Verantwortliche für diese Daten sind. Für die wenigen Daten, die wir tatsächlich verarbeiten (eine Kauf-E-Mail, ein Lizenzschlüssel, ein verschlüsselter Sync-Snapshot), ist der Verantwortliche <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, Anschrift <span class="fillme">[DIRECCIÓN]</span>, der unabhängige Entwickler, der <strong>Ghoosted</strong> betreibt — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Zurück zu Ghoosted</a></p>
+  </article>
+
+  <!-- ============ ITALIANO ============ -->
+  <article class="legal lang-it">
+    <h1>Informativa sulla Privacy</h1>
+    <p class="updated">Ultimo aggiornamento: 26 luglio 2026</p>
+    <p class="intro">In breve: Ghoosted conserva i tuoi dati sul tuo dispositivo. Non gestiamo alcun server che memorizzi i tuoi dati di Instagram in forma leggibile, non abbiamo un sistema di account e non possiamo vedere ciò che Ghoosted raccoglie per te.</p>
+
+    <h2>1. Il principio fondamentale</h2>
+    <p>Ghoosted è progettato per essere <strong>local-first</strong>. Tutto ciò che l'Estensione raccoglie — i tuoi follower, gli account che segui, gli elenchi di chi visualizza le storie, le date/orari, le statistiche e le impostazioni — viene memorizzato esclusivamente nella memoria locale del tuo browser (<code>chrome.storage.local</code>) sul tuo computer. Non viene mai caricato in forma leggibile verso di noi o verso terzi. L'unica eccezione è la sincronizzazione opzionale con l'app mobile companion descritta nella Sezione 3, che carica soltanto uno snapshot cifrato end-to-end che non possiamo leggere.</p>
+
+    <h2>2. Dati che raccogliamo su di te: nessuno (da parte nostra)</h2>
+    <p>L'Estensione non contiene alcuna analisi, alcuna telemetria, alcun pixel di tracciamento e alcun SDK pubblicitario. Non creiamo un account per te e non riceviamo i tuoi dati di Instagram, la tua password di Instagram (che non chiediamo mai), né il contenuto delle tue liste di Ghoosted.</p>
+
+    <h2>3. Connessioni di rete effettuate da Ghoosted</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> l'Estensione legge i dati direttamente dalla tua sessione già autenticata, nel tuo browser, allo stesso modo in cui fa il sito web di Instagram. Questo avviene tra il tuo browser e Instagram, non tramite noi.</li>
+      <li><strong>API di licenza di Ghoosted (su Vercel):</strong> solo quando attivi una chiave. L'estensione invia la tua chiave di licenza e il tuo ID numerico dell'account Instagram all'API di licenza di Ghoosted per confermare che la chiave sia valida e associarla a tale account. Non viene mai inviato alcun contenuto, follower o messaggio di Instagram. Il risultato viene memorizzato localmente nel tuo browser.</li>
+      <li><strong>Sincronizzazione opzionale con l'app mobile companion:</strong> se scegli di collegare un'app mobile companion scansionando un codice QR, l'Estensione carica uno snapshot cifrato end-to-end dei tuoi dati Ghoosted verso un relay ospitato su Vercel e memorizzato in Upstash Redis. La chiave di cifratura non ci raggiunge mai: esiste solo all'interno del codice QR stesso, trasmessa direttamente da uno dei tuoi dispositivi all'altro. Né noi, né Vercel, né Upstash possiamo leggere il contenuto; da parte nostra vediamo solo testo cifrato. Gli snapshot vengono eliminati automaticamente dopo 7 giorni. Se non usi mai questa funzione, non viene caricato nulla.</li>
+      <li><strong>Email di licenza (Resend):</strong> quando acquisti Ghoosted Pro, utilizziamo Resend per inviarti l'email transazionale contenente la tua chiave di licenza. Resend tratta il tuo indirizzo email esclusivamente per recapitare quel messaggio.</li>
+      <li><strong>Questo sito web (ghoosted.net):</strong> ospitato su Vercel, che può conservare log di server standard (come l'indirizzo IP e i dati delle richieste) per finalità di sicurezza e funzionamento. Consulta l'<a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Informativa sulla Privacy di Vercel</a>. Il sito memorizza la tua scelta della lingua nella memoria locale del tuo browser; non utilizza cookie pubblicitari o di tracciamento.</li>
+      <li><strong>Controllo della versione:</strong> ogni poche ore l'Estensione chiede al server di Ghoosted se esiste una versione più recente, per avvisarti quando esce o se la tua ha smesso di funzionare. La richiesta non invia alcun dato su di te o sul tuo account — restano solo i log del server descritti sotto (indirizzo IP e dati della richiesta).</li>
+    </ul>
+    <p>In sintesi, i responsabili del trattamento a cui ci affidiamo sono: <strong>Stripe</strong> (pagamenti), <strong>Vercel</strong> (hosting del sito e relay di licenza/sincronizzazione), <strong>Upstash</strong> (archiviazione cifrata della sincronizzazione) e <strong>Resend</strong> (email transazionale di licenza). Nessuno di loro può leggere i tuoi dati di Instagram.</p>
+
+    <p><strong>Trasferimenti internazionali e contratti con i responsabili.</strong> Alcuni di questi fornitori (Stripe, Vercel, Upstash, Resend) possono trattare i dati limitati descritti sopra — un indirizzo email, un indirizzo IP nei log del server o il blob cifrato illeggibile della sincronizzazione — su server negli Stati Uniti. In tal caso, il trasferimento è protetto dalle garanzie del Capo V del GDPR: il Quadro UE-USA sulla privacy dei dati se il fornitore è certificato, oppure le Clausole Contrattuali Standard della Commissione europea. Ogni fornitore è vincolato da un contratto di responsabile del trattamento ai sensi dell'articolo 28 del GDPR e non può usare i dati per fini propri.</p>
+
+    <h2>4. Informazioni su altre persone</h2>
+    <p>Ghoosted ti mostra informazioni su altri utenti di Instagram (ad esempio, chi ha visualizzato le tue storie o chi ha smesso di seguirti). Tali informazioni vengono visualizzate e memorizzate esclusivamente sul tuo dispositivo, sotto il tuo controllo. Non le riceviamo mai in forma leggibile — l'unica eccezione è se utilizzi la sincronizzazione opzionale con l'app mobile companion (Sezione 3), che trasmette solo una copia cifrata end-to-end che non possiamo decifrare. Sei responsabile del loro utilizzo lecito e per scopi personali, in conformità con le leggi sulla privacy a te applicabili.</p>
+    <p>Questo include le <strong>foto profilo</strong>. Quando qualcuno cambia la propria, Ghoosted salva una copia dell'immagine nella memoria locale del browser per poterti mostrare il prima e il dopo e perché la riga conservi un volto quando il link originale di Instagram scade. Queste copie non lasciano mai il tuo dispositivo e non ci vengono mai inviate. Puoi cancellarle tutte quando vuoi da <em>Impostazioni → Dati → svuota foto salvate</em>, oppure disinstallando l'Estensione.</p>
+
+    <h2>5. Dati di pagamento</h2>
+    <p>Quando acquisti Ghoosted Pro, il tuo pagamento viene gestito sul nostro sito web da <strong>Stripe</strong>, il nostro fornitore di servizi di pagamento. Non riceviamo né memorizziamo mai i dettagli della tua carta — lo fa Stripe, ai sensi dell'<a href="https://stripe.com/privacy" target="_blank" rel="noopener">Informativa sulla Privacy di Stripe</a>. Vediamo solo dati limitati dell'ordine (come la tua email e la chiave di licenza) necessari per emettere e gestire la tua chiave.</p>
+
+    <h2>6. Le tue scelte e i tuoi diritti</h2>
+    <p>Poiché non conserviamo i tuoi dati di Instagram in forma leggibile su alcun server, c'è ben poco da parte nostra da esportare o cancellare — con due eccezioni circoscritte: lo snapshot cifrato di sincronizzazione sul nostro relay, se hai utilizzato la sincronizzazione con l'app mobile companion (viene eliminato automaticamente dopo 7 giorni, e possiamo cancellarlo prima su richiesta, anche se non possiamo leggerne il contenuto), e i registri di ordini/acquisti conservati da noi e da Stripe (vedi Sezione 7). Hai sempre il controllo dei dati sul tuo dispositivo:</p>
+    <ul>
+      <li><strong>Esporta</strong> i tuoi dati Ghoosted in qualsiasi momento dalle impostazioni dell'estensione ("Esporta i miei dati").</li>
+      <li><strong>Elimina</strong> i tuoi dati in qualsiasi momento tramite "cancella cronologia", "Ricostruisci baseline", oppure disinstallando l'Estensione (che rimuove tutti i dati locali).</li>
+    </ul>
+    <p>Per qualsiasi dato relativo a ordini/acquisti conservato da noi o da Stripe, oppure per esercitare i diritti previsti dal GDPR o dal CCPA, contatta <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>Le basi giuridiche per il trattamento limitato sopra descritto sono: l'esecuzione di un contratto (art. 6, par. 1, lett. b, GDPR) per emettere e gestire la tua licenza e la funzione opzionale di sincronizzazione; il nostro legittimo interesse (art. 6, par. 1, lett. f, GDPR) a prevenire frodi e abusi del sistema di licenze; e l'adempimento di un obbligo legale (art. 6, par. 1, lett. c, GDPR) di conservare registri contabili e fiscali. Hai inoltre il diritto di presentare un reclamo all'Agenzia spagnola per la protezione dei dati (Agencia Española de Protección de Datos, AEPD) all'indirizzo <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>, oppure all'autorità di controllo del tuo Stato membro dell'UE.</p>
+
+    <h2>7. Conservazione dei dati</h2>
+    <p>I dati locali rimangono sul tuo dispositivo finché non li elimini o disinstalli l'Estensione. Gli snapshot cifrati di sincronizzazione (Sezione 3) vengono eliminati automaticamente dopo 7 giorni, indipendentemente dal fatto che tu li abbia recuperati sull'altro dispositivo. I registri di ordini/acquisti sono conservati da Stripe e da noi solo per il tempo necessario agli obblighi contabili e legali — generalmente tra 4 e 6 anni secondo la normativa commerciale e fiscale spagnola.</p>
+
+    <h2>8. Requisito di età e minori</h2>
+    <p>Ghoosted non è destinato a persone di età inferiore a 18 anni. Non utilizzarlo se non hai raggiunto tale età. Inoltre, non devi utilizzare l'Estensione per monitorare, tracciare o raccogliere informazioni su chiunque tu conosca o ritenga abbia un'età inferiore a 18 anni — consulta i nostri <a href="terms.html">Termini di Servizio</a>.</p>
+
+    <h2>9. Modifiche e contatti</h2>
+    <p>Aggiorneremo questa informativa secondo necessità e modificheremo la data di "Ultimo aggiornamento". I dati che l'Estensione legge da Instagram rimangono sul tuo dispositivo e non ci raggiungono mai, pertanto <strong>tu</strong> sei il titolare del trattamento di tali dati. Per la piccola parte che trattiamo (un'email di acquisto, una chiave di licenza, uno snapshot cifrato di sincronizzazione), il titolare del trattamento è <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, indirizzo <span class="fillme">[DIRECCIÓN]</span>, lo sviluppatore indipendente che gestisce <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Torna a Ghoosted</a></p>
+  </article>
+
+  <!-- ============ PORTUGUÊS (BR) ============ -->
+  <article class="legal lang-pt-BR">
+    <h1>Política de Privacidade</h1>
+    <p class="updated">Última atualização: 26 de julho de 2026</p>
+    <p class="intro">Resumo rápido: o Ghoosted mantém seus dados no seu dispositivo. Não operamos nenhum servidor que armazene seus dados do Instagram em forma legível, não temos sistema de contas, e não conseguimos ver o que o Ghoosted coleta para você.</p>
+
+    <h2>1. O princípio central</h2>
+    <p>O Ghoosted foi criado para ser <strong>local-first</strong> (prioridade local). Tudo o que a Extensão coleta — seus seguidores, as contas que você segue, listas de visualizadores de stories, registros de data/hora, estatísticas e configurações — é armazenado apenas no armazenamento local do seu navegador (<code>chrome.storage.local</code>), no seu próprio computador. Isso nunca é enviado, em forma legível, para nós nem para terceiros. A única exceção é a sincronização opcional com o aplicativo móvel complementar descrita na Seção 3, que envia apenas um instantâneo criptografado de ponta a ponta que não conseguimos ler.</p>
+
+    <h2>2. Dados que coletamos sobre você: nenhum (do nosso lado)</h2>
+    <p>A Extensão não contém análises (analytics), telemetria, pixels de rastreamento ou SDKs de publicidade. Não criamos uma conta para você e não recebemos seus dados do Instagram, sua senha do Instagram (que nunca solicitamos) ou o conteúdo das suas listas do Ghoosted.</p>
+
+    <h2>3. Conexões de rede que o Ghoosted realiza</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> a Extensão lê dados diretamente da sua própria sessão conectada, no seu navegador, da mesma forma que o site do Instagram faz. Isso ocorre entre o seu navegador e o Instagram — não passa por nós.</li>
+      <li><strong>API de licença do Ghoosted (na Vercel):</strong> apenas quando você ativa uma chave. A extensão envia sua chave de licença e o ID numérico da sua conta do Instagram para a API de licença própria do Ghoosted, a fim de confirmar que a chave é válida e vinculá-la a essa conta. Nenhum conteúdo, seguidor ou mensagem do Instagram é enviado. O resultado é armazenado localmente no seu navegador.</li>
+      <li><strong>Sincronização opcional com o aplicativo móvel complementar:</strong> se você optar por vincular um aplicativo móvel complementar escaneando um código QR, a Extensão envia um instantâneo criptografado de ponta a ponta dos seus dados do Ghoosted para um relay hospedado na Vercel e armazenado no Upstash Redis. A chave de criptografia nunca chega até nós: ela existe apenas dentro do próprio código QR, transmitida diretamente de um dos seus dispositivos para o outro. Nem nós, nem a Vercel, nem o Upstash conseguem ler o conteúdo; do nosso lado, vemos apenas texto cifrado. Os instantâneos são excluídos automaticamente após 7 dias. Se você nunca usar esse recurso, nada é enviado.</li>
+      <li><strong>E-mail de licença (Resend):</strong> quando você compra o Ghoosted Pro, usamos o Resend para enviar o e-mail transacional contendo sua chave de licença. O Resend trata seu endereço de e-mail apenas para entregar essa mensagem.</li>
+      <li><strong>Este site (ghoosted.net):</strong> hospedado na Vercel, que pode manter registros padrão de servidor (como endereço IP e dados da requisição) para fins de segurança e operação. Consulte a <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Política de Privacidade da Vercel</a>. O site armazena sua escolha de idioma no armazenamento local do seu navegador; não utiliza cookies de publicidade ou rastreamento.</li>
+      <li><strong>Verificação de versão:</strong> a cada poucas horas a Extensão pergunta ao servidor do Ghoosted se existe uma versão mais nova, para avisar quando sair ou se a sua parou de funcionar. A requisição não envia nenhum dado seu nem da sua conta — ficam apenas os registros de servidor descritos abaixo (endereço IP e dados da requisição).</li>
+    </ul>
+    <p>Em resumo, os operadores de tratamento em que nos apoiamos são: <strong>Stripe</strong> (pagamentos), <strong>Vercel</strong> (hospedagem do site e do relay de licença/sincronização), <strong>Upstash</strong> (armazenamento criptografado da sincronização) e <strong>Resend</strong> (e-mail transacional de licença). Nenhum deles consegue ler seus dados do Instagram.</p>
+
+    <p><strong>Transferências internacionais e contratos de operador.</strong> Alguns desses fornecedores (Stripe, Vercel, Upstash, Resend) podem tratar os dados limitados descritos acima — um e-mail, um IP em logs de servidor ou o blob criptografado ilegível da sincronização — em servidores nos Estados Unidos. Quando isso ocorre, a transferência é protegida pelas garantias do Capítulo V do GDPR: o Quadro de Privacidade de Dados UE–EUA quando o fornecedor é certificado, ou as Cláusulas Contratuais-Padrão da Comissão Europeia. Cada fornecedor está vinculado por um contrato de tratamento de dados nos termos do artigo 28 do GDPR e não pode usar os dados para fins próprios.</p>
+
+    <h2>4. Informações sobre outras pessoas</h2>
+    <p>O Ghoosted mostra a você informações sobre outros usuários do Instagram (por exemplo, quem visualizou seus stories ou quem deixou de te seguir). Essa informação é exibida e armazenada apenas no seu dispositivo, sob seu controle. Nós nunca a recebemos em forma legível — a única exceção é se você usar a sincronização opcional com o aplicativo móvel complementar (Seção 3), que transmite apenas uma cópia criptografada de ponta a ponta que não conseguimos decifrar. Você é responsável por utilizá-la de forma lícita e apenas para fins pessoais, em conformidade com as leis de privacidade que se aplicam a você.</p>
+    <p>Isso inclui as <strong>fotos de perfil</strong>. Quando alguém troca a sua, o Ghoosted guarda uma cópia da imagem no armazenamento local do navegador para poder mostrar o antes e o depois e para que a linha mantenha um rosto quando o link original do Instagram expirar. Essas cópias nunca saem do seu dispositivo e nunca são enviadas para nós. Você pode apagar todas quando quiser em <em>Ajustes → Dados → limpar fotos salvas</em>, ou desinstalando a Extensão.</p>
+
+    <h2>5. Dados de pagamento</h2>
+    <p>Quando você compra o Ghoosted Pro, seu pagamento é processado no nosso site pela <strong>Stripe</strong>, nosso processador de pagamentos. Nunca recebemos ou armazenamos os dados do seu cartão — a Stripe o faz, conforme a <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Política de Privacidade da Stripe</a>. Vemos apenas dados limitados do pedido (como seu e-mail e a chave de licença) necessários para emitir e gerenciar sua chave.</p>
+
+    <h2>6. Suas escolhas e direitos</h2>
+    <p>Como não mantemos seus dados do Instagram em forma legível em nenhum servidor, há muito pouco do nosso lado para exportar ou apagar — com duas exceções pontuais: o instantâneo criptografado de sincronização em nosso relay, se você tiver usado a sincronização com o aplicativo móvel complementar (ele é excluído automaticamente após 7 dias, e podemos excluí-lo antes mediante solicitação, ainda que não possamos ler seu conteúdo), e os registros de pedido/compra mantidos por nós e pela Stripe (veja a Seção 7). Você está sempre no controle dos dados no seu dispositivo:</p>
+    <ul>
+      <li><strong>Exportar</strong> seus dados do Ghoosted a qualquer momento pelas configurações da extensão ("Exportar meus dados").</li>
+      <li><strong>Excluir</strong> esses dados a qualquer momento por meio de "limpar histórico", "Reconstruir base", ou desinstalando a Extensão (o que remove todos os dados locais).</li>
+    </ul>
+    <p>Para qualquer dado de pedido/compra mantido por nós ou pela Stripe, ou para exercer direitos previstos no GDPR ou na CCPA, entre em contato pelo <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>As bases legais para o tratamento limitado descrito acima são: a execução de um contrato (art. 6(1)(b) do GDPR) para emitir e gerenciar sua licença e o recurso opcional de sincronização; nosso interesse legítimo (art. 6(1)(f) do GDPR) em prevenir fraude e abuso do sistema de licenças; e o cumprimento de uma obrigação legal (art. 6(1)(c) do GDPR) de manter registros contábeis e fiscais. Você também tem o direito de apresentar uma reclamação à Agência Espanhola de Proteção de Dados (Agencia Española de Protección de Datos, AEPD) em <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>, ou à autoridade de controle do seu próprio Estado-membro da UE.</p>
+
+    <h2>7. Retenção de dados</h2>
+    <p>Os dados locais permanecem no seu dispositivo até que você os exclua ou desinstale a Extensão. Os instantâneos criptografados de sincronização (Seção 3) são excluídos automaticamente após 7 dias, tenham ou não sido recuperados no seu outro dispositivo. Os registros de pedido/compra são mantidos pela Stripe e por nós apenas pelo tempo necessário para cumprir obrigações contábeis e legais — geralmente entre 4 e 6 anos, conforme a legislação comercial e fiscal espanhola.</p>
+
+    <h2>8. Requisito de idade e crianças</h2>
+    <p>O Ghoosted não se destina a pessoas com menos de 18 anos. Não o utilize se você tiver menos dessa idade. Você também não deve usar a Extensão para monitorar, rastrear ou coletar informações sobre qualquer pessoa que você conheça ou acredite ter menos de 18 anos — consulte nossos <a href="terms.html">Termos de Serviço</a>.</p>
+
+    <h2>9. Alterações e contato</h2>
+    <p>Atualizaremos esta política conforme necessário e alteraremos a data de "Última atualização". Os dados que a Extensão lê do Instagram permanecem no seu dispositivo e nunca chegam até nós, de modo que <strong>você</strong> é o controlador desses dados. Para o pouco que efetivamente tratamos (um e-mail de compra, uma chave de licença, um instantâneo criptografado de sincronização), o controlador é <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, endereço <span class="fillme">[DIRECCIÓN]</span>, o desenvolvedor independente que opera o <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Voltar ao Ghoosted</a></p>
+  </article>
+
+  <!-- ============ TÜRKÇE ============ -->
+  <article class="legal lang-tr">
+    <h1>Gizlilik Politikası</h1>
+    <p class="updated">Son güncelleme: 26 Temmuz 2026</p>
+    <p class="intro">Kısacası: Ghoosted verilerinizi cihazınızda tutar. Instagram verilerinizi okunabilir biçimde saklayan hiçbir sunucu işletmiyoruz, bir hesap sistemimiz yok ve Ghoosted'ın sizin için topladığı verileri göremiyoruz.</p>
+
+    <h2>1. Temel ilke</h2>
+    <p>Ghoosted, <strong>önce yerel (local-first)</strong> olacak şekilde tasarlanmıştır. Uzantının topladığı her şey — takipçileriniz, takip ettiğiniz hesaplar, hikaye izleyici listeleri, zaman damgaları, istatistikler ve ayarlar — yalnızca kendi bilgisayarınızda, tarayıcınızın yerel depolama alanında (<code>chrome.storage.local</code>) saklanır. Bu veriler bize veya herhangi bir üçüncü tarafa okunabilir biçimde asla yüklenmez. Tek istisna, Bölüm 3'te açıklanan ve yalnızca bizim okuyamadığımız uçtan uca şifrelenmiş bir anlık görüntü yükleyen isteğe bağlı mobil eşlik uygulaması senkronizasyonudur.</p>
+
+    <h2>2. Sizin hakkınızda topladığımız veriler: yok (bizim tarafımızda)</h2>
+    <p>Uzantı hiçbir analiz aracı, telemetri, izleme pikseli veya reklam SDK'sı içermez. Sizin için bir hesap oluşturmayız ve Instagram verilerinizi, Instagram şifrenizi (ki bunu asla istemeyiz) veya Ghoosted listelerinizin içeriğini almayız.</p>
+
+    <h2>3. Ghoosted'ın kurduğu ağ bağlantıları</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> Uzantı, verileri tıpkı Instagram web sitesinin yaptığı gibi, tarayıcınızda kendi oturum açmış hesabınızdan doğrudan okur. Bu işlem tarayıcınız ile Instagram arasında gerçekleşir — bizim üzerimizden değil.</li>
+      <li><strong>Ghoosted lisans API'si (Vercel üzerinde):</strong> yalnızca bir anahtarı etkinleştirdiğinizde. Uzantı, anahtarın geçerli olduğunu doğrulamak ve onu o hesaba bağlamak için lisans anahtarınızı ve Instagram sayısal hesap kimliğinizi Ghoosted'ın kendi lisans API'sine gönderir. Instagram içeriği, takipçileri veya mesajları asla gönderilmez. Sonuç, tarayıcınızda yerel olarak saklanır.</li>
+      <li><strong>İsteğe bağlı mobil eşlik uygulaması senkronizasyonu:</strong> bir QR kodu tarayarak bir mobil eşlik uygulamasını bağlamayı seçerseniz, Uzantı, Ghoosted verilerinizin uçtan uca şifrelenmiş bir anlık görüntüsünü Vercel üzerinde barındırılan ve Upstash Redis'te depolanan bir aktarım noktasına (relay) yükler. Şifreleme anahtarı bize asla ulaşmaz — yalnızca QR kodunun içinde bulunur ve doğrudan cihazlarınızdan birinden diğerine aktarılır. Ne biz, ne Vercel, ne de Upstash içeriği okuyabilir; bizim tarafımızda yalnızca şifreli metin görünür. Anlık görüntüler 7 gün sonra otomatik olarak silinir. Bu özelliği hiç kullanmazsanız hiçbir şey yüklenmez.</li>
+      <li><strong>Lisans e-postası (Resend):</strong> Ghoosted Pro satın aldığınızda, lisans anahtarınızı içeren işlemsel e-postayı göndermek için Resend'i kullanırız. Resend, e-posta adresinizi yalnızca bu mesajı iletmek için işler.</li>
+      <li><strong>Bu web sitesi (ghoosted.net):</strong> güvenlik ve işletim amacıyla standart sunucu günlükleri (IP adresi ve istek verileri gibi) tutabilen Vercel üzerinde barındırılır. Bkz. <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel'in Gizlilik Politikası</a>. Site, dil tercihinizi tarayıcınızın yerel depolama alanında saklar; reklam veya izleme çerezi kullanmaz.</li>
+      <li><strong>Sürüm denetimi:</strong> Uzantı birkaç saatte bir Ghoosted sunucusuna daha yeni bir sürüm olup olmadığını sorar; böylece çıktığında haber verebilir ya da seninki çalışmayı bıraktıysa uyarabilir. İstek, seninle veya hesabınla ilgili hiçbir veri göndermez — yalnızca aşağıda anlatılan standart sunucu kayıtları (IP adresi ve istek verileri) tutulur.</li>
+    </ul>
+    <p>Özetle, dayandığımız veri işleyiciler şunlardır: <strong>Stripe</strong> (ödemeler), <strong>Vercel</strong> (web sitesi barındırma ile lisans/senkronizasyon aktarımı), <strong>Upstash</strong> (şifreli senkronizasyon depolaması) ve <strong>Resend</strong> (işlemsel lisans e-postası). Bunların hiçbiri Instagram verilerinizi okuyamaz.</p>
+
+    <p><strong>Uluslararası aktarımlar ve işleyici sözleşmeleri.</strong> Bu sağlayıcılardan bazıları (Stripe, Vercel, Upstash, Resend), yukarıda açıklanan sınırlı verileri — bir e-posta adresi, sunucu günlüklerindeki bir IP adresi veya okunamayan şifreli eşitleme verisi — Amerika Birleşik Devletleri'ndeki sunucularda işleyebilir. Böyle bir durumda aktarım, GDPR Bölüm V güvenceleriyle korunur: sağlayıcı sertifikalıysa AB–ABD Veri Gizliliği Çerçevesi, aksi halde Avrupa Komisyonu'nun Standart Sözleşme Maddeleri. Her sağlayıcı, GDPR Madde 28 uyarınca bir veri işleme sözleşmesiyle bağlıdır ve verileri kendi amaçları için kullanamaz.</p>
+
+    <h2>4. Diğer kişiler hakkındaki bilgiler</h2>
+    <p>Ghoosted size diğer Instagram kullanıcıları hakkında bilgi gösterir (örneğin, hikayelerinizi kimlerin izlediği veya sizi kimlerin takipten çıkardığı). Bu bilgiler yalnızca cihazınızda, sizin kontrolünüzde görüntülenir ve saklanır. Bu bilgileri okunabilir biçimde asla almayız — tek istisna, isteğe bağlı mobil eşlik uygulaması senkronizasyonunu kullanmanızdır (Bölüm 3); bu durumda yalnızca çözemediğimiz uçtan uca şifrelenmiş bir kopya iletilir. Bu bilgileri, size uygulanan gizlilik yasalarına uygun şekilde, hukuka uygun olarak ve kişisel amaçlarla kullanmaktan siz sorumlusunuz.</p>
+    <p>Buna <strong>profil fotoğrafları</strong> da dâhildir. Biri fotoğrafını değiştirdiğinde Ghoosted, öncesini ve sonrasını gösterebilmek ve Instagram'ın özgün bağlantısı sona erdiğinde satırda bir yüz kalabilmesi için görüntünün bir kopyasını tarayıcının yerel deposuna kaydeder. Bu kopyalar cihazından hiç çıkmaz ve bize hiçbir zaman gönderilmez. İstediğin an <em>Ayarlar → Veriler → kayıtlı fotoğrafları temizle</em> bölümünden hepsini silebilir ya da Uzantıyı kaldırabilirsin.</p>
+
+    <h2>5. Ödeme verileri</h2>
+    <p>Ghoosted Pro satın aldığınızda, ödemeniz web sitemizde ödeme işlemcimiz olan <strong>Stripe</strong> tarafından gerçekleştirilir. Kart bilgilerinizi asla almayız veya saklamayız — bunları <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe'ın Gizlilik Politikası</a> kapsamında Stripe saklar. Yalnızca anahtarınızı düzenlemek ve yönetmek için gerekli olan sınırlı sipariş verilerini (e-posta adresiniz ve lisans anahtarınız gibi) görürüz.</p>
+
+    <h2>6. Seçimleriniz ve haklarınız</h2>
+    <p>Instagram verilerinizi hiçbir sunucuda okunabilir biçimde tutmadığımızdan, bizim tarafımızda dışa aktarılacak veya silinecek çok az şey vardır — iki dar istisna dışında: mobil eşlik uygulaması senkronizasyonunu kullandıysanız aktarım noktamızdaki şifreli senkronizasyon anlık görüntüsü (7 gün sonra otomatik olarak silinir ve içeriğini okuyamasak da talebiniz üzerine daha erken silebiliriz) ve bizim ile Stripe'ın elinde tuttuğu sipariş/satın alma kayıtları (bkz. Bölüm 7). Cihazınızdaki veriler üzerinde her zaman kontrol sizdedir:</p>
+    <ul>
+      <li>Ghoosted verilerinizi uzantı ayarlarından ("Verilerimi dışa aktar") istediğiniz zaman <strong>dışa aktarabilirsiniz</strong>.</li>
+      <li>"Geçmişi temizle", "Temel çizgiyi yeniden oluştur" seçenekleriyle veya Uzantıyı kaldırarak (bu tüm yerel verileri siler) istediğiniz zaman <strong>silebilirsiniz</strong>.</li>
+    </ul>
+    <p>Bizim veya Stripe'ın elinde bulunan herhangi bir sipariş/satın alma verisi için ya da GDPR veya CCPA kapsamındaki haklarınızı kullanmak için <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a> adresiyle iletişime geçin.</p>
+    <p>Yukarıda açıklanan sınırlı işlemenin hukuki dayanakları şunlardır: lisansınızı ve isteğe bağlı senkronizasyon özelliğini vermek ve yönetmek için bir sözleşmenin ifası (GDPR m. 6(1)(b)); lisans sisteminde dolandırıcılığı ve kötüye kullanımı önlemeye yönelik meşru menfaatimiz (GDPR m. 6(1)(f)); ve muhasebe ile vergi kayıtlarını tutma yönündeki yasal yükümlülüğe uyum (GDPR m. 6(1)(c)). Ayrıca İspanyol Veri Koruma Kurumu'na (Agencia Española de Protección de Datos, AEPD) <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a> adresinden veya kendi AB üye devletinizdeki denetim otoritesine şikayette bulunma hakkına sahipsiniz.</p>
+
+    <h2>7. Veri saklama süresi</h2>
+    <p>Yerel veriler, siz silene veya Uzantıyı kaldırana kadar cihazınızda kalır. Şifreli senkronizasyon anlık görüntüleri (Bölüm 3), diğer cihazınızda alınmış olsun olmasın, 7 gün sonra otomatik olarak silinir. Satın alma/sipariş kayıtları, Stripe ve bizim tarafımızdan yalnızca muhasebe ve yasal yükümlülükler için gerekli olduğu süre boyunca — İspanyol ticaret ve vergi hukuku uyarınca genellikle 4 ila 6 yıl — saklanır.</p>
+
+    <h2>8. Yaş şartı ve çocuklar</h2>
+    <p>Ghoosted, 18 yaşından küçük hiç kimse için tasarlanmamıştır. Bu yaşın altındaysanız Uzantıyı kullanmayın. Ayrıca Uzantıyı, 18 yaşından küçük olduğunu bildiğiniz veya öyle olduğuna inandığınız herhangi bir kişiyi izlemek, takip etmek veya hakkında bilgi toplamak için kullanmamalısınız — bkz. <a href="terms.html">Kullanım Şartlarımız</a>.</p>
+
+    <h2>9. Değişiklikler ve iletişim</h2>
+    <p>Bu politikayı gerektiğinde güncelleyecek ve "Son güncelleme" tarihini değiştireceğiz. Uzantının Instagram'dan okuduğu veriler cihazınızda kalır ve bize asla ulaşmaz; bu nedenle bu verilerin veri sorumlusu <strong>sizsiniz</strong>. Bizim işlediğimiz az miktardaki veri için (bir satın alma e-postası, bir lisans anahtarı, şifreli bir senkronizasyon anlık görüntüsü), veri sorumlusu <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, adres <span class="fillme">[DIRECCIÓN]</span>, <strong>Ghoosted</strong>'ı işleten bağımsız geliştiricidir — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Ghoosted'a dön</a></p>
+  </article>
+
+  <!-- ============ INDONESIA ============ -->
+  <article class="legal lang-id">
+    <h1>Kebijakan Privasi</h1>
+    <p class="updated">Terakhir diperbarui: 26 Juli 2026</p>
+    <p class="intro">Versi singkat: Ghoosted menyimpan data Anda di perangkat Anda. Kami tidak menjalankan server yang menyimpan data Instagram Anda dalam bentuk yang dapat dibaca, kami tidak memiliki sistem akun, dan kami tidak dapat melihat apa yang dikumpulkan Ghoosted untuk Anda.</p>
+
+    <h2>1. Prinsip inti</h2>
+    <p>Ghoosted dibangun dengan prinsip <strong>local-first</strong> (mengutamakan penyimpanan lokal). Semua yang dikumpulkan Ekstensi ini — pengikut Anda, akun yang Anda ikuti, daftar penonton story, stempel waktu (timestamp), statistik, dan pengaturan — hanya disimpan di penyimpanan lokal browser Anda (<code>chrome.storage.local</code>) pada komputer Anda sendiri. Data ini tidak pernah diunggah kepada kami atau pihak ketiga mana pun dalam bentuk yang dapat dibaca. Satu-satunya pengecualian adalah sinkronisasi opsional dengan aplikasi pendamping seluler yang dijelaskan di Bagian 3, yang hanya mengunggah snapshot terenkripsi end-to-end yang tidak dapat kami baca.</p>
+
+    <h2>2. Data yang kami kumpulkan tentang Anda: tidak ada (di pihak kami)</h2>
+    <p>Ekstensi ini tidak mengandung analitik, telemetri, piksel pelacak (tracking pixel), atau SDK periklanan apa pun. Kami tidak membuatkan akun untuk Anda dan kami tidak menerima data Instagram Anda, kata sandi Instagram Anda (yang tidak pernah kami minta), atau isi daftar Ghoosted Anda.</p>
+
+    <h2>3. Koneksi jaringan yang dilakukan Ghoosted</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> Ekstensi ini membaca data langsung dari sesi Anda sendiri yang sudah masuk (logged-in), di browser Anda, dengan cara yang sama seperti situs web Instagram melakukannya. Hal ini terjadi antara browser Anda dan Instagram — bukan melalui kami.</li>
+      <li><strong>API lisensi Ghoosted (di Vercel):</strong> hanya ketika Anda mengaktifkan kunci lisensi. Ekstensi mengirimkan kunci lisensi Anda dan ID akun numerik Instagram Anda ke API lisensi milik Ghoosted sendiri untuk memastikan kunci tersebut valid dan mengikatnya ke akun tersebut. Tidak ada konten, pengikut, atau pesan Instagram yang pernah dikirim. Hasilnya disimpan secara lokal di browser Anda.</li>
+      <li><strong>Sinkronisasi opsional dengan aplikasi pendamping seluler:</strong> jika Anda memilih untuk menghubungkan aplikasi pendamping seluler dengan memindai kode QR, Ekstensi mengunggah snapshot terenkripsi end-to-end dari data Ghoosted Anda ke relay yang dihosting di Vercel dan disimpan di Upstash Redis. Kunci enkripsi tidak pernah sampai kepada kami — kunci itu hanya ada di dalam kode QR itu sendiri, dan berpindah langsung dari salah satu perangkat Anda ke perangkat lainnya. Baik kami, Vercel, maupun Upstash tidak dapat membaca isinya; di pihak kami, kami hanya melihat teks terenkripsi (ciphertext). Snapshot dihapus secara otomatis setelah 7 hari. Jika Anda tidak pernah menggunakan fitur ini, tidak ada apa pun yang diunggah.</li>
+      <li><strong>Email lisensi (Resend):</strong> saat Anda membeli Ghoosted Pro, kami menggunakan Resend untuk mengirimkan email transaksional yang berisi kunci lisensi Anda. Resend memproses alamat email Anda semata-mata untuk mengirimkan pesan tersebut.</li>
+      <li><strong>Situs web ini (ghoosted.net):</strong> dihosting di Vercel, yang dapat menyimpan log server standar (seperti alamat IP dan data permintaan) untuk keamanan dan operasional. Lihat <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Kebijakan Privasi Vercel</a>. Situs ini menyimpan pilihan bahasa Anda di penyimpanan lokal browser Anda; situs ini tidak menggunakan cookie iklan atau pelacakan apa pun.</li>
+      <li><strong>Pemeriksaan versi:</strong> setiap beberapa jam Ekstensi menanyakan ke server Ghoosted apakah ada versi lebih baru, agar bisa memberi tahu saat rilis atau memperingatkan jika versimu berhenti bekerja. Permintaan ini tidak mengirim data apa pun tentangmu atau akunmu — hanya log server standar di bawah (alamat IP dan data permintaan) yang tercatat.</li>
+    </ul>
+    <p>Singkatnya, pemroses data yang kami andalkan adalah: <strong>Stripe</strong> (pembayaran), <strong>Vercel</strong> (hosting situs web serta relay lisensi/sinkronisasi), <strong>Upstash</strong> (penyimpanan sinkronisasi terenkripsi), dan <strong>Resend</strong> (email transaksional lisensi). Tidak satu pun dari mereka dapat membaca data Instagram Anda.</p>
+
+    <p><strong>Transfer internasional dan kontrak pemroses.</strong> Beberapa penyedia ini (Stripe, Vercel, Upstash, Resend) mungkin memproses data terbatas yang dijelaskan di atas — alamat email, alamat IP di log server, atau blob sinkronisasi terenkripsi yang tak terbaca — di server di Amerika Serikat. Jika itu terjadi, transfernya dilindungi oleh jaminan Bab V GDPR: Kerangka Privasi Data UE–AS jika penyedia tersertifikasi, atau Klausul Kontrak Standar Komisi Eropa. Setiap penyedia terikat perjanjian pemrosesan data berdasarkan Pasal 28 GDPR dan tidak boleh memakai data untuk tujuannya sendiri.</p>
+
+    <h2>4. Informasi tentang orang lain</h2>
+    <p>Ghoosted menampilkan informasi tentang pengguna Instagram lain kepada Anda (misalnya, siapa yang melihat story Anda atau siapa yang berhenti mengikuti Anda). Informasi tersebut ditampilkan dan disimpan hanya di perangkat Anda, di bawah kendali Anda. Kami tidak pernah menerimanya dalam bentuk yang dapat dibaca — satu-satunya pengecualian adalah jika Anda menggunakan sinkronisasi opsional dengan aplikasi pendamping seluler (Bagian 3), yang hanya mentransmisikan salinan terenkripsi end-to-end yang tidak dapat kami dekripsi. Anda bertanggung jawab untuk menggunakannya secara sah dan untuk tujuan pribadi, sesuai dengan hukum privasi yang berlaku bagi Anda.</p>
+    <p>Ini termasuk <strong>foto profil</strong>. Saat seseorang menggantinya, Ghoosted menyimpan salinan gambar di penyimpanan lokal peramban agar bisa menunjukkan sebelum dan sesudah, dan agar barisnya tetap punya wajah ketika tautan asli Instagram kedaluwarsa. Salinan ini tidak pernah keluar dari perangkatmu dan tidak pernah dikirim ke kami. Kamu bisa menghapus semuanya kapan saja lewat <em>Pengaturan → Data → hapus foto tersimpan</em>, atau dengan mencopot Ekstensi.</p>
+
+    <h2>5. Data pembayaran</h2>
+    <p>Saat Anda membeli Ghoosted Pro, pembayaran Anda ditangani di situs web kami oleh <strong>Stripe</strong>, prosesor pembayaran kami. Kami tidak pernah menerima atau menyimpan detail kartu Anda — Stripe yang melakukannya, berdasarkan <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Kebijakan Privasi Stripe</a>. Kami hanya melihat data pesanan terbatas (seperti email dan kunci lisensi Anda) yang diperlukan untuk menerbitkan dan mengelola kunci Anda.</p>
+
+    <h2>6. Pilihan dan hak Anda</h2>
+    <p>Karena kami tidak menyimpan data Instagram Anda dalam bentuk yang dapat dibaca di server mana pun, hanya sedikit sekali yang ada di pihak kami untuk diekspor atau dihapus — dengan dua pengecualian terbatas: snapshot sinkronisasi terenkripsi di relay kami, jika Anda telah menggunakan sinkronisasi aplikasi pendamping seluler (dihapus otomatis setelah 7 hari, dan kami dapat menghapusnya lebih cepat atas permintaan, meskipun kami tidak dapat membaca isinya), dan catatan pesanan/pembelian yang disimpan oleh kami dan oleh Stripe (lihat Bagian 7). Anda selalu memegang kendali atas data di perangkat Anda:</p>
+    <ul>
+      <li><strong>Ekspor</strong> data Ghoosted Anda kapan saja dari pengaturan ekstensi ("Ekspor data saya").</li>
+      <li><strong>Hapus</strong> kapan saja melalui "hapus riwayat", "Bangun ulang dasar (Rebuild baseline)", atau dengan mencopot pemasangan (uninstall) Ekstensi (yang menghapus semua data lokal).</li>
+    </ul>
+    <p>Untuk data pesanan/pembelian apa pun yang disimpan oleh kami atau oleh Stripe, atau untuk menjalankan hak Anda berdasarkan GDPR atau CCPA, hubungi <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>Dasar hukum untuk pemrosesan terbatas yang dijelaskan di atas adalah: pelaksanaan kontrak (Pasal 6(1)(b) GDPR) untuk menerbitkan dan mengelola lisensi Anda serta fitur sinkronisasi opsional; kepentingan sah kami (Pasal 6(1)(f) GDPR) dalam mencegah penipuan dan penyalahgunaan sistem lisensi; dan kepatuhan terhadap kewajiban hukum (Pasal 6(1)(c) GDPR) untuk menyimpan catatan akuntansi dan pajak. Anda juga memiliki hak untuk mengajukan pengaduan kepada Badan Perlindungan Data Spanyol (Agencia Española de Protección de Datos, AEPD) di <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>, atau kepada otoritas pengawas di negara anggota UE Anda sendiri.</p>
+
+    <h2>7. Retensi data</h2>
+    <p>Data lokal tetap berada di perangkat Anda hingga Anda menghapusnya atau mencopot pemasangan Ekstensi. Snapshot sinkronisasi terenkripsi (Bagian 3) dihapus secara otomatis setelah 7 hari, baik sudah diambil di perangkat lain Anda maupun belum. Catatan pesanan/pembelian disimpan oleh Stripe dan oleh kami hanya selama diperlukan untuk keperluan akuntansi dan kewajiban hukum — umumnya antara 4 hingga 6 tahun berdasarkan hukum komersial dan perpajakan Spanyol.</p>
+
+    <h2>8. Persyaratan usia dan anak-anak</h2>
+    <p>Ghoosted tidak ditujukan untuk siapa pun yang berusia di bawah 18 tahun. Jangan gunakan Ekstensi ini jika Anda berada di bawah usia tersebut. Anda juga tidak boleh menggunakan Ekstensi ini untuk memantau, melacak, atau mengumpulkan informasi tentang siapa pun yang Anda kenal atau yakini berusia di bawah 18 tahun — lihat <a href="terms.html">Syarat Layanan</a> kami.</p>
+
+    <h2>9. Perubahan dan kontak</h2>
+    <p>Kami akan memperbarui kebijakan ini sesuai kebutuhan dan mengubah tanggal "Terakhir diperbarui". Data yang dibaca Ekstensi dari Instagram tetap berada di perangkat Anda dan tidak pernah sampai kepada kami, sehingga <strong>Anda</strong> adalah pengendali (controller) data tersebut. Untuk sedikit data yang kami tangani (email pembelian, kunci lisensi, snapshot sinkronisasi terenkripsi), pengendalinya adalah <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, alamat <span class="fillme">[DIRECCIÓN]</span>, pengembang independen yang mengoperasikan <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Kembali ke Ghoosted</a></p>
+  </article>
+
+  <!-- ============ HINDI ============ -->
+  <article class="legal lang-hi">
+    <h1>गोपनीयता नीति</h1>
+    <p class="updated">अंतिम अद्यतन: 26 जुलाई 2026</p>
+    <p class="intro">संक्षिप्त संस्करण: Ghoosted आपका डेटा आपके डिवाइस पर रखता है। हम ऐसा कोई सर्वर संचालित नहीं करते जो आपका Instagram डेटा पठनीय रूप में संग्रहीत करे, हमारे पास कोई खाता प्रणाली नहीं है, और हम यह नहीं देख सकते कि Ghoosted आपके लिए क्या एकत्र करता है।</p>
+
+    <h2>1. मूल सिद्धांत</h2>
+    <p>Ghoosted को <strong>लोकल-फ़र्स्ट</strong> बनाया गया है। एक्सटेंशन जो कुछ भी इकट्ठा करता है — आपके फ़ॉलोअर्स, जिन खातों को आप फ़ॉलो करते हैं, स्टोरी-व्यूअर सूचियाँ, टाइमस्टैम्प, आँकड़े और सेटिंग्स — वह केवल आपके अपने कंप्यूटर पर, आपके ब्राउज़र के लोकल स्टोरेज (<code>chrome.storage.local</code>) में संग्रहीत होता है। यह कभी भी हमें या किसी तृतीय पक्ष को पठनीय रूप में अपलोड नहीं किया जाता। एकमात्र अपवाद सेक्शन 3 में वर्णित वैकल्पिक मोबाइल-कम्पैनियन सिंक है, जो केवल एक एंड-टू-एंड एन्क्रिप्टेड स्नैपशॉट अपलोड करता है जिसे हम पढ़ नहीं सकते।</p>
+
+    <h2>2. आपके बारे में हम जो डेटा एकत्र करते हैं: कुछ नहीं (हमारी ओर से)</h2>
+    <p>एक्सटेंशन में कोई एनालिटिक्स, कोई टेलीमेट्री, कोई ट्रैकिंग पिक्सेल और कोई विज्ञापन SDK नहीं है। हम आपके लिए कोई खाता नहीं बनाते और हमें आपका Instagram डेटा, आपका Instagram पासवर्ड (जो हम कभी नहीं माँगते), या आपकी Ghoosted सूचियों की सामग्री प्राप्त नहीं होती।</p>
+
+    <h2>3. Ghoosted जो नेटवर्क कनेक्शन बनाता है</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> एक्सटेंशन आपके अपने लॉग-इन किए गए सत्र से, आपके ब्राउज़र में, सीधे डेटा पढ़ता है — ठीक उसी तरह जैसे Instagram वेबसाइट स्वयं करती है। यह आपके ब्राउज़र और Instagram के बीच होता है — हमारे माध्यम से नहीं।</li>
+      <li><strong>Ghoosted लाइसेंस API (Vercel पर):</strong> केवल तब जब आप कोई कुंजी सक्रिय करते हैं। एक्सटेंशन आपकी लाइसेंस कुंजी और आपकी Instagram संख्यात्मक खाता ID को Ghoosted के अपने लाइसेंस API पर भेजता है ताकि यह पुष्टि हो सके कि कुंजी मान्य है और उसे उस खाते से जोड़ा जा सके। कोई भी Instagram सामग्री, फ़ॉलोअर्स या संदेश कभी नहीं भेजे जाते। परिणाम आपके ब्राउज़र में स्थानीय रूप से संग्रहीत होता है।</li>
+      <li><strong>वैकल्पिक मोबाइल-कम्पैनियन सिंक:</strong> यदि आप QR कोड स्कैन करके एक मोबाइल कम्पैनियन ऐप जोड़ना चुनते हैं, तो एक्सटेंशन आपके Ghoosted डेटा का एक एंड-टू-एंड एन्क्रिप्टेड स्नैपशॉट Vercel पर होस्ट किए गए और Upstash Redis में संग्रहीत एक रिले पर अपलोड करता है। एन्क्रिप्शन कुंजी कभी हम तक नहीं पहुँचती — यह केवल QR कोड के भीतर ही मौजूद होती है, और सीधे आपके एक डिवाइस से दूसरे डिवाइस तक जाती है। न तो हम, न ही Vercel, न ही Upstash सामग्री पढ़ सकते हैं; हमारी ओर से हमें केवल सिफर-टेक्स्ट दिखाई देता है। स्नैपशॉट 7 दिनों के बाद स्वचालित रूप से हटा दिए जाते हैं। यदि आप इस सुविधा का कभी उपयोग नहीं करते, तो कुछ भी अपलोड नहीं होता।</li>
+      <li><strong>लाइसेंस ईमेल (Resend):</strong> जब आप Ghoosted Pro खरीदते हैं, तो हम आपकी लाइसेंस कुंजी वाला लेन-देन संबंधी ईमेल भेजने के लिए Resend का उपयोग करते हैं। Resend आपके ईमेल पते को केवल वह संदेश डिलीवर करने के लिए प्रोसेस करता है।</li>
+      <li><strong>यह वेबसाइट (ghoosted.net):</strong> Vercel पर होस्ट की गई, जो सुरक्षा और संचालन के लिए मानक सर्वर लॉग (जैसे IP पता और अनुरोध डेटा) रख सकती है। देखें <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel की गोपनीयता नीति</a>। साइट आपकी भाषा की पसंद आपके ब्राउज़र के लोकल स्टोरेज में संग्रहीत करती है; यह किसी विज्ञापन या ट्रैकिंग कुकी का उपयोग नहीं करती।</li>
+      <li><strong>संस्करण जाँच:</strong> हर कुछ घंटों में एक्सटेंशन Ghoosted के सर्वर से पूछता है कि कोई नया संस्करण है या नहीं, ताकि आपको बता सके या चेतावनी दे सके कि आपका काम करना बंद कर चुका है। इस अनुरोध में आपके या आपके खाते के बारे में कोई डेटा नहीं जाता — केवल नीचे बताए गए सामान्य सर्वर लॉग (IP पता और अनुरोध डेटा) दर्ज होते हैं।</li>
+    </ul>
+    <p>संक्षेप में, जिन प्रोसेसरों पर हम निर्भर हैं वे हैं: <strong>Stripe</strong> (भुगतान), <strong>Vercel</strong> (वेबसाइट होस्टिंग और लाइसेंस/सिंक रिले), <strong>Upstash</strong> (एन्क्रिप्टेड सिंक स्टोरेज), और <strong>Resend</strong> (लेन-देन संबंधी लाइसेंस ईमेल)। इनमें से कोई भी आपका Instagram डेटा नहीं पढ़ सकता।</p>
+
+    <p><strong>अंतरराष्ट्रीय ट्रांसफर और प्रोसेसर अनुबंध।</strong> इनमें से कुछ प्रदाता (Stripe, Vercel, Upstash, Resend) ऊपर बताए सीमित डेटा — एक ईमेल पता, सर्वर लॉग में एक IP, या सिंक का अपठनीय एन्क्रिप्टेड ब्लॉब — अमेरिका के सर्वरों पर प्रोसेस कर सकते हैं। ऐसा होने पर ट्रांसफर GDPR के अध्याय V की सुरक्षा के तहत होता है: प्रदाता प्रमाणित हो तो EU–US डेटा प्राइवेसी फ्रेमवर्क, या यूरोपीय आयोग के मानक अनुबंध खंड। हर प्रदाता GDPR के अनुच्छेद 28 के तहत डेटा प्रोसेसिंग अनुबंध से बंधा है और डेटा को अपने मकसद के लिए इस्तेमाल नहीं कर सकता।</p>
+
+    <h2>4. अन्य लोगों के बारे में जानकारी</h2>
+    <p>Ghoosted आपको अन्य Instagram उपयोगकर्ताओं के बारे में जानकारी दिखाता है (उदाहरण के लिए, आपकी स्टोरी किसने देखी या किसने आपको अनफ़ॉलो किया)। वह जानकारी केवल आपके डिवाइस पर, आपके नियंत्रण में प्रदर्शित और संग्रहीत होती है। हमें यह पठनीय रूप में कभी प्राप्त नहीं होती — एकमात्र अपवाद तब है जब आप वैकल्पिक मोबाइल-कम्पैनियन सिंक (सेक्शन 3) का उपयोग करते हैं, जो केवल एक एंड-टू-एंड एन्क्रिप्टेड कॉपी भेजता है जिसे हम डिक्रिप्ट नहीं कर सकते। आप पर लागू गोपनीयता कानूनों के अनुरूप, इसे केवल कानूनी रूप से और व्यक्तिगत उद्देश्यों के लिए उपयोग करने हेतु आप ज़िम्मेदार हैं।</p>
+    <p>इसमें <strong>प्रोफ़ाइल फ़ोटो</strong> भी शामिल हैं। जब कोई अपनी फ़ोटो बदलता है, तो Ghoosted उस छवि की एक प्रति आपके ब्राउज़र के स्थानीय संग्रह में रखता है, ताकि पहले और बाद की तुलना दिखाई जा सके और इंस्टाग्राम का मूल लिंक समाप्त होने पर भी पंक्ति में चेहरा बना रहे। ये प्रतियाँ कभी आपके डिवाइस से बाहर नहीं जातीं और हमें कभी नहीं भेजी जातीं। आप इन्हें कभी भी <em>सेटिंग्स → डेटा → सहेजी गई फ़ोटो हटाएँ</em> से मिटा सकते हैं, या एक्सटेंशन अनइंस्टॉल कर सकते हैं।</p>
+
+    <h2>5. भुगतान डेटा</h2>
+    <p>जब आप Ghoosted Pro खरीदते हैं, तो हमारी वेबसाइट पर आपका भुगतान हमारे भुगतान प्रोसेसर <strong>Stripe</strong> द्वारा संभाला जाता है। हमें आपके कार्ड की जानकारी कभी प्राप्त या संग्रहीत नहीं होती — यह Stripe के पास, <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripe की गोपनीयता नीति</a> के तहत, होती है। हम केवल आपकी कुंजी जारी करने और प्रबंधित करने के लिए आवश्यक सीमित ऑर्डर डेटा (जैसे आपका ईमेल और लाइसेंस कुंजी) देखते हैं।</p>
+
+    <h2>6. आपकी पसंद और अधिकार</h2>
+    <p>चूँकि हम आपका Instagram डेटा किसी भी सर्वर पर पठनीय रूप में नहीं रखते, इसलिए हमारी ओर से एक्सपोर्ट या मिटाने के लिए बहुत कम कुछ है — दो सीमित अपवादों के साथ: हमारे रिले पर मौजूद एन्क्रिप्टेड सिंक स्नैपशॉट, यदि आपने मोबाइल-कम्पैनियन सिंक का उपयोग किया है (यह 7 दिनों बाद स्वतः हट जाता है, और अनुरोध पर हम इसे जल्दी भी हटा सकते हैं, भले ही हम इसकी सामग्री न पढ़ सकें), और हमारे तथा Stripe के पास रखे गए ऑर्डर/खरीद रिकॉर्ड (देखें सेक्शन 7)। आपके डिवाइस पर मौजूद डेटा पर हमेशा आपका ही नियंत्रण रहता है:</p>
+    <ul>
+      <li>एक्सटेंशन सेटिंग्स ("Export my data") से किसी भी समय अपना Ghoosted डेटा <strong>एक्सपोर्ट</strong> करें।</li>
+      <li>"clear history", "Rebuild baseline" के ज़रिए, या एक्सटेंशन को अनइंस्टॉल करके (जिससे सारा स्थानीय डेटा हट जाता है) इसे किसी भी समय <strong>हटाएँ</strong>।</li>
+    </ul>
+    <p>हमारे या Stripe के पास रखे गए किसी भी ऑर्डर/खरीद डेटा के लिए, या GDPR या CCPA के तहत अपने अधिकारों का प्रयोग करने के लिए, <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a> पर संपर्क करें।</p>
+    <p>ऊपर वर्णित सीमित प्रोसेसिंग के लिए कानूनी आधार हैं: आपकी लाइसेंस और वैकल्पिक सिंक सुविधा जारी करने तथा प्रबंधित करने के लिए अनुबंध का निष्पादन (GDPR अनुच्छेद 6(1)(b)); लाइसेंस प्रणाली में धोखाधड़ी और दुरुपयोग को रोकने में हमारा वैध हित (GDPR अनुच्छेद 6(1)(f)); और लेखांकन तथा कर संबंधी रिकॉर्ड बनाए रखने के कानूनी दायित्व का अनुपालन (GDPR अनुच्छेद 6(1)(c))। आपके पास स्पेनिश डेटा संरक्षण एजेंसी (Agencia Española de Protección de Datos, AEPD) के पास <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a> पर, या अपने स्वयं के EU सदस्य राज्य के पर्यवेक्षी प्राधिकरण के पास शिकायत दर्ज करने का अधिकार भी है।</p>
+
+    <h2>7. डेटा प्रतिधारण</h2>
+    <p>स्थानीय डेटा आपके डिवाइस पर तब तक रहता है जब तक आप इसे हटाते नहीं या अनइंस्टॉल नहीं करते। एन्क्रिप्टेड सिंक स्नैपशॉट (सेक्शन 3) 7 दिनों बाद स्वचालित रूप से हटा दिए जाते हैं, चाहे आपने उन्हें अपने दूसरे डिवाइस पर प्राप्त किया हो या नहीं। खरीद/ऑर्डर के रिकॉर्ड Stripe और हमारे द्वारा केवल तब तक रखे जाते हैं जब तक लेखांकन और कानूनी दायित्वों के लिए आवश्यक हो — आमतौर पर स्पेनिश वाणिज्यिक और कर कानून के तहत 4 से 6 वर्ष तक।</p>
+
+    <h2>8. आयु आवश्यकता और बच्चे</h2>
+    <p>Ghoosted 18 वर्ष से कम आयु के किसी भी व्यक्ति के लिए नहीं है। यदि आप इस आयु से कम हैं तो इसका उपयोग न करें। आपको एक्सटेंशन का उपयोग किसी ऐसे व्यक्ति की निगरानी, ट्रैकिंग या उसके बारे में जानकारी एकत्र करने के लिए भी नहीं करना चाहिए जिसे आप जानते हैं या मानते हैं कि वह 18 वर्ष से कम आयु का है — हमारी <a href="terms.html">सेवा की शर्तें</a> देखें।</p>
+
+    <h2>9. परिवर्तन और संपर्क</h2>
+    <p>हम आवश्यकतानुसार इस नीति को अद्यतन करेंगे और "अंतिम अद्यतन" तिथि बदलेंगे। एक्सटेंशन Instagram से जो डेटा पढ़ता है वह आपके डिवाइस पर ही रहता है और कभी हम तक नहीं पहुँचता, इसलिए उस डेटा के नियंत्रक (controller) <strong>आप</strong> हैं। हम जो थोड़ा-बहुत संभालते हैं (एक खरीद ईमेल, एक लाइसेंस कुंजी, एक एन्क्रिप्टेड सिंक स्नैपशॉट) उसके लिए नियंत्रक <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, NIF <span class="fillme">[NIF]</span>, पता <span class="fillme">[DIRECCIÓN]</span>, <strong>Ghoosted</strong> का संचालन करने वाला स्वतंत्र डेवलपर है — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>।</p>
+
+    <p class="foot-back"><a href="index.html">← Ghoosted पर वापस जाएँ</a></p>
+  </article>
+
+  <!-- ============ РУССКИЙ ============ -->
+  <article class="legal lang-ru">
+    <h1>Политика конфиденциальности</h1>
+    <p class="updated">Последнее обновление: 26 июля 2026 г.</p>
+    <p class="intro">Коротко: Ghoosted хранит ваши данные на вашем устройстве. У нас нет сервера, который хранил бы ваши данные Instagram в читаемом виде, у нас нет системы аккаунтов, и мы не можем видеть то, что Ghoosted собирает для вас.</p>
+
+    <h2>1. Основной принцип</h2>
+    <p>Ghoosted создан по принципу <strong>local-first</strong> (приоритет локального хранения). Всё, что собирает Расширение, — ваши подписчики, аккаунты, на которые вы подписаны, списки зрителей историй, временные метки, статистика и настройки — хранится только в локальном хранилище вашего браузера (<code>chrome.storage.local</code>) на вашем собственном компьютере. Эти данные никогда не передаются нам или каким-либо третьим лицам в читаемом виде. Единственное исключение — необязательная синхронизация с мобильным приложением-компаньоном, описанная в разделе 3, при которой загружается лишь зашифрованный сквозным шифрованием снимок, который мы не можем прочитать.</p>
+
+    <h2>2. Данные о вас, которые мы собираем: никаких (с нашей стороны)</h2>
+    <p>Расширение не содержит аналитики, телеметрии, трекинговых пикселей или рекламных SDK. Мы не создаём для вас аккаунт и не получаем ваши данные Instagram, ваш пароль от Instagram (который мы никогда не запрашиваем) или содержимое ваших списков Ghoosted.</p>
+
+    <h2>3. Сетевые соединения, которые устанавливает Ghoosted</h2>
+    <ul>
+      <li><strong>Instagram (instagram.com):</strong> Расширение считывает данные напрямую из вашей собственной сессии, в которую вы вошли, в вашем браузере — точно так же, как это делает сам сайт Instagram. Это происходит между вашим браузером и Instagram — без нашего участия.</li>
+      <li><strong>API лицензий Ghoosted (на Vercel):</strong> только при активации ключа. Расширение отправляет ваш лицензионный ключ и числовой идентификатор вашего аккаунта Instagram в собственный API лицензий Ghoosted, чтобы подтвердить действительность ключа и привязать его к этому аккаунту. Содержимое Instagram, подписчики или сообщения никогда не передаются. Результат сохраняется локально в вашем браузере.</li>
+      <li><strong>Необязательная синхронизация с мобильным приложением-компаньоном:</strong> если вы решите подключить мобильное приложение-компаньон, отсканировав QR-код, Расширение загружает зашифрованный сквозным шифрованием снимок ваших данных Ghoosted на релей, размещённый на Vercel и хранящийся в Upstash Redis. Ключ шифрования никогда не попадает к нам — он существует только внутри самого QR-кода и передаётся напрямую с одного вашего устройства на другое. Ни мы, ни Vercel, ни Upstash не можем прочитать содержимое; с нашей стороны видно только зашифрованный текст. Снимки автоматически удаляются через 7 дней. Если вы никогда не используете эту функцию, ничего не загружается.</li>
+      <li><strong>Электронное письмо с лицензией (Resend):</strong> при покупке Ghoosted Pro мы используем Resend для отправки вам транзакционного письма с вашим лицензионным ключом. Resend обрабатывает ваш адрес электронной почты исключительно для доставки этого сообщения.</li>
+      <li><strong>Этот сайт (ghoosted.net):</strong> размещён на Vercel, который может вести стандартные серверные журналы (например, IP-адрес и данные запросов) в целях безопасности и работы сервиса. См. <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Политику конфиденциальности Vercel</a>. Сайт сохраняет выбранный вами язык в локальном хранилище вашего браузера; он не использует рекламные или трекинговые файлы cookie.</li>
+      <li><strong>Проверка версии:</strong> раз в несколько часов расширение спрашивает сервер Ghoosted, есть ли более новая версия, чтобы сообщить о выходе или предупредить, если ваша перестала работать. Запрос не передаёт никаких данных о вас или вашем аккаунте — сохраняются только стандартные журналы сервера, описанные ниже (IP-адрес и данные запроса).</li>
+    </ul>
+    <p>Кратко, мы полагаемся на следующих обработчиков данных: <strong>Stripe</strong> (платежи), <strong>Vercel</strong> (хостинг сайта и релей лицензий/синхронизации), <strong>Upstash</strong> (зашифрованное хранилище синхронизации) и <strong>Resend</strong> (транзакционное письмо с лицензией). Ни один из них не может прочитать ваши данные Instagram.</p>
+
+    <p><strong>Международная передача и договоры с обработчиками.</strong> Некоторые из этих провайдеров (Stripe, Vercel, Upstash, Resend) могут обрабатывать описанные выше ограниченные данные — адрес электронной почты, IP-адрес в журналах сервера или нечитаемый зашифрованный блоб синхронизации — на серверах в США. В таком случае передача защищена гарантиями главы V GDPR: рамочным соглашением ЕС–США о конфиденциальности данных, если провайдер сертифицирован, либо стандартными договорными положениями Европейской комиссии. Каждый провайдер связан договором об обработке данных по статье 28 GDPR и не может использовать данные в собственных целях.</p>
+
+    <h2>4. Информация о других людях</h2>
+    <p>Ghoosted показывает вам информацию о других пользователях Instagram (например, о том, кто просматривал ваши истории или кто отписался от вас). Эта информация отображается и хранится только на вашем устройстве, под вашим контролем. Мы никогда не получаем её в читаемом виде — единственное исключение — если вы используете необязательную синхронизацию с мобильным приложением-компаньоном (раздел 3), при которой передаётся лишь зашифрованная сквозным шифрованием копия, которую мы не можем расшифровать. Вы несёте ответственность за её законное использование в личных целях, в соответствии с применимым к вам законодательством о защите данных.</p>
+    <p>Сюда входят <strong>фотографии профиля</strong>. Когда кто-то меняет свою, Ghoosted сохраняет копию изображения в локальном хранилище браузера, чтобы показать «до» и «после» и чтобы в строке оставалось лицо после истечения исходной ссылки Instagram. Эти копии никогда не покидают ваше устройство и никогда не передаются нам. Вы можете удалить их в любой момент в <em>Настройки → Данные → очистить сохранённые фото</em> или удалив расширение.</p>
+
+    <h2>5. Платёжные данные</h2>
+    <p>При покупке Ghoosted Pro ваш платёж обрабатывается на нашем сайте компанией <strong>Stripe</strong>, нашим платёжным оператором. Мы никогда не получаем и не храним данные вашей карты — это делает Stripe в соответствии с <a href="https://stripe.com/privacy" target="_blank" rel="noopener">Политикой конфиденциальности Stripe</a>. Мы видим лишь ограниченные данные заказа (например, ваш адрес электронной почты и лицензионный ключ), необходимые для выдачи и управления вашим ключом.</p>
+
+    <h2>6. Ваш выбор и права</h2>
+    <p>Поскольку мы не храним ваши данные Instagram в читаемом виде ни на одном сервере, с нашей стороны почти нечего экспортировать или удалять — за двумя узкими исключениями: зашифрованный снимок синхронизации на нашем релее, если вы использовали синхронизацию с мобильным приложением-компаньоном (он автоматически удаляется через 7 дней, и по вашему запросу мы можем удалить его раньше, хотя и не можем прочитать его содержимое), и записи о заказах/покупках, которые хранятся у нас и у Stripe (см. раздел 7). Вы всегда полностью контролируете данные на своём устройстве:</p>
+    <ul>
+      <li><strong>Экспортировать</strong> ваши данные Ghoosted в любой момент из настроек расширения («Экспортировать мои данные»).</li>
+      <li><strong>Удалить</strong> их в любой момент с помощью функций «очистить историю», «Восстановить базовый уровень» либо удалив Расширение (что удаляет все локальные данные).</li>
+    </ul>
+    <p>По вопросам данных о заказе/покупке, которые хранятся у нас или у Stripe, либо для реализации прав в соответствии с GDPR или CCPA обращайтесь по адресу <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>Правовыми основаниями для описанной выше ограниченной обработки являются: исполнение договора (ст. 6(1)(b) GDPR) для выдачи и управления вашей лицензией, а также необязательной функцией синхронизации; наш законный интерес (ст. 6(1)(f) GDPR) в предотвращении мошенничества и злоупотреблений системой лицензирования; и соблюдение юридического обязательства (ст. 6(1)(c) GDPR) вести бухгалтерский и налоговый учёт. Вы также имеете право подать жалобу в Испанское агентство по защите данных (Agencia Española de Protección de Datos, AEPD) на сайте <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a> либо в надзорный орган своего государства — члена ЕС.</p>
+
+    <h2>7. Срок хранения данных</h2>
+    <p>Локальные данные остаются на вашем устройстве до тех пор, пока вы их не удалите или не удалите Расширение. Зашифрованные снимки синхронизации (раздел 3) автоматически удаляются через 7 дней независимо от того, были ли они получены на вашем другом устройстве. Записи о заказах/покупках хранятся Stripe и нами только в течение срока, необходимого для целей бухгалтерского учёта и исполнения юридических обязательств, — как правило, от 4 до 6 лет согласно испанскому торговому и налоговому законодательству.</p>
+
+    <h2>8. Возрастные требования и дети</h2>
+    <p>Ghoosted не предназначен для лиц младше 18 лет. Не используйте его, если вы не достигли этого возраста. Вам также запрещается использовать Расширение для наблюдения, слежки или сбора информации о любом лице, которое, как вам известно или как вы предполагаете, не достигло 18 лет, — см. наши <a href="terms.html">Условия использования</a>.</p>
+
+    <h2>9. Изменения и контакты</h2>
+    <p>Мы будем обновлять настоящую политику по мере необходимости и менять дату «Последнее обновление». Данные, которые Расширение считывает из Instagram, остаются на вашем устройстве и никогда не доходят до нас, поэтому оператором этих данных являетесь <strong>вы сами</strong>. В отношении той небольшой части данных, с которой имеем дело мы (адрес электронной почты покупки, лицензионный ключ, зашифрованный снимок синхронизации), оператором данных является <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>, ИНН (NIF) <span class="fillme">[NIF]</span>, адрес <span class="fillme">[DIRECCIÓN]</span>, независимый разработчик, управляющий продуктом <strong>Ghoosted</strong>, — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← Назад к Ghoosted</a></p>
+  </article>
+
+  <!-- ============ العربية ============ -->
+  <article class="legal lang-ar">
+    <h1>سياسة الخصوصية</h1>
+    <p class="updated">آخر تحديث: 26 يوليو 2026</p>
+    <p class="intro">باختصار: تحتفظ Ghoosted ببياناتك على جهازك. لا نُشغّل أي خادم يخزّن بيانات إنستغرام الخاصة بك بصيغة قابلة للقراءة، وليس لدينا نظام حسابات، ولا يمكننا رؤية ما تجمعه Ghoosted من أجلك.</p>
+
+    <h2>1. المبدأ الأساسي</h2>
+    <p>صُمِّمت Ghoosted لتكون <strong>محلية أولاً</strong>. كل ما تجمعه الإضافة — متابعوك، والحسابات التي تتابعها، وقوائم مشاهدي القصص، والطوابع الزمنية، والإحصاءات، والإعدادات — يُخزَّن فقط في التخزين المحلي لمتصفحك (<code>chrome.storage.local</code>) على جهازك الخاص. ولا يُرفَع مطلقًا، بصيغة قابلة للقراءة، إلينا أو إلى أي طرف ثالث. الاستثناء الوحيد هو مزامنة تطبيق الجوال المرافق الاختيارية الموضحة في القسم 3، والتي لا ترفع سوى لقطة مشفّرة تشفيرًا تامًا من طرف إلى طرف لا يمكننا قراءتها.</p>
+
+    <h2>2. البيانات التي نجمعها عنك: لا شيء (من جانبنا)</h2>
+    <p>لا تحتوي الإضافة على أي أدوات تحليل، ولا أي تتبع تقني (تيليمتري)، ولا بكسلات تتبع، ولا حزم تطوير برمجية إعلانية. نحن لا ننشئ لك حسابًا، ولا نتلقى بيانات إنستغرام الخاصة بك، ولا كلمة مرور إنستغرام (التي لا نطلبها مطلقًا)، ولا محتويات قوائم Ghoosted الخاصة بك.</p>
+
+    <h2>3. اتصالات الشبكة التي تُجريها Ghoosted</h2>
+    <ul>
+      <li><strong>إنستغرام (instagram.com):</strong> تقرأ الإضافة البيانات مباشرةً من جلستك الخاصة التي سجّلت الدخول إليها، في متصفحك، بنفس الطريقة التي يعمل بها موقع إنستغرام. يحدث هذا بين متصفحك وإنستغرام مباشرةً — وليس عبرنا.</li>
+      <li><strong>واجهة برمجة تطبيقات ترخيص Ghoosted (على Vercel):</strong> فقط عند تفعيل مفتاح ترخيص. ترسل الإضافة مفتاح ترخيصك ومعرّف حساب إنستغرام الرقمي الخاص بك إلى واجهة برمجة تطبيقات الترخيص الخاصة بـ Ghoosted للتأكد من صلاحية المفتاح وربطه بذلك الحساب. لا يُرسَل أبدًا أي محتوى من إنستغرام أو متابعون أو رسائل. تُخزَّن النتيجة محليًا في متصفحك.</li>
+      <li><strong>مزامنة تطبيق الجوال المرافق (اختيارية):</strong> إذا اخترت ربط تطبيق جوال مرافق عن طريق مسح رمز QR، ترفع الإضافة لقطة مشفّرة تشفيرًا تامًا من طرف إلى طرف لبيانات Ghoosted الخاصة بك إلى وسيط (relay) مستضاف على Vercel ومخزَّن في Upstash Redis. لا يصل مفتاح التشفير إلينا مطلقًا — فهو موجود فقط داخل رمز QR نفسه، وينتقل مباشرةً من أحد جهازيك إلى الآخر. لا نستطيع نحن ولا Vercel ولا Upstash قراءة المحتوى؛ فمن جانبنا لا نرى سوى نص مشفّر. تُحذف اللقطات تلقائيًا بعد 7 أيام. وإذا لم تستخدم هذه الميزة إطلاقًا، فلن يُرفع أي شيء.</li>
+      <li><strong>بريد الترخيص الإلكتروني (Resend):</strong> عند شرائك Ghoosted Pro، نستخدم Resend لإرسال البريد الإلكتروني التعاملي الذي يحتوي على مفتاح ترخيصك. تعالج Resend عنوان بريدك الإلكتروني فقط لتسليم تلك الرسالة.</li>
+      <li><strong>هذا الموقع الإلكتروني (ghoosted.net):</strong> مستضاف على Vercel، الذي قد يحتفظ بسجلات خادم قياسية (مثل عنوان IP وبيانات الطلب) لأغراض الأمان والتشغيل. راجع <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">سياسة خصوصية Vercel</a>. يخزّن الموقع اختيارك للغة في التخزين المحلي لمتصفحك؛ ولا يستخدم أي ملفات تعريف ارتباط إعلانية أو تتبعية.</li>
+      <li><strong>فحص الإصدار:</strong> كل بضع ساعات تسأل الإضافة خادم Ghoosted عمّا إذا كان هناك إصدار أحدث، لتخبرك عند صدوره أو تحذّرك إذا توقّف إصدارك عن العمل. لا يرسل الطلب أي بيانات عنك أو عن حسابك — تُسجَّل فقط سجلات الخادم المعتادة الموضّحة أدناه (عنوان IP وبيانات الطلب).</li>
+    </ul>
+    <p>باختصار، الجهات التي تعالج البيانات نيابةً عنا هي: <strong>Stripe</strong> (المدفوعات)، و<strong>Vercel</strong> (استضافة الموقع ووسيط الترخيص/المزامنة)، و<strong>Upstash</strong> (تخزين المزامنة المشفّر)، و<strong>Resend</strong> (بريد الترخيص التعاملي). لا يستطيع أي منها قراءة بيانات إنستغرام الخاصة بك.</p>
+
+    <p><strong>عمليات النقل الدولية وعقود المعالجة.</strong> قد يعالج بعض هؤلاء المزوّدين (Stripe وVercel وUpstash وResend) البيانات المحدودة الموصوفة أعلاه — عنوان بريد إلكتروني، أو عنوان IP في سجلات الخادم، أو كتلة المزامنة المشفّرة غير القابلة للقراءة — على خوادم في الولايات المتحدة. وعند حدوث ذلك، تكون عملية النقل محمية بضمانات الفصل الخامس من اللائحة العامة لحماية البيانات: إطار خصوصية البيانات بين الاتحاد الأوروبي والولايات المتحدة إذا كان المزوّد معتمدًا، أو البنود التعاقدية القياسية للمفوضية الأوروبية. كل مزوّد ملزم بعقد معالجة بيانات بموجب المادة 28 من اللائحة ولا يجوز له استخدام البيانات لأغراضه الخاصة.</p>
+
+    <h2>4. معلومات عن أشخاص آخرين</h2>
+    <p>تعرض لك Ghoosted معلومات عن مستخدمي إنستغرام الآخرين (على سبيل المثال، من شاهد قصصك أو من ألغى متابعتك). تُعرض تلك المعلومات وتُخزَّن فقط على جهازك، تحت سيطرتك. نحن لا نتلقاها مطلقًا بصيغة قابلة للقراءة — والاستثناء الوحيد هو إذا استخدمت مزامنة تطبيق الجوال المرافق الاختيارية (القسم 3)، والتي لا تنقل سوى نسخة مشفّرة تشفيرًا تامًا من طرف إلى طرف لا يمكننا فك تشفيرها. أنت المسؤول عن استخدامها بصورة قانونية ولأغراض شخصية، بما يتوافق مع قوانين الخصوصية المعمول بها في حالتك.</p>
+    <p>ويشمل ذلك <strong>صور الملف الشخصي</strong>. عندما يغيّر أحدهم صورته، يحفظ Ghoosted نسخة من الصورة في التخزين المحلي لمتصفحك ليتمكن من عرض ما قبل وما بعد، ولكي يبقى للصف وجه بعد انتهاء صلاحية رابط إنستغرام الأصلي. هذه النسخ لا تغادر جهازك أبدًا ولا تُرسل إلينا مطلقًا. يمكنك محوها كلها في أي وقت من <em>الإعدادات ← البيانات ← مسح الصور المحفوظة</em>، أو بإزالة الإضافة.</p>
+
+    <h2>5. بيانات الدفع</h2>
+    <p>عند شرائك Ghoosted Pro، تُعالَج عملية الدفع على موقعنا الإلكتروني بواسطة <strong>Stripe</strong>، معالج الدفع الخاص بنا. نحن لا نتلقى أو نخزّن بيانات بطاقتك أبدًا — بل تقوم Stripe بذلك، بموجب <a href="https://stripe.com/privacy" target="_blank" rel="noopener">سياسة خصوصية Stripe</a>. لا نطّلع سوى على بيانات طلب محدودة (مثل بريدك الإلكتروني ومفتاح ترخيصك) اللازمة لإصدار مفتاحك وإدارته.</p>
+
+    <h2>6. خياراتك وحقوقك</h2>
+    <p>نظرًا لأننا لا نحتفظ ببيانات إنستغرام الخاصة بك بصيغة قابلة للقراءة على أي خادم، فلا يوجد لدينا سوى القليل جدًا لنصدّره أو نحذفه — مع استثناءين محدودين: لقطة المزامنة المشفّرة الموجودة على وسيطنا، إن كنت قد استخدمت مزامنة تطبيق الجوال المرافق (تُحذف تلقائيًا بعد 7 أيام، ويمكننا حذفها في وقت أبكر بناءً على طلبك، رغم أننا لا نستطيع قراءة محتواها)، وسجلات الطلب/الشراء التي نحتفظ بها نحن وStripe (راجع القسم 7). أنت دائمًا المتحكم في البيانات الموجودة على جهازك:</p>
+    <ul>
+      <li><strong>تصدير</strong> بيانات Ghoosted الخاصة بك في أي وقت من إعدادات الإضافة ("تصدير بياناتي").</li>
+      <li><strong>حذفها</strong> في أي وقت عبر "مسح السجل"، أو "إعادة بناء خط الأساس"، أو عن طريق إلغاء تثبيت الإضافة (مما يزيل جميع البيانات المحلية).</li>
+    </ul>
+    <p>لأي بيانات طلب/شراء نحتفظ بها نحن أو تحتفظ بها Stripe، أو لممارسة حقوقك بموجب اللائحة العامة لحماية البيانات GDPR أو قانون خصوصية المستهلك في كاليفورنيا CCPA، تواصل معنا عبر <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+    <p>الأسس القانونية للمعالجة المحدودة الموضحة أعلاه هي: تنفيذ العقد (المادة 6(1)(ب) من اللائحة العامة لحماية البيانات) لإصدار ترخيصك وإدارته وإدارة ميزة المزامنة الاختيارية؛ ومصلحتنا المشروعة (المادة 6(1)(و)) في منع الاحتيال وإساءة استخدام نظام التراخيص؛ والامتثال لالتزام قانوني (المادة 6(1)(ج)) بالاحتفاظ بسجلات محاسبية وضريبية. كما يحق لك تقديم شكوى إلى الوكالة الإسبانية لحماية البيانات (Agencia Española de Protección de Datos، AEPD) عبر <a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>، أو إلى الجهة الرقابية في دولتك العضو في الاتحاد الأوروبي.</p>
+
+    <h2>7. الاحتفاظ بالبيانات</h2>
+    <p>تبقى البيانات المحلية على جهازك إلى أن تحذفها أو تُلغي تثبيت الإضافة. تُحذف لقطات المزامنة المشفّرة (القسم 3) تلقائيًا بعد 7 أيام، سواء استرجعتها على جهازك الآخر أم لا. تحتفظ Stripe ونحن بسجلات الطلب/الشراء فقط للمدة اللازمة للأغراض المحاسبية والالتزامات القانونية — وعادةً ما تتراوح بين 4 و6 سنوات بموجب القانون التجاري والضريبي الإسباني.</p>
+
+    <h2>8. الحد الأدنى للعمر والأطفال</h2>
+    <p>لا يُقصد بـ Ghoosted أن يستخدمها أي شخص دون سن 18 عامًا. لا تستخدمها إن كنت دون هذا السن. كما يُحظر عليك استخدام الإضافة لمراقبة أو تعقّب أو جمع معلومات عن أي شخص تعرفه أو تعتقد أنه دون سن 18 عامًا — راجع <a href="terms.html">شروط الخدمة</a> الخاصة بنا.</p>
+
+    <h2>9. التغييرات والتواصل</h2>
+    <p>سنحدّث هذه السياسة عند الحاجة ونغيّر تاريخ "آخر تحديث". تبقى البيانات التي تقرأها الإضافة من إنستغرام على جهازك ولا تصل إلينا أبدًا، لذا فإن <strong>أنت</strong> المتحكم في تلك البيانات. أما بالنسبة للقدر القليل الذي نتعامل معه (بريد إلكتروني للشراء، مفتاح ترخيص، لقطة مزامنة مشفّرة)، فإن المتحكم فيه هو <span class="fillme">[NOMBRE LEGAL COMPLETO]</span>، الرقم الضريبي (NIF) <span class="fillme">[NIF]</span>، العنوان <span class="fillme">[DIRECCIÓN]</span>، المطوّر المستقل الذي يدير <strong>Ghoosted</strong> — <a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>.</p>
+
+    <p class="foot-back"><a href="index.html">← العودة إلى Ghoosted</a></p>
+  </article>
+
+  <!-- ============ 日本語 ============ -->
+  <article class="legal lang-ja">
+    <h1>プライバシーポリシー</h1>
+    <p class="updated">最終更新日：2026年7月26日</p>
+    <p class="intro">簡潔に言うと：Ghoostedはお客様のデータをお客様の端末内に保持します。当方はInstagramデータを読み取り可能な形で保存するサーバーを一切運用しておらず、アカウントシステムも持たず、Ghoostedがお客様のために収集する情報を当方が見ることはできません。</p>
+
+    <h2>1. 基本原則</h2>
+    <p>Ghoostedは<strong>ローカルファースト</strong>という考え方で構築されています。フォロワー、フォロー中のアカウント、ストーリーズ閲覧者のリスト、タイムスタンプ、統計情報、設定など、本拡張機能が収集するすべての情報は、お客様自身のコンピューター上のブラウザのローカルストレージ（<code>chrome.storage.local</code>）にのみ保存されます。これらの情報が読み取り可能な形で当方または第三者にアップロードされることは一切ありません。唯一の例外は、セクション3で説明するモバイルコンパニオン同期（任意機能）であり、これは当方が読み取れないエンドツーエンド暗号化されたスナップショットのみをアップロードします。</p>
+
+    <h2>2. 当方が収集するお客様のデータ：（当方側では）一切なし</h2>
+    <p>本拡張機能には、アナリティクス、テレメトリー、トラッキングピクセル、広告SDKは一切含まれていません。当方はお客様のアカウントを作成せず、お客様のInstagramデータ、Instagramのパスワード（当方が尋ねることは一切ありません）、またはGhoostedのリストの内容を受け取ることもありません。</p>
+
+    <h2>3. Ghoostedが行うネットワーク通信</h2>
+    <ul>
+      <li><strong>Instagram（instagram.com）：</strong>本拡張機能は、Instagramのウェブサイト自体と同様に、お客様のブラウザ内のご自身のログインセッションから直接データを読み取ります。これはお客様のブラウザとInstagramの間で行われるものであり、当方を経由することはありません。</li>
+      <li><strong>Ghoostedライセンス用API（Vercel上で運用）：</strong>ライセンスキーを有効化する場合にのみ通信が発生します。本拡張機能は、キーの有効性を確認しそのアカウントに紐づけるため、ライセンスキーとお客様のInstagramの数値アカウントIDをGhoosted自身のライセンスAPIに送信します。Instagramのコンテンツ、フォロワー、メッセージが送信されることは一切ありません。その結果はお客様のブラウザにローカルに保存されます。</li>
+      <li><strong>モバイルコンパニオン同期（任意機能）：</strong>QRコードをスキャンしてモバイルコンパニオンアプリを連携することを選択した場合、本拡張機能はお客様のGhoostedデータのエンドツーエンド暗号化されたスナップショットを、Vercel上でホスティングされUpstash Redisに保存されるリレーへアップロードします。暗号化キーが当方に届くことは一切なく、QRコード自体の中にのみ存在し、お客様の一方の端末からもう一方の端末へ直接渡されます。当方、Vercel、Upstashのいずれもその内容を読み取ることはできず、当方側で見えるのは暗号化されたテキストのみです。スナップショットは7日後に自動的に削除されます。この機能を一度も使用しない場合、何もアップロードされません。</li>
+      <li><strong>ライセンスメール（Resend）：</strong>Ghoosted Proをご購入いただく際、ライセンスキーを含む取引メールの送信にResendを使用します。Resendは、そのメッセージを配信する目的のみでお客様のメールアドレスを処理します。</li>
+      <li><strong>本ウェブサイト（ghoosted.net）：</strong>Vercel上でホスティングされており、Vercelはセキュリティおよび運用のため、標準的なサーバーログ（IPアドレスやリクエストデータなど）を保持する場合があります。詳細は<a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercelのプライバシーポリシー</a>をご覧ください。本サイトは、お客様の言語選択をブラウザのローカルストレージに保存しますが、広告用またはトラッキング用のクッキーは使用しません。</li>
+      <li><strong>バージョン確認：</strong>拡張機能は数時間ごとに Ghoosted のサーバーへ新しいバージョンの有無を問い合わせ、公開時のお知らせや、お使いのものが動かなくなった場合の警告を行います。このリクエストであなたやアカウントに関するデータは送信されません。記録されるのは以下に記載する通常のサーバーログ（IP アドレスとリクエスト情報）のみです。</li>
+    </ul>
+    <p>まとめると、当方が利用する処理者は次のとおりです：<strong>Stripe</strong>（決済）、<strong>Vercel</strong>（ウェブサイトのホスティングおよびライセンス／同期のリレー）、<strong>Upstash</strong>（暗号化された同期データの保存）、および<strong>Resend</strong>（ライセンスの取引メール）。これらのいずれも、お客様のInstagramデータを読み取ることはできません。</p>
+
+    <p><strong>国際移転と処理者契約。</strong>これらのプロバイダーの一部(Stripe、Vercel、Upstash、Resend)は、上記の限られたデータ——メールアドレス、サーバーログ内のIPアドレス、判読不能な暗号化同期ブロブ——を米国のサーバーで処理する場合があります。その場合、移転はGDPR第V章の保護措置——プロバイダーが認証されている場合はEU–米国データプライバシーフレームワーク、それ以外は欧州委員会の標準契約条項——により保護されます。各プロバイダーはGDPR第28条に基づくデータ処理契約に拘束され、データを自らの目的に使用することはできません。</p>
+
+    <h2>4. 第三者に関する情報</h2>
+    <p>Ghoostedは、他のInstagramユーザーに関する情報（例えば、誰があなたのストーリーズを閲覧したか、誰があなたのフォローを解除したかなど）を表示します。この情報は、お客様の端末上でのみ、お客様の管理下で表示・保存されます。当方がこれを読み取り可能な形で受け取ることは一切ありません——唯一の例外は、任意のモバイルコンパニオン同期（セクション3）をご利用の場合であり、その際は当方が復号できないエンドツーエンド暗号化されたコピーのみが送信されます。お客様に適用されるプライバシー法に従い、この情報を適法かつ個人的な目的でのみ使用する責任はお客様にあります。</p>
+    <p>これには<strong>プロフィール写真</strong>も含まれます。誰かが写真を変更すると、Ghoosted は変更前と変更後を表示できるように、また Instagram の元のリンクが失効しても一覧に顔が残るように、画像の複製をブラウザのローカル領域に保存します。この複製は端末の外に出ることはなく、当社に送信されることもありません。<em>設定 → データ → 保存した写真を消去</em> からいつでもすべて削除できます。拡張機能をアンインストールしても消えます。</p>
+
+    <h2>5. 決済データ</h2>
+    <p>Ghoosted Proをご購入いただく際、お支払いは当方のウェブサイト上で決済代行業者である<strong>Stripe</strong>により処理されます。お客様のカード情報を当方が受け取ったり保存したりすることは一切なく、これらは<a href="https://stripe.com/privacy" target="_blank" rel="noopener">Stripeのプライバシーポリシー</a>の下でStripeが保持します。当方は、ライセンスキーの発行・管理に必要な限定的な注文データ（メールアドレスやライセンスキーなど）のみを確認します。</p>
+
+    <h2>6. お客様の選択および権利</h2>
+    <p>当方はいかなるサーバーにもお客様のInstagramデータを読み取り可能な形で保持していないため、当方側でエクスポートまたは削除すべきものはごくわずかです——次の2つの限定的な例外を除きます。モバイルコンパニオン同期をご利用の場合にリレー上に残る暗号化された同期スナップショット（7日後に自動削除され、内容を読み取ることはできませんが、ご要望があればより早く削除することも可能です）、そして当方およびStripeが保持する注文・購入記録です（セクション7を参照）。お客様は常に、ご自身の端末上のデータを管理することができます。</p>
+    <ul>
+      <li>拡張機能の設定（「マイデータをエクスポート」）から、いつでもGhoostedのデータを<strong>エクスポート</strong>できます。</li>
+      <li>「履歴を消去」、「ベースラインを再構築」、または本拡張機能をアンインストールすること（すべてのローカルデータが削除されます）により、いつでもデータを<strong>削除</strong>できます。</li>
+    </ul>
+    <p>当方またはStripeが保持する注文・購入データに関するお問い合わせ、またはGDPRもしくはCCPAに基づく権利を行使される場合は、<a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>までご連絡ください。</p>
+    <p>上記の限定的な処理の法的根拠は次のとおりです：ライセンスおよび任意の同期機能を発行・管理するための契約の履行（GDPR第6条1項(b)）、ライセンスシステムにおける不正利用・悪用の防止に関する当方の正当な利益（GDPR第6条1項(f)）、および会計・税務記録を保持するという法的義務の遵守（GDPR第6条1項(c)）。また、お客様はスペインデータ保護庁（Agencia Española de Protección de Datos、AEPD）<a href="https://www.aepd.es" target="_blank" rel="noopener">www.aepd.es</a>、またはお客様の所属するEU加盟国の監督機関に苦情を申し立てる権利も有します。</p>
+
+    <h2>7. データの保持期間</h2>
+    <p>ローカルデータは、お客様が削除するか、本拡張機能をアンインストールするまで、お客様の端末に保存され続けます。暗号化された同期スナップショット（セクション3）は、もう一方の端末で取得済みかどうかにかかわらず、7日後に自動的に削除されます。購入・注文記録は、会計上および法的義務のために必要な期間——スペインの商法・税法上、一般的に4年から6年——に限り、Stripeおよび当方によって保持されます。</p>
+
+    <h2>8. 年齢要件および児童</h2>
+    <p>Ghoostedは18歳未満の方を対象としていません。該当する年齢に満たない場合は、本拡張機能を使用しないでください。また、18歳未満であると知っている、または知り得る立場にある人物を監視、追跡、または当該人物に関する情報を収集する目的で本拡張機能を使用してはなりません。詳細は<a href="terms.html">利用規約</a>をご覧ください。</p>
+
+    <h2>9. 変更および連絡先</h2>
+    <p>当方は必要に応じて本ポリシーを更新し、「最終更新日」の日付を変更します。本拡張機能がInstagramから読み取るデータはお客様の端末にとどまり、当方に届くことは一切ないため、当該データの管理者は<strong>お客様ご自身</strong>です。当方が取り扱うわずかな情報（購入時のメールアドレス、ライセンスキー、暗号化された同期スナップショットなど）については、管理者は<span class="fillme">[NOMBRE LEGAL COMPLETO]</span>（NIF：<span class="fillme">[NIF]</span>、住所：<span class="fillme">[DIRECCIÓN]</span>）であり、Ghoostedを運営する独立した開発者です。連絡先は<a href="mailto:hello@ghoosted.net">hello@ghoosted.net</a>です。</p>
+
+    <p class="foot-back"><a href="index.html">← Ghoostedに戻る</a></p>
+  </article>
+
+  <script src="legal-i18n.js?v=1"></script>
+</body>
+</html>

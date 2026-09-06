@@ -1,0 +1,349 @@
+/* Ghoosted landing — config + wiring (nav, reveal, CTAs, i18n boot). */
+(function () {
+  'use strict';
+
+  // ── Owner: set these two after publishing ──────────────────────────────
+  const CONFIG = {
+    // Chrome Web Store URL of your published extension. Leave '' until then;
+    // the "Add to Chrome" buttons will point to the pricing section meanwhile.
+    chromeUrl: '',
+    // Your Gumroad product URL, e.g. 'https://YOURNAME.gumroad.com/l/ghosted'.
+    // Leave '' until you create the product; buy buttons fall back to #pricing.
+  };
+
+  function ready(fn) {
+    document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn);
+  }
+
+  ready(function () {
+    GhostedI18n.init();
+
+    // sticky nav border + top-alert shrink on scroll (big at rest, compact once scrolled)
+    const nav = document.getElementById('nav');
+    const topAlert = document.getElementById('topAlert');
+    const onScroll = () => {
+      const scrolled = window.scrollY > 8;
+      nav.classList.toggle('scrolled', scrolled);
+      if (topAlert) topAlert.classList.toggle('scrolled', scrolled);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Menu plegable de movil. Se cierra al elegir destino, al tocar fuera y
+    // con Escape; si se vuelve a escritorio se limpia el estado para que no
+    // quede el panel abierto colgando sobre la barra.
+    const burger = document.getElementById('navBurger');
+    const navLinks = document.getElementById('navLinks');
+    if (burger && navLinks) {
+      const cerrar = function () {
+        navLinks.classList.remove('abierto');
+        burger.setAttribute('aria-expanded', 'false');
+      };
+      burger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const abierto = navLinks.classList.toggle('abierto');
+        burger.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+      });
+      navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', cerrar));
+      document.addEventListener('click', function (e) {
+        if (!navLinks.contains(e.target) && e.target !== burger) cerrar();
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrar(); });
+      window.matchMedia('(min-width:861px)').addEventListener('change', cerrar);
+    }
+
+    // reveal-on-scroll
+    //
+    // OJO: esto pone TODA la pagina a opacity:0 y la devuelve a la vista solo
+    // cuando el observador dispara. Si por lo que sea no dispara -- una pestana
+    // que arranca en segundo plano, un viewport de altura 0, un rastreador, una
+    // herramienta de captura -- el visitante ve una pagina en blanco con el
+    // contenido perfectamente presente en el DOM. Ya nos ha pasado. Asi que el
+    // efecto es un adorno y va montado como tal: se apaga solo ante la duda.
+    const targets = document.querySelectorAll('.features-head,.section-head,.stats,.film,.worlds,.pcard,.faq-list,.fb-grid,.show,.pair-card');
+    // Al rendirse se QUITA la clase 'reveal', no se anade 'in'. Anadir 'in'
+    // deja el elemento dependiendo de una transicion de opacidad, y una
+    // transicion no avanza en una pestana en segundo plano: se queda 'running'
+    // para siempre y el elemento sigue pintandose a opacity 0. Quitar 'reveal'
+    // borra la declaracion entera y el contenido aparece sin animacion, que es
+    // justo lo que queremos cuando el efecto no se puede reproducir.
+    const mostrarTodo = function () {
+      targets.forEach((el) => { el.classList.remove('reveal'); el.classList.add('in'); });
+    };
+    // Una pestana abierta en segundo plano (clic con rueda, sesion restaurada)
+    // o un rastreador no ejecutan ni transiciones ni observador. Ahi no se
+    // esconde nada de entrada: el efecto es un lujo, el contenido no.
+    if (document.visibilityState === 'hidden') {
+      targets.forEach((el) => el.classList.add('in'));
+    } else if ('IntersectionObserver' in window && window.innerHeight > 0) {
+      targets.forEach((el) => el.classList.add('reveal'));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      targets.forEach((el) => io.observe(el));
+
+      // 1) Lo que ya esta en pantalla se muestra sin esperar al observador.
+      //    Un elemento mas alto que la ventana nunca llega al 12% exigido.
+      const enPantalla = function (el) {
+        const r = el.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      };
+      targets.forEach((el) => { if (enPantalla(el)) el.classList.add('in'); });
+
+      // 2) Red de seguridad: si a los 2,5 s sigue habiendo algo invisible
+      //    dentro de la ventana, es que el observador no esta funcionando.
+      //    Se descarta el efecto y se ensena la pagina entera.
+      setTimeout(function () {
+        const atascado = Array.from(targets).some((el) => !el.classList.contains('in') && enPantalla(el));
+        if (atascado) { io.disconnect(); mostrarTodo(); }
+      }, 2500);
+
+      // 3) Y si el usuario llega a hacer scroll sin que se haya revelado nada,
+      //    no se le deja seguir bajando por un vacio blanco.
+      window.addEventListener('scroll', function alPrimerScroll() {
+        window.removeEventListener('scroll', alPrimerScroll);
+        if (!document.querySelector('.reveal.in')) { io.disconnect(); mostrarTodo(); }
+      }, { passive: true, once: false });
+    } else {
+      targets.forEach((el) => el.classList.add('in'));
+    }
+
+    // Scroll-linked zoom on the showcase card: small on the way in, full size
+    // while it sits in view, small again on the way out. Driven here rather
+    // than with a CSS view() timeline so Firefox and Safari get it too.
+    // TEMPORARY (2026-07-25): the prefers-reduced-motion guard is disabled so
+    // the effect can be eyeballed on a machine that has "reduce animation" on.
+    // RESTORE BEFORE SHIPPING:
+    //   if (filmCard && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const filmCard = document.querySelector('.film-card');
+    if (filmCard) {
+      const MIN = 0.84;   // scale at both ends of the pass
+      const RAMP = 0.32;  // fraction of the pass spent growing / shrinking
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const r = filmCard.getBoundingClientRect();
+        const vh = window.innerHeight;
+        // 0 = card's top edge at the viewport bottom, 1 = its bottom edge at the top
+        const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+        let s = 1;
+        if (p < RAMP) s = MIN + (1 - MIN) * (p / RAMP);
+        else if (p > 1 - RAMP) s = MIN + (1 - MIN) * ((1 - p) / RAMP);
+        filmCard.style.transform = 'scale(' + s.toFixed(4) + ')';
+      };
+      const queue = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      paint();
+      window.addEventListener('scroll', queue, { passive: true });
+      window.addEventListener('resize', queue);
+    }
+
+    // Showcase — the two product shots cross-fade on a timer and the tab
+    // progress bars run off that same clock. Clicking a tab (or the shot
+    // itself) takes over. Pauses while off-screen or in a background tab, so
+    // the slides aren't cycling where nobody can see them.
+    //
+    // Deliberately NOT gated on prefers-reduced-motion: this timer is the
+    // only thing that shows a visitor the second slide exists at all, and
+    // killing it leaves the section stuck on slide 1 with no story (same
+    // reasoning as the pair-section loop above). Reduced motion instead
+    // drops just the kinetic bits — the photo's scale-drift (styles.css) and
+    // the progress-bar fill going instant instead of animated (below).
+    const showStage = document.getElementById('showStage');
+    if (showStage) {
+      const DUR = 5200, TICK = 100;
+      const slides = showStage.querySelectorAll('[data-slide]');
+      const ledes = document.querySelectorAll('[data-lede]');
+      const tabs = document.querySelectorAll('.show-tab');
+      const bars = document.querySelectorAll('.show-tab .show-bar i');
+      const count = slides.length;
+      const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let idx = 0, elapsed = 0, cycle = null, onScreen = false;
+
+      const paint = () => {
+        slides.forEach((el, n) => el.classList.toggle('is-on', n === idx));
+        ledes.forEach((el, n) => el.classList.toggle('is-on', n === idx));
+        tabs.forEach((el, n) => el.classList.toggle('is-on', n === idx));
+        bars.forEach((el, n) => {
+          el.style.width = n !== idx ? '0%'
+            : still ? '100%' : Math.min(100, (elapsed / DUR) * 100) + '%';
+        });
+      };
+      const go = (n) => { idx = ((n % count) + count) % count; elapsed = 0; paint(); };
+      const tick = () => { elapsed += TICK; elapsed >= DUR ? go(idx + 1) : paint(); };
+      const play = () => { if (!cycle) cycle = setInterval(tick, TICK); };
+      const pause = () => { if (cycle) { clearInterval(cycle); cycle = null; } };
+      const sync = () => { (onScreen && !document.hidden) ? play() : pause(); };
+
+      showStage.addEventListener('click', () => go(idx + 1));
+      showStage.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(idx + 1); }
+      });
+      tabs.forEach((el, n) => el.addEventListener('click', () => go(n)));
+      document.addEventListener('visibilitychange', sync);
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => {
+          onScreen = entries[0].isIntersecting;
+          sync();
+        }, { threshold: 0.25 }).observe(showStage);
+      } else {
+        onScreen = true; sync();
+      }
+      paint();
+    }
+
+    // Pair section — real QR (same vendored generator qr.js the extension
+    // itself uses), pointing at this very section rather than a live pairing
+    // session: a static marketing page can't mint a real channel+key like the
+    // extension does at click-time, and /pair no longer exists as a page.
+    const pairQrSlot = document.getElementById('pairQrSlot');
+    if (pairQrSlot && window.GhostedQR) {
+      pairQrSlot.innerHTML = GhostedQR.svg('https://ghoosted.net/#pair', {
+        scale: 6, margin: 2, dark: '#0a0a0f', light: '#ffffff',
+      });
+    }
+
+    // Pair section — loops the illustration between "scanning" and "linked" so
+    // a visitor sees the whole flow without a real device. Ships is-linked by
+    // default (see the class in the HTML) so a no-JS visitor still gets the
+    // finished state rather than a stuck mid-scan frame.
+    //
+    // Deliberately NOT gated on prefers-reduced-motion: this loop is the only
+    // thing that explains what pairing does, and killing it leaves the panel
+    // frozen on a checkmark with no story. That setting asks for less MOTION,
+    // so the CSS drops the two genuinely kinetic bits instead (the sweeping
+    // scanline and the travelling connector dot) and keeps the crossfade.
+    const pairStage = document.getElementById('pairStage');
+    if (pairStage) {
+      const SCAN_MS = 5600, LINK_MS = 3400;
+      const labels = [document.getElementById('pairLabel'), document.getElementById('pairLabel2')].filter(Boolean);
+      const setStage = (linked) => {
+        pairStage.classList.toggle('is-linked', linked);
+        pairStage.classList.toggle('is-scanning', !linked);
+        const text = GhostedI18n.t(linked ? 'pair_badge_linked' : 'pair_badge_scanning', linked ? 'Linked' : 'Waiting for scan');
+        labels.forEach((el) => { el.textContent = text; });
+      };
+      const loop = () => {
+        setStage(false);
+        setTimeout(() => { setStage(true); setTimeout(loop, LINK_MS); }, SCAN_MS);
+      };
+      setTimeout(loop, 1200); // hold the finished state a beat before the first demo pass
+    }
+
+    // A phone visitor literally cannot run a Chrome extension — iOS has no
+    // extension support in Chrome at all, and Android Chrome doesn't either.
+    // The requirement is always on the page; here it just gets promoted to an
+    // alert for the people it actually blocks, before they reach the buy button.
+    const priceReq = document.getElementById('priceReq');
+    if (priceReq && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      priceReq.classList.add('is-mobile');
+    }
+
+    // "Add to Chrome" buttons
+    const chromeUrl = CONFIG.chromeUrl || '#pricing';
+    document.querySelectorAll('[data-cta="chrome"]').forEach((a) => {
+      a.setAttribute('href', chromeUrl);
+      if (chromeUrl.indexOf('http') === 0) { a.target = '_blank'; a.rel = 'noopener'; }
+    });
+
+    // "Buy" buttons — each carries data-plan="pro"|"plus" (generic top-of-page
+    // CTAs with no data-plan default to "pro" server-side). Sends the plan so
+    // checkout.js picks the matching Stripe price instead of always charging
+    // the same one regardless of which card was clicked.
+    const buys = document.querySelectorAll('[data-cta="buy"]');
+    buys.forEach((button) => button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      if (button.hasAttribute('aria-busy')) return; // no duplicate Stripe sessions on double-click
+      const original = button.innerHTML;          // innerHTML: keep the i18n spans + arrow intact
+      button.setAttribute('aria-busy', 'true');
+      button.textContent = GhostedI18n.t('buy_opening', 'Opening checkout…');
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan: button.dataset.plan || 'pro' }),
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload.url) throw new Error(payload.error || 'checkout_unavailable');
+        window.location.assign(payload.url);
+      } catch (error) {
+        button.innerHTML = original;
+        button.removeAttribute('aria-busy');
+        window.alert(GhostedI18n.t('buy_alert_fail', "Payment isn't available yet. Please try again in a few minutes."));
+      }
+    }));
+
+    // Sin contador y sin precio anterior tachado. Un "termina en" o un 30 EUR
+    // tachado afirman una oferta y un precio previo: mientras esos 30 EUR no se
+    // hayan cobrado de verdad, la Directiva Omnibus lo trata como precio de
+    // referencia falso. El precio que se anuncia es el que se cobra y punto.
+    // Si algun dia hay oferta real, el bloque que la pintaba esta en el
+    // historial: se recupera de ahi con su fecha unica para todos.
+
+    // Cookie notice (informational only — no tracking on this site).
+    const cookie = document.getElementById('cookie');
+    if (cookie) {
+      let seen; try { seen = localStorage.getItem('ghosted_cookies'); } catch (e) {}
+      if (!seen) setTimeout(function () { cookie.classList.add('show'); }, 700);
+      const a = document.getElementById('cookieAccept');
+      if (a) a.addEventListener('click', function () {
+        try { localStorage.setItem('ghosted_cookies', 'seen'); } catch (e) {}
+        cookie.classList.remove('show');
+      });
+    }
+
+
+    // ── Cycling collage panel + nav search hint ──────────────────────────
+    // Scenes crossfade together: panel tint + the three photos + pill text.
+    // Language-neutral pill terms (handles / aesthetic phrases), so no i18n.
+    // Not gated on prefers-reduced-motion: these are still-image opacity
+    // crossfades, not the drifting/parallaxing motion that setting targets.
+    const panel = document.getElementById('worldsPanel');
+    if (panel) {
+      const SCENES = [
+        { bg: '#B2687C', pill: 'golden hour ✨' },
+        { bg: '#9A9A78', pill: '@sara.mrn' },
+        { bg: '#3E5A72', pill: 'city nights 🌙' },
+      ];
+      const slots = panel.querySelectorAll('.w-slot');
+      const pillText = document.getElementById('worldsPillText');
+      let scene = 0;
+      // No pause-on-hover: the panel is aria-hidden (purely decorative), and
+      // since it spans nearly the full width, any cursor resting over it
+      // while reading silently stalled the cycle — it just looked broken.
+      setInterval(function () {
+        if (document.hidden) return;
+        scene = (scene + 1) % SCENES.length;
+        panel.style.backgroundColor = SCENES[scene].bg;
+        slots.forEach(function (slot) {
+          const imgs = slot.querySelectorAll('img');
+          imgs.forEach(function (im, i) { im.classList.toggle('on', i === scene); });
+        });
+        if (pillText) {
+          pillText.classList.add('swap');
+          setTimeout(function () {
+            pillText.textContent = SCENES[scene].pill;
+            pillText.classList.remove('swap');
+          }, 400);
+        }
+      }, 4000);
+    }
+    // Nav search placeholder rotates through profile-ish queries — plain text
+    // crossfade, not gated on prefers-reduced-motion (that setting is meant
+    // for vestibular-triggering motion like the drifting chips, not a static
+    // label's opacity swap; gating it there silently froze it for anyone
+    // with that OS/browser preference on).
+    const hint = document.getElementById('navSearchHint');
+    if (hint) {
+      hint.style.transition = 'opacity .3s ease';
+      const TERMS = ['@emilysunshine', 'golden hour ✨', '@sara.mrn', 'beach days', '@leo.dnb', 'city nights 🌙'];
+      let ti = 0;
+      setInterval(function () {
+        if (document.hidden) return;
+        ti = (ti + 1) % TERMS.length;
+        hint.style.opacity = '0';
+        setTimeout(function () { hint.textContent = TERMS[ti]; hint.style.opacity = '1'; }, 300);
+      }, 3200);
+    }
+  });
+})();

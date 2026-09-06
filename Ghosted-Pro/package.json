@@ -1,0 +1,9 @@
+{
+  "name": "ghosted-pro",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Comprobaciones de la extension. No se empaqueta: el zip solo lleva src, _locales, icons y manifest.json.",
+  "scripts": {
+    "test": "node test/run.js"
+  }
+}

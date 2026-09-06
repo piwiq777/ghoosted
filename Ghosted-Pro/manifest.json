@@ -1,0 +1,87 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "Ghosted",
+  "version": "1.57.0",
+  "default_locale": "en",
+  "description": "__MSG_extDesc__",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Ghosted",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "src/page-api.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "src/i18n.js",
+        "src/storage.js",
+        "src/ig-api.js",
+        "src/build.js",
+        "src/license.js",
+        "src/qr.js",
+        "src/mobile.js",
+        "src/content.js"
+      ],
+      "css": [
+        "src/panel.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "downloads",
+    "notifications",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.instagram.com/*",
+    "https://i.instagram.com/*",
+    "https://*.cdninstagram.com/*",
+    "https://*.fbcdn.net/*",
+    "https://*.ghoosted.net/*"
+  ],
+  "homepage_url": "https://ghoosted.net",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/icon-128.png",
+        "relations.html",
+        "relations.js"
+      ],
+      "matches": [
+        "https://www.instagram.com/*"
+      ]
+    }
+  ]
+}

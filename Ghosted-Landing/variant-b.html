@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ghoosted — The real story</title>
+<style>
+/* ============================================================
+   GHOSTED — Variant B: ELEGANT PARALLAX
+   Warm near-white gallery. Editorial grotesk. A field of
+   photo chips floating in pseudo-3D behind the headline.
+   ============================================================ */
+
+:root{
+  --bg:#F7F5F0;            /* warm near-white */
+  --ink:#141210;          /* near-black text */
+  --ink-soft:#6b655d;     /* muted label / sub */
+  --line:rgba(20,18,16,.14);
+  --pill:#16130F;         /* solid dark pill */
+  --card-radius:14px;
+  --maxw:1180px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+  font-feature-settings:"ss01","cv01";
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;                /* never horizontal scroll */
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ---------- top bar ---------- */
+.nav{
+  position:relative;z-index:40;
+  max-width:var(--maxw);margin:0 auto;
+  padding:26px 28px 0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.brand{
+  font-weight:600;font-size:15px;letter-spacing:-.02em;
+  display:flex;align-items:center;gap:9px;
+}
+.brand .dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--ink);display:inline-block;
+  box-shadow:0 0 0 4px rgba(20,18,16,.08);
+}
+.nav .links{display:flex;gap:26px;font-size:14px;color:var(--ink-soft);letter-spacing:-.01em}
+.nav .links a{transition:color .3s ease}
+.nav .links a:hover{color:var(--ink)}
+@media(max-width:640px){ .nav .links{display:none} }
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  min-height:clamp(620px,92vh,900px);
+  display:flex;align-items:center;justify-content:center;
+  padding:40px 22px 70px;
+  overflow:hidden;                  /* keep chips clipped to hero */
+}
+
+/* the chip field spans the whole hero, behind text */
+.field{
+  position:absolute;inset:0;
+  z-index:1;
+  pointer-events:none;              /* only chips themselves catch pointer */
+}
+
+/* center content sits above the field */
+.center{
+  position:relative;z-index:20;
+  text-align:center;
+  max-width:820px;
+  pointer-events:none;              /* let clicks fall through to chips at the edges... */
+}
+.center > *{pointer-events:auto}    /* ...but keep buttons/label interactive */
+
+/* soft halo so headline stays legible over chips */
+.center::before{
+  content:"";position:absolute;z-index:-1;
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  width:130%;height:150%;
+  background:radial-gradient(ellipse at center,
+     rgba(247,245,240,.92) 0%,
+     rgba(247,245,240,.72) 42%,
+     rgba(247,245,240,0) 72%);
+  pointer-events:none;
+}
+
+.label{
+  font-size:12px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-soft);
+  margin:0 0 22px;
+}
+.h1{
+  font-weight:500;
+  font-size:clamp(44px,8.2vw,86px);
+  line-height:.99;
+  letter-spacing:-.045em;           /* very tight editorial tracking */
+  margin:0;
+}
+.h1 .l2{
+  display:block;
+  font-style:italic;
+  font-weight:400;
+  letter-spacing:-.05em;
+  color:#2a2621;
+}
+.sub{
+  margin:26px auto 0;
+  max-width:520px;
+  font-size:clamp(15px,1.7vw,17px);
+  line-height:1.5;
+  color:var(--ink-soft);
+  letter-spacing:-.011em;
+}
+
+.cta{
+  margin-top:34px;
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+}
+.pill{
+  font-family:inherit;font-size:15px;font-weight:500;letter-spacing:-.015em;
+  padding:16px 26px;border-radius:100px;cursor:pointer;
+  border:1px solid transparent;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),
+             box-shadow .35s ease, background .3s ease, color .3s ease;
+}
+.pill.primary{
+  background:var(--pill);color:#fff;
+  box-shadow:0 6px 22px rgba(20,18,16,.18);
+}
+.pill.primary:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(20,18,16,.26) }
+.pill.secondary{
+  background:rgba(255,255,255,.5);color:var(--ink);
+  border-color:var(--line);
+  backdrop-filter:blur(4px);
+}
+.pill.secondary:hover{ transform:translateY(-2px); background:rgba(255,255,255,.85) }
+.trust{
+  margin-top:18px;font-size:13px;color:var(--ink-soft);letter-spacing:-.01em;
+}
+
+/* ---------- a chip ---------- */
+.chip{
+  position:absolute;top:0;left:0;                /* positioned via transform */
+  border-radius:var(--card-radius);
+  overflow:hidden;
+  background:#e9e6e0;
+  pointer-events:auto;
+  cursor:grab;
+  will-change:transform;
+  box-shadow:0 10px 30px rgba(20,18,16,.14),
+             0 2px 8px rgba(20,18,16,.08);
+  /* hover-only transitions on the INNER wrapper so JS transform stays free */
+}
+.chip img{
+  width:100%;height:100%;object-fit:cover;
+  -webkit-user-drag:none;user-select:none;pointer-events:none;
+}
+.chip .inner{
+  width:100%;height:100%;
+  transition:transform .5s cubic-bezier(.2,.7,.2,1),
+             filter .5s ease, box-shadow .5s ease;
+}
+.chip:hover{ z-index:30 !important; }
+.chip:hover .inner{ transform:scale(1.05); }
+.chip.grabbing{cursor:grabbing}
+
+/* ---------- sections below hero ---------- */
+.section{max-width:var(--maxw);margin:0 auto;padding:70px 28px}
+.filmcard{
+  position:relative;border-radius:26px;overflow:hidden;
+  aspect-ratio:16/8;background:#000;
+  box-shadow:0 30px 70px rgba(20,18,16,.18);
+}
+.filmcard img{width:100%;height:100%;object-fit:cover;opacity:.86}
+.filmcard .play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;
+}
+.filmcard .play .btn{
+  display:flex;align-items:center;gap:12px;
+  padding:15px 24px;border-radius:100px;
+  background:rgba(20,18,16,.42);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.25);
+  font-size:15px;font-weight:500;letter-spacing:-.01em;
+  transition:background .3s ease,transform .3s ease;cursor:pointer;
+}
+.filmcard .play .btn:hover{background:rgba(20,18,16,.6);transform:scale(1.03)}
+.filmcard .play .tri{
+  width:0;height:0;border-style:solid;
+  border-width:7px 0 7px 12px;border-color:transparent transparent transparent #fff;
+}
+
+.bighead{
+  font-weight:500;letter-spacing:-.04em;line-height:1.02;
+  font-size:clamp(32px,5.4vw,58px);
+  max-width:14ch;margin:0 0 8px;
+}
+.bighead .it{font-style:italic;font-weight:400;color:#4a453d}
+.leadp{color:var(--ink-soft);max-width:44ch;font-size:16px;line-height:1.55;letter-spacing:-.01em}
+
+.masonry{
+  margin-top:44px;
+  columns:3 240px;column-gap:18px;
+}
+.masonry img{
+  width:100%;border-radius:14px;margin:0 0 18px;
+  box-shadow:0 12px 30px rgba(20,18,16,.10);
+  break-inside:avoid;
+}
+
+.feat-grid{
+  margin-top:46px;display:grid;gap:26px;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+}
+.feat h3{font-size:18px;font-weight:600;letter-spacing:-.02em;margin:0 0 8px}
+.feat p{margin:0;color:var(--ink-soft);font-size:15px;line-height:1.5;letter-spacing:-.01em}
+.feat .num{font-size:13px;color:#a49b8e;letter-spacing:.12em;font-weight:500}
+
+.foot{
+  border-top:1px solid var(--line);margin-top:40px;
+  padding:34px 28px;max-width:var(--maxw);margin-left:auto;margin-right:auto;
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  color:var(--ink-soft);font-size:13px;letter-spacing:-.01em;
+}
+
+@media(max-width:640px){
+  .section{padding:52px 20px}
+  .masonry{columns:2 150px}
+  .filmcard{aspect-ratio:4/3}
+}
+
+/* reduced motion: chips static but still hoverable */
+@media (prefers-reduced-motion:reduce){
+  .pill,.chip .inner{transition:none}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="brand"><span class="dot"></span>Ghoosted</div>
+  <div class="links">
+    <a href="#film">Film</a>
+    <a href="#work">How it works</a>
+    <a href="#get">Get it</a>
+  </div>
+</nav>
+
+<header class="hero" id="hero">
+  <!-- chip field injected by JS -->
+  <div class="field" id="field" aria-hidden="true"></div>
+
+  <div class="center">
+    <p class="label">Chrome extension · Instagram</p>
+    <h1 class="h1">The real story.<span class="l2">Behind every profile.</span></h1>
+    <p class="sub">Watch &amp; save anyone's stories, pull up their full profile, and see who's really engaging with yours. Everything Instagram hides.</p>
+    <div class="cta">
+      <button class="pill primary">Try it · €5 forever</button>
+      <button class="pill secondary" onclick="document.getElementById('film').scrollIntoView({behavior:'smooth'})">See what it does</button>
+    </div>
+    <p class="trust">No password. All on your phone.</p>
+  </div>
+</header>
+
+<section class="section" id="film">
+  <div class="filmcard">
+    <img src="assets/mood/m8.jpg" alt="">
+    <div class="play"><div class="btn"><span class="tri"></span>Watch the film</div></div>
+  </div>
+</section>
+
+<section class="section" id="work">
+  <h2 class="bighead">Everything Instagram <span class="it">quietly hides</span> from you.</h2>
+  <p class="leadp">Ghoosted lives inside your browser. No servers, no logins — just the story the app never shows you.</p>
+  <div class="masonry">
+    <img src="assets/mood/m4.jpg" alt="">
+    <img src="assets/mood/m1.jpg" alt="">
+    <img src="assets/mood/m6.jpg" alt="">
+    <img src="assets/mood/m5.jpg" alt="">
+    <img src="assets/mood/m3.jpg" alt="">
+    <img src="assets/mood/m2.jpg" alt="">
+    <img src="assets/mood/m7.jpg" alt="">
+    <img src="assets/mood/m9.jpg" alt="">
+  </div>
+</section>
+
+<section class="section" id="get">
+  <h2 class="bighead">A whole dossier, <span class="it">one click away.</span></h2>
+  <div class="feat-grid">
+    <div class="feat"><div class="num">01</div><h3>Who watched</h3><p>See every viewer of your stories, ranked by how often they come back.</p></div>
+    <div class="feat"><div class="num">02</div><h3>Ghost mode</h3><p>Open and save anyone's stories without ever leaving a trace.</p></div>
+    <div class="feat"><div class="num">03</div><h3>Unfollows</h3><p>Get told the moment someone slips away — no more guessing.</p></div>
+    <div class="feat"><div class="num">04</div><h3>Full profile</h3><p>Pull up the complete dossier on any public account, instantly.</p></div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div>Ghoosted — €5 forever. No password. All on your phone.</div>
+  <div>© 2026 Ghoosted</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     MOTION MODEL
+     Each chip carries a HOME position + a DEPTH (0 far .. 1 near).
+     Every frame its screen transform = home + drift + parallax + drag,
+     summed additively. Drift is a slow per-chip sine wobble. Parallax
+     is the smoothed cursor offset * depth. Drag is a critically-damped
+     spring that, once released, springs the offset back toward 0 while
+     carrying release velocity (momentum → fling → settle).
+     ============================================================ */
+
+  var field = document.getElementById('field');
+  var hero  = document.getElementById('hero');
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var isMobile = window.innerWidth < 720;
+
+  /* ---- TUNING CONSTANTS ---- */
+  var PARALLAX_MAX   = isMobile ? 12 : 34;   // px cursor-parallax at depth=1
+  var DRIFT_AMP      = isMobile ? 5  : 9;    // px idle-drift amplitude at depth=1
+  var DRIFT_SPEED    = 0.00022;              // idle-drift angular speed (rad/ms)
+  var PARALLAX_EASE  = 0.06;                 // cursor smoothing (lower = laggier/gentler)
+  var SPRING_K       = 0.055;                // drag spring-back stiffness
+  var SPRING_DAMP    = 0.82;                 // drag velocity damping (momentum feel)
+  var ROT_PARALLAX   = 2.2;                  // deg of tilt added from cursor at depth=1
+
+  /* chip recipe: src + base pixel size + depth.
+     Depth drives size scaling, blur, opacity, parallax & z. */
+  var RECIPE = [
+    {src:'m8.jpg', w:150, h:210, d:0.95},
+    {src:'m4.jpg', w:172, h:132, d:0.90},
+    {src:'m1.jpg', w:168, h:128, d:0.85},
+    {src:'m2.jpg', w:140, h:132, d:0.80},
+    {src:'m6.jpg', w:150, h:126, d:0.62},
+    {src:'m3.jpg', w:150, h:120, d:0.55},
+    {src:'m5.jpg', w:132, h:120, d:0.42},
+    {src:'m7.jpg', w:118, h:118, d:0.36},
+    {src:'m9.jpg', w:96,  h:96,  d:0.28},
+    {src:'m4.jpg', w:120, h:92,  d:0.22},
+    {src:'m1.jpg', w:120, h:92,  d:0.18},
+    {src:'m8.jpg', w:92,  h:128, d:0.14}
+  ];
+  if(isMobile) RECIPE = RECIPE.slice(0,7);   // fewer chips on small screens
+
+  /* HOME placement: scatter around the hero, kept away from the dead
+     center where the headline sits (bias toward edges). Values are
+     fractions of hero width/height, resolved to px on layout. */
+  var SLOTS = [
+    [0.10,0.20],[0.84,0.16],[0.06,0.62],[0.90,0.60],
+    [0.22,0.82],[0.74,0.84],[0.16,0.40],[0.86,0.40],
+    [0.34,0.14],[0.66,0.15],[0.30,0.90],[0.68,0.90]
+  ];
+
+  var chips = [];
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+
+  function build(){
+    var W = hero.clientWidth, H = hero.clientHeight;
+    RECIPE.forEach(function(r,i){
+      var el = document.createElement('div');
+      el.className = 'chip';
+      var inner = document.createElement('div');
+      inner.className = 'inner';
+      var img = document.createElement('img');
+      img.src = 'assets/mood/' + r.src;
+      img.alt = '';
+      inner.appendChild(img);
+      el.appendChild(inner);
+      field.appendChild(el);
+
+      var slot = SLOTS[i % SLOTS.length];
+      // depth-scaled visual size
+      var scale = 0.72 + r.d*0.5;                 // far chips smaller
+      var w = r.w*scale, h = r.h*scale;
+      // nudge home so a chip isn't perfectly on the slot every reload
+      var hx = slot[0]*W - w/2 + rand(-24,24);
+      var hy = slot[1]*H - h/2 + rand(-18,18);
+      // keep within bounds
+      hx = Math.max(-w*0.25, Math.min(W - w*0.75, hx));
+      hy = Math.max(-h*0.25, Math.min(H - h*0.75, hy));
+
+      el.style.width = w+'px';
+      el.style.height = h+'px';
+      el.style.zIndex = String(2 + Math.round(r.d*14));
+      // depth styling: far = blurred + faded + desaturated a touch
+      var blur = (1 - r.d) * (isMobile?2.2:3.4);
+      var op   = 0.55 + r.d*0.45;
+      el.style.filter = 'blur('+blur.toFixed(2)+'px)';
+      el.style.opacity = op.toFixed(2);
+
+      var c = {
+        el:el, d:r.d,
+        homeX:hx, homeY:hy,
+        baseRot: rand(-14,14),                    // static per-chip rotation
+        driftPhase: rand(0,Math.PI*2),
+        driftPhaseY: rand(0,Math.PI*2),
+        driftAmpX: DRIFT_AMP*(0.4+r.d)*rand(.7,1.2),
+        driftAmpY: DRIFT_AMP*(0.4+r.d)*rand(.7,1.2),
+        // drag state (offset from home, and its velocity)
+        dx:0, dy:0, vx:0, vy:0,
+        dragging:false,
+        // last committed transform (for reduced-motion static render)
+      };
+      chips.push(c);
+      attachDrag(c);
+      // static render immediately (also the reduced-motion final state)
+      render(c, 0, 0, 0);
+    });
+  }
+
+  /* apply a full transform for chip c given current parallax + time */
+  function render(c, px, py, rotp){
+    var driftX = 0, driftY = 0;
+    if(!reduce){
+      var t = performance.now();
+      driftX = Math.sin(t*DRIFT_SPEED + c.driftPhase) * c.driftAmpX;
+      driftY = Math.cos(t*DRIFT_SPEED*0.9 + c.driftPhaseY) * c.driftAmpY;
+    }
+    var x = c.homeX + c.dx + driftX + px*c.d;
+    var y = c.homeY + c.dy + driftY + py*c.d;
+    var rot = c.baseRot + rotp*c.d + (c.dx*0.02); // slight tilt into a drag
+    c.el.style.transform =
+      'translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) rotate('+rot.toFixed(2)+'deg)';
+  }
+
+  /* ---- pointer / cursor parallax (smoothed) ---- */
+  var tpx=0, tpy=0;   // target parallax (from cursor)
+  var cpx=0, cpy=0;   // current smoothed parallax
+  var trot=0, crot=0;
+
+  window.addEventListener('pointermove', function(e){
+    if(e.pointerType==='touch') return;         // touch handled via drag only
+    var r = hero.getBoundingClientRect();
+    var nx = (e.clientX - r.left)/r.width  - 0.5; // -0.5..0.5
+    var ny = (e.clientY - r.top )/r.height - 0.5;
+    tpx = -nx * PARALLAX_MAX * 2;
+    tpy = -ny * PARALLAX_MAX * 2;
+    trot = -nx * ROT_PARALLAX * 2;
+  }, {passive:true});
+  hero.addEventListener('pointerleave', function(){ tpx=0; tpy=0; trot=0; });
+
+  /* ---- drag: pointer events, capture only when a chip is grabbed ---- */
+  function attachDrag(c){
+    var el = c.el;
+    var startX=0, startY=0, lastX=0, lastY=0, lastT=0, pid=null;
+
+    el.addEventListener('pointerdown', function(e){
+      pid = e.pointerId;
+      el.setPointerCapture(pid);
+      c.dragging = true;
+      el.classList.add('grabbing');
+      startX = e.clientX; startY = e.clientY;
+      lastX = e.clientX; lastY = e.clientY; lastT = performance.now();
+      c.vx = c.vy = 0;
+      e.preventDefault();
+    });
+
+    el.addEventListener('pointermove', function(e){
+      if(!c.dragging || e.pointerId!==pid) return;
+      var now = performance.now();
+      var mvx = e.clientX - lastX, mvy = e.clientY - lastY;
+      c.dx += mvx;  c.dy += mvy;                 // follow finger 1:1
+      var dt = Math.max(8, now - lastT);
+      c.vx = mvx/dt*16;  c.vy = mvy/dt*16;       // px/frame velocity estimate
+      lastX = e.clientX; lastY = e.clientY; lastT = now;
+      // while dragging, only prevent scroll if the grab has clearly moved
+      if(Math.abs(e.clientX-startX)+Math.abs(e.clientY-startY) > 6) e.preventDefault();
+    });
+
+    function release(e){
+      if(!c.dragging || (pid!==null && e.pointerId!==pid)) return;
+      c.dragging = false;
+      el.classList.remove('grabbing');
+      try{ el.releasePointerCapture(pid); }catch(_){}
+      pid = null;
+      // velocity is carried into the spring loop → fling then settle back home
+    }
+    el.addEventListener('pointerup', release);
+    el.addEventListener('pointercancel', release);
+  }
+
+  /* ---- single rAF loop ---- */
+  function tick(){
+    // smooth cursor parallax
+    cpx += (tpx - cpx)*PARALLAX_EASE;
+    cpy += (tpy - cpy)*PARALLAX_EASE;
+    crot += (trot - crot)*PARALLAX_EASE;
+
+    for(var i=0;i<chips.length;i++){
+      var c = chips[i];
+      if(!c.dragging){
+        // spring the drag-offset back toward home, with momentum
+        c.vx += (-c.dx)*SPRING_K;
+        c.vy += (-c.dy)*SPRING_K;
+        c.vx *= SPRING_DAMP;
+        c.vy *= SPRING_DAMP;
+        c.dx += c.vx;
+        c.dy += c.vy;
+        if(Math.abs(c.dx)<0.05 && Math.abs(c.vx)<0.05) { c.dx=0; c.vx=0; }
+        if(Math.abs(c.dy)<0.05 && Math.abs(c.vy)<0.05) { c.dy=0; c.vy=0; }
+      }
+      render(c, cpx, cpy, crot);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  var raf = null;
+  build();
+  if(!reduce){ raf = requestAnimationFrame(tick); }
+
+  // reflow chip homes on resize (debounced) — rebuild the field
+  var rt=null;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){
+      var nowMobile = window.innerWidth < 720;
+      if(nowMobile !== isMobile){ location.reload(); return; } // simplest correct path
+      var W=hero.clientWidth, H=hero.clientHeight;
+      chips.forEach(function(c,i){
+        var slot = SLOTS[i % SLOTS.length];
+        var w=c.el.clientWidth, h=c.el.clientHeight;
+        c.homeX = Math.max(-w*0.25, Math.min(W-w*0.75, slot[0]*W - w/2));
+        c.homeY = Math.max(-h*0.25, Math.min(H-h*0.75, slot[1]*H - h/2));
+      });
+    }, 200);
+  });
+})();
+</script>
+</body>
+</html>

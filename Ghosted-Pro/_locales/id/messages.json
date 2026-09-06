@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "Lihat siapa yang berhenti mengikutimu di Instagram. Datamu tetap di perangkatmu."
+  },
+  "ago_s": {
+    "message": "$1s lalu"
+  },
+  "ago_m": {
+    "message": "$1m lalu"
+  },
+  "ago_h": {
+    "message": "$1h lalu"
+  },
+  "ago_d": {
+    "message": "$1d lalu"
+  },
+  "ago_w": {
+    "message": "$1w lalu"
+  },
+  "ago_mo": {
+    "message": "$1mo lalu"
+  },
+  "status_starting": {
+    "message": "Memulai…"
+  },
+  "status_first": {
+    "message": "Menyiapkan scan pertama…"
+  },
+  "status_checking": {
+    "message": "Mengecek followers…"
+  },
+  "status_loading_followers": {
+    "message": "Memuat followers… $1"
+  },
+  "status_loading_following": {
+    "message": "Memuat following…"
+  },
+  "status_loading_following_n": {
+    "message": "Memuat following… $1"
+  },
+  "status_partial": {
+    "message": "Instagram ngasih daftar nggak lengkap — baseline kamu tetap aman. Coba lagi bentar lagi."
+  },
+  "status_baseline": {
+    "message": "Baseline tersimpan ✓ Mulai sekarang aku lacak perubahannya."
+  },
+  "status_unfollowers": {
+    "message": "$1 unfollow kamu."
+  },
+  "status_nochanges": {
+    "message": "Nggak ada perubahan. Semua terkini ✓"
+  },
+  "status_rate": {
+    "message": "Instagram minta pelan-pelan · kode $1. Data kamu tetap tersimpan."
+  },
+  "status_auth": {
+    "message": "Instagram nolak pembacaan · kode $1. Kamu bisa cek lagi."
+  },
+  "status_challenge": {
+    "message": "Instagram minta verifikasi di webnya · kode $1."
+  },
+  "status_cooldown": {
+    "message": "Siap cek Instagram."
+  },
+  "status_network": {
+    "message": "Error jaringan. Aku coba lagi."
+  },
+  "status_transport": {
+    "message": "Instagram ngasih webnya, bukan followers · kode $1."
+  },
+  "status_http": {
+    "message": "Instagram menolak permintaan · kode $1. Mencoba cara lain."
+  },
+  "status_other_tab": {
+    "message": "Tab Instagram lain lagi ngecek akun ini."
+  },
+  "status_error": {
+    "message": "Ada yang salah. Aku coba lagi."
+  },
+  "status_reload": {
+    "message": "Ekstensi diperbarui — muat ulang tab Instagram ini."
+  },
+  "status_upto": {
+    "message": "Terkini ✓ (terakhir: $1)"
+  },
+  "status_pro_needed": {
+    "message": "Pelacakan story itu fitur Ghoosted Pro."
+  },
+  "status_story_reading": {
+    "message": "Membaca story kamu…"
+  },
+  "status_story_none": {
+    "message": "Tidak ada story aktif. Unggah satu dulu."
+  },
+  "status_story_item": {
+    "message": "Membaca story $1…"
+  },
+  "status_story_viewers": {
+    "message": "Membaca penonton… $1"
+  },
+  "status_story_done": {
+    "message": "$1 penonton terbaca ✓"
+  },
+  "status_watch_adding": {
+    "message": "Menambahkan profil ke pantauan…"
+  },
+  "status_watch_added": {
+    "message": "$1 ditambahkan ke pantauan ✓"
+  },
+  "status_no_photos": {
+    "message": "Tidak ada foto tersimpan untuk dihapus."
+  },
+  "status_photos_cleared": {
+    "message": "Foto tersimpan dihapus ✓"
+  },
+  "status_save_failed": {
+    "message": "Gagal menyimpan — penyimpanan mungkin penuh. Coba \"hapus foto tersimpan\" di Pengaturan."
+  },
+  "status_watch_invalid": {
+    "message": "Masukkan username yang valid."
+  },
+  "status_watch_notfound": {
+    "message": "Nggak nemu profil Instagram itu."
+  },
+  "status_watch_found": {
+    "message": "$1 ketemu. Konfirmasi dulu sebelum dipantau."
+  },
+  "notif_one": {
+    "message": "Ada yang unfollow kamu 👀"
+  },
+  "notif_many": {
+    "message": "$1 orang unfollow kamu 👀"
+  },
+  "ui_subtitle": {
+    "message": "siapa nonton, siapa kabur"
+  },
+  "big_mode": {
+    "message": "Mode besar"
+  },
+  "close": {
+    "message": "Tutup"
+  },
+  "settings": {
+    "message": "Pengaturan"
+  },
+  "chip_followers": {
+    "message": "followers"
+  },
+  "chip_following": {
+    "message": "following"
+  },
+  "chip_notback": {
+    "message": "nggak follback"
+  },
+  "tab_unfollow": {
+    "message": "Unfollow"
+  },
+  "tab_new": {
+    "message": "Baru"
+  },
+  "tab_notback": {
+    "message": "Nggak follback"
+  },
+  "tab_live": {
+    "message": "Story"
+  },
+  "tab_activity": {
+    "message": "Aktivitas"
+  },
+  "tab_history": {
+    "message": "Riwayat"
+  },
+  "tab_top": {
+    "message": "Top"
+  },
+  "top_likes": {
+    "message": "Paling banyak like"
+  },
+  "top_comments": {
+    "message": "Paling banyak komentar"
+  },
+  "top_stories": {
+    "message": "Paling banyak nonton story"
+  },
+  "top_growth": {
+    "message": "Followers baru"
+  },
+  "top_calc": {
+    "message": "Hitung like & komentar"
+  },
+  "top_recalc": {
+    "message": "Muat ulang"
+  },
+  "top_calculating": {
+    "message": "Menghitung…"
+  },
+  "top_calc_hint": {
+    "message": "Ketuk buat baca like & komentar di post terbaru kamu."
+  },
+  "top_from": {
+    "message": "Dari $1 post terakhir kamu."
+  },
+  "top_progress": {
+    "message": "Membaca post $1/$2…"
+  },
+  "top_likes_n": {
+    "message": "$1 like"
+  },
+  "top_cmts_n": {
+    "message": "$1 komentar"
+  },
+  "top_empty": {
+    "message": "Belum ada apa-apa."
+  },
+  "top_growth_empty": {
+    "message": "Belum ada followers baru yang tercatat."
+  },
+  "btn_check": {
+    "message": "Cek sekarang"
+  },
+  "btn_capture": {
+    "message": "Lihat penonton"
+  },
+  "next_review": {
+    "message": "Scan otomatis berikutnya ~ $1"
+  },
+  "private": {
+    "message": "privat"
+  },
+  "empty_unfollow": {
+    "message": "Belum ada yang unfollow kamu sejak pelacakan dimulai.<br>Aku bakal kabari di sini dan lewat notifikasi 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "Belum bisa memuat followers kamu.<br>Ketuk “Cek sekarang” buat coba lagi."
+  },
+  "empty_new": {
+    "message": "Belum ada followers baru yang tercatat."
+  },
+  "empty_notback_load": {
+    "message": "Ketuk \"Cek sekarang\" buat memuat siapa yang kamu follow."
+  },
+  "empty_notback_none": {
+    "message": "Semua yang kamu follow follback kamu 🙌"
+  },
+  "empty_ghosted": {
+    "message": "Unggah story, lalu ketuk \"Lihat penonton\" untuk memulai peringkat."
+  },
+  "empty_ghosted_pub": {
+    "message": "Belum ada penonton. Unggah story dan cek lagi."
+  },
+  "empty_history": {
+    "message": "Data belum cukup. Tren followers kamu bakal muncul di sini."
+  },
+  "empty_activity": {
+    "message": "Belum ada perubahan profil.<br>Ghoosted bakal simpan perubahan foto, nama, username, dan bio mulai dari scan pertama."
+  },
+  "activity_title": {
+    "message": "Aktivitas profil"
+  },
+  "activity_desc": {
+    "message": "Followers dan following kamu dipantau otomatis. Tambahkan akun mana pun biar dapat notif saat mereka posting story atau ganti siapa yang di-follow. Pengecekan jalan selama Instagram kebuka di tab."
+  },
+  "activity_watch_placeholder": {
+    "message": "Cari username buat dipantau…"
+  },
+  "sugg_following": {
+    "message": "kamu follow"
+  },
+  "spy_hint": {
+    "message": "Cuma jalan di akun publik atau akun yang udah kamu follow."
+  },
+  "activity_watch_add": {
+    "message": "Tambah"
+  },
+  "activity_watch_search": {
+    "message": "Cari"
+  },
+  "activity_watch_confirm": {
+    "message": "Pantau profil"
+  },
+  "activity_watch_cancel": {
+    "message": "Batal"
+  },
+  "activity_manual": {
+    "message": "Dalam bidikan · $1"
+  },
+  "activity_remove": {
+    "message": "Berhenti pantau"
+  },
+  "activity_changed_photo": {
+    "message": "Ganti foto profil"
+  },
+  "activity_changed_bio": {
+    "message": "Update bio"
+  },
+  "activity_changed_name": {
+    "message": "Ganti nama"
+  },
+  "activity_changed_username": {
+    "message": "Ganti username"
+  },
+  "activity_changed_profile": {
+    "message": "Update profil"
+  },
+  "activity_tag_photo": {
+    "message": "foto"
+  },
+  "activity_tag_bio": {
+    "message": "bio"
+  },
+  "activity_tag_profile": {
+    "message": "profil"
+  },
+  "activity_tag_followers": {
+    "message": "followers"
+  },
+  "activity_story": {
+    "message": "Posting story"
+  },
+  "activity_link": {
+    "message": "Ganti link"
+  },
+  "activity_followers_up": {
+    "message": "Dapat $1 followers"
+  },
+  "activity_followers_down": {
+    "message": "Kehilangan $1 followers"
+  },
+  "activity_new_follower": {
+    "message": "Follower baru: $1"
+  },
+  "new_followers_title": {
+    "message": "Followers baru"
+  },
+  "activity_lost_follower": {
+    "message": "$1 unfollow dia"
+  },
+  "lost_followers_title": {
+    "message": "Unfollow dia"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — buka profil ini"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "Cari di TikTok"
+  },
+  "dos_more": {
+    "message": "Lihat lebih"
+  },
+  "dos_loading_more": {
+    "message": "Memuat…"
+  },
+  "dos_ghost": {
+    "message": "Stories"
+  },
+  "dos_ghost_hint": {
+    "message": "Nonton story mereka tanpa ketahuan"
+  },
+  "dos_ghost_note": {
+    "message": "Mode hantu · nggak ninggalin jejak di “dilihat oleh”"
+  },
+  "dos_ghost_none": {
+    "message": "Nggak ada story aktif sekarang."
+  },
+  "dos_ghost_all": {
+    "message": "⬇ Unduh semua"
+  },
+  "dos_ghost_all_prog": {
+    "message": "Mengunduh $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "$1 terunduh ✓"
+  },
+  "dos_filter_all": {
+    "message": "Semua"
+  },
+  "activity_follow_add": {
+    "message": "Mulai follow $1"
+  },
+  "activity_follow_rem": {
+    "message": "Unfollow $1"
+  },
+  "activity_tag_story": {
+    "message": "story"
+  },
+  "activity_tag_follow": {
+    "message": "follow"
+  },
+  "activity_tag_unfollow2": {
+    "message": "unfollow"
+  },
+  "notif_story": {
+    "message": "$1 posting story 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 follow orang baru"
+  },
+  "notif_follow_rem": {
+    "message": "$1 unfollow seseorang"
+  },
+  "spy_now_follows": {
+    "message": "Sekarang follow $1"
+  },
+  "spy_unfollowed": {
+    "message": "Unfollow $1"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 unfollow KAMU 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 ganti siapa yang di-follow"
+  },
+  "spy_added_c": {
+    "message": "+$1 following"
+  },
+  "spy_removed_c": {
+    "message": "−$1 following"
+  },
+  "watch_toggle_story": {
+    "message": "Kabari aku soal story-nya"
+  },
+  "watch_toggle_following": {
+    "message": "Lacak siapa yang di-follow"
+  },
+  "wt_story": {
+    "message": "Story"
+  },
+  "wt_following": {
+    "message": "Mengikuti"
+  },
+  "wt_profile": {
+    "message": "Profil"
+  },
+  "spy_check_title": {
+    "message": "Mereka saling follow?"
+  },
+  "spy_a_ph": {
+    "message": "akun A (@user)"
+  },
+  "spy_b_ph": {
+    "message": "akun B (@user)"
+  },
+  "spy_check_btn": {
+    "message": "Cek"
+  },
+  "spy_checking": {
+    "message": "Mengecek…"
+  },
+  "spy_checking_dir": {
+    "message": "Mengecek daftar following $1… bisa makan beberapa detik buat akun gede"
+  },
+  "spy_need_two": {
+    "message": "Masukkan kedua username."
+  },
+  "spy_result_mutual": {
+    "message": "$1 dan $2 saling follow"
+  },
+  "spy_result_a": {
+    "message": "$1 follow $2, tapi nggak sebaliknya"
+  },
+  "spy_result_b": {
+    "message": "$2 follow $1, tapi nggak sebaliknya"
+  },
+  "spy_result_none": {
+    "message": "$1 dan $2 nggak saling follow"
+  },
+  "spy_result_err": {
+    "message": "Nggak bisa cek (akun privat atau nggak ada?)"
+  },
+  "spy_direction_yes": {
+    "message": "$1 follow $2"
+  },
+  "spy_direction_no": {
+    "message": "$1 nggak follow $2"
+  },
+  "spy_direction_unknown": {
+    "message": "Nggak bisa verifikasi $1 follow $2 apa nggak — akun privat yang nggak kamu follow"
+  },
+  "dos_open": {
+    "message": "Detektif — selidiki profil"
+  },
+  "dos_loading": {
+    "message": "Memuat dosir…"
+  },
+  "dos_err": {
+    "message": "Nggak bisa memuat profil ini."
+  },
+  "dos_err_auth": {
+    "message": "Instagram nolak pembacaan. Coba lagi."
+  },
+  "dos_download": {
+    "message": "Unduh foto (HD)"
+  },
+  "dos_downloading": {
+    "message": "Mengunduh…"
+  },
+  "dos_downloaded": {
+    "message": "Tersimpan ✓"
+  },
+  "dos_openpic": {
+    "message": "Buka foto"
+  },
+  "dos_copyid": {
+    "message": "Salin ID"
+  },
+  "dos_watch": {
+    "message": "Pantau"
+  },
+  "dos_watching": {
+    "message": "Dipantau ✓"
+  },
+  "dos_copied": {
+    "message": "Tersalin ✓"
+  },
+  "dos_posts": {
+    "message": "post"
+  },
+  "dos_profile": {
+    "message": "Profil"
+  },
+  "dos_web": {
+    "message": "Website"
+  },
+  "dos_category": {
+    "message": "Kategori"
+  },
+  "dos_contact": {
+    "message": "Kontak publik"
+  },
+  "dos_address": {
+    "message": "Alamat"
+  },
+  "dos_business": {
+    "message": "Bisnis"
+  },
+  "dos_highlights": {
+    "message": "Story sorotan"
+  },
+  "dos_save": {
+    "message": "Lihat foto"
+  },
+  "dos_save_hint": {
+    "message": "Menyimpan sampul ini dan menampilkannya untukmu"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "Tersimpan ✓"
+  },
+  "dos_saved_already": {
+    "message": "Sudah tersimpan"
+  },
+  "dos_photo_history": {
+    "message": "Riwayat foto"
+  },
+  "dos_posts_sec": {
+    "message": "Postingan"
+  },
+  "dos_engagement": {
+    "message": "Engagement"
+  },
+  "dos_eng_avg": {
+    "message": "Rata-rata: $1 like · $2 komentar per post"
+  },
+  "eng_fire": {
+    "message": "🔥 Gila"
+  },
+  "eng_good": {
+    "message": "Bagus banget"
+  },
+  "eng_ok": {
+    "message": "Biasa"
+  },
+  "eng_low": {
+    "message": "Rendah"
+  },
+  "dos_relations": {
+    "message": "Followers & following"
+  },
+  "dos_see_followers": {
+    "message": "Lihat followers"
+  },
+  "dos_see_following": {
+    "message": "Lihat following"
+  },
+  "dos_rel_hint": {
+    "message": "Akun publik, atau yang kamu follow. Cuma nampilin sebagian, bukan seluruh daftar."
+  },
+  "dos_rel_loading": {
+    "message": "Memuat…"
+  },
+  "dos_rel_empty": {
+    "message": "Nggak bisa baca daftar ini (akun privat yang nggak kamu follow)."
+  },
+  "dos_rel_more": {
+    "message": "Nampilin $1 pertama. Buka profilnya buat daftar lengkap."
+  },
+  "dos_rel_search": {
+    "message": "Cari di daftar ini…"
+  },
+  "dos_rel_click_hint": {
+    "message": "Ketuk angka followers atau following di atas buat lihat daftarnya di sini."
+  },
+  "dos_rel_nomatch": {
+    "message": "Nggak ada yang cocok di daftar yang dimuat."
+  },
+  "dos_history": {
+    "message": "Riwayat"
+  },
+  "dos_history_empty": {
+    "message": "Belum ada perubahan yang terlacak buat akun ini."
+  },
+  "dos_graph_empty": {
+    "message": "Grafik followers kebentuk seiring kamu buka profil ini dari waktu ke waktu."
+  },
+  "dos_investigate": {
+    "message": "Selidiki"
+  },
+  "unlock_title": {
+    "message": "Aktifkan Ghoosted"
+  },
+  "unlock_copy": {
+    "message": "Satu kunci mengaktifkan Ghoosted buat akun Instagram ini — selamanya. Sekali bayar."
+  },
+  "unlock_price": {
+    "message": "€5 · seumur hidup, sekali pakai"
+  },
+  "unlock_buy": {
+    "message": "Beli · €5 sekali bayar"
+  },
+  "unlock_label": {
+    "message": "Udah punya kunci?"
+  },
+  "unlock_activate": {
+    "message": "Aktifkan"
+  },
+  "unlock_enter_key": {
+    "message": "Masukkan kunci produkmu."
+  },
+  "unlock_checking": {
+    "message": "Mengecek kunci…"
+  },
+  "unlock_active": {
+    "message": "Ghoosted aktif buat akun ini ✓"
+  },
+  "unlock_bound": {
+    "message": "Kunci ini udah terhubung ke akun Instagram lain."
+  },
+  "unlock_expired": {
+    "message": "Kunci ini udah dinonaktifkan."
+  },
+  "unlock_invalid": {
+    "message": "Kunci nggak valid atau belum diterbitkan."
+  },
+  "unlock_network": {
+    "message": "Nggak bisa verifikasi kunci. Coba lagi."
+  },
+  "unlock_status": {
+    "message": "Aktifkan Ghoosted buat mulai."
+  },
+  "tag_unfollow": {
+    "message": "unfollow"
+  },
+  "tag_new": {
+    "message": "baru"
+  },
+  "tag_notfollowing": {
+    "message": "nggak follback"
+  },
+  "tag_fan": {
+    "message": "fan no.1"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "Buka Ghoosted Pro"
+  },
+  "pro_desc": {
+    "message": "Lihat siapa yang nonton story kamu, bikin ranking permanen penonton paling setia, dapat alert unfollow instan dan riwayat lengkap kamu."
+  },
+  "pro_unlock": {
+    "message": "Buka — €5 sekali bayar"
+  },
+  "pro_havekey": {
+    "message": "Udah beli? Klik ikon Ghoosted di toolbar browser buat masukin kuncimu."
+  },
+  "history_captures": {
+    "message": "Pemeriksaan terbaru"
+  },
+  "history_viewers": {
+    "message": "$1 penonton"
+  },
+  "confirm_reset": {
+    "message": "Bangun ulang baseline? Aku bakal baca ulang followers kamu sekarang sebagai titik awal baru. Riwayat \"Unfollow\" dan \"Baru\" kamu TIDAK dihapus."
+  },
+  "confirm_clear": {
+    "message": "Hapus SEMUA riwayat (unfollow, followers baru, dan statistik story)? Ini nggak bisa dibatalkan."
+  },
+  "confirm_clear_photos": {
+    "message": "Hapus $1 foto tersimpan (avatar, sampul sorotan)? Ini membebaskan ruang penyimpanan dan tidak dapat dibatalkan."
+  },
+  "settings_interval": {
+    "message": "Cek tiap"
+  },
+  "settings_notify": {
+    "message": "Beri tahu aku"
+  },
+  "settings_reset": {
+    "message": "Bangun ulang baseline (riwayat tetap)"
+  },
+  "settings_export": {
+    "message": "Ekspor dataku (JSON)"
+  },
+  "settings_clear": {
+    "message": "hapus riwayat"
+  },
+  "settings_clear_photos": {
+    "message": "hapus foto tersimpan"
+  },
+  "popup_tagline": {
+    "message": "siapa nonton, siapa kabur"
+  },
+  "popup_status_free": {
+    "message": "Paket gratis"
+  },
+  "popup_status_locked": {
+    "message": "Menunggu aktivasi"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · aktif"
+  },
+  "popup_free_desc": {
+    "message": "Aktifkan kunci Ghoosted buat pakai ekstensi ini dengan akun Instagram ini."
+  },
+  "popup_pro_desc": {
+    "message": "Semua fitur terbuka. Makasih dukungannya"
+  },
+  "popup_buy": {
+    "message": "Dapatkan Ghoosted · €5"
+  },
+  "popup_license_label": {
+    "message": "Udah beli? Masukkan kunci lisensimu"
+  },
+  "popup_activate": {
+    "message": "Aktifkan"
+  },
+  "popup_open_ig": {
+    "message": "Buka Instagram"
+  },
+  "popup_privacy": {
+    "message": "Privasi"
+  },
+  "popup_help": {
+    "message": "Bantuan"
+  },
+  "popup_remove": {
+    "message": "Hapus lisensi"
+  },
+  "popup_enter_key": {
+    "message": "Masukkan kunci lisensimu dulu."
+  },
+  "popup_activating": {
+    "message": "Memverifikasi…"
+  },
+  "popup_active": {
+    "message": "Pro aktif. Nikmati 🎉"
+  },
+  "popup_refunded": {
+    "message": "Lisensi ini direfund atau disengketakan."
+  },
+  "popup_network": {
+    "message": "Nggak bisa terhubung ke server. Coba lagi."
+  },
+  "popup_invalid": {
+    "message": "Kunci itu kayaknya nggak valid. Cek lagi dan coba ulang."
+  },
+  "popup_removed": {
+    "message": "Lisensi dihapus."
+  },
+  "popup_need_ig": {
+    "message": "Buka Instagram di jendela ini buat aktifkan kuncimu."
+  },
+  "popup_bound": {
+    "message": "Kunci ini udah terhubung ke akun Instagram lain."
+  },
+  "eng_hidden": {
+    "message": "Suka disembunyikan"
+  },
+  "eng_hidden_sub": {
+    "message": "Tidak bisa menghitung engagement asli: jumlah suka disembunyikan."
+  },
+  "settings_language": {
+    "message": "Bahasa"
+  },
+  "settings_data": {
+    "message": "Data"
+  },
+  "settings_connect_mobile": {
+    "message": "Hubungkan ponsel"
+  },
+  "mobile_title": {
+    "message": "Ghoosted di ponselmu"
+  },
+  "mobile_body": {
+    "message": "Pindai dengan kamera ponsel. Ponselmu mencerminkan ekstensi, hanya-baca. Diperbarui setiap kali PC memeriksa."
+  },
+  "mobile_unpair": {
+    "message": "Putuskan ponsel"
+  },
+  "popup_wrong_product": {
+    "message": "Kunci ini untuk versi Ghoosted yang berbeda."
+  },
+  "gs_saw": {
+    "message": "Melihat $1 dari $2 story kamu"
+  },
+  "gs_saw_total": {
+    "message": "total $1 story kamu dilihat"
+  },
+  "gs_days_one": {
+    "message": "$1 hari"
+  },
+  "gs_days_many": {
+    "message": "$1 hari"
+  },
+  "gs_pos": {
+    "message": "no. $1 di daftar"
+  },
+  "tag_dropoff": {
+    "message": "tidak selesai"
+  },
+  "gs_note": {
+    "message": "Dari daftar penonton Instagram: siapa yang melihat dan menyukai. Tangkapan layar dan tonton ulang tidak dilaporkan Instagram."
+  },
+  "gs_liked": {
+    "message": "❤️ menyukai $1"
+  },
+  "gs_story_n": {
+    "message": "Story $1 ($2) · $3 penonton · $4 suka"
+  },
+  "gs_search": {
+    "message": "Cari penonton…"
+  },
+  "gs_no_match": {
+    "message": "Tidak ada penonton dengan nama itu."
+  },
+  "gs_alltime": {
+    "message": "total $1 story kamu ditonton"
+  },
+  "gs_archive_title": {
+    "message": "Story saya",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "Kembali"
+  },
+  "gs_all_fans": {
+    "message": "Penggemar semua story kamu"
+  },
+  "gs_order_note": {
+    "message": "Penonton dalam urutan Instagram. Saat seseorang membuka ulang story-mu, dia naik lagi ke atas — Ghoosted mendeteksinya dan menghitungnya sebagai pembukaan ulang (🔁). Ini perkiraan berdasar seberapa sering Ghoosted membaca daftar, bukan penghitung resmi Instagram: itu tidak ada."
+  },
+  "gs_detail_meta": {
+    "message": "$1 penonton · $2 suka"
+  },
+  "gs_no_viewers": {
+    "message": "Tidak ada penonton tersimpan untuk story ini."
+  },
+  "gs_video": {
+    "message": "Video"
+  },
+  "gs_photo": {
+    "message": "Foto"
+  },
+  "gs_archive_sub": {
+    "message": "Hanya kamu yang bisa melihat story arsipmu, kecuali kamu memilih membagikannya."
+  },
+  "gs_refresh": {
+    "message": "Perbarui story saya"
+  },
+  "gs_capturing": {
+    "message": "Membaca penonton story kamu…"
+  },
+  "gs_empty_archive": {
+    "message": "Belum ada yang tersimpan. Kalau ada story aktif, perbarui sekarang."
+  },
+  "gs_reopen": {
+    "message": "kembali ke atas $1×"
+  },
+  "nb_select": {
+    "message": "Pilih"
+  },
+  "nb_cancel": {
+    "message": "Batal"
+  },
+  "nb_all": {
+    "message": "Semua"
+  },
+  "nb_none": {
+    "message": "Kosongkan"
+  },
+  "nb_unfollow_n": {
+    "message": "Berhenti ikuti ($1)"
+  },
+  "nb_hint": {
+    "message": "Ketuk orang yang ingin kamu berhenti ikuti, lalu “Berhenti ikuti”. Dijalankan satu per satu dengan jeda — Instagram memblokir akun yang terlalu cepat."
+  },
+  "nb_confirm": {
+    "message": "Berhenti mengikuti $1 akun? Ghoosted melakukannya perlahan (beberapa detik jeda) agar tidak diblokir Instagram. Biarkan tab ini terbuka."
+  },
+  "nb_progress": {
+    "message": "Memproses… $1/$2"
+  },
+  "nb_done": {
+    "message": "Selesai — $1 diberhentikan."
+  },
+  "nb_blocked": {
+    "message": "Instagram minta pelan-pelan. Berhenti setelah $1. Lanjutkan nanti."
+  },
+  "wprof_updated": {
+    "message": "Diperbarui $1"
+  },
+  "wprof_followers": {
+    "message": "Pengikut"
+  },
+  "wprof_following": {
+    "message": "Mengikuti"
+  },
+  "wprof_recent": {
+    "message": "Baru diikuti"
+  },
+  "wprof_recent_none": {
+    "message": "Belum ada akun baru yang diikuti terdeteksi."
+  },
+  "wprof_track_hint": {
+    "message": "Aktifkan 👥 untuk melacak siapa yang mereka ikuti dan lihat statistiknya di sini."
+  },
+  "unit_min": {
+    "message": "mnt"
+  },
+  "dos_link": {
+    "message": "tautan"
+  },
+  "dos_id": {
+    "message": "ID"
+  },
+  "dos_email": {
+    "message": "Email"
+  },
+  "dos_tel": {
+    "message": "Telepon"
+  },
+  "status_newfollowers": {
+    "message": "+$1 pengikut baru."
+  },
+  "nb_search": {
+    "message": "Cari berdasarkan nama atau @username"
+  },
+  "nb_no_match": {
+    "message": "Tidak ada akun dengan nama itu."
+  },
+  "gh_entry": {
+    "message": "Story aktif (mode hantu)"
+  },
+  "gh_note": {
+    "message": "Orang-orang ini sedang punya story. Buka di sini — Instagram tidak diberi tahu, kamu tidak muncul di daftar penonton."
+  },
+  "gh_watch_note": {
+    "message": "Mode hantu — Instagram tidak tahu kamu melihatnya."
+  },
+  "gh_refresh": {
+    "message": "Muat ulang"
+  },
+  "gh_loading": {
+    "message": "Mencari story aktif…"
+  },
+  "gh_loading_one": {
+    "message": "Memuat story-nya…"
+  },
+  "gh_empty": {
+    "message": "Saat ini tidak ada yang kamu ikuti sedang punya story."
+  },
+  "gh_no_media": {
+    "message": "Story-nya tidak bisa dimuat."
+  },
+  "gh_err": {
+    "message": "Instagram tidak mengembalikan daftarnya. Coba lagi sebentar."
+  },
+  "gh_err_rate": {
+    "message": "Instagram minta pelan-pelan. Tunggu sebentar lalu coba lagi."
+  },
+  "gh_stories_n": {
+    "message": "$1 story"
+  },
+  "gh_story_1": {
+    "message": "1 story"
+  },
+  "gh_unseen": {
+    "message": "belum dilihat"
+  },
+  "gh_slide": {
+    "message": "$1 dari $2"
+  },
+  "nb_failed": {
+    "message": "Berhenti mengikuti $1. $2 gagal — Instagram menolaknya."
+  },
+  "gh_play_all": {
+    "message": "Putar semua ($1)"
+  },
+  "gh_person_of": {
+    "message": "$1 dari $2"
+  },
+  "gh_badge": {
+    "message": "mode hantu"
+  },
+  "gh_pause": {
+    "message": "Jeda"
+  },
+  "gh_resume": {
+    "message": "Lanjut"
+  },
+  "gh_close": {
+    "message": "Tutup"
+  },
+  "gh_download": {
+    "message": "Unduh"
+  },
+  "gh_download_all": {
+    "message": "Unduh semua"
+  },
+  "gh_sound": {
+    "message": "Suara"
+  },
+  "dos_posts_none": {
+    "message": "Tidak ada akses ke postingan"
+  },
+  "settings_appearance": {
+    "message": "Tampilan"
+  },
+  "settings_light": {
+    "message": "Mode terang"
+  },
+  "toast_watching": {
+    "message": "Kamu sekarang memantau $1",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "Kamu berhenti memantau $1",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "Instagram minta pelan-pelan. Coba lagi $1 menit lagi.",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "Cari seseorang…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "Tidak ada yang bernama itu",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "Mencari…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "Tidak ada hasil",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "Riwayatnya belum cukup. Cek lagi besok.",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "sejak $1",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "Beri tahu jika berubah",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "Memantau",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "Memantau $1",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "$1 tidak dipantau lagi",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "PASANGAN DIPANTAU",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1 berhenti mengikuti $2",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1 mulai mengikuti $2",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1 berhenti mengikuti $2",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1 mulai mengikuti $2",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "pasangan",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "Kosongkan",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "Yakin?",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "Aktivitas dikosongkan",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "sebelum",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "sekarang",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "Memuat pengikut",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "Sebentar, ini bisa memakan waktu",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "Daftar yang kamu ikuti tak terbaca penuh. Yang lama dipertahankan.",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "Daftar mengikuti dari $1 · tekan “Cek sekarang” untuk memperbarui",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "Memuat yang diikuti",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "Membandingkan dan menyimpan",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "dari $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "PERMINTAAN MENGIKUTI",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "Manual",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "Hanya yang saya ikuti",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "Semua",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "Siapa pun yang meminta masuk ke akun privatmu tanpa kamu periksa.",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "Setujui sekarang",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "Menyetujui…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "Tidak ada permintaan.",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "Terima",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "Tolak",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "$1 diterima",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "$1 ditolak",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "$1 diterima",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "Permintaan tidak bisa dimuat.",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "Setujui otomatis",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "Menyetujui permintaan",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "Berhenti mengikuti",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "sekitar $1 lagi",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 mnt",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 dtk",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "Kami sengaja pelan-pelan",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "Instagram memblokir akun yang melakukannya terlalu cepat. Jeda tak beraturan tidak terdeteksi. Panel boleh ditutup: tetap jalan di latar.",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "Klik untuk melipat atau membuka",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "Interaksi",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "Ada versi baru ($1)",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "Unduh",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "Versimu tidak lagi bekerja dengan Instagram. Perbarui untuk terus memakainya.",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "Tutup",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "Perubahan pengikut dan yang kamu ikuti dicatat di sini: siapa yang datang, siapa yang pergi dan kapan. Pemeriksaan berjalan selama Instagram terbuka di sebuah tab."
+  },
+  "empty_unfollow_own": {
+    "message": "Belum ada yang berhenti mengikutimu sejak pemeriksaan pertama.<br>Aku kabari di sini dan lewat notifikasi 👀"
+  },
+  "load_pair": {
+    "message": "Memeriksa apakah saling mengikuti"
+  },
+  "spy_checking_rev": {
+    "message": "Mencari di antara pengikut $1…"
+  },
+  "spy_via_followers": {
+    "message": "diperiksa di daftar pengikut $1"
+  },
+  "busy_other": {
+    "message": "Ada pemeriksaan lain yang berjalan. Tunggu sampai selesai."
+  }
+}

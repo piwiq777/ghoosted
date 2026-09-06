@@ -1,0 +1,14 @@
+{
+  "_comentario": "Lo que la extensión pregunta cada seis horas. Editar aquí y desplegar: no hace falta tocar código ni que nadie reinstale nada.",
+  "latest": "1.57.0",
+  "minimum": "1.51.0",
+  "notice": null,
+  "_ejemploDeAviso": {
+    "id": "2026-09-instagram-escrituras",
+    "level": "warn",
+    "text": {
+      "es": "Instagram ha cambiado algo y dejar de seguir no funciona. Estamos en ello.",
+      "en": "Instagram changed something and unfollowing is failing. We're on it."
+    }
+  }
+}

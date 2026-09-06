@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <title>Ghoosted · Móvil</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#08070d">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="manifest" href="m.webmanifest">
+  <style>
+    :root{
+      --bg:#08070d; --ink:#f5f3fa; --ink-2:rgba(245,243,250,.62); --ink-3:rgba(245,243,250,.40);
+      --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
+      --surface:rgba(255,255,255,.04); --surface-2:rgba(255,255,255,.07);
+      --accent:#e0459a; --alert:#ff5a7a; --ok:#39d98a;
+      --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);
+      min-height:100vh;-webkit-font-smoothing:antialiased}
+    body{padding:0 14px calc(28px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto}
+    a{color:inherit;text-decoration:none}
+    .top{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:11px;
+      padding:calc(14px + env(safe-area-inset-top)) 2px 12px;background:linear-gradient(180deg,var(--bg) 70%,rgba(8,7,13,0));}
+    .brand-mark{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;flex:none;
+      background:linear-gradient(135deg,#f9457e,#a439c9);}
+    .brand-mark svg{width:20px;fill:#fff}
+    .brand-t{font-weight:800;font-size:17px;letter-spacing:-.02em;line-height:1}
+    .brand-s{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+    .sync{margin-left:auto;font-size:11px;color:var(--ink-3);text-align:right;line-height:1.35}
+    .sync .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink-3);margin-right:5px;vertical-align:0}
+    .sync.live .dot{background:var(--ok);box-shadow:0 0 8px var(--ok)}
+    .sync.stale .dot{background:var(--alert)}
+
+    .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:4px 0 14px}
+    .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 8px;text-align:center}
+    .card b{display:block;font-size:22px;font-weight:800;letter-spacing:-.03em}
+    .card.alert b{color:var(--alert)}
+    .card span{display:block;font-size:11px;color:var(--ink-3);margin-top:3px}
+
+    .tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:8px;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{flex:none;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+      border-radius:100px;padding:8px 13px;font-size:13px;font-weight:600;display:flex;gap:6px;align-items:center;cursor:pointer}
+    .tab.active{background:#fff;color:#0a0a0f;border-color:#fff}
+    .tab .cnt{font-size:11px;background:rgba(255,255,255,.12);color:var(--ink-2);border-radius:100px;padding:1px 7px;min-width:18px;text-align:center}
+    .tab.active .cnt{background:rgba(0,0,0,.12);color:#0a0a0f}
+
+    .list{display:flex;flex-direction:column;gap:2px}
+    .row{display:flex;align-items:center;gap:11px;padding:10px 6px;border-radius:12px}
+    .row:active{background:var(--surface)}
+    .av{width:42px;height:42px;border-radius:50%;flex:none;object-fit:cover;background:var(--surface-2);
+      display:grid;place-items:center;font-weight:700;font-size:15px;color:var(--ink-2);overflow:hidden}
+    .av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .who{min-width:0;flex:1}
+    .who b{display:block;font-size:14.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .who span{display:block;font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .when{font-size:11px;color:var(--ink-3);flex:none}
+    .ig{margin-left:6px;flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+      background:var(--surface);border:1px solid var(--line)}
+    .ig svg{width:15px;height:15px;fill:none;stroke:var(--ink-2);stroke-width:2}
+
+    .state{padding:60px 24px;text-align:center;color:var(--ink-2)}
+    .state .big{font-size:44px;margin-bottom:14px}
+    .state h2{font-size:18px;font-weight:800;margin:0 0 8px}
+    .state p{font-size:14px;color:var(--ink-3);line-height:1.6;margin:0 auto;max-width:300px}
+    .state code{background:var(--surface);border:1px solid var(--line);border-radius:7px;padding:2px 6px;font-size:12px}
+    .hidden{display:none!important}
+    .spin{width:22px;height:22px;border:2.5px solid var(--line-2);border-top-color:var(--accent);border-radius:50%;
+      animation:sp .8s linear infinite;margin:0 auto 16px}
+    @keyframes sp{to{transform:rotate(360deg)}}
+  </style>
+</head>
+<body>
+  <div class="top">
+    <span class="brand-mark"><svg viewBox="0 0 24 24"><path d="M12 2c-4.1 0-7 3.2-7 7.3V21l2.3-1.6L9.6 21l2.4-1.6L14.4 21l2.3-1.6L19 21V9.3C19 5.2 16.1 2 12 2zM9.3 10.4a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm5.4 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/></svg></span>
+    <div>
+      <div class="brand-t">Ghoosted</div>
+      <div class="brand-s" id="acct">móvil</div>
+    </div>
+    <div class="sync" id="sync"><span class="dot"></span><span id="syncTxt"></span></div>
+  </div>
+
+  <main id="dash" class="hidden">
+    <div class="cards">
+      <div class="card"><b id="cFoll">–</b><span id="lFoll">seguidores</span></div>
+      <div class="card"><b id="cFing">–</b><span id="lFing">seguidos</span></div>
+      <div class="card alert"><b id="cNb">–</b><span id="lNb">no te siguen</span></div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="list" id="list"></div>
+  </main>
+
+  <div id="waiting" class="state hidden">
+    <div class="spin"></div>
+    <h2 id="wTitle">Esperando a tu PC…</h2>
+    <p id="wBody">Abre Instagram en el ordenador con la extensión Ghoosted. En cuanto haga una revisión, verás aquí lo mismo.</p>
+  </div>
+
+  <div id="empty" class="state hidden">
+    <div class="big">📱</div>
+    <h2 id="eTitle">Empareja tu móvil</h2>
+    <p id="eBody">En el PC, abre Ghoosted → ⚙ ajustes → <b>Conectar móvil</b> y escanea el QR con la cámara. Esta página mostrará lo mismo que la extensión.</p>
+  </div>
+
+  <script>
+  (function () {
+    'use strict';
+    var ES = (navigator.language || 'es').toLowerCase().indexOf('es') === 0;
+    var T = {
+      seguidores: ES ? 'seguidores' : 'followers',
+      seguidos:   ES ? 'seguidos'   : 'following',
+      notback:    ES ? 'no te siguen' : "don't follow back",
+      tab_unfollow: ES ? 'Te dejaron' : 'Unfollowed',
+      tab_new:      ES ? 'Nuevos' : 'New',
+      tab_notback:  ES ? 'No te siguen' : 'Not back',
+      tab_activity: ES ? 'Actividad' : 'Activity',
+      empty_unfollow: ES ? 'Nadie te ha dejado de seguir.' : 'Nobody has unfollowed you.',
+      empty_new: ES ? 'Sin seguidores nuevos todavía.' : 'No new followers yet.',
+      empty_notback: ES ? 'Todos a los que sigues te siguen de vuelta.' : 'Everyone you follow follows you back.',
+      empty_activity: ES ? 'Sin actividad registrada.' : 'No activity yet.',
+      live: ES ? 'Actualizado' : 'Updated',
+      stale: ES ? 'PC apagado · última' : 'PC off · last',
+      waitTitle: ES ? 'Esperando a tu PC…' : 'Waiting for your PC…',
+      waitBody: ES ? 'Abre Instagram en el ordenador con la extensión Ghoosted. En cuanto haga una revisión, verás aquí lo mismo.'
+                   : 'Open Instagram on your computer with the Ghoosted extension. As soon as it runs a check, it shows up here.',
+      emptyTitle: ES ? 'Empareja tu móvil' : 'Pair your phone',
+      badKey: ES ? 'Enlace de emparejamiento no válido. Vuelve a escanear el QR desde el PC.'
+                 : 'Invalid pairing link. Scan the QR from your PC again.',
+      just: ES ? 'ahora mismo' : 'just now',
+    };
+    document.documentElement.lang = ES ? 'es' : 'en';
+    document.getElementById('lFoll').textContent = T.seguidores;
+    document.getElementById('lFing').textContent = T.seguidos;
+    document.getElementById('lNb').textContent = T.notback;
+    document.getElementById('wTitle').textContent = T.waitTitle;
+    document.getElementById('wBody').textContent = T.waitBody;
+    document.getElementById('eTitle').textContent = T.emptyTitle;
+
+    var STORE = 'ghosted_m';
+    function b64urlToBytes(s) {
+      s = String(s).replace(/-/g, '+').replace(/_/g, '/');
+      while (s.length % 4) s += '=';
+      var bin = atob(s), out = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    }
+    function b64ToBytes(s) {
+      var bin = atob(String(s)), out = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    }
+
+    // 1) Pairing: read #<channel>~<key> from the QR, persist it, strip the URL.
+    var hash = location.hash.replace(/^#/, '');
+    if (hash.indexOf('~') !== -1) {
+      var parts = hash.split('~');
+      if (parts[0] && parts[1]) {
+        try { localStorage.setItem(STORE, JSON.stringify({ channel: parts[0], key: parts[1] })); } catch (e) {}
+      }
+      history.replaceState(null, '', location.pathname);
+    }
+    var pair = null;
+    try { pair = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch (e) {}
+
+    var elDash = document.getElementById('dash');
+    var elWait = document.getElementById('waiting');
+    var elEmpty = document.getElementById('empty');
+    var elSync = document.getElementById('sync');
+    var elSyncTxt = document.getElementById('syncTxt');
+    function show(which) {
+      elDash.classList.toggle('hidden', which !== 'dash');
+      elWait.classList.toggle('hidden', which !== 'wait');
+      elEmpty.classList.toggle('hidden', which !== 'empty');
+    }
+    if (!pair) { show('empty'); return; }
+
+    async function decrypt(blobB64) {
+      var raw = b64ToBytes(blobB64);
+      var iv = raw.slice(0, 12), ct = raw.slice(12);
+      var key = await crypto.subtle.importKey('raw', b64urlToBytes(pair.key), { name: 'AES-GCM' }, false, ['decrypt']);
+      var pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv }, key, ct);
+      return JSON.parse(new TextDecoder().decode(pt));
+    }
+
+    function ago(ts) {
+      var s = Math.max(0, Math.floor((Date.now() - ts) / 1000));
+      if (s < 45) return T.just;
+      var m = Math.floor(s / 60); if (m < 60) return (ES ? 'hace ' : '') + m + ' min' + (ES ? '' : ' ago');
+      var h = Math.floor(m / 60); if (h < 24) return (ES ? 'hace ' : '') + h + ' h' + (ES ? '' : ' ago');
+      var d = Math.floor(h / 24); return (ES ? 'hace ' : '') + d + ' d' + (ES ? '' : ' ago');
+    }
+    function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+    function initials(u) { return (String(u || '?').replace(/[^a-z0-9]/gi, '')[0] || '?').toUpperCase(); }
+
+    var activeTab = 'unfollow';
+    var lastData = null;
+
+    function rowHtml(p) {
+      var uname = p.username ? '@' + p.username : '';
+      var name = p.full_name || '';
+      // picData = a small embedded thumbnail (data: URI, always renders — no
+      // network, no CORS, never expires). pic = a raw Instagram CDN URL, kept
+      // only as best-effort for items outside the embedded-thumbnail budget;
+      // those URLs are signed and DO expire, so this is allowed to fail —
+      // onerror falls back to initials either way.
+      var imgSrc = p.picData || p.pic;
+      var av = imgSrc
+        ? '<span class="av"><img src="' + esc(imgSrc) + '" referrerpolicy="no-referrer" onerror="this.style.display=\'none\';this.parentNode.textContent=\'' + initials(p.username) + '\'"></span>'
+        : '<span class="av">' + initials(p.username) + '</span>';
+      var when = p.ts ? '<span class="when">' + ago(p.ts) + '</span>' : '';
+      var link = p.username ? 'https://www.instagram.com/' + encodeURIComponent(p.username) + '/' : '#';
+      return '<a class="row" href="' + link + '" target="_blank" rel="noopener">' + av +
+        '<span class="who"><b>' + esc(name || uname) + '</b><span>' + esc(name ? uname : '') + '</span></span>' +
+        when +
+        '<span class="ig"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none"/></svg></span>' +
+        '</a>';
+    }
+
+    function actLabel(e) {
+      var who = e.username ? '@' + e.username : '';
+      if (e.type === 'unfollow') return (ES ? 'Te dejó de seguir' : 'Unfollowed you');
+      if (e.type === 'new') return (ES ? 'Te siguió' : 'Followed you');
+      if (e.type === 'photo') return (ES ? 'Cambió su foto' : 'Changed photo');
+      if (e.type === 'bio') return (ES ? 'Cambió su bio' : 'Changed bio');
+      if (e.type === 'name') return (ES ? 'Cambió su nombre' : 'Changed name');
+      if (e.type === 'username') return (ES ? 'Cambió su @' : 'Changed handle');
+      if (e.type === 'story') return (ES ? 'Subió una historia' : 'Posted a story');
+      if (e.type === 'follow_add') return (ES ? 'Empezó a seguir a ' : 'Started following ') + (e.target && e.target.username ? '@' + e.target.username : '');
+      if (e.type === 'follow_rem') return (ES ? 'Dejó de seguir a ' : 'Unfollowed ') + (e.target && e.target.username ? '@' + e.target.username : '');
+      return e.type || '';
+    }
+
+    function renderList() {
+      var d = lastData; if (!d) return;
+      var tabs = d.tabs || {};
+      var items, empty;
+      if (activeTab === 'unfollow') { items = tabs.unfollow || []; empty = T.empty_unfollow; }
+      else if (activeTab === 'new') { items = tabs.new || []; empty = T.empty_new; }
+      else if (activeTab === 'notback') { items = tabs.notback || []; empty = T.empty_notback; }
+      else { items = tabs.activity || []; empty = T.empty_activity; }
+
+      var list = document.getElementById('list');
+      if (!items.length) { list.innerHTML = '<div class="state" style="padding:44px 20px"><p>' + esc(empty) + '</p></div>'; return; }
+      if (activeTab === 'activity') {
+        list.innerHTML = items.map(function (e) {
+          var p = { username: e.username, full_name: actLabel(e), pic: e.pic, ts: e.ts };
+          return rowHtml(p);
+        }).join('');
+      } else {
+        list.innerHTML = items.map(rowHtml).join('');
+      }
+    }
+
+    function renderTabs() {
+      var d = lastData; var tabs = d.tabs || {};
+      var defs = [
+        ['unfollow', T.tab_unfollow, (tabs.unfollow || []).length],
+        ['new', T.tab_new, (tabs.new || []).length],
+        ['notback', T.tab_notback, (tabs.notback || []).length],
+        ['activity', T.tab_activity, (tabs.activity || []).length],
+      ];
+      var el = document.getElementById('tabs');
+      el.innerHTML = defs.map(function (t) {
+        return '<button class="tab' + (t[0] === activeTab ? ' active' : '') + '" data-t="' + t[0] + '">' +
+          esc(t[1]) + '<span class="cnt">' + t[2] + '</span></button>';
+      }).join('');
+      Array.prototype.forEach.call(el.querySelectorAll('.tab'), function (b) {
+        b.addEventListener('click', function () { activeTab = b.getAttribute('data-t'); renderTabs(); renderList(); });
+      });
+    }
+
+    function render(d) {
+      lastData = d;
+      show('dash');
+      var c = d.counts || {};
+      document.getElementById('cFoll').textContent = c.followers != null ? Number(c.followers).toLocaleString() : '–';
+      document.getElementById('cFing').textContent = c.following != null ? Number(c.following).toLocaleString() : '–';
+      document.getElementById('cNb').textContent = c.notback != null ? Number(c.notback).toLocaleString() : '–';
+      if (d.user && d.user.username) document.getElementById('acct').textContent = '@' + d.user.username;
+      renderTabs(); renderList();
+      var stale = Date.now() - (d.ts || 0) > 30 * 60000;
+      elSync.className = 'sync ' + (stale ? 'stale' : 'live');
+      elSyncTxt.textContent = (stale ? T.stale + ' ' : T.live + ' ') + ago(d.ts || Date.now());
+    }
+
+    var polling = false;
+    async function tick() {
+      if (polling) return; polling = true;
+      try {
+        var r = await fetch('/api/m/pull?channel=' + encodeURIComponent(pair.channel), { cache: 'no-store' }).then(function (x) { return x.json(); });
+        if (!r || !r.ok) return;
+        if (!r.blob) { if (!lastData) show('wait'); return; }
+        var data = await decrypt(r.blob);
+        render(data);
+      } catch (e) {
+        if (e && (e.name === 'OperationError' || String(e).indexOf('decrypt') !== -1) && !lastData) {
+          show('wait');
+          document.getElementById('wTitle').textContent = T.badKey;
+        }
+      } finally { polling = false; }
+    }
+
+    if (!lastData) show('wait');
+    tick();
+    setInterval(tick, 20000);
+    window.addEventListener('focus', tick);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) tick(); });
+  })();
+  </script>
+</body>
+</html>

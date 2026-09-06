@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "Voyez qui se désabonne de vous sur Instagram. Vos données restent sur votre appareil."
+  },
+  "ago_s": {
+    "message": "il y a $1s"
+  },
+  "ago_m": {
+    "message": "il y a $1m"
+  },
+  "ago_h": {
+    "message": "il y a $1h"
+  },
+  "ago_d": {
+    "message": "il y a $1d"
+  },
+  "ago_w": {
+    "message": "il y a $1w"
+  },
+  "ago_mo": {
+    "message": "il y a $1mo"
+  },
+  "status_starting": {
+    "message": "Démarrage…"
+  },
+  "status_first": {
+    "message": "Préparation du premier scan…"
+  },
+  "status_checking": {
+    "message": "Vérification des abonnés…"
+  },
+  "status_loading_followers": {
+    "message": "Chargement des abonnés… $1"
+  },
+  "status_loading_following": {
+    "message": "Chargement des abonnements…"
+  },
+  "status_loading_following_n": {
+    "message": "Chargement des abonnements… $1"
+  },
+  "status_partial": {
+    "message": "Instagram a renvoyé une liste incomplète — je garde ta référence. Je réessaie bientôt."
+  },
+  "status_baseline": {
+    "message": "Référence enregistrée ✓ Je détecte les changements à partir de maintenant."
+  },
+  "status_unfollowers": {
+    "message": "$1 personne(s) t'ont lâché."
+  },
+  "status_nochanges": {
+    "message": "Aucun changement. Tout est à jour ✓"
+  },
+  "status_rate": {
+    "message": "Instagram demande de ralentir · code $1. Tes données restent enregistrées."
+  },
+  "status_auth": {
+    "message": "Instagram a refusé la lecture · code $1. Tu peux revérifier."
+  },
+  "status_challenge": {
+    "message": "Instagram demande une vérification sur son site · code $1."
+  },
+  "status_cooldown": {
+    "message": "Prêt à vérifier Instagram."
+  },
+  "status_network": {
+    "message": "Erreur réseau. Je réessaie."
+  },
+  "status_transport": {
+    "message": "Instagram a renvoyé son site au lieu des abonnés · code $1."
+  },
+  "status_http": {
+    "message": "Instagram a rejeté la requête · code $1. Nouvel essai autrement."
+  },
+  "status_other_tab": {
+    "message": "Un autre onglet Instagram vérifie déjà ce compte."
+  },
+  "status_error": {
+    "message": "Un truc a foiré. Je réessaie."
+  },
+  "status_reload": {
+    "message": "L’extension a été mise à jour — rechargez cet onglet Instagram."
+  },
+  "status_upto": {
+    "message": "À jour ✓ (dernière : $1)"
+  },
+  "status_pro_needed": {
+    "message": "Le suivi des stories est une fonctionnalité Ghoosted Pro."
+  },
+  "status_story_reading": {
+    "message": "Lecture de tes stories…"
+  },
+  "status_story_none": {
+    "message": "Aucune story active. Publiez-en une d'abord."
+  },
+  "status_story_item": {
+    "message": "Lecture de la story $1…"
+  },
+  "status_story_viewers": {
+    "message": "Lecture des vues… $1"
+  },
+  "status_story_done": {
+    "message": "$1 vues lues ✓"
+  },
+  "status_watch_adding": {
+    "message": "Ajout du profil à la surveillance…"
+  },
+  "status_watch_added": {
+    "message": "$1 ajouté à la surveillance ✓"
+  },
+  "status_no_photos": {
+    "message": "Aucune photo enregistrée à supprimer."
+  },
+  "status_photos_cleared": {
+    "message": "Photos enregistrées supprimées ✓"
+  },
+  "status_save_failed": {
+    "message": "Échec de l'enregistrement — le stockage est peut-être plein. Essayez « vider les photos enregistrées » dans les Réglages."
+  },
+  "status_watch_invalid": {
+    "message": "Entre un nom d'utilisateur valide."
+  },
+  "status_watch_notfound": {
+    "message": "Impossible de trouver ce profil Instagram."
+  },
+  "status_watch_found": {
+    "message": "$1 trouvé. Confirme avant de le surveiller."
+  },
+  "notif_one": {
+    "message": "Quelqu'un t'a lâché 👀"
+  },
+  "notif_many": {
+    "message": "$1 personnes t'ont lâché 👀"
+  },
+  "ui_subtitle": {
+    "message": "qui te regarde, qui te lâche"
+  },
+  "big_mode": {
+    "message": "Mode agrandi"
+  },
+  "close": {
+    "message": "Fermer"
+  },
+  "settings": {
+    "message": "Réglages"
+  },
+  "chip_followers": {
+    "message": "abonnés"
+  },
+  "chip_following": {
+    "message": "abonnements"
+  },
+  "chip_notback": {
+    "message": "te suivent pas"
+  },
+  "tab_unfollow": {
+    "message": "Unfollows"
+  },
+  "tab_new": {
+    "message": "Nouveaux"
+  },
+  "tab_notback": {
+    "message": "Te suivent pas"
+  },
+  "tab_live": {
+    "message": "Stories"
+  },
+  "tab_activity": {
+    "message": "Activité"
+  },
+  "tab_history": {
+    "message": "Historique"
+  },
+  "tab_top": {
+    "message": "Top"
+  },
+  "top_likes": {
+    "message": "Plus de likes reçus"
+  },
+  "top_comments": {
+    "message": "Plus de commentaires"
+  },
+  "top_stories": {
+    "message": "Plus de stories vues"
+  },
+  "top_growth": {
+    "message": "Nouveaux abonnés"
+  },
+  "top_calc": {
+    "message": "Calculer likes & commentaires"
+  },
+  "top_recalc": {
+    "message": "Actualiser"
+  },
+  "top_calculating": {
+    "message": "Calcul…"
+  },
+  "top_calc_hint": {
+    "message": "Appuie pour lire les likes & commentaires de tes derniers posts."
+  },
+  "top_from": {
+    "message": "Sur tes $1 derniers posts."
+  },
+  "top_progress": {
+    "message": "Lecture du post $1/$2…"
+  },
+  "top_likes_n": {
+    "message": "$1 likes"
+  },
+  "top_cmts_n": {
+    "message": "$1 commentaires"
+  },
+  "top_empty": {
+    "message": "Rien pour l'instant."
+  },
+  "top_growth_empty": {
+    "message": "Aucun nouvel abonné enregistré pour l'instant."
+  },
+  "btn_check": {
+    "message": "Vérifier"
+  },
+  "btn_capture": {
+    "message": "Voir les vues"
+  },
+  "next_review": {
+    "message": "Prochain scan auto ~ $1"
+  },
+  "private": {
+    "message": "privé"
+  },
+  "empty_unfollow": {
+    "message": "Personne ne t'a lâché depuis le début du suivi.<br>Je te préviens ici et par notification 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "Je n'ai pas encore pu charger tes abonnés.<br>Appuie sur « Vérifier » pour réessayer."
+  },
+  "empty_new": {
+    "message": "Aucun nouvel abonné enregistré pour l'instant."
+  },
+  "empty_notback_load": {
+    "message": "Appuie sur « Vérifier » pour charger qui tu suis."
+  },
+  "empty_notback_none": {
+    "message": "Tous ceux que tu suis te suivent en retour 🙌"
+  },
+  "empty_ghosted": {
+    "message": "Publiez une story, puis touchez \"Voir les vues\" pour lancer votre classement."
+  },
+  "empty_ghosted_pub": {
+    "message": "Aucune vue pour l'instant. Publiez une story et réessayez."
+  },
+  "empty_history": {
+    "message": "Pas encore assez de données. Ton évolution d'abonnés apparaîtra ici."
+  },
+  "empty_activity": {
+    "message": "Aucun changement de profil pour l'instant.<br>Ghoosted enregistrera les changements de photo, nom, pseudo et bio dès le premier scan."
+  },
+  "activity_title": {
+    "message": "Activité des profils"
+  },
+  "activity_desc": {
+    "message": "Tes abonnés et abonnements sont surveillés automatiquement. Ajoute n'importe quel compte pour être prévenu quand il publie une story ou change qui il suit. Les vérifications se font tant qu'Instagram est ouvert dans un onglet."
+  },
+  "activity_watch_placeholder": {
+    "message": "Cherche un pseudo à surveiller…"
+  },
+  "sugg_following": {
+    "message": "tu suis"
+  },
+  "spy_hint": {
+    "message": "Fonctionne uniquement sur les comptes publics ou que tu suis déjà."
+  },
+  "activity_watch_add": {
+    "message": "Ajouter"
+  },
+  "activity_watch_search": {
+    "message": "Chercher"
+  },
+  "activity_watch_confirm": {
+    "message": "Surveiller le profil"
+  },
+  "activity_watch_cancel": {
+    "message": "Annuler"
+  },
+  "activity_manual": {
+    "message": "Dans le viseur · $1"
+  },
+  "activity_remove": {
+    "message": "Arrêter de surveiller"
+  },
+  "activity_changed_photo": {
+    "message": "A changé sa photo de profil"
+  },
+  "activity_changed_bio": {
+    "message": "A mis à jour sa bio"
+  },
+  "activity_changed_name": {
+    "message": "A changé son nom"
+  },
+  "activity_changed_username": {
+    "message": "A changé son pseudo"
+  },
+  "activity_changed_profile": {
+    "message": "A mis à jour son profil"
+  },
+  "activity_tag_photo": {
+    "message": "photo"
+  },
+  "activity_tag_bio": {
+    "message": "bio"
+  },
+  "activity_tag_profile": {
+    "message": "profil"
+  },
+  "activity_tag_followers": {
+    "message": "abonnés"
+  },
+  "activity_story": {
+    "message": "A publié une story"
+  },
+  "activity_link": {
+    "message": "A changé son lien"
+  },
+  "activity_followers_up": {
+    "message": "A gagné $1 abonnés"
+  },
+  "activity_followers_down": {
+    "message": "A perdu $1 abonnés"
+  },
+  "activity_new_follower": {
+    "message": "Nouvel abonné : $1"
+  },
+  "new_followers_title": {
+    "message": "Nouveaux abonnés"
+  },
+  "activity_lost_follower": {
+    "message": "$1 l'a lâché"
+  },
+  "lost_followers_title": {
+    "message": "L'ont lâché"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — ouvrir ce profil"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "Chercher sur TikTok"
+  },
+  "dos_more": {
+    "message": "Voir plus"
+  },
+  "dos_loading_more": {
+    "message": "Chargement…"
+  },
+  "dos_ghost": {
+    "message": "Stories"
+  },
+  "dos_ghost_hint": {
+    "message": "Regarde ses stories sans qu'il voie que tu les as vues"
+  },
+  "dos_ghost_note": {
+    "message": "Mode fantôme · aucune trace dans « vu par »"
+  },
+  "dos_ghost_none": {
+    "message": "Aucune story active pour le moment."
+  },
+  "dos_ghost_all": {
+    "message": "⬇ Tout télécharger"
+  },
+  "dos_ghost_all_prog": {
+    "message": "Téléchargement $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "$1 téléchargées ✓"
+  },
+  "dos_filter_all": {
+    "message": "Tout"
+  },
+  "activity_follow_add": {
+    "message": "A commencé à suivre $1"
+  },
+  "activity_follow_rem": {
+    "message": "A lâché $1"
+  },
+  "activity_tag_story": {
+    "message": "story"
+  },
+  "activity_tag_follow": {
+    "message": "suit"
+  },
+  "activity_tag_unfollow2": {
+    "message": "a lâché"
+  },
+  "notif_story": {
+    "message": "$1 a publié une story 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 suit une nouvelle personne"
+  },
+  "notif_follow_rem": {
+    "message": "$1 a lâché quelqu'un"
+  },
+  "spy_now_follows": {
+    "message": "Suit maintenant $1"
+  },
+  "spy_unfollowed": {
+    "message": "A lâché $1"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 T'A lâché 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 a changé qui il suit"
+  },
+  "spy_added_c": {
+    "message": "+$1 abonnements"
+  },
+  "spy_removed_c": {
+    "message": "−$1 abonnements"
+  },
+  "watch_toggle_story": {
+    "message": "Me prévenir de ses stories"
+  },
+  "watch_toggle_following": {
+    "message": "Surveiller qui il suit"
+  },
+  "wt_story": {
+    "message": "Stories"
+  },
+  "wt_following": {
+    "message": "Abonnements"
+  },
+  "wt_profile": {
+    "message": "Profil"
+  },
+  "spy_check_title": {
+    "message": "Ils se suivent ?"
+  },
+  "spy_a_ph": {
+    "message": "compte A (@pseudo)"
+  },
+  "spy_b_ph": {
+    "message": "compte B (@pseudo)"
+  },
+  "spy_check_btn": {
+    "message": "Vérifier"
+  },
+  "spy_checking": {
+    "message": "Vérification…"
+  },
+  "spy_checking_dir": {
+    "message": "Vérification des abonnements de $1… ça peut prendre quelques secondes pour les gros comptes"
+  },
+  "spy_need_two": {
+    "message": "Entre les deux pseudos."
+  },
+  "spy_result_mutual": {
+    "message": "$1 et $2 se suivent mutuellement"
+  },
+  "spy_result_a": {
+    "message": "$1 suit $2, mais pas l'inverse"
+  },
+  "spy_result_b": {
+    "message": "$2 suit $1, mais pas l'inverse"
+  },
+  "spy_result_none": {
+    "message": "Ni $1 ni $2 ne se suivent"
+  },
+  "spy_result_err": {
+    "message": "Vérification impossible (compte privé ou inexistant ?)"
+  },
+  "spy_direction_yes": {
+    "message": "$1 suit $2"
+  },
+  "spy_direction_no": {
+    "message": "$1 ne suit pas $2"
+  },
+  "spy_direction_unknown": {
+    "message": "Impossible de vérifier si $1 suit $2 — compte privé que tu ne suis pas"
+  },
+  "dos_open": {
+    "message": "Détective — enquêter sur le profil"
+  },
+  "dos_loading": {
+    "message": "Chargement du dossier…"
+  },
+  "dos_err": {
+    "message": "Impossible de charger ce profil."
+  },
+  "dos_err_auth": {
+    "message": "Instagram a refusé la lecture. Réessaie."
+  },
+  "dos_download": {
+    "message": "Télécharger la photo (HD)"
+  },
+  "dos_downloading": {
+    "message": "Téléchargement…"
+  },
+  "dos_downloaded": {
+    "message": "Enregistrée ✓"
+  },
+  "dos_openpic": {
+    "message": "Ouvrir la photo"
+  },
+  "dos_copyid": {
+    "message": "Copier l'ID"
+  },
+  "dos_watch": {
+    "message": "Surveiller"
+  },
+  "dos_watching": {
+    "message": "Sous surveillance ✓"
+  },
+  "dos_copied": {
+    "message": "Copié ✓"
+  },
+  "dos_posts": {
+    "message": "posts"
+  },
+  "dos_profile": {
+    "message": "Profil"
+  },
+  "dos_web": {
+    "message": "Site web"
+  },
+  "dos_category": {
+    "message": "Catégorie"
+  },
+  "dos_contact": {
+    "message": "Contact public"
+  },
+  "dos_address": {
+    "message": "Adresse"
+  },
+  "dos_business": {
+    "message": "Entreprise"
+  },
+  "dos_highlights": {
+    "message": "Stories à la une"
+  },
+  "dos_save": {
+    "message": "Voir la photo"
+  },
+  "dos_save_hint": {
+    "message": "Enregistre cette couverture et te la montre"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "Enregistrée ✓"
+  },
+  "dos_saved_already": {
+    "message": "Déjà enregistrée"
+  },
+  "dos_photo_history": {
+    "message": "Historique photos"
+  },
+  "dos_posts_sec": {
+    "message": "Publications"
+  },
+  "dos_engagement": {
+    "message": "Engagement"
+  },
+  "dos_eng_avg": {
+    "message": "Moyenne : $1 likes · $2 commentaires par post"
+  },
+  "eng_fire": {
+    "message": "🔥 De ouf"
+  },
+  "eng_good": {
+    "message": "Très bon"
+  },
+  "eng_ok": {
+    "message": "Moyen"
+  },
+  "eng_low": {
+    "message": "Faible"
+  },
+  "dos_relations": {
+    "message": "Abonnés & abonnements"
+  },
+  "dos_see_followers": {
+    "message": "Voir les abonnés"
+  },
+  "dos_see_following": {
+    "message": "Voir les abonnements"
+  },
+  "dos_rel_hint": {
+    "message": "Comptes publics ou que tu suis. Montre un échantillon, pas toute la liste."
+  },
+  "dos_rel_loading": {
+    "message": "Chargement…"
+  },
+  "dos_rel_empty": {
+    "message": "Impossible de lire cette liste (compte privé que tu ne suis pas)."
+  },
+  "dos_rel_more": {
+    "message": "Affiche les $1 premiers. Ouvre son profil pour la liste complète."
+  },
+  "dos_rel_search": {
+    "message": "Chercher dans la liste…"
+  },
+  "dos_rel_click_hint": {
+    "message": "Appuie sur le nombre d'abonnés ou d'abonnements ci-dessus pour voir la liste ici."
+  },
+  "dos_rel_nomatch": {
+    "message": "Aucun résultat dans la liste chargée."
+  },
+  "dos_history": {
+    "message": "Historique"
+  },
+  "dos_history_empty": {
+    "message": "Aucun changement enregistré pour ce compte."
+  },
+  "dos_graph_empty": {
+    "message": "Le graphique d'abonnés se construit à mesure que tu ouvres ce profil."
+  },
+  "dos_investigate": {
+    "message": "Enquêter"
+  },
+  "unlock_title": {
+    "message": "Active Ghoosted"
+  },
+  "unlock_copy": {
+    "message": "Une clé active Ghoosted pour ce compte Instagram, pour toujours. Paiement unique."
+  },
+  "unlock_price": {
+    "message": "€5 · à vie, usage unique"
+  },
+  "unlock_buy": {
+    "message": "Acheter · €5 une fois"
+  },
+  "unlock_label": {
+    "message": "Tu as déjà une clé ?"
+  },
+  "unlock_activate": {
+    "message": "Activer"
+  },
+  "unlock_enter_key": {
+    "message": "Entre ta clé de produit."
+  },
+  "unlock_checking": {
+    "message": "Vérification de la clé…"
+  },
+  "unlock_active": {
+    "message": "Ghoosted activé pour ce compte ✓"
+  },
+  "unlock_bound": {
+    "message": "Cette clé est déjà liée à un autre compte Instagram."
+  },
+  "unlock_expired": {
+    "message": "Cette clé a été désactivée."
+  },
+  "unlock_invalid": {
+    "message": "La clé est invalide ou pas encore émise."
+  },
+  "unlock_network": {
+    "message": "Impossible de vérifier la clé. Réessaie."
+  },
+  "unlock_status": {
+    "message": "Active Ghoosted pour commencer."
+  },
+  "tag_unfollow": {
+    "message": "t'a lâché"
+  },
+  "tag_new": {
+    "message": "nouveau"
+  },
+  "tag_notfollowing": {
+    "message": "te suit pas"
+  },
+  "tag_fan": {
+    "message": "fan n°1"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "Débloque Ghoosted Pro"
+  },
+  "pro_desc": {
+    "message": "Découvre qui regarde tes stories, crée un classement permanent de tes spectateurs les plus fidèles, reçois des alertes instantanées et ton historique complet."
+  },
+  "pro_unlock": {
+    "message": "Débloquer — €5 une fois"
+  },
+  "pro_havekey": {
+    "message": "Déjà acheté ? Clique sur l'icône Ghoosted dans la barre du navigateur pour entrer ta clé."
+  },
+  "history_captures": {
+    "message": "Vérifications récentes"
+  },
+  "history_viewers": {
+    "message": "$1 spectateurs"
+  },
+  "confirm_reset": {
+    "message": "Refaire la référence ? Je relis tes abonnés actuels comme nouveau point de départ. Ton historique « Unfollows » et « Nouveaux » n'est PAS supprimé."
+  },
+  "confirm_clear": {
+    "message": "Supprimer TOUT l'historique (unfollows, nouveaux abonnés et stats de stories) ? Ça ne peut pas être annulé."
+  },
+  "confirm_clear_photos": {
+    "message": "Supprimer les $1 photos enregistrées (avatars, couvertures à la une) ? Cela libère de l'espace et est irréversible."
+  },
+  "settings_interval": {
+    "message": "Vérifier toutes les"
+  },
+  "settings_notify": {
+    "message": "Me prévenir"
+  },
+  "settings_reset": {
+    "message": "Refaire la référence (garde l'historique)"
+  },
+  "settings_export": {
+    "message": "Exporter mes données (JSON)"
+  },
+  "settings_clear": {
+    "message": "effacer l'historique"
+  },
+  "settings_clear_photos": {
+    "message": "vider les photos enregistrées"
+  },
+  "popup_tagline": {
+    "message": "qui te regarde, qui te lâche"
+  },
+  "popup_status_free": {
+    "message": "Offre gratuite"
+  },
+  "popup_status_locked": {
+    "message": "En attente d'activation"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · actif"
+  },
+  "popup_free_desc": {
+    "message": "Active une clé Ghoosted pour utiliser l'extension avec ce compte Instagram."
+  },
+  "popup_pro_desc": {
+    "message": "Tout est débloqué. Merci pour ton soutien"
+  },
+  "popup_buy": {
+    "message": "Obtenir Ghoosted · €5"
+  },
+  "popup_license_label": {
+    "message": "Déjà acheté ? Entre ta clé de licence"
+  },
+  "popup_activate": {
+    "message": "Activer"
+  },
+  "popup_open_ig": {
+    "message": "Ouvrir Instagram"
+  },
+  "popup_privacy": {
+    "message": "Confidentialité"
+  },
+  "popup_help": {
+    "message": "Aide"
+  },
+  "popup_remove": {
+    "message": "Retirer la licence"
+  },
+  "popup_enter_key": {
+    "message": "Entre d'abord ta clé de licence."
+  },
+  "popup_activating": {
+    "message": "Vérification…"
+  },
+  "popup_active": {
+    "message": "Pro activé. Profite 🎉"
+  },
+  "popup_refunded": {
+    "message": "Cette licence a été remboursée ou contestée."
+  },
+  "popup_network": {
+    "message": "Impossible de joindre le serveur. Réessaie."
+  },
+  "popup_invalid": {
+    "message": "Cette clé n'a pas l'air valide. Vérifie et réessaie."
+  },
+  "popup_removed": {
+    "message": "Licence retirée."
+  },
+  "popup_need_ig": {
+    "message": "Ouvre Instagram dans cette fenêtre pour activer ta clé."
+  },
+  "popup_bound": {
+    "message": "Cette clé est déjà liée à un autre compte Instagram."
+  },
+  "eng_hidden": {
+    "message": "Cache ses likes"
+  },
+  "eng_hidden_sub": {
+    "message": "Impossible de calculer l'engagement réel : les likes sont cachés."
+  },
+  "settings_language": {
+    "message": "Langue"
+  },
+  "settings_data": {
+    "message": "Données"
+  },
+  "settings_connect_mobile": {
+    "message": "Connecter le téléphone"
+  },
+  "mobile_title": {
+    "message": "Ghoosted sur ton téléphone"
+  },
+  "mobile_body": {
+    "message": "Scanne avec l’appareil photo du téléphone. Ton téléphone reflète l’extension, en lecture seule. Il se met à jour à chaque vérification du PC."
+  },
+  "mobile_unpair": {
+    "message": "Dissocier le téléphone"
+  },
+  "popup_wrong_product": {
+    "message": "Cette clé correspond à une autre version de Ghoosted."
+  },
+  "gs_saw": {
+    "message": "A vu $1 de vos $2 stories"
+  },
+  "gs_saw_total": {
+    "message": "$1 de vos stories vues au total"
+  },
+  "gs_days_one": {
+    "message": "$1 jour"
+  },
+  "gs_days_many": {
+    "message": "$1 jours"
+  },
+  "gs_pos": {
+    "message": "n° $1 dans la liste"
+  },
+  "tag_dropoff": {
+    "message": "n'a pas fini"
+  },
+  "gs_note": {
+    "message": "D'après la liste des vues d'Instagram : qui a vu et qui a aimé. Instagram ne signale ni captures ni revisionnages."
+  },
+  "gs_liked": {
+    "message": "❤️ a aimé $1"
+  },
+  "gs_story_n": {
+    "message": "Story $1 ($2) · $3 vues · $4 j’aime"
+  },
+  "gs_search": {
+    "message": "Chercher une vue…"
+  },
+  "gs_no_match": {
+    "message": "Aucune vue à ce nom."
+  },
+  "gs_alltime": {
+    "message": "$1 de vos stories vues au total"
+  },
+  "gs_archive_title": {
+    "message": "Mes stories",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "Retour"
+  },
+  "gs_all_fans": {
+    "message": "Fans de toutes vos stories"
+  },
+  "gs_order_note": {
+    "message": "Vues dans l'ordre d'Instagram. Quand quelqu'un rouvre ta story, il remonte tout en haut — Ghoosted le détecte et le compte comme une réouverture (🔁). C'est une estimation selon la fréquence de lecture, pas un compteur officiel Instagram : ça n'existe pas."
+  },
+  "gs_detail_meta": {
+    "message": "$1 vues · $2 j’aime"
+  },
+  "gs_no_viewers": {
+    "message": "Aucune vue enregistrée pour cette story."
+  },
+  "gs_video": {
+    "message": "Vidéo"
+  },
+  "gs_photo": {
+    "message": "Photo"
+  },
+  "gs_archive_sub": {
+    "message": "Vous seul pouvez voir vos stories archivées, sauf si vous choisissez de les partager."
+  },
+  "gs_refresh": {
+    "message": "Actualiser mes stories"
+  },
+  "gs_capturing": {
+    "message": "Lecture des vues de ta story…"
+  },
+  "gs_empty_archive": {
+    "message": "Rien d'enregistré. Si une story est en ligne, actualisez pour la garder."
+  },
+  "gs_reopen": {
+    "message": "revenu·e en haut $1×"
+  },
+  "nb_select": {
+    "message": "Sélectionner"
+  },
+  "nb_cancel": {
+    "message": "Annuler"
+  },
+  "nb_all": {
+    "message": "Tout"
+  },
+  "nb_none": {
+    "message": "Aucun"
+  },
+  "nb_unfollow_n": {
+    "message": "Ne plus suivre ($1)"
+  },
+  "nb_hint": {
+    "message": "Touche les personnes à ne plus suivre, puis « Ne plus suivre ». Ça se fait une par une avec une pause — Instagram bloque les comptes trop rapides."
+  },
+  "nb_confirm": {
+    "message": "Ne plus suivre $1 comptes ? Ghoosted le fait lentement (quelques secondes entre chaque) pour éviter un blocage Instagram. Laisse cet onglet ouvert."
+  },
+  "nb_progress": {
+    "message": "En cours… $1/$2"
+  },
+  "nb_done": {
+    "message": "Terminé — $1 désabonnements."
+  },
+  "nb_blocked": {
+    "message": "Instagram demande de ralentir. Arrêté après $1. Continue plus tard."
+  },
+  "wprof_updated": {
+    "message": "Màj $1"
+  },
+  "wprof_followers": {
+    "message": "Abonnés"
+  },
+  "wprof_following": {
+    "message": "Abonnements"
+  },
+  "wprof_recent": {
+    "message": "Abonnements récents"
+  },
+  "wprof_recent_none": {
+    "message": "Aucun nouvel abonnement détecté pour l'instant."
+  },
+  "wprof_track_hint": {
+    "message": "Active 👥 pour suivre qui il/elle suit et voir ses stats ici."
+  },
+  "unit_min": {
+    "message": "min"
+  },
+  "dos_link": {
+    "message": "lien"
+  },
+  "dos_id": {
+    "message": "ID"
+  },
+  "dos_email": {
+    "message": "E-mail"
+  },
+  "dos_tel": {
+    "message": "Tél"
+  },
+  "status_newfollowers": {
+    "message": "+$1 nouvel(le)(s) abonné(e)(s)."
+  },
+  "nb_search": {
+    "message": "Rechercher par nom ou @pseudo"
+  },
+  "nb_no_match": {
+    "message": "Aucun compte à ce nom."
+  },
+  "gh_entry": {
+    "message": "Stories en cours (mode fantôme)"
+  },
+  "gh_note": {
+    "message": "Ces personnes ont une story en ce moment. Ouvrez-la ici : Instagram n'en saura rien, vous n'apparaîtrez pas dans la liste des vues."
+  },
+  "gh_watch_note": {
+    "message": "Mode fantôme — Instagram ne sait pas que vous l'avez vue."
+  },
+  "gh_refresh": {
+    "message": "Actualiser"
+  },
+  "gh_loading": {
+    "message": "Recherche des stories en cours…"
+  },
+  "gh_loading_one": {
+    "message": "Chargement de sa story…"
+  },
+  "gh_empty": {
+    "message": "Personne que vous suivez n'a de story en ce moment."
+  },
+  "gh_no_media": {
+    "message": "Impossible de charger sa story."
+  },
+  "gh_err": {
+    "message": "Instagram n'a pas renvoyé la liste. Réessayez dans un instant."
+  },
+  "gh_err_rate": {
+    "message": "Instagram a demandé de ralentir. Attendez un peu et réessayez."
+  },
+  "gh_stories_n": {
+    "message": "$1 stories"
+  },
+  "gh_story_1": {
+    "message": "1 story"
+  },
+  "gh_unseen": {
+    "message": "non vue"
+  },
+  "gh_slide": {
+    "message": "$1 sur $2"
+  },
+  "nb_failed": {
+    "message": "Vous ne suivez plus $1. $2 ont échoué — Instagram a refusé."
+  },
+  "gh_play_all": {
+    "message": "Tout voir ($1)"
+  },
+  "gh_person_of": {
+    "message": "$1 sur $2"
+  },
+  "gh_badge": {
+    "message": "mode fantôme"
+  },
+  "gh_pause": {
+    "message": "Pause"
+  },
+  "gh_resume": {
+    "message": "Reprendre"
+  },
+  "gh_close": {
+    "message": "Fermer"
+  },
+  "gh_download": {
+    "message": "Télécharger"
+  },
+  "gh_download_all": {
+    "message": "Tout télécharger"
+  },
+  "gh_sound": {
+    "message": "Son"
+  },
+  "dos_posts_none": {
+    "message": "Pas d’accès aux publications"
+  },
+  "settings_appearance": {
+    "message": "Apparence"
+  },
+  "settings_light": {
+    "message": "Mode clair"
+  },
+  "toast_watching": {
+    "message": "Vous surveillez maintenant $1",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "Vous ne surveillez plus $1",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "Instagram demande de ralentir. Réessayez dans $1 min.",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "Chercher quelqu'un…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "Personne à ce nom",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "Recherche…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "Aucun résultat",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "Pas encore assez d'historique. Revenez dans un jour.",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "depuis le $1",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "M'alerter si ça change",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "Alerte active",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "Surveillance de $1",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "$1 n'est plus surveillé",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "PAIRES SURVEILLÉES",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1 ne suit plus $2",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1 suit désormais $2",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1 ne suit plus $2",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1 suit désormais $2",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "paire",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "Vider",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "Sûr ?",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "Activité vidée",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "avant",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "maintenant",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "Chargement des abonnés",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "Un instant, cela peut prendre du temps",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "Impossible de lire toute votre liste d'abonnements. L'ancienne est conservée.",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "Liste d'abonnements du $1 · appuyez sur « Vérifier » pour l'actualiser",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "Chargement des abonnements",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "Comparaison et enregistrement",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "sur $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "DEMANDES D'ABONNEMENT",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "Manuel",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "Seulement ceux que je suis",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "Toutes",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "N'importe qui entrera dans votre compte privé sans que vous le validiez.",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "Approuver",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "Approbation…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "Aucune demande en attente.",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "Accepter",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "Refuser",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "$1 accepté",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "$1 refusé",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "$1 acceptées",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "Impossible de charger les demandes.",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "Approuver automatiquement",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "Approbation des demandes",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "Désabonnement",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "environ $1 restantes",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 min",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 s",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "On y va lentement exprès",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "Instagram bloque les comptes qui vont trop vite. Des pauses irrégulières passent inaperçues. Vous pouvez fermer le panneau : ça continue en arrière-plan.",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "Cliquez pour replier ou déplier",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "Interactions",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "Une nouvelle version est là ($1)",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "Télécharger",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "Votre version ne fonctionne plus avec Instagram. Mettez à jour pour continuer.",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "Ignorer",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "Les changements de vos abonnés et abonnements sont notés ici : qui arrive, qui part et quand. Les vérifications se font tant qu'Instagram reste ouvert dans un onglet."
+  },
+  "empty_unfollow_own": {
+    "message": "Personne ne s'est désabonné depuis la première vérification.<br>Je vous préviens ici et par notification 👀"
+  },
+  "load_pair": {
+    "message": "Vérification s'ils s'abonnent l'un à l'autre"
+  },
+  "spy_checking_rev": {
+    "message": "Recherche parmi les abonnés de $1…"
+  },
+  "spy_via_followers": {
+    "message": "vérifié dans la liste d'abonnés de $1"
+  },
+  "busy_other": {
+    "message": "Une autre vérification est en cours. Attendez qu'elle finisse."
+  }
+}

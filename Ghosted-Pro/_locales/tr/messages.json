@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "Instagram'da seni kimin takipten çıktığını gör. Verilerin cihazında kalır."
+  },
+  "ago_s": {
+    "message": "$1s önce"
+  },
+  "ago_m": {
+    "message": "$1m önce"
+  },
+  "ago_h": {
+    "message": "$1h önce"
+  },
+  "ago_d": {
+    "message": "$1d önce"
+  },
+  "ago_w": {
+    "message": "$1w önce"
+  },
+  "ago_mo": {
+    "message": "$1mo önce"
+  },
+  "status_starting": {
+    "message": "Başlıyor…"
+  },
+  "status_first": {
+    "message": "İlk tarama hazırlanıyor…"
+  },
+  "status_checking": {
+    "message": "Takipçiler kontrol ediliyor…"
+  },
+  "status_loading_followers": {
+    "message": "Takipçiler yükleniyor… $1"
+  },
+  "status_loading_following": {
+    "message": "Takip edilenler yükleniyor…"
+  },
+  "status_loading_following_n": {
+    "message": "Takip edilenler yükleniyor… $1"
+  },
+  "status_partial": {
+    "message": "Instagram eksik liste döndürdü — başlangıç noktanı koruyorum. Birazdan tekrar deneyeceğim."
+  },
+  "status_baseline": {
+    "message": "Başlangıç noktası kaydedildi ✓ Bundan sonra değişiklikleri takip edeceğim."
+  },
+  "status_unfollowers": {
+    "message": "$1 kişi seni takipten çıktı."
+  },
+  "status_nochanges": {
+    "message": "Değişiklik yok. Her şey güncel ✓"
+  },
+  "status_rate": {
+    "message": "Instagram yavaşlamanı istedi · kod $1. Verilerin hâlâ kayıtlı."
+  },
+  "status_auth": {
+    "message": "Instagram okumayı reddetti · kod $1. Tekrar kontrol edebilirsin."
+  },
+  "status_challenge": {
+    "message": "Instagram kendi sitesinde doğrulama istiyor · kod $1."
+  },
+  "status_cooldown": {
+    "message": "Instagram'ı kontrol etmeye hazır."
+  },
+  "status_network": {
+    "message": "Ağ hatası. Tekrar deneyeceğim."
+  },
+  "status_transport": {
+    "message": "Instagram takipçiler yerine kendi sitesini döndürdü · kod $1."
+  },
+  "status_http": {
+    "message": "Instagram isteği reddetti · kod $1. Başka yolla deniyorum."
+  },
+  "status_other_tab": {
+    "message": "Başka bir Instagram sekmesi bu hesabı zaten kontrol ediyor."
+  },
+  "status_error": {
+    "message": "Bir şeyler ters gitti. Tekrar deneyeceğim."
+  },
+  "status_reload": {
+    "message": "Uzantı güncellendi — bu Instagram sekmesini yenile."
+  },
+  "status_upto": {
+    "message": "Güncel ✓ (son: $1)"
+  },
+  "status_pro_needed": {
+    "message": "Story takibi bir Ghoosted Pro özelliği."
+  },
+  "status_story_reading": {
+    "message": "Story'lerin okunuyor…"
+  },
+  "status_story_none": {
+    "message": "Aktif hikâye yok. Önce bir tane paylaş."
+  },
+  "status_story_item": {
+    "message": "Story $1 okunuyor…"
+  },
+  "status_story_viewers": {
+    "message": "İzleyiciler okunuyor… $1"
+  },
+  "status_story_done": {
+    "message": "$1 izleyici okundu ✓"
+  },
+  "status_watch_adding": {
+    "message": "Profil izleme listesine ekleniyor…"
+  },
+  "status_watch_added": {
+    "message": "$1 izleme listesine eklendi ✓"
+  },
+  "status_no_photos": {
+    "message": "Silinecek kayıtlı fotoğraf yok."
+  },
+  "status_photos_cleared": {
+    "message": "Kayıtlı fotoğraflar silindi ✓"
+  },
+  "status_save_failed": {
+    "message": "Kaydedilemedi — depolama alanı dolu olabilir. Ayarlar'da \"kayıtlı fotoğrafları temizle\"yi dene."
+  },
+  "status_watch_invalid": {
+    "message": "Geçerli bir kullanıcı adı gir."
+  },
+  "status_watch_notfound": {
+    "message": "O Instagram profili bulunamadı."
+  },
+  "status_watch_found": {
+    "message": "$1 bulundu. İzlemeden önce onayla."
+  },
+  "notif_one": {
+    "message": "Biri seni takipten çıktı 👀"
+  },
+  "notif_many": {
+    "message": "$1 kişi seni takipten çıktı 👀"
+  },
+  "ui_subtitle": {
+    "message": "kim izliyor, kim gidiyor"
+  },
+  "big_mode": {
+    "message": "Büyük mod"
+  },
+  "close": {
+    "message": "Kapat"
+  },
+  "settings": {
+    "message": "Ayarlar"
+  },
+  "chip_followers": {
+    "message": "takipçi"
+  },
+  "chip_following": {
+    "message": "takip"
+  },
+  "chip_notback": {
+    "message": "geri takip etmiyor"
+  },
+  "tab_unfollow": {
+    "message": "Takipten çıkanlar"
+  },
+  "tab_new": {
+    "message": "Yeni"
+  },
+  "tab_notback": {
+    "message": "Geri takip etmeyen"
+  },
+  "tab_live": {
+    "message": "Hikâyeler"
+  },
+  "tab_activity": {
+    "message": "Aktivite"
+  },
+  "tab_history": {
+    "message": "Geçmiş"
+  },
+  "tab_top": {
+    "message": "Top"
+  },
+  "top_likes": {
+    "message": "En çok beğeni alan"
+  },
+  "top_comments": {
+    "message": "En çok yorum"
+  },
+  "top_stories": {
+    "message": "En çok story izleyen"
+  },
+  "top_growth": {
+    "message": "Yeni takipçiler"
+  },
+  "top_calc": {
+    "message": "Beğeni ve yorumları hesapla"
+  },
+  "top_recalc": {
+    "message": "Yenile"
+  },
+  "top_calculating": {
+    "message": "Hesaplanıyor…"
+  },
+  "top_calc_hint": {
+    "message": "Son gönderilerindeki beğeni ve yorumları okumak için dokun."
+  },
+  "top_from": {
+    "message": "Son $1 gönderinden."
+  },
+  "top_progress": {
+    "message": "Gönderi $1/$2 okunuyor…"
+  },
+  "top_likes_n": {
+    "message": "$1 beğeni"
+  },
+  "top_cmts_n": {
+    "message": "$1 yorum"
+  },
+  "top_empty": {
+    "message": "Henüz bir şey yok."
+  },
+  "top_growth_empty": {
+    "message": "Henüz yeni takipçi kaydedilmedi."
+  },
+  "btn_check": {
+    "message": "Şimdi kontrol et"
+  },
+  "btn_capture": {
+    "message": "İzleyicileri gör"
+  },
+  "next_review": {
+    "message": "Sonraki otomatik tarama ~ $1"
+  },
+  "private": {
+    "message": "gizli"
+  },
+  "empty_unfollow": {
+    "message": "Takip başladığından beri kimse seni bırakmadı.<br>Seni burada ve bildirimle uyaracağım 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "Takipçilerini henüz yükleyemedim.<br>Tekrar denemek için “Şimdi kontrol et”e dokun."
+  },
+  "empty_new": {
+    "message": "Henüz yeni takipçi kaydedilmedi."
+  },
+  "empty_notback_load": {
+    "message": "Kimi takip ettiğini yüklemek için \"Şimdi kontrol et\"e dokun."
+  },
+  "empty_notback_none": {
+    "message": "Takip ettiğin herkes seni geri takip ediyor 🙌"
+  },
+  "empty_ghosted": {
+    "message": "Bir hikâye paylaş ve sıralamayı başlatmak için \"İzleyicileri gör\"e dokun."
+  },
+  "empty_ghosted_pub": {
+    "message": "Henüz izleyici yok. Bir hikâye paylaş ve tekrar bak."
+  },
+  "empty_history": {
+    "message": "Henüz yeterli veri yok. Takipçi grafiğin burada görünecek."
+  },
+  "empty_activity": {
+    "message": "Henüz profil değişikliği yok.<br>Ghoosted; profil fotoğrafı, isim, kullanıcı adı ve bio değişikliklerini ilk taramadan itibaren kaydedecek."
+  },
+  "activity_title": {
+    "message": "Profil aktivitesi"
+  },
+  "activity_desc": {
+    "message": "Takipçilerin ve takip ettiklerin otomatik izlenir. Bir story paylaştıklarında veya kimi takip ettiklerini değiştirdiklerinde haber almak için istediğin hesabı ekle. Kontroller, Instagram bir sekmede açıkken çalışır."
+  },
+  "activity_watch_placeholder": {
+    "message": "İzlemek için kullanıcı adı ara…"
+  },
+  "sugg_following": {
+    "message": "takip ediyorsun"
+  },
+  "spy_hint": {
+    "message": "Sadece herkese açık veya zaten takip ettiğin hesaplarda çalışır."
+  },
+  "activity_watch_add": {
+    "message": "Ekle"
+  },
+  "activity_watch_search": {
+    "message": "Ara"
+  },
+  "activity_watch_confirm": {
+    "message": "Profili izle"
+  },
+  "activity_watch_cancel": {
+    "message": "İptal"
+  },
+  "activity_manual": {
+    "message": "Hedefte · $1"
+  },
+  "activity_remove": {
+    "message": "İzlemeyi bırak"
+  },
+  "activity_changed_photo": {
+    "message": "Profil fotoğrafını değiştirdi"
+  },
+  "activity_changed_bio": {
+    "message": "Bio'sunu güncelledi"
+  },
+  "activity_changed_name": {
+    "message": "İsmini değiştirdi"
+  },
+  "activity_changed_username": {
+    "message": "Kullanıcı adını değiştirdi"
+  },
+  "activity_changed_profile": {
+    "message": "Profilini güncelledi"
+  },
+  "activity_tag_photo": {
+    "message": "foto"
+  },
+  "activity_tag_bio": {
+    "message": "bio"
+  },
+  "activity_tag_profile": {
+    "message": "profil"
+  },
+  "activity_tag_followers": {
+    "message": "takipçi"
+  },
+  "activity_story": {
+    "message": "Bir story paylaştı"
+  },
+  "activity_link": {
+    "message": "Linkini değiştirdi"
+  },
+  "activity_followers_up": {
+    "message": "$1 takipçi kazandı"
+  },
+  "activity_followers_down": {
+    "message": "$1 takipçi kaybetti"
+  },
+  "activity_new_follower": {
+    "message": "Yeni takipçi: $1"
+  },
+  "new_followers_title": {
+    "message": "Yeni takipçiler"
+  },
+  "activity_lost_follower": {
+    "message": "$1 onu takipten çıktı"
+  },
+  "lost_followers_title": {
+    "message": "Onu takipten çıkanlar"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — bu profili aç"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "TikTok'ta ara"
+  },
+  "dos_more": {
+    "message": "Daha fazla göster"
+  },
+  "dos_loading_more": {
+    "message": "Yükleniyor…"
+  },
+  "dos_ghost": {
+    "message": "Story'ler"
+  },
+  "dos_ghost_hint": {
+    "message": "Gördüğünü belli etmeden story'lerini izle"
+  },
+  "dos_ghost_note": {
+    "message": "Hayalet modu · “görüntüleyenler”de iz bırakmaz"
+  },
+  "dos_ghost_none": {
+    "message": "Şu an aktif story yok."
+  },
+  "dos_ghost_all": {
+    "message": "⬇ Tümünü indir"
+  },
+  "dos_ghost_all_prog": {
+    "message": "İndiriliyor $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "$1 indirildi ✓"
+  },
+  "dos_filter_all": {
+    "message": "Tümü"
+  },
+  "activity_follow_add": {
+    "message": "$1 kişisini takip etmeye başladı"
+  },
+  "activity_follow_rem": {
+    "message": "$1 kişisini takipten çıktı"
+  },
+  "activity_tag_story": {
+    "message": "story"
+  },
+  "activity_tag_follow": {
+    "message": "takip"
+  },
+  "activity_tag_unfollow2": {
+    "message": "bıraktı"
+  },
+  "notif_story": {
+    "message": "$1 bir story paylaştı 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 yeni birini takip etti"
+  },
+  "notif_follow_rem": {
+    "message": "$1 birini takipten çıktı"
+  },
+  "spy_now_follows": {
+    "message": "Artık $1 kişisini takip ediyor"
+  },
+  "spy_unfollowed": {
+    "message": "$1 kişisini takipten çıktı"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 SENİ takipten çıktı 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 kimi takip ettiğini değiştirdi"
+  },
+  "spy_added_c": {
+    "message": "+$1 takip"
+  },
+  "spy_removed_c": {
+    "message": "−$1 takip"
+  },
+  "watch_toggle_story": {
+    "message": "Story'lerini bana bildir"
+  },
+  "watch_toggle_following": {
+    "message": "Kimi takip ettiğini izle"
+  },
+  "wt_story": {
+    "message": "Hikâyeler"
+  },
+  "wt_following": {
+    "message": "Takip"
+  },
+  "wt_profile": {
+    "message": "Profil"
+  },
+  "spy_check_title": {
+    "message": "Takipleşiyorlar mı?"
+  },
+  "spy_a_ph": {
+    "message": "hesap A (@kullanıcı)"
+  },
+  "spy_b_ph": {
+    "message": "hesap B (@kullanıcı)"
+  },
+  "spy_check_btn": {
+    "message": "Kontrol et"
+  },
+  "spy_checking": {
+    "message": "Kontrol ediliyor…"
+  },
+  "spy_checking_dir": {
+    "message": "$1 kullanıcısının takip listesi kontrol ediliyor… büyük hesaplarda birkaç saniye sürebilir"
+  },
+  "spy_need_two": {
+    "message": "İki kullanıcı adını da gir."
+  },
+  "spy_result_mutual": {
+    "message": "$1 ve $2 birbirini takip ediyor"
+  },
+  "spy_result_a": {
+    "message": "$1, $2'yi takip ediyor ama tersi değil"
+  },
+  "spy_result_b": {
+    "message": "$2, $1'i takip ediyor ama tersi değil"
+  },
+  "spy_result_none": {
+    "message": "Ne $1 ne de $2 birbirini takip ediyor"
+  },
+  "spy_result_err": {
+    "message": "Kontrol edilemedi (gizli veya olmayan hesap?)"
+  },
+  "spy_direction_yes": {
+    "message": "$1, $2'yi takip ediyor"
+  },
+  "spy_direction_no": {
+    "message": "$1, $2'yi takip etmiyor"
+  },
+  "spy_direction_unknown": {
+    "message": "$1, $2'yi takip ediyor mu doğrulanamıyor — takip etmediğin gizli hesap"
+  },
+  "dos_open": {
+    "message": "Dedektif — profili araştır"
+  },
+  "dos_loading": {
+    "message": "Dosya yükleniyor…"
+  },
+  "dos_err": {
+    "message": "Bu profil yüklenemedi."
+  },
+  "dos_err_auth": {
+    "message": "Instagram okumayı reddetti. Tekrar dene."
+  },
+  "dos_download": {
+    "message": "Fotoğrafı indir (HD)"
+  },
+  "dos_downloading": {
+    "message": "İndiriliyor…"
+  },
+  "dos_downloaded": {
+    "message": "Kaydedildi ✓"
+  },
+  "dos_openpic": {
+    "message": "Fotoğrafı aç"
+  },
+  "dos_copyid": {
+    "message": "ID'yi kopyala"
+  },
+  "dos_watch": {
+    "message": "İzle"
+  },
+  "dos_watching": {
+    "message": "İzleniyor ✓"
+  },
+  "dos_copied": {
+    "message": "Kopyalandı ✓"
+  },
+  "dos_posts": {
+    "message": "gönderi"
+  },
+  "dos_profile": {
+    "message": "Profil"
+  },
+  "dos_web": {
+    "message": "Web sitesi"
+  },
+  "dos_category": {
+    "message": "Kategori"
+  },
+  "dos_contact": {
+    "message": "Herkese açık iletişim"
+  },
+  "dos_address": {
+    "message": "Adres"
+  },
+  "dos_business": {
+    "message": "İşletme"
+  },
+  "dos_highlights": {
+    "message": "Öne çıkan story'ler"
+  },
+  "dos_save": {
+    "message": "Fotoğrafı gör"
+  },
+  "dos_save_hint": {
+    "message": "Bu kapağı kaydeder ve sana gösterir"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "Kaydedildi ✓"
+  },
+  "dos_saved_already": {
+    "message": "Zaten kayıtlı"
+  },
+  "dos_photo_history": {
+    "message": "Foto geçmişi"
+  },
+  "dos_posts_sec": {
+    "message": "Gönderiler"
+  },
+  "dos_engagement": {
+    "message": "Etkileşim"
+  },
+  "dos_eng_avg": {
+    "message": "Ortalama: gönderi başına $1 beğeni · $2 yorum"
+  },
+  "eng_fire": {
+    "message": "🔥 Efsane"
+  },
+  "eng_good": {
+    "message": "Harika"
+  },
+  "eng_ok": {
+    "message": "Normal"
+  },
+  "eng_low": {
+    "message": "Düşük"
+  },
+  "dos_relations": {
+    "message": "Takipçiler ve takip edilenler"
+  },
+  "dos_see_followers": {
+    "message": "Takipçileri gör"
+  },
+  "dos_see_following": {
+    "message": "Takip edilenleri gör"
+  },
+  "dos_rel_hint": {
+    "message": "Herkese açık veya takip ettiğin hesaplar. Tüm listeyi değil, bir kısmını gösterir."
+  },
+  "dos_rel_loading": {
+    "message": "Yükleniyor…"
+  },
+  "dos_rel_empty": {
+    "message": "Bu liste okunamıyor (takip etmediğin gizli hesap)."
+  },
+  "dos_rel_more": {
+    "message": "İlk $1 gösteriliyor. Tam liste için profilini aç."
+  },
+  "dos_rel_search": {
+    "message": "Bu listede ara…"
+  },
+  "dos_rel_click_hint": {
+    "message": "Listeyi burada görmek için yukarıdaki takipçi veya takip sayısına dokun."
+  },
+  "dos_rel_nomatch": {
+    "message": "Yüklenen listede eşleşme yok."
+  },
+  "dos_history": {
+    "message": "Geçmiş"
+  },
+  "dos_history_empty": {
+    "message": "Bu hesap için henüz değişiklik kaydedilmedi."
+  },
+  "dos_graph_empty": {
+    "message": "Takipçi grafiği, bu profili zamanla açtıkça oluşur."
+  },
+  "dos_investigate": {
+    "message": "Araştır"
+  },
+  "unlock_title": {
+    "message": "Ghoosted'i etkinleştir"
+  },
+  "unlock_copy": {
+    "message": "Bir anahtar, bu Instagram hesabı için Ghoosted'i sonsuza dek etkinleştirir — tek seferlik ödeme."
+  },
+  "unlock_price": {
+    "message": "€5 · ömür boyu, tek kullanım"
+  },
+  "unlock_buy": {
+    "message": "Satın al · €5 tek seferlik"
+  },
+  "unlock_label": {
+    "message": "Zaten anahtarın var mı?"
+  },
+  "unlock_activate": {
+    "message": "Etkinleştir"
+  },
+  "unlock_enter_key": {
+    "message": "Ürün anahtarını gir."
+  },
+  "unlock_checking": {
+    "message": "Anahtar kontrol ediliyor…"
+  },
+  "unlock_active": {
+    "message": "Ghoosted bu hesap için etkinleştirildi ✓"
+  },
+  "unlock_bound": {
+    "message": "Bu anahtar zaten başka bir Instagram hesabına bağlı."
+  },
+  "unlock_expired": {
+    "message": "Bu anahtar devre dışı bırakıldı."
+  },
+  "unlock_invalid": {
+    "message": "Anahtar geçersiz veya henüz oluşturulmadı."
+  },
+  "unlock_network": {
+    "message": "Anahtar doğrulanamadı. Tekrar dene."
+  },
+  "unlock_status": {
+    "message": "Başlamak için Ghoosted'i etkinleştir."
+  },
+  "tag_unfollow": {
+    "message": "seni bıraktı"
+  },
+  "tag_new": {
+    "message": "yeni"
+  },
+  "tag_notfollowing": {
+    "message": "seni takip etmiyor"
+  },
+  "tag_fan": {
+    "message": "1 numara fan"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "Ghoosted Pro'nun kilidini aç"
+  },
+  "pro_desc": {
+    "message": "Story'lerini kimin izlediğini gör, en sadık izleyicilerinin kalıcı sıralamasını oluştur, anında takipten çıkma uyarıları ve tüm geçmişini al."
+  },
+  "pro_unlock": {
+    "message": "Kilidini aç — €5 tek seferlik"
+  },
+  "pro_havekey": {
+    "message": "Zaten aldın mı? Anahtarını girmek için tarayıcı araç çubuğundaki Ghoosted simgesine tıkla."
+  },
+  "history_captures": {
+    "message": "Son kontroller"
+  },
+  "history_viewers": {
+    "message": "$1 izleyici"
+  },
+  "confirm_reset": {
+    "message": "Başlangıç noktasını sıfırlayayım mı? Mevcut takipçilerini yeni bir başlangıç olarak tekrar okuyacağım. \"Takipten çıkanlar\" ve \"Yeni\" geçmişin SİLİNMEZ."
+  },
+  "confirm_clear": {
+    "message": "TÜM geçmiş silinsin mi (takipten çıkanlar, yeni takipçiler ve story istatistikleri)? Bu geri alınamaz."
+  },
+  "confirm_clear_photos": {
+    "message": "Kayıtlı $1 fotoğraf silinsin mi (avatarlar, öne çıkan kapakları)? Depolama alanı açar ve geri alınamaz."
+  },
+  "settings_interval": {
+    "message": "Kontrol sıklığı"
+  },
+  "settings_notify": {
+    "message": "Beni uyar"
+  },
+  "settings_reset": {
+    "message": "Başlangıç noktasını yenile (geçmişi korur)"
+  },
+  "settings_export": {
+    "message": "Verilerimi dışa aktar (JSON)"
+  },
+  "settings_clear": {
+    "message": "geçmişi temizle"
+  },
+  "settings_clear_photos": {
+    "message": "kayıtlı fotoğrafları temizle"
+  },
+  "popup_tagline": {
+    "message": "kim izliyor, kim gidiyor"
+  },
+  "popup_status_free": {
+    "message": "Ücretsiz plan"
+  },
+  "popup_status_locked": {
+    "message": "Etkinleştirme bekleniyor"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · aktif"
+  },
+  "popup_free_desc": {
+    "message": "Uzantıyı bu Instagram hesabıyla kullanmak için bir Ghoosted anahtarı etkinleştir."
+  },
+  "popup_pro_desc": {
+    "message": "Tüm özellikler açık. Desteğin için teşekkürler"
+  },
+  "popup_buy": {
+    "message": "Ghoosted'i al · €5"
+  },
+  "popup_license_label": {
+    "message": "Zaten aldın mı? Lisans anahtarını gir"
+  },
+  "popup_activate": {
+    "message": "Etkinleştir"
+  },
+  "popup_open_ig": {
+    "message": "Instagram'ı aç"
+  },
+  "popup_privacy": {
+    "message": "Gizlilik"
+  },
+  "popup_help": {
+    "message": "Yardım"
+  },
+  "popup_remove": {
+    "message": "Lisansı kaldır"
+  },
+  "popup_enter_key": {
+    "message": "Önce lisans anahtarını gir."
+  },
+  "popup_activating": {
+    "message": "Doğrulanıyor…"
+  },
+  "popup_active": {
+    "message": "Pro etkinleştirildi. İyi eğlenceler 🎉"
+  },
+  "popup_refunded": {
+    "message": "Bu lisans iade edildi veya itiraz edildi."
+  },
+  "popup_network": {
+    "message": "Sunucuya ulaşılamadı. Tekrar dene."
+  },
+  "popup_invalid": {
+    "message": "Bu anahtar geçerli görünmüyor. Kontrol edip tekrar dene."
+  },
+  "popup_removed": {
+    "message": "Lisans kaldırıldı."
+  },
+  "popup_need_ig": {
+    "message": "Anahtarını etkinleştirmek için bu pencerede Instagram'ı aç."
+  },
+  "popup_bound": {
+    "message": "Bu anahtar zaten başka bir Instagram hesabına bağlı."
+  },
+  "eng_hidden": {
+    "message": "Beğenileri gizli"
+  },
+  "eng_hidden_sub": {
+    "message": "Gerçek etkileşim hesaplanamıyor: beğeni sayısını gizliyor."
+  },
+  "settings_language": {
+    "message": "Dil"
+  },
+  "settings_data": {
+    "message": "Veriler"
+  },
+  "settings_connect_mobile": {
+    "message": "Telefonu bağla"
+  },
+  "mobile_title": {
+    "message": "Telefonunda Ghoosted"
+  },
+  "mobile_body": {
+    "message": "Telefon kamerasıyla tara. Telefonun uzantıyı yansıtır, salt okunur. PC her kontrol yaptığında güncellenir."
+  },
+  "mobile_unpair": {
+    "message": "Telefon bağlantısını kes"
+  },
+  "popup_wrong_product": {
+    "message": "Bu anahtar farklı bir Ghoosted sürümü için."
+  },
+  "gs_saw": {
+    "message": "$2 hikâyenden $1 tanesini izledi"
+  },
+  "gs_saw_total": {
+    "message": "toplam $1 hikâyen izlendi"
+  },
+  "gs_days_one": {
+    "message": "$1 gün"
+  },
+  "gs_days_many": {
+    "message": "$1 gün"
+  },
+  "gs_pos": {
+    "message": "listede $1."
+  },
+  "tag_dropoff": {
+    "message": "bitirmedi"
+  },
+  "gs_note": {
+    "message": "Instagram'ın izleyici listesinden: kim izledi, kim beğendi. Ekran görüntüsü ve tekrar izlemeyi Instagram bildirmez."
+  },
+  "gs_liked": {
+    "message": "❤️ $1 tanesini beğendi"
+  },
+  "gs_story_n": {
+    "message": "Hikâye $1 ($2) · $3 izleyici · $4 beğeni"
+  },
+  "gs_search": {
+    "message": "İzleyici ara…"
+  },
+  "gs_no_match": {
+    "message": "Bu adda izleyici yok."
+  },
+  "gs_alltime": {
+    "message": "toplam $1 hikâyen izlendi"
+  },
+  "gs_archive_title": {
+    "message": "Hikâyelerim",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "Geri"
+  },
+  "gs_all_fans": {
+    "message": "Tüm hikâyelerinin hayranları"
+  },
+  "gs_order_note": {
+    "message": "İzleyiciler Instagram'ın sırasında. Biri hikâyeni tekrar açtığında en üste çıkar — Ghoosted bunu tespit edip yeniden açma (🔁) olarak sayar. Ghoosted'ın listeyi ne sıklıkta okuduğuna bağlı bir tahmindir, resmi bir Instagram sayacı değildir — öyle bir şey yok."
+  },
+  "gs_detail_meta": {
+    "message": "$1 izleyici · $2 beğeni"
+  },
+  "gs_no_viewers": {
+    "message": "Bu hikâye için kayıtlı izleyici yok."
+  },
+  "gs_video": {
+    "message": "Video"
+  },
+  "gs_photo": {
+    "message": "Fotoğraf"
+  },
+  "gs_archive_sub": {
+    "message": "Arşivlenen hikâyelerini yalnızca sen görebilirsin, paylaşmayı seçmedikçe."
+  },
+  "gs_refresh": {
+    "message": "Hikâyelerimi yenile"
+  },
+  "gs_capturing": {
+    "message": "Hikâyenin izleyicileri okunuyor…"
+  },
+  "gs_empty_archive": {
+    "message": "Henüz kayıt yok. Şu an aktif bir hikâyen varsa güncelle ve kaydet."
+  },
+  "gs_reopen": {
+    "message": "tekrar en üste $1×"
+  },
+  "nb_select": {
+    "message": "Seç"
+  },
+  "nb_cancel": {
+    "message": "İptal"
+  },
+  "nb_all": {
+    "message": "Tümü"
+  },
+  "nb_none": {
+    "message": "Hiçbiri"
+  },
+  "nb_unfollow_n": {
+    "message": "Takibi bırak ($1)"
+  },
+  "nb_hint": {
+    "message": "Takibi bırakmak istediklerine dokun, sonra “Takibi bırak”. Aralarında bekleyerek tek tek yapılır — Instagram çok hızlı bırakan hesapları engeller."
+  },
+  "nb_confirm": {
+    "message": "$1 hesabın takibi bırakılsın mı? Ghoosted, Instagram engelinden kaçınmak için yavaş yapar (aralarında birkaç saniye). Bu sekmeyi açık bırak."
+  },
+  "nb_progress": {
+    "message": "Bırakılıyor… $1/$2"
+  },
+  "nb_done": {
+    "message": "Bitti — $1 bırakıldı."
+  },
+  "nb_blocked": {
+    "message": "Instagram yavaşlamanı istedi. $1 sonra durdu. Kalanı sonra dene."
+  },
+  "wprof_updated": {
+    "message": "Güncel. $1"
+  },
+  "wprof_followers": {
+    "message": "Takipçi"
+  },
+  "wprof_following": {
+    "message": "Takip"
+  },
+  "wprof_recent": {
+    "message": "Son takip edilenler"
+  },
+  "wprof_recent_none": {
+    "message": "Henüz yeni takip tespit edilmedi."
+  },
+  "wprof_track_hint": {
+    "message": "Kimi takip ettiğini görmek ve istatistiklerini burada görmek için 👥 aç."
+  },
+  "unit_min": {
+    "message": "dk"
+  },
+  "dos_link": {
+    "message": "bağlantı"
+  },
+  "dos_id": {
+    "message": "Kimlik"
+  },
+  "dos_email": {
+    "message": "E-posta"
+  },
+  "dos_tel": {
+    "message": "Tel"
+  },
+  "status_newfollowers": {
+    "message": "+$1 yeni takipçi."
+  },
+  "nb_search": {
+    "message": "Ada veya @kullanıcı adına göre ara"
+  },
+  "nb_no_match": {
+    "message": "Bu ada sahip bir hesap yok."
+  },
+  "gh_entry": {
+    "message": "Aktif hikâyeler (hayalet modu)"
+  },
+  "gh_note": {
+    "message": "Bu kişilerin şu anda hikâyesi var. Buradan aç: Instagram’a bilgi gitmez, izleyen listesinde görünmezsin."
+  },
+  "gh_watch_note": {
+    "message": "Hayalet modu — Instagram bunu izlediğini bilmiyor."
+  },
+  "gh_refresh": {
+    "message": "Yenile"
+  },
+  "gh_loading": {
+    "message": "Aktif hikâyeler aranıyor…"
+  },
+  "gh_loading_one": {
+    "message": "Hikâyesi yükleniyor…"
+  },
+  "gh_empty": {
+    "message": "Şu anda takip ettiğin kimsenin hikâyesi yok."
+  },
+  "gh_no_media": {
+    "message": "Hikâyesi yüklenemedi."
+  },
+  "gh_err": {
+    "message": "Instagram listeyi vermedi. Birazdan tekrar dene."
+  },
+  "gh_err_rate": {
+    "message": "Instagram yavaşlamanı istedi. Biraz bekleyip tekrar dene."
+  },
+  "gh_stories_n": {
+    "message": "$1 hikâye"
+  },
+  "gh_story_1": {
+    "message": "1 hikâye"
+  },
+  "gh_unseen": {
+    "message": "izlenmedi"
+  },
+  "gh_slide": {
+    "message": "$2 / $1"
+  },
+  "nb_failed": {
+    "message": "$1 kişiyi takipten çıktın. $2 başarısız — Instagram reddetti."
+  },
+  "gh_play_all": {
+    "message": "Hepsini izle ($1)"
+  },
+  "gh_person_of": {
+    "message": "$2 / $1"
+  },
+  "gh_badge": {
+    "message": "hayalet modu"
+  },
+  "gh_pause": {
+    "message": "Duraklat"
+  },
+  "gh_resume": {
+    "message": "Devam"
+  },
+  "gh_close": {
+    "message": "Kapat"
+  },
+  "gh_download": {
+    "message": "İndir"
+  },
+  "gh_download_all": {
+    "message": "Tümünü indir"
+  },
+  "gh_sound": {
+    "message": "Ses"
+  },
+  "dos_posts_none": {
+    "message": "Gönderilere erişim yok"
+  },
+  "settings_appearance": {
+    "message": "Görünüm"
+  },
+  "settings_light": {
+    "message": "Açık mod"
+  },
+  "toast_watching": {
+    "message": "Artık $1 hesabını izliyorsun",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "$1 hesabını artık izlemiyorsun",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "Instagram yavaşlamamızı istedi. $1 dk sonra tekrar dene.",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "Birini ara…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "Bu isimde kimse yok",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "Aranıyor…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "Sonuç yok",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "Henüz yeterli geçmiş yok. Bir gün sonra bak.",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "$1 tarihinden beri",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "Değişirse haber ver",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "Bildiriyor",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "$1 izleniyor",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "$1 artık izlenmiyor",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "İZLENEN ÇİFTLER",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1, $2 hesabını takipten çıktı",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1, $2 hesabını takip etmeye başladı",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1, $2 hesabını takipten çıktı",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1, $2 hesabını takip etmeye başladı",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "çift",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "Temizle",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "Emin misin?",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "Etkinlik temizlendi",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "önce",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "şimdi",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "Takipçiler yükleniyor",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "Bir dakika, bu biraz sürebilir",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "Takip listen tam okunamadı. Öncekiyle devam ediliyor.",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "$1 tarihli takip listesi · yenilemek için “Şimdi kontrol et”",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "Takip edilenler yükleniyor",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "Karşılaştırılıyor ve kaydediliyor",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "/ $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "TAKİP İSTEKLERİ",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "Manuel",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "Sadece takip ettiklerim",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "Hepsi",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "İsteyen herkes sen bakmadan gizli hesabına girer.",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "Şimdi onayla",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "Onaylanıyor…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "Bekleyen istek yok.",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "Kabul et",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "Reddet",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "$1 kabul edildi",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "$1 reddedildi",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "$1 kabul edildi",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "İstekler yüklenemedi.",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "Otomatik onayla",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "İstekler onaylanıyor",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "Takipten çıkılıyor",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "yaklaşık $1 kaldı",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 dk",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 sn",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "Bilerek yavaş gidiyoruz",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "Instagram bunu çok hızlı yapan hesapları engeller. Düzensiz aralıklar fark edilmez. Paneli kapatabilirsin: arka planda devam eder.",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "Katlamak veya açmak için tıkla",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "Etkileşimler",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "Yeni sürüm çıktı ($1)",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "İndir",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "Sürümün artık Instagram ile çalışmıyor. Kullanmaya devam etmek için güncelle.",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "Kapat",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "Takipçilerindeki ve takip ettiklerindeki değişiklikler burada tutulur: kim geliyor, kim gidiyor ve ne zaman. Kontroller Instagram bir sekmede açıkken yapılır."
+  },
+  "empty_unfollow_own": {
+    "message": "İlk kontrolden bu yana kimse takibi bırakmadı.<br>Burada ve bildirimle haber vereceğim 👀"
+  },
+  "load_pair": {
+    "message": "Birbirlerini takip ediyor mu diye bakılıyor"
+  },
+  "spy_checking_rev": {
+    "message": "$1 hesabının takipçileri aranıyor…"
+  },
+  "spy_via_followers": {
+    "message": "$1 hesabının takipçi listesinden doğrulandı"
+  },
+  "busy_other": {
+    "message": "Başka bir kontrol sürüyor. Bitmesini bekle."
+  }
+}

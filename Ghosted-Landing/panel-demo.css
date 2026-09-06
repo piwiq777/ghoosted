@@ -1,0 +1,133 @@
+/* Ghoosted — injected panel styles. Scoped under #ghd-* so it never leaks into
+ * Instagram's own UI. Native-feeling: Instagram's magenta→indigo gradient.
+ *
+ * ── This is the rules from build/Ghoosted/src/panel.css actually used by the
+ * "Ghoosted" ranking tab (head/chips/tabs/list/row/foot), copied verbatim so
+ * the landing renders a real, pixel-accurate demo of the product instead of a
+ * hand-drawn approximation. Settings/dossier/watchlist/mutual-check rules are
+ * left out since that tab never shows them. Positioning overrides for the
+ * embedded (non-floating) context live in styles.css under .ghd-demo. If the
+ * real panel.css changes, re-copy the relevant rules here. */
+
+#ghd-panel, #ghd-fab, #ghd-backdrop{
+  --accent:#8a3ab9;          /* Instagram purple — solid accents/text */
+  --accent-2:#b06fe0;        /* lighter purple for hovers/tags */
+  --accent-grad:linear-gradient(45deg,#d62976,#4f5bd5);                     /* buttons / logo */
+  --fab-grad:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);/* full IG gradient — the FAB */
+  --accent-soft:rgba(138,58,185,.16);
+  --glow:rgba(138,58,185,.34);
+  --danger:#ff7a8a;          /* unfollow / alert red */
+  --panel:#141419;
+  --ink:#f2f2f5;--ink-2:#9a9aa2;--ink-3:#7c7c83;
+  --line:rgba(255,255,255,.09);--line-2:rgba(255,255,255,.14);
+  --surface:rgba(255,255,255,.05);--surface-2:rgba(255,255,255,.08);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+}
+
+@keyframes ghdPop{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes ghdOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(8px) scale(.97)}}
+@keyframes ghdRow{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes ghdFade{from{opacity:0}to{opacity:1}}
+@keyframes ghdFabIn{from{opacity:0;transform:scale(.4) translateY(20px)}to{opacity:1;transform:none}}
+@keyframes ghdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+#ghd-fab{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;
+  background:var(--fab-grad);box-shadow:0 10px 30px rgba(0,0,0,.48);
+  cursor:pointer;z-index:2147483000;display:flex;align-items:center;justify-content:center;border:none;
+  animation:ghdFabIn .5s cubic-bezier(.22,1,.36,1);transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease}
+#ghd-fab:hover{transform:scale(1.08) translateY(-1px);box-shadow:0 16px 40px rgba(0,0,0,.58)}
+#ghd-fab:active{transform:scale(.94)}
+#ghd-fab svg{width:28px;height:28px;fill:#fff}
+#ghd-badge{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;
+  background:#ff3b5c;color:#fff;font:700 11px/20px var(--font);text-align:center;
+  box-shadow:0 0 0 2px #0b0b0f;display:none}
+
+#ghd-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  z-index:2147482900;display:none;animation:ghdFade .3s ease}
+#ghd-backdrop.show{display:block}
+
+#ghd-panel{position:fixed;right:22px;bottom:88px;width:396px;max-width:calc(100vw - 44px);max-height:76vh;
+  background:rgba(18,18,22,.96);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.65);
+  z-index:2147483000;display:none;flex-direction:column;overflow:hidden;color:var(--ink);
+  font-family:var(--font);
+  animation:ghdPop .38s cubic-bezier(.22,1,.36,1);will-change:transform,opacity}
+#ghd-panel.ghd-out{animation:ghdOut .18s ease forwards}
+#ghd-panel.ghd-big{right:auto;bottom:auto;inset:0;margin:auto;width:min(820px,94vw);height:min(88vh,960px);
+  max-height:none;max-width:none;border-radius:26px}
+#ghd-panel *{box-sizing:border-box}
+
+.ghd-head{display:flex;align-items:center;gap:11px;padding:16px 16px 12px}
+.ghd-logo{width:34px;height:34px;border-radius:50%;background:var(--fab-grad);
+  flex:none;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px var(--glow);
+  animation:ghdFloat 4s ease-in-out infinite}
+.ghd-logo svg{width:20px;height:20px;fill:#fff}
+.ghd-title{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.ghd-title small{display:block;font-weight:400;font-size:11px;color:var(--ink-2);letter-spacing:0}
+.ghd-exp{margin-left:auto;background:var(--surface);border:none;color:#cfcfd6;font-size:14px;cursor:pointer;
+  width:30px;height:30px;border-radius:9px;transition:transform .14s ease,background .2s ease}
+.ghd-exp:hover{background:var(--line-2)}
+.ghd-x{background:none;border:none;color:var(--ink-2);font-size:20px;cursor:pointer;line-height:1;padding:4px;transition:transform .14s ease,color .2s ease}
+.ghd-x:hover{color:#fff}
+.ghd-exp:active,.ghd-x:active{transform:scale(.9)}
+
+.ghd-chips{display:flex;gap:8px;padding:0 16px 12px}
+.ghd-chip{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:9px 6px;text-align:center;transition:transform .2s cubic-bezier(.22,1,.36,1),background .2s ease}
+.ghd-chip:hover{background:var(--surface-2);transform:translateY(-1px)}
+.ghd-chip b{display:block;font-size:18px;line-height:1.1}
+.ghd-chip span{font-size:10.5px;color:var(--ink-2)}
+.ghd-chip.warn b{color:var(--danger)}
+
+.ghd-tabs{display:flex;gap:3px;padding:0 10px;overflow-x:auto;scrollbar-width:none}
+.ghd-tabs::-webkit-scrollbar{display:none}
+.ghd-tab{flex:0 0 auto;background:none;border:none;color:var(--ink-2);font:600 12px/1 var(--font);padding:10px 9px;
+  border-radius:9px;cursor:pointer;white-space:nowrap;transition:color .2s ease,background .25s cubic-bezier(.22,1,.36,1),transform .14s ease}
+.ghd-tab.active{color:#fff;background:var(--surface-2)}
+.ghd-tab:active{transform:scale(.96)}
+.ghd-tab .cnt{display:inline-block;margin-left:3px;font-size:10px;color:#c9c9cf;background:rgba(255,255,255,.1);border-radius:8px;padding:1px 5px}
+.ghd-lock{margin-left:3px;font-size:9px;color:var(--accent-2)}
+.ghd-pro-tab.unlocked .ghd-lock{display:none}
+
+.ghd-list{overflow-y:auto;padding:8px 8px 4px;flex:1;min-height:140px}
+.ghd-list::-webkit-scrollbar{width:8px}
+.ghd-list::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px}
+#ghd-panel.ghd-big .ghd-list{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;align-content:start}
+#ghd-panel.ghd-big .ghd-empty,#ghd-panel.ghd-big .ghd-upsell,#ghd-panel.ghd-big .ghd-chart,#ghd-panel.ghd-big .ghd-loghead,#ghd-panel.ghd-big .ghd-activity-head{grid-column:1/-1}
+
+.ghd-row{display:flex;align-items:center;gap:11px;padding:8px;border-radius:13px;text-decoration:none;color:inherit;
+  animation:ghdRow .4s cubic-bezier(.22,1,.36,1) both;transition:background .18s ease,transform .16s ease}
+.ghd-row:hover{background:var(--surface-2)}
+.ghd-row:active{transform:scale(.985)}
+.ghd-av{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;background:linear-gradient(140deg,#3a3a44,#55555f);
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px}
+.ghd-av img{width:100%;height:100%;object-fit:cover;display:block}
+.ghd-info{min-width:0;flex:1}
+.ghd-name{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
+.ghd-user{font-size:11.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghd-sub2{font-size:10.5px;color:var(--accent-2);margin-top:2px}
+.ghd-ver{color:#3897f0;font-size:11px}
+.ghd-rank{font-size:10px;color:var(--accent-2);background:var(--accent-soft);border-radius:7px;padding:1px 6px}
+.ghd-right{margin-left:auto;text-align:right;flex:none}
+.ghd-time{font-size:10.5px;color:#8a8a90}
+.ghd-tag{display:inline-block;margin-top:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px}
+.ghd-tag.red{background:rgba(255,59,92,.16);color:var(--danger)}
+.ghd-tag.green{background:rgba(52,211,153,.15);color:#43e0a0}
+.ghd-tag.gray{background:rgba(255,255,255,.09);color:#c0c0c6}
+.ghd-tag.fan{background:var(--accent-grad);color:#fff}
+.ghd-empty{text-align:center;color:var(--ink-3);font-size:12.5px;padding:34px 20px;line-height:1.55;animation:ghdFade .3s ease}
+
+.ghd-foot{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line)}
+.ghd-status{font-size:11px;color:var(--ink-2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghd-status.ok{color:#43e0a0}.ghd-status.alert{color:var(--danger)}.ghd-status.work{color:#f2c14e}
+.ghd-btn{background:var(--accent-grad);border:none;color:#fff;font:600 12px/1 var(--font);
+  padding:10px 14px;border-radius:11px;cursor:pointer;box-shadow:0 8px 20px var(--glow);transition:transform .14s ease,filter .2s ease}
+.ghd-btn:hover{filter:brightness(1.08)}.ghd-btn:active{transform:scale(.95)}.ghd-btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+.ghd-gear{background:var(--surface);border:none;color:#d0d0d6;width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:15px;
+  transition:transform .18s ease,background .2s ease}
+.ghd-gear:hover{background:var(--line-2)}.ghd-gear:active{transform:scale(.92) rotate(40deg)}
+.ghd-next{font-size:10px;color:#6f6f76;padding:0 14px 10px;margin-top:-2px}
+
+@media (prefers-reduced-motion: reduce){
+  #ghd-panel,#ghd-fab,#ghd-backdrop,.ghd-row,.ghd-list,.ghd-chip,.ghd-tab,.ghd-logo{animation:none!important;transition:none!important}
+}

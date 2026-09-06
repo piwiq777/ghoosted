@@ -1,0 +1,47 @@
+GHOSTED — CÓMO INSTALARLO (léelo antes de nada)
+=================================================
+
+ERROR MÁS COMÚN: intentar cargar el archivo .ZIP directamente.
+Chrome NO puede cargar un .zip. Tienes que DESCOMPRIMIRLO primero.
+Si te saltas este paso, no aparecerá nada — ni error, ni icono, nada.
+
+PASO A PASO (en el PC donde quieras probarlo):
+
+1. Botón derecho sobre el archivo .zip → "Extraer todo..." (o "Extract All").
+   Windows creará una CARPETA nueva con el mismo nombre. Ábrela y confirma
+   que ves un archivo llamado "manifest.json" dentro. Si no lo ves, no está
+   bien descomprimido — repite este paso.
+
+2. Abre Chrome (o Edge/Brave) y ve a:  chrome://extensions
+
+3. Arriba a la derecha, activa el interruptor "Modo de desarrollador".
+   Si ese interruptor sale GRIS y no se puede tocar, o si Chrome avisa de
+   "Las extensiones de desarrollador están inhabilitadas" — ese PC tiene una
+   política de empresa/administrador que bloquea extensiones sin firmar.
+   Eso NO se puede saltar desde fuera; hace falta un Chrome sin esa política,
+   o subir la extensión a la Chrome Web Store (eso ya está en marcha aparte).
+
+4. Pulsa "Cargar descomprimida" ("Load unpacked").
+
+5. En el selector de carpetas, entra en la carpeta que descomprimiste en el
+   paso 1 y selecciónala ENTERA (la carpeta, no un archivo suelto de dentro,
+   y no el .zip). Debe verse "manifest.json" listado dentro de la carpeta que
+   seleccionas.
+
+6. Debería aparecer la tarjeta de Ghoosted en chrome://extensions. Si sale un
+   aviso ROJO de error, léelo — dice exactamente qué falta.
+
+7. Entra en instagram.com (con sesión iniciada). En unos segundos debería
+   aparecer un icono flotante con el fantasma de Ghoosted, normalmente abajo
+   a la derecha.
+
+SI AÚN ASÍ NO APARECE NADA:
+- Recarga la pestaña de Instagram con F5 (los cambios de extensión no
+  siempre aplican a pestañas que ya estaban abiertas).
+- En chrome://extensions, comprueba que el interruptor de Ghoosted está en
+  AZUL (activado), no gris.
+- Prueba el botón de recargar (🔄) en la tarjeta de la extensión.
+- Dime EXACTAMENTE qué ves: ¿sale la tarjeta en chrome://extensions o no
+  sale nada en absoluto? ¿sale algún aviso rojo? ¿qué versión de Chrome
+  tiene ese PC (chrome://version)? Con eso puedo saber qué está pasando de
+  verdad en vez de adivinar.

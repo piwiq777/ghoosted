@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "देखें कि इंस्टाग्राम पर आपको किसने अनफ़ॉलो किया। आपका डेटा आपके डिवाइस पर रहता है।"
+  },
+  "ago_s": {
+    "message": "$1s पहले"
+  },
+  "ago_m": {
+    "message": "$1m पहले"
+  },
+  "ago_h": {
+    "message": "$1h पहले"
+  },
+  "ago_d": {
+    "message": "$1d पहले"
+  },
+  "ago_w": {
+    "message": "$1w पहले"
+  },
+  "ago_mo": {
+    "message": "$1mo पहले"
+  },
+  "status_starting": {
+    "message": "शुरू हो रहा है…"
+  },
+  "status_first": {
+    "message": "पहला स्कैन तैयार हो रहा है…"
+  },
+  "status_checking": {
+    "message": "फॉलोअर्स चेक हो रहे हैं…"
+  },
+  "status_loading_followers": {
+    "message": "फॉलोअर्स लोड हो रहे हैं… $1"
+  },
+  "status_loading_following": {
+    "message": "फॉलोइंग लोड हो रही है…"
+  },
+  "status_loading_following_n": {
+    "message": "फॉलोइंग लोड हो रही है… $1"
+  },
+  "status_partial": {
+    "message": "Instagram ने अधूरी लिस्ट दी — तुम्हारी बेसलाइन बरकरार है। जल्द फिर कोशिश करूँगा।"
+  },
+  "status_baseline": {
+    "message": "बेसलाइन सेव हो गई ✓ अब से बदलाव ट्रैक करूँगा।"
+  },
+  "status_unfollowers": {
+    "message": "$1 ने तुम्हें unfollow किया।"
+  },
+  "status_nochanges": {
+    "message": "कोई बदलाव नहीं। सब अपडेट है ✓"
+  },
+  "status_rate": {
+    "message": "Instagram ने थोड़ा रुकने को कहा · कोड $1। तुम्हारा डेटा सेव है।"
+  },
+  "status_auth": {
+    "message": "Instagram ने रीड नकार दी · कोड $1। तुम दोबारा चेक कर सकते हो।"
+  },
+  "status_challenge": {
+    "message": "Instagram को अपनी वेबसाइट पर एक जाँच चाहिए · कोड $1।"
+  },
+  "status_cooldown": {
+    "message": "Instagram चेक करने के लिए तैयार।"
+  },
+  "status_network": {
+    "message": "नेटवर्क एरर। फिर कोशिश करूँगा।"
+  },
+  "status_transport": {
+    "message": "Instagram ने फॉलोअर्स की जगह अपनी वेबसाइट भेज दी · कोड $1।"
+  },
+  "status_http": {
+    "message": "Instagram ने अनुरोध अस्वीकार किया · कोड $1। दूसरे तरीके से कोशिश जारी।"
+  },
+  "status_other_tab": {
+    "message": "एक और Instagram टैब पहले से इस अकाउंट को चेक कर रहा है।"
+  },
+  "status_error": {
+    "message": "कुछ गड़बड़ हो गई। फिर कोशिश करूँगा।"
+  },
+  "status_reload": {
+    "message": "एक्सटेंशन अपडेट हुआ — यह Instagram टैब फिर से लोड करें।"
+  },
+  "status_upto": {
+    "message": "अपडेट है ✓ (आखिरी: $1)"
+  },
+  "status_pro_needed": {
+    "message": "Story ट्रैकिंग Ghoosted Pro का फीचर है।"
+  },
+  "status_story_reading": {
+    "message": "तुम्हारी Stories पढ़ी जा रही हैं…"
+  },
+  "status_story_none": {
+    "message": "कोई सक्रिय स्टोरी नहीं। पहले एक पोस्ट करें।"
+  },
+  "status_story_item": {
+    "message": "Story $1 पढ़ी जा रही है…"
+  },
+  "status_story_viewers": {
+    "message": "दर्शक पढ़े जा रहे हैं… $1"
+  },
+  "status_story_done": {
+    "message": "$1 दर्शक पढ़े गए ✓"
+  },
+  "status_watch_adding": {
+    "message": "प्रोफ़ाइल वॉचलिस्ट में जोड़ी जा रही है…"
+  },
+  "status_watch_added": {
+    "message": "$1 वॉचलिस्ट में जोड़ा गया ✓"
+  },
+  "status_no_photos": {
+    "message": "साफ़ करने के लिए कोई सहेजी गई फ़ोटो नहीं।"
+  },
+  "status_photos_cleared": {
+    "message": "सहेजी गई फ़ोटो साफ़ हो गईं ✓"
+  },
+  "status_save_failed": {
+    "message": "सहेजा नहीं जा सका — डिवाइस संग्रहण भरा हो सकता है। सेटिंग्स में \"सहेजी गई फ़ोटो साफ़ करें\" आज़माएं।"
+  },
+  "status_watch_invalid": {
+    "message": "सही यूज़रनेम डालो।"
+  },
+  "status_watch_notfound": {
+    "message": "वो Instagram प्रोफ़ाइल नहीं मिली।"
+  },
+  "status_watch_found": {
+    "message": "$1 मिल गया। वॉच करने से पहले कन्फर्म करो।"
+  },
+  "notif_one": {
+    "message": "किसी ने तुम्हें unfollow किया 👀"
+  },
+  "notif_many": {
+    "message": "$1 लोगों ने तुम्हें unfollow किया 👀"
+  },
+  "ui_subtitle": {
+    "message": "कौन देखता है, कौन छोड़ता है"
+  },
+  "big_mode": {
+    "message": "बड़ा मोड"
+  },
+  "close": {
+    "message": "बंद करो"
+  },
+  "settings": {
+    "message": "सेटिंग्स"
+  },
+  "chip_followers": {
+    "message": "फॉलोअर्स"
+  },
+  "chip_following": {
+    "message": "फॉलोइंग"
+  },
+  "chip_notback": {
+    "message": "फॉलो बैक नहीं"
+  },
+  "tab_unfollow": {
+    "message": "छोड़ गए"
+  },
+  "tab_new": {
+    "message": "नए"
+  },
+  "tab_notback": {
+    "message": "फॉलो बैक नहीं"
+  },
+  "tab_live": {
+    "message": "स्टोरी"
+  },
+  "tab_activity": {
+    "message": "एक्टिविटी"
+  },
+  "tab_history": {
+    "message": "हिस्ट्री"
+  },
+  "tab_top": {
+    "message": "टॉप"
+  },
+  "top_likes": {
+    "message": "सबसे ज़्यादा लाइक्स मिले"
+  },
+  "top_comments": {
+    "message": "सबसे ज़्यादा कमेंट्स"
+  },
+  "top_stories": {
+    "message": "सबसे ज़्यादा Stories देखीं"
+  },
+  "top_growth": {
+    "message": "नए फॉलोअर्स"
+  },
+  "top_calc": {
+    "message": "लाइक्स और कमेंट्स कैलकुलेट करो"
+  },
+  "top_recalc": {
+    "message": "रिफ्रेश"
+  },
+  "top_calculating": {
+    "message": "कैलकुलेट हो रहा है…"
+  },
+  "top_calc_hint": {
+    "message": "अपने हाल के पोस्ट्स के लाइक्स और कमेंट्स पढ़ने के लिए टैप करो।"
+  },
+  "top_from": {
+    "message": "तुम्हारे आखिरी $1 पोस्ट्स से।"
+  },
+  "top_progress": {
+    "message": "पोस्ट $1/$2 पढ़ा जा रहा है…"
+  },
+  "top_likes_n": {
+    "message": "$1 लाइक्स"
+  },
+  "top_cmts_n": {
+    "message": "$1 कमेंट्स"
+  },
+  "top_empty": {
+    "message": "अभी कुछ नहीं।"
+  },
+  "top_growth_empty": {
+    "message": "अभी तक कोई नया फॉलोअर रिकॉर्ड नहीं हुआ।"
+  },
+  "btn_check": {
+    "message": "अभी चेक करो"
+  },
+  "btn_capture": {
+    "message": "दर्शक देखें"
+  },
+  "next_review": {
+    "message": "अगला ऑटो स्कैन ~ $1"
+  },
+  "private": {
+    "message": "प्राइवेट"
+  },
+  "empty_unfollow": {
+    "message": "ट्रैकिंग शुरू होने के बाद से किसी ने तुम्हें unfollow नहीं किया।<br>मैं यहाँ और नोटिफिकेशन से बता दूँगा 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "मैं अभी तक तुम्हारे फॉलोअर्स लोड नहीं कर पाया।<br>दोबारा कोशिश के लिए “अभी चेक करो” टैप करो।"
+  },
+  "empty_new": {
+    "message": "अभी तक कोई नया फॉलोअर रिकॉर्ड नहीं हुआ।"
+  },
+  "empty_notback_load": {
+    "message": "तुम किसे फॉलो करते हो, ये लोड करने के लिए “अभी चेक करो” टैप करो।"
+  },
+  "empty_notback_none": {
+    "message": "तुम जिन सबको फॉलो करते हो, वो सब फॉलो बैक करते हैं 🙌"
+  },
+  "empty_ghosted": {
+    "message": "एक स्टोरी पोस्ट करें, फिर रैंकिंग शुरू करने के लिए \"दर्शक देखें\" दबाएँ।"
+  },
+  "empty_ghosted_pub": {
+    "message": "अभी कोई दर्शक नहीं। स्टोरी पोस्ट करें और फिर देखें।"
+  },
+  "empty_history": {
+    "message": "अभी पर्याप्त डेटा नहीं। तुम्हारा फॉलोअर ट्रेंड यहाँ दिखेगा।"
+  },
+  "empty_activity": {
+    "message": "अभी तक कोई प्रोफ़ाइल बदलाव नहीं।<br>Ghoosted पहले स्कैन से ही फोटो, नाम, यूज़रनेम और बायो के बदलाव सेव करेगा।"
+  },
+  "activity_title": {
+    "message": "प्रोफ़ाइल एक्टिविटी"
+  },
+  "activity_desc": {
+    "message": "तुम्हारे फॉलोअर्स और फॉलोइंग अपने-आप वॉच होते हैं। किसी भी अकाउंट को जोड़ो और जब वो story पोस्ट करे या किसी को फॉलो/अनफॉलो करे तो अलर्ट पाओ। जाँच तब चलती है जब Instagram किसी टैब में खुला हो।"
+  },
+  "activity_watch_placeholder": {
+    "message": "वॉच करने के लिए यूज़रनेम सर्च करो…"
+  },
+  "sugg_following": {
+    "message": "तुम फॉलो करते हो"
+  },
+  "spy_hint": {
+    "message": "सिर्फ पब्लिक अकाउंट्स या जिन्हें तुम पहले से फॉलो करते हो, उन पर काम करता है।"
+  },
+  "activity_watch_add": {
+    "message": "जोड़ो"
+  },
+  "activity_watch_search": {
+    "message": "सर्च"
+  },
+  "activity_watch_confirm": {
+    "message": "प्रोफ़ाइल वॉच करो"
+  },
+  "activity_watch_cancel": {
+    "message": "कैंसल"
+  },
+  "activity_manual": {
+    "message": "निशाने पर · $1"
+  },
+  "activity_remove": {
+    "message": "वॉच करना बंद करो"
+  },
+  "activity_changed_photo": {
+    "message": "प्रोफ़ाइल फोटो बदली"
+  },
+  "activity_changed_bio": {
+    "message": "बायो अपडेट की"
+  },
+  "activity_changed_name": {
+    "message": "नाम बदला"
+  },
+  "activity_changed_username": {
+    "message": "यूज़रनेम बदला"
+  },
+  "activity_changed_profile": {
+    "message": "प्रोफ़ाइल अपडेट की"
+  },
+  "activity_tag_photo": {
+    "message": "फोटो"
+  },
+  "activity_tag_bio": {
+    "message": "बायो"
+  },
+  "activity_tag_profile": {
+    "message": "प्रोफ़ाइल"
+  },
+  "activity_tag_followers": {
+    "message": "फॉलोअर्स"
+  },
+  "activity_story": {
+    "message": "एक story पोस्ट की"
+  },
+  "activity_link": {
+    "message": "अपना लिंक बदला"
+  },
+  "activity_followers_up": {
+    "message": "$1 फॉलोअर्स बढ़े"
+  },
+  "activity_followers_down": {
+    "message": "$1 फॉलोअर्स घटे"
+  },
+  "activity_new_follower": {
+    "message": "नया फॉलोअर: $1"
+  },
+  "new_followers_title": {
+    "message": "नए फॉलोअर्स"
+  },
+  "activity_lost_follower": {
+    "message": "$1 ने इन्हें unfollow किया"
+  },
+  "lost_followers_title": {
+    "message": "इन्हें unfollow किया"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — यह प्रोफ़ाइल खोलो"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "TikTok पर सर्च करो"
+  },
+  "dos_more": {
+    "message": "और दिखाओ"
+  },
+  "dos_loading_more": {
+    "message": "लोड हो रहा है…"
+  },
+  "dos_ghost": {
+    "message": "Stories"
+  },
+  "dos_ghost_hint": {
+    "message": "उनकी Stories देखो, उन्हें पता भी नहीं चलेगा"
+  },
+  "dos_ghost_note": {
+    "message": "घोस्ट मोड · “देखा गया” में कोई निशान नहीं छोड़ता"
+  },
+  "dos_ghost_none": {
+    "message": "अभी कोई एक्टिव story नहीं।"
+  },
+  "dos_ghost_all": {
+    "message": "⬇ सब डाउनलोड करो"
+  },
+  "dos_ghost_all_prog": {
+    "message": "डाउनलोड हो रहा है $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "$1 डाउनलोड हुईं ✓"
+  },
+  "dos_filter_all": {
+    "message": "सब"
+  },
+  "activity_follow_add": {
+    "message": "$1 को फॉलो करना शुरू किया"
+  },
+  "activity_follow_rem": {
+    "message": "$1 को unfollow किया"
+  },
+  "activity_tag_story": {
+    "message": "story"
+  },
+  "activity_tag_follow": {
+    "message": "फॉलो"
+  },
+  "activity_tag_unfollow2": {
+    "message": "अनफॉलो"
+  },
+  "notif_story": {
+    "message": "$1 ने एक story पोस्ट की 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 ने किसी नए को फॉलो किया"
+  },
+  "notif_follow_rem": {
+    "message": "$1 ने किसी को unfollow किया"
+  },
+  "spy_now_follows": {
+    "message": "अब $1 को फॉलो करता है"
+  },
+  "spy_unfollowed": {
+    "message": "$1 को unfollow किया"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 ने तुम्हें unfollow किया 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 ने अपनी फॉलोइंग बदली"
+  },
+  "spy_added_c": {
+    "message": "+$1 फॉलोइंग"
+  },
+  "spy_removed_c": {
+    "message": "−$1 फॉलोइंग"
+  },
+  "watch_toggle_story": {
+    "message": "उनकी Stories का अलर्ट दो"
+  },
+  "watch_toggle_following": {
+    "message": "वो किसे फॉलो करता है, ट्रैक करो"
+  },
+  "wt_story": {
+    "message": "स्टोरी"
+  },
+  "wt_following": {
+    "message": "फ़ॉलोइंग"
+  },
+  "wt_profile": {
+    "message": "प्रोफ़ाइल"
+  },
+  "spy_check_title": {
+    "message": "क्या ये एक-दूसरे को फॉलो करते हैं?"
+  },
+  "spy_a_ph": {
+    "message": "अकाउंट A (@user)"
+  },
+  "spy_b_ph": {
+    "message": "अकाउंट B (@user)"
+  },
+  "spy_check_btn": {
+    "message": "चेक करो"
+  },
+  "spy_checking": {
+    "message": "चेक हो रहा है…"
+  },
+  "spy_checking_dir": {
+    "message": "$1 की फॉलोइंग लिस्ट चेक हो रही है… बड़े अकाउंट्स के लिए कुछ सेकंड लग सकते हैं"
+  },
+  "spy_need_two": {
+    "message": "दोनों यूज़रनेम डालो।"
+  },
+  "spy_result_mutual": {
+    "message": "$1 और $2 एक-दूसरे को फॉलो करते हैं"
+  },
+  "spy_result_a": {
+    "message": "$1, $2 को फॉलो करता है, पर उल्टा नहीं"
+  },
+  "spy_result_b": {
+    "message": "$2, $1 को फॉलो करता है, पर उल्टा नहीं"
+  },
+  "spy_result_none": {
+    "message": "न $1 और न $2 एक-दूसरे को फॉलो करते हैं"
+  },
+  "spy_result_err": {
+    "message": "चेक नहीं हो पाया (प्राइवेट या मौजूद नहीं अकाउंट?)"
+  },
+  "spy_direction_yes": {
+    "message": "$1, $2 को फॉलो करता है"
+  },
+  "spy_direction_no": {
+    "message": "$1, $2 को फॉलो नहीं करता"
+  },
+  "spy_direction_unknown": {
+    "message": "पता नहीं चल पाया कि $1, $2 को फॉलो करता है या नहीं — प्राइवेट अकाउंट जिसे तुम फॉलो नहीं करते"
+  },
+  "dos_open": {
+    "message": "डिटेक्टिव — प्रोफ़ाइल की जाँच करो"
+  },
+  "dos_loading": {
+    "message": "फाइल लोड हो रही है…"
+  },
+  "dos_err": {
+    "message": "यह प्रोफ़ाइल लोड नहीं हो पाई।"
+  },
+  "dos_err_auth": {
+    "message": "Instagram ने रीड नकार दी। दोबारा कोशिश करो।"
+  },
+  "dos_download": {
+    "message": "फोटो डाउनलोड करो (HD)"
+  },
+  "dos_downloading": {
+    "message": "डाउनलोड हो रहा है…"
+  },
+  "dos_downloaded": {
+    "message": "सेव हो गई ✓"
+  },
+  "dos_openpic": {
+    "message": "फोटो खोलो"
+  },
+  "dos_copyid": {
+    "message": "ID कॉपी करो"
+  },
+  "dos_watch": {
+    "message": "वॉच करो"
+  },
+  "dos_watching": {
+    "message": "वॉच हो रहा है ✓"
+  },
+  "dos_copied": {
+    "message": "कॉपी हो गया ✓"
+  },
+  "dos_posts": {
+    "message": "पोस्ट्स"
+  },
+  "dos_profile": {
+    "message": "प्रोफ़ाइल"
+  },
+  "dos_web": {
+    "message": "वेबसाइट"
+  },
+  "dos_category": {
+    "message": "कैटेगरी"
+  },
+  "dos_contact": {
+    "message": "पब्लिक कॉन्टैक्ट"
+  },
+  "dos_address": {
+    "message": "पता"
+  },
+  "dos_business": {
+    "message": "बिज़नेस"
+  },
+  "dos_highlights": {
+    "message": "हाइलाइट्स"
+  },
+  "dos_save": {
+    "message": "फोटो देखो"
+  },
+  "dos_save_hint": {
+    "message": "यह कवर सेव करके तुम्हें दिखाता है"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "सेव हो गई ✓"
+  },
+  "dos_saved_already": {
+    "message": "पहले से सेव है"
+  },
+  "dos_photo_history": {
+    "message": "फोटो हिस्ट्री"
+  },
+  "dos_posts_sec": {
+    "message": "पोस्ट्स"
+  },
+  "dos_engagement": {
+    "message": "एंगेजमेंट"
+  },
+  "dos_eng_avg": {
+    "message": "औसत: $1 लाइक्स · $2 कमेंट्स प्रति पोस्ट"
+  },
+  "eng_fire": {
+    "message": "🔥 ज़बरदस्त"
+  },
+  "eng_good": {
+    "message": "बढ़िया"
+  },
+  "eng_ok": {
+    "message": "औसत"
+  },
+  "eng_low": {
+    "message": "कम"
+  },
+  "dos_relations": {
+    "message": "फॉलोअर्स और फॉलोइंग"
+  },
+  "dos_see_followers": {
+    "message": "फॉलोअर्स देखो"
+  },
+  "dos_see_following": {
+    "message": "फॉलोइंग देखो"
+  },
+  "dos_rel_hint": {
+    "message": "पब्लिक अकाउंट्स, या जिन्हें तुम फॉलो करते हो। पूरी लिस्ट नहीं, बस एक झलक दिखाता है।"
+  },
+  "dos_rel_loading": {
+    "message": "लोड हो रहा है…"
+  },
+  "dos_rel_empty": {
+    "message": "यह लिस्ट पढ़ी नहीं जा सकती (प्राइवेट अकाउंट जिसे तुम फॉलो नहीं करते)।"
+  },
+  "dos_rel_more": {
+    "message": "पहले $1 दिखा रहे हैं। पूरी लिस्ट के लिए उनकी प्रोफ़ाइल खोलो।"
+  },
+  "dos_rel_search": {
+    "message": "इस लिस्ट में सर्च करो…"
+  },
+  "dos_rel_click_hint": {
+    "message": "लिस्ट यहाँ देखने के लिए ऊपर फॉलोअर्स या फॉलोइंग नंबर पर टैप करो।"
+  },
+  "dos_rel_nomatch": {
+    "message": "लोड की गई लिस्ट में कोई मैच नहीं।"
+  },
+  "dos_history": {
+    "message": "हिस्ट्री"
+  },
+  "dos_history_empty": {
+    "message": "इस अकाउंट के लिए अभी तक कोई बदलाव ट्रैक नहीं हुआ।"
+  },
+  "dos_graph_empty": {
+    "message": "जैसे-जैसे तुम समय के साथ यह प्रोफ़ाइल खोलोगे, फॉलोअर ग्राफ बनता जाएगा।"
+  },
+  "dos_investigate": {
+    "message": "जाँच करो"
+  },
+  "unlock_title": {
+    "message": "Ghoosted एक्टिवेट करो"
+  },
+  "unlock_copy": {
+    "message": "एक key इस Instagram अकाउंट के लिए Ghoosted को हमेशा के लिए एक्टिवेट कर देती है — एक बार भुगतान।"
+  },
+  "unlock_price": {
+    "message": "€5 · आजीवन, एक बार इस्तेमाल"
+  },
+  "unlock_buy": {
+    "message": "खरीदो · €5 एक बार"
+  },
+  "unlock_label": {
+    "message": "पहले से key है?"
+  },
+  "unlock_activate": {
+    "message": "एक्टिवेट करो"
+  },
+  "unlock_enter_key": {
+    "message": "अपनी प्रोडक्ट key डालो।"
+  },
+  "unlock_checking": {
+    "message": "key चेक हो रही है…"
+  },
+  "unlock_active": {
+    "message": "इस अकाउंट के लिए Ghoosted एक्टिवेट हो गया ✓"
+  },
+  "unlock_bound": {
+    "message": "यह key पहले से किसी और Instagram अकाउंट से जुड़ी है।"
+  },
+  "unlock_expired": {
+    "message": "यह key डीएक्टिवेट कर दी गई है।"
+  },
+  "unlock_invalid": {
+    "message": "key अमान्य है या अभी जारी नहीं हुई।"
+  },
+  "unlock_network": {
+    "message": "key वेरिफाई नहीं हो पाई। दोबारा कोशिश करो।"
+  },
+  "unlock_status": {
+    "message": "शुरू करने के लिए Ghoosted एक्टिवेट करो।"
+  },
+  "tag_unfollow": {
+    "message": "छोड़ गया"
+  },
+  "tag_new": {
+    "message": "नया"
+  },
+  "tag_notfollowing": {
+    "message": "तुम्हें फॉलो नहीं करता"
+  },
+  "tag_fan": {
+    "message": "टॉप फैन"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "Ghoosted Pro अनलॉक करो"
+  },
+  "pro_desc": {
+    "message": "देखो कौन तुम्हारी Stories देखता है, अपने सबसे वफादार व्यूअर्स की परमानेंट रैंकिंग बनाओ, तुरंत unfollow अलर्ट पाओ और पूरी हिस्ट्री देखो।"
+  },
+  "pro_unlock": {
+    "message": "अनलॉक — €5 एक बार"
+  },
+  "pro_havekey": {
+    "message": "पहले से खरीदा है? अपनी key डालने के लिए ब्राउज़र टूलबार में Ghoosted आइकन पर क्लिक करो।"
+  },
+  "history_captures": {
+    "message": "हाल की जाँच"
+  },
+  "history_viewers": {
+    "message": "$1 व्यूअर्स"
+  },
+  "confirm_reset": {
+    "message": "बेसलाइन दोबारा बनाएँ? मैं तुम्हारे मौजूदा फॉलोअर्स को नए शुरुआती बिंदु के रूप में फिर पढ़ूँगा। तुम्हारी “छोड़ गए” और “नए” हिस्ट्री डिलीट नहीं होगी।"
+  },
+  "confirm_clear": {
+    "message": "सारी हिस्ट्री डिलीट करें (unfollows, नए फॉलोअर्स और story स्टैट्स)? यह वापस नहीं होगा।"
+  },
+  "confirm_clear_photos": {
+    "message": "सहेजी गई $1 फ़ोटो हटाएं (अवतार, हाइलाइट कवर)? इससे संग्रहण स्थान खाली होगा और इसे पूर्ववत नहीं किया जा सकता।"
+  },
+  "settings_interval": {
+    "message": "हर कितनी देर में चेक करूँ"
+  },
+  "settings_notify": {
+    "message": "मुझे नोटिफाई करो"
+  },
+  "settings_reset": {
+    "message": "बेसलाइन दोबारा बनाओ (हिस्ट्री रहेगी)"
+  },
+  "settings_export": {
+    "message": "मेरा डेटा एक्सपोर्ट करो (JSON)"
+  },
+  "settings_clear": {
+    "message": "हिस्ट्री मिटाओ"
+  },
+  "settings_clear_photos": {
+    "message": "सहेजी गई फ़ोटो साफ़ करें"
+  },
+  "popup_tagline": {
+    "message": "कौन देखता है, कौन छोड़ता है"
+  },
+  "popup_status_free": {
+    "message": "फ्री प्लान"
+  },
+  "popup_status_locked": {
+    "message": "एक्टिवेशन बाकी है"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · एक्टिव"
+  },
+  "popup_free_desc": {
+    "message": "इस Instagram अकाउंट के साथ एक्सटेंशन इस्तेमाल करने के लिए Ghoosted key एक्टिवेट करो।"
+  },
+  "popup_pro_desc": {
+    "message": "सारे फीचर्स अनलॉक। तुम्हारे सपोर्ट के लिए शुक्रिया"
+  },
+  "popup_buy": {
+    "message": "Ghoosted लो · €5"
+  },
+  "popup_license_label": {
+    "message": "पहले से खरीदा है? अपनी लाइसेंस key डालो"
+  },
+  "popup_activate": {
+    "message": "एक्टिवेट करो"
+  },
+  "popup_open_ig": {
+    "message": "Instagram खोलो"
+  },
+  "popup_privacy": {
+    "message": "प्राइवेसी"
+  },
+  "popup_help": {
+    "message": "हेल्प"
+  },
+  "popup_remove": {
+    "message": "लाइसेंस हटाओ"
+  },
+  "popup_enter_key": {
+    "message": "पहले अपनी लाइसेंस key डालो।"
+  },
+  "popup_activating": {
+    "message": "वेरिफाई हो रहा है…"
+  },
+  "popup_active": {
+    "message": "Pro एक्टिवेट हो गया। मज़े करो 🎉"
+  },
+  "popup_refunded": {
+    "message": "यह लाइसेंस रिफंड या डिस्प्यूट हो गया।"
+  },
+  "popup_network": {
+    "message": "सर्वर तक नहीं पहुँच पाया। दोबारा कोशिश करो।"
+  },
+  "popup_invalid": {
+    "message": "यह key सही नहीं लग रही। जाँचो और फिर कोशिश करो।"
+  },
+  "popup_removed": {
+    "message": "लाइसेंस हटा दिया।"
+  },
+  "popup_need_ig": {
+    "message": "अपनी key एक्टिवेट करने के लिए इस विंडो में Instagram खोलो।"
+  },
+  "popup_bound": {
+    "message": "यह key पहले से किसी और Instagram अकाउंट से जुड़ी है।"
+  },
+  "eng_hidden": {
+    "message": "लाइक्स छुपाता है"
+  },
+  "eng_hidden_sub": {
+    "message": "असली एंगेजमेंट नहीं निकाल सकते: लाइक काउंट छुपाया गया है।"
+  },
+  "settings_language": {
+    "message": "भाषा"
+  },
+  "settings_data": {
+    "message": "डेटा"
+  },
+  "settings_connect_mobile": {
+    "message": "फ़ोन कनेक्ट करें"
+  },
+  "mobile_title": {
+    "message": "आपके फ़ोन पर Ghoosted"
+  },
+  "mobile_body": {
+    "message": "फ़ोन कैमरे से स्कैन करें। आपका फ़ोन एक्सटेंशन का दर्पण है, केवल-पढ़ने के लिए। जब भी PC जाँच करता है, यह अपडेट होता है।"
+  },
+  "mobile_unpair": {
+    "message": "फ़ोन अनपेयर करें"
+  },
+  "popup_wrong_product": {
+    "message": "यह कुंजी Ghoosted के किसी दूसरे संस्करण के लिए है।"
+  },
+  "gs_saw": {
+    "message": "आपकी $2 में से $1 स्टोरी देखी"
+  },
+  "gs_saw_total": {
+    "message": "कुल $1 स्टोरी देखी गईं"
+  },
+  "gs_days_one": {
+    "message": "$1 दिन"
+  },
+  "gs_days_many": {
+    "message": "$1 दिन"
+  },
+  "gs_pos": {
+    "message": "सूची में #$1"
+  },
+  "tag_dropoff": {
+    "message": "पूरा नहीं देखा"
+  },
+  "gs_note": {
+    "message": "इंस्टाग्राम की व्यूअर सूची से: किसने देखा और किसने लाइक किया। स्क्रीनशॉट और दोबारा देखना इंस्टाग्राम नहीं बताता।"
+  },
+  "gs_liked": {
+    "message": "❤️ $1 को लाइक किया"
+  },
+  "gs_story_n": {
+    "message": "स्टोरी $1 ($2) · $3 दर्शक · $4 लाइक"
+  },
+  "gs_search": {
+    "message": "दर्शक खोजें…"
+  },
+  "gs_no_match": {
+    "message": "उस नाम का कोई दर्शक नहीं।"
+  },
+  "gs_alltime": {
+    "message": "कुल $1 स्टोरी देखी गईं"
+  },
+  "gs_archive_title": {
+    "message": "मेरी स्टोरीज़",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "वापस"
+  },
+  "gs_all_fans": {
+    "message": "आपकी सभी स्टोरीज़ के फैन"
+  },
+  "gs_order_note": {
+    "message": "दर्शक Instagram के क्रम में। जब कोई आपकी स्टोरी दोबारा खोलता है तो वह फिर सबसे ऊपर आ जाता है — Ghoosted इसे पहचानकर री-ओपन (🔁) गिनता है। यह अनुमान है, इस पर निर्भर कि Ghoosted कितनी बार सूची पढ़ता है; कोई आधिकारिक Instagram काउंटर नहीं — वह होता ही नहीं।"
+  },
+  "gs_detail_meta": {
+    "message": "$1 दर्शक · $2 लाइक"
+  },
+  "gs_no_viewers": {
+    "message": "इस स्टोरी के लिए कोई दर्शक सहेजा नहीं गया।"
+  },
+  "gs_video": {
+    "message": "वीडियो"
+  },
+  "gs_photo": {
+    "message": "फ़ोटो"
+  },
+  "gs_archive_sub": {
+    "message": "आपकी संग्रहित स्टोरीज़ केवल आप देख सकते हैं, जब तक कि आप उन्हें साझा न करें।"
+  },
+  "gs_refresh": {
+    "message": "मेरी स्टोरीज़ ताज़ा करें"
+  },
+  "gs_capturing": {
+    "message": "आपकी स्टोरी के दर्शक पढ़े जा रहे हैं…"
+  },
+  "gs_empty_archive": {
+    "message": "अभी कुछ सहेजा नहीं गया। कोई स्टोरी चालू हो तो अभी अपडेट करें।"
+  },
+  "gs_reopen": {
+    "message": "फिर ऊपर $1×"
+  },
+  "nb_select": {
+    "message": "चुनें"
+  },
+  "nb_cancel": {
+    "message": "रद्द करें"
+  },
+  "nb_all": {
+    "message": "सभी"
+  },
+  "nb_none": {
+    "message": "कोई नहीं"
+  },
+  "nb_unfollow_n": {
+    "message": "अनफ़ॉलो करें ($1)"
+  },
+  "nb_hint": {
+    "message": "जिन्हें अनफ़ॉलो करना है उन्हें चुनें, फिर “अनफ़ॉलो करें”। एक-एक करके, बीच में रुककर — Instagram बहुत तेज़ अनफ़ॉलो करने वाले खातों को ब्लॉक करता है।"
+  },
+  "nb_confirm": {
+    "message": "$1 खातों को अनफ़ॉलो करें? Ghoosted इसे धीरे करता है (हर एक के बीच कुछ सेकंड) ताकि Instagram ब्लॉक न करे। यह टैब खुला रखें।"
+  },
+  "nb_progress": {
+    "message": "अनफ़ॉलो हो रहा है… $1/$2"
+  },
+  "nb_done": {
+    "message": "हो गया — $1 अनफ़ॉलो किए।"
+  },
+  "nb_blocked": {
+    "message": "Instagram ने धीमे करने को कहा। $1 के बाद रुका। बाकी बाद में।"
+  },
+  "wprof_updated": {
+    "message": "अपडेट $1"
+  },
+  "wprof_followers": {
+    "message": "फॉलोअर्स"
+  },
+  "wprof_following": {
+    "message": "फॉलोइंग"
+  },
+  "wprof_recent": {
+    "message": "हाल में फॉलो किए"
+  },
+  "wprof_recent_none": {
+    "message": "अभी तक कोई नया फॉलो नहीं मिला।"
+  },
+  "wprof_track_hint": {
+    "message": "यह देखने के लिए कि वे किसे फॉलो करते हैं और यहां आंकड़े देखने के लिए 👥 चालू करें।"
+  },
+  "unit_min": {
+    "message": "मिनट"
+  },
+  "dos_link": {
+    "message": "लिंक"
+  },
+  "dos_id": {
+    "message": "आईडी"
+  },
+  "dos_email": {
+    "message": "ईमेल"
+  },
+  "dos_tel": {
+    "message": "फ़ोन"
+  },
+  "status_newfollowers": {
+    "message": "+$1 नए फॉलोअर।"
+  },
+  "nb_search": {
+    "message": "नाम या @यूज़रनेम से खोजें"
+  },
+  "nb_no_match": {
+    "message": "उस नाम का कोई अकाउंट नहीं मिला।"
+  },
+  "gh_entry": {
+    "message": "चालू स्टोरीज़ (घोस्ट मोड)"
+  },
+  "gh_note": {
+    "message": "इन लोगों की अभी स्टोरी चल रही है। यहीं खोलिए — Instagram को पता नहीं चलता, आप उनकी व्यूअर लिस्ट में नहीं दिखेंगे।"
+  },
+  "gh_watch_note": {
+    "message": "घोस्ट मोड — Instagram को नहीं पता कि आपने यह देखी।"
+  },
+  "gh_refresh": {
+    "message": "रिफ़्रेश"
+  },
+  "gh_loading": {
+    "message": "चालू स्टोरीज़ ढूँढ रहे हैं…"
+  },
+  "gh_loading_one": {
+    "message": "उनकी स्टोरी लोड हो रही है…"
+  },
+  "gh_empty": {
+    "message": "अभी आपके फ़ॉलो किए किसी की स्टोरी नहीं है।"
+  },
+  "gh_no_media": {
+    "message": "उनकी स्टोरी लोड नहीं हो सकी।"
+  },
+  "gh_err": {
+    "message": "Instagram ने लिस्ट नहीं दी। थोड़ी देर में फिर कोशिश करें।"
+  },
+  "gh_err_rate": {
+    "message": "Instagram ने धीरे चलने को कहा है। थोड़ा रुककर फिर कोशिश करें।"
+  },
+  "gh_stories_n": {
+    "message": "$1 स्टोरीज़"
+  },
+  "gh_story_1": {
+    "message": "1 स्टोरी"
+  },
+  "gh_unseen": {
+    "message": "बिना देखी"
+  },
+  "gh_slide": {
+    "message": "$2 में से $1"
+  },
+  "nb_failed": {
+    "message": "$1 को अनफ़ॉलो किया। $2 विफल — Instagram ने मना कर दिया।"
+  },
+  "gh_play_all": {
+    "message": "सभी $1 देखें"
+  },
+  "gh_person_of": {
+    "message": "$2 में से $1"
+  },
+  "gh_badge": {
+    "message": "घोस्ट मोड"
+  },
+  "gh_pause": {
+    "message": "रोकें"
+  },
+  "gh_resume": {
+    "message": "जारी रखें"
+  },
+  "gh_close": {
+    "message": "बंद करें"
+  },
+  "gh_download": {
+    "message": "डाउनलोड"
+  },
+  "gh_download_all": {
+    "message": "सभी डाउनलोड करें"
+  },
+  "gh_sound": {
+    "message": "आवाज़"
+  },
+  "dos_posts_none": {
+    "message": "पोस्ट तक पहुँच नहीं"
+  },
+  "settings_appearance": {
+    "message": "रूप"
+  },
+  "settings_light": {
+    "message": "लाइट मोड"
+  },
+  "toast_watching": {
+    "message": "अब आप $1 पर नज़र रख रहे हैं",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "अब आप $1 पर नज़र नहीं रख रहे",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "इंस्टाग्राम ने धीमे चलने को कहा। $1 मिनट में फिर कोशिश करें।",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "किसी को खोजें…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "इस नाम का कोई नहीं",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "खोज रहे हैं…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "कोई परिणाम नहीं",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "अभी पर्याप्त इतिहास नहीं है। एक दिन बाद देखें।",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "$1 से",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "बदलाव हो तो बताएं",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "सूचना चालू",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "$1 पर नज़र",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "$1 पर अब नज़र नहीं",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "निगरानी वाली जोड़ियाँ",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1 ने $2 को अनफ़ॉलो किया",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1 ने $2 को फ़ॉलो किया",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1 ने $2 को अनफ़ॉलो किया",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1 ने $2 को फ़ॉलो किया",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "जोड़ी",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "खाली करें",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "पक्का?",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "गतिविधि खाली की गई",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "पहले",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "अब",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "फ़ॉलोअर्स लोड हो रहे हैं",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "एक क्षण, इसमें समय लग सकता है",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "आपकी फ़ॉलोइंग सूची पूरी नहीं पढ़ी जा सकी। पिछली रखी गई है।",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "$1 की फ़ॉलोइंग सूची · अपडेट के लिए “अभी जाँचें” दबाएँ",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "फ़ॉलोइंग लोड हो रही है",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "तुलना और सहेजना",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "में से $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "फ़ॉलो अनुरोध",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "मैनुअल",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "सिर्फ़ जिन्हें मैं फ़ॉलो करता हूँ",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "सभी",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "जो भी माँगेगा वह बिना जाँच के आपके निजी खाते में आ जाएगा।",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "अभी स्वीकारें",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "स्वीकार हो रहा है…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "कोई लंबित अनुरोध नहीं।",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "स्वीकारें",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "अस्वीकारें",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "$1 स्वीकृत",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "$1 अस्वीकृत",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "$1 स्वीकृत",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "अनुरोध लोड नहीं हो सके।",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "स्वतः स्वीकारें",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "अनुरोध स्वीकार हो रहे हैं",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "अनफ़ॉलो हो रहा है",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "लगभग $1 बाकी",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 मिनट",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 सेकंड",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "हम जान-बूझकर धीरे चल रहे हैं",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "बहुत तेज़ करने पर इंस्टाग्राम खाते ब्लॉक कर देता है। अनियमित अंतराल पकड़ में नहीं आते। पैनल बंद कर सकते हैं: पीछे चलता रहेगा।",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "मोड़ने या खोलने के लिए क्लिक करें",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "इंटरैक्शन",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "नया संस्करण उपलब्ध है ($1)",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "डाउनलोड",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "आपका संस्करण अब इंस्टाग्राम के साथ काम नहीं करता। जारी रखने के लिए अपडेट करें।",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "बंद करें",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "यहाँ आपके फ़ॉलोअर और फ़ॉलोइंग में हुए बदलाव दर्ज होते हैं: कौन आया, कौन गया और कब। जाँच तब चलती है जब Instagram किसी टैब में खुला हो।"
+  },
+  "empty_unfollow_own": {
+    "message": "पहली जाँच के बाद से किसी ने अनफ़ॉलो नहीं किया।<br>यहाँ और नोटिफ़िकेशन से बताऊँगा 👀"
+  },
+  "load_pair": {
+    "message": "देख रहे हैं कि वे एक-दूसरे को फ़ॉलो करते हैं या नहीं"
+  },
+  "spy_checking_rev": {
+    "message": "$1 के फ़ॉलोअर में खोज रहे हैं…"
+  },
+  "spy_via_followers": {
+    "message": "$1 की फ़ॉलोअर सूची में देखा गया"
+  },
+  "busy_other": {
+    "message": "एक और जाँच चल रही है। उसके पूरा होने का इंतज़ार करें।"
+  }
+}

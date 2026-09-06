@@ -1,0 +1,1626 @@
+/* Ghosted — injected panel styles. Scoped under #ghd-* so it never leaks into
+ * Instagram's own UI. Native-feeling: Instagram's magenta→indigo gradient. */
+
+#ghd-panel, #ghd-fab, #ghd-backdrop{
+  --accent:#8a3ab9;          /* Instagram purple — solid accents/text */
+  --accent-2:#bd83e8;        /* lighter purple for hovers/tags — 4.5:1 sobre --panel */
+  --accent-grad:linear-gradient(45deg,#d62976,#4f5bd5);                     /* buttons / logo */
+  --fab-grad:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);/* full IG gradient — the FAB */
+  --accent-soft:rgba(138,58,185,.16);
+  --glow:rgba(138,58,185,.34);
+  --danger:#ff7a8a;          /* unfollow / alert red — text on transparent/soft backgrounds */
+  --danger-solid:#e0455a;    /* same hue, filled buttons/checks (needs the extra contrast) */
+  --panel:#141419;
+  --ink:#f2f2f5;--ink-2:#a6a6ae;--ink-3:#91919a;  /* ambos por encima de 4.5:1 sobre --panel */
+  --line:rgba(255,255,255,.09);--line-2:rgba(255,255,255,.14);
+  --surface:rgba(255,255,255,.05);--surface-2:rgba(255,255,255,.08);
+  --blur:blur(20px);         /* frosted-glass overlays (dossier, stories, followers view) */
+  --on-accent:#fff;        /* texto sobre degradados: blanco en ambos temas */
+  --on-soft:#fff;          /* texto sobre --accent-soft (tinte translucido), NO sobre degradado */
+  --card-soft:rgba(255,255,255,.05); /* fondo de las tarjetas de vigilancia */
+  --font:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,system-ui,sans-serif;
+}
+
+@keyframes ghdPop{from{opacity:0;transform:translateY(14px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes ghdOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(8px) scale(.97)}}
+@keyframes ghdRow{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes ghdFade{from{opacity:0}to{opacity:1}}
+@keyframes ghdFabIn{from{opacity:0;transform:scale(.4) translateY(20px)}to{opacity:1;transform:none}}
+@keyframes ghdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+#ghd-fab{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;
+  background:var(--fab-grad);box-shadow:0 10px 30px rgba(0,0,0,.48);
+  cursor:pointer;z-index:2147483000;display:flex;align-items:center;justify-content:center;border:none;
+  animation:ghdFabIn .5s cubic-bezier(.22,1,.36,1);transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease}
+#ghd-fab:hover{transform:scale(1.08) translateY(-1px);box-shadow:0 16px 40px rgba(0,0,0,.58)}
+#ghd-fab:active{transform:scale(.94)}
+#ghd-fab:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#ghd-fab svg{width:28px;height:28px;fill:#fff}
+/* a soft breathing ring around the FAB while there's unseen activity, so a
+   new unfollow/story-viewer result doesn't rely on the tiny badge alone */
+#ghd-fab::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);
+  opacity:0;pointer-events:none}
+#ghd-fab:has(#ghd-badge[style*="display: block"])::after{animation:ghdPulseRing 2.2s cubic-bezier(.22,1,.36,1) infinite}
+@keyframes ghdPulseRing{0%{opacity:.55;transform:scale(.92)}70%{opacity:0;transform:scale(1.22)}100%{opacity:0;transform:scale(1.22)}}
+#ghd-badge{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;
+  background:#ff3b5c;color:#fff;font:700 11px/20px var(--font);text-align:center;
+  box-shadow:0 0 0 2px #0b0b0f;display:none;animation:ghdBadgeIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ghdBadgeIn{from{transform:scale(.4)}to{transform:scale(1)}}
+
+#ghd-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  z-index:2147482900;display:none;animation:ghdFade .3s ease}
+#ghd-backdrop.show{display:block}
+
+/* height, not max-height: with max-height the panel shrank to its content,
+   so every tab change resized the whole window. Fixed now; the list
+   scrolls inside it instead. */
+#ghd-panel{position:fixed;right:22px;bottom:88px;width:396px;max-width:calc(100vw - 44px);height:min(76vh,660px);
+  background:rgba(18,18,22,.96);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border:1px solid var(--line);border-radius:22px;
+  /* layered elevation: a soft ambient shadow, a tighter contact shadow, and a
+     faint 1px inner highlight along the top edge — the difference between
+     "a dark rectangle" and a card that reads as floating glass. */
+  box-shadow:0 24px 70px rgba(0,0,0,.55),0 6px 18px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);
+  z-index:2147483000;display:none;flex-direction:column;overflow:hidden;color:var(--ink);
+  font-family:var(--font);
+  animation:ghdPop .38s cubic-bezier(.22,1,.36,1);will-change:transform,opacity}
+#ghd-panel.ghd-out{animation:ghdOut .18s ease forwards}
+#ghd-panel.ghd-big{right:auto;bottom:auto;inset:0;margin:auto;width:min(820px,94vw);height:min(88vh,960px);
+  max-height:none;max-width:none;border-radius:26px}
+#ghd-panel *{box-sizing:border-box}
+/* one consistent keyboard-focus ring for every interactive element in the
+   panel, instead of relying on (or losing) the browser default against a
+   dark background */
+#ghd-panel button:focus-visible,#ghd-panel a:focus-visible,#ghd-panel input:focus-visible{
+  outline:2px solid var(--accent-2);outline-offset:2px;border-radius:6px}
+
+.ghd-head{display:flex;align-items:center;gap:11px;padding:16px 16px 12px;flex-shrink:0}
+.ghd-logo{width:34px;height:34px;border-radius:50%;background:var(--fab-grad);
+  flex:none;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px var(--glow);
+  animation:ghdFloat 4s ease-in-out infinite}
+.ghd-logo svg{width:20px;height:20px;fill:#fff}
+.ghd-title{font-weight:700;font-size:16px;letter-spacing:-.01em}
+.ghd-title small{display:block;font-weight:400;font-size:11px;color:var(--ink-2);letter-spacing:0}
+.ghd-exp{margin-left:auto;background:var(--surface);border:none;color:var(--ink-2);font-size:14px;cursor:pointer;
+  width:30px;height:30px;border-radius:9px;transition:transform .14s ease,background .2s ease}
+.ghd-exp:hover{background:var(--line-2)}
+.ghd-x{background:none;border:none;color:var(--ink-2);font-size:20px;cursor:pointer;line-height:1;padding:4px;transition:transform .14s ease,color .2s ease}
+.ghd-x:hover{color:var(--ink)}
+.ghd-exp:active,.ghd-x:active{transform:scale(.9)}
+
+.ghd-chips{display:flex;gap:8px;padding:0 16px 12px;flex-shrink:0}
+.ghd-chip{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:13px;
+  padding:9px 6px;text-align:center;transition:transform .2s cubic-bezier(.22,1,.36,1),background .2s ease}
+.ghd-chip:hover{background:var(--surface-2);transform:translateY(-1px)}
+.ghd-chip b{display:block;font-size:18px;line-height:1.1}
+.ghd-chip span{font-size:10.5px;color:var(--ink-2)}
+.ghd-chip.warn b{color:var(--danger)}
+
+/* One line with horizontal scroll. It was like this originally and the tabs
+   past the edge were unreachable — but the cause wasn't the layout, it was
+   that nothing said there was more and a mouse wheel produces deltaY, which
+   doesn't move a container that only overflows in X. So: a slim visible
+   scrollbar, edge fades that appear only on the side that has more (toggled
+   by .has-left/.has-right from content.js), and a wheel handler that
+   translates deltaY into scrollLeft. */
+.ghd-tabs{position:relative;display:flex;flex-wrap:nowrap;gap:3px;padding:0 10px 4px;flex-shrink:0;
+  overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent;
+  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 100%);mask-image:linear-gradient(90deg,#000 0,#000 100%)}
+.ghd-tabs::-webkit-scrollbar{height:4px}
+.ghd-tabs::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:4px}
+.ghd-tabs::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.24)}
+.ghd-tabs::-webkit-scrollbar-track{background:transparent}
+/* fade whichever edge still has tabs behind it */
+.ghd-tabs.has-left.has-right{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%)}
+.ghd-tabs.has-left:not(.has-right){-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px);
+  mask-image:linear-gradient(90deg,transparent 0,#000 26px)}
+.ghd-tabs.has-right:not(.has-left){-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%);
+  mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%)}
+.ghd-tab{flex:0 0 auto;background:none;border:none;color:var(--ink-2);font:600 12px/1 var(--font);padding:10px 9px;
+  border-radius:9px;cursor:pointer;white-space:nowrap;transition:color .2s ease,background .25s cubic-bezier(.22,1,.36,1),transform .14s ease}
+.ghd-tab.active{color:var(--ink);background:var(--surface-2)}
+.ghd-tab:active{transform:scale(.96)}
+.ghd-tab .cnt{display:inline-block;margin-left:3px;font-size:10px;color:var(--ink-2);background:var(--surface-2);border-radius:8px;padding:1px 5px}
+.ghd-lock{margin-left:3px;font-size:9px;color:var(--accent-2)}
+.ghd-pro-tab.unlocked .ghd-lock{display:none}
+
+.ghd-list{overflow-y:auto;padding:8px 8px 4px;flex:1;min-height:140px}
+.ghd-list::-webkit-scrollbar{width:8px}
+.ghd-list::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px}
+#ghd-panel.ghd-big .ghd-list{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;align-content:start}
+#ghd-panel.ghd-big .ghd-empty,#ghd-panel.ghd-big .ghd-upsell,#ghd-panel.ghd-big .ghd-chart,#ghd-panel.ghd-big .ghd-loghead,#ghd-panel.ghd-big .ghd-activity-head,#ghd-panel.ghd-big .ghd-top-sec,#ghd-panel.ghd-big .ghd-top-calc,#ghd-panel.ghd-big .ghd-actions,#ghd-panel.ghd-big .ghd-tray,#ghd-panel.ghd-big .ghd-refresh-btn,#ghd-panel.ghd-big .ghd-fans-entry,#ghd-panel.ghd-big .ghd-archive-sub,#ghd-panel.ghd-big .ghd-gh-err,#ghd-panel.ghd-big .ghd-watch-list,#ghd-panel.ghd-big .ghd-mutual{grid-column:1/-1}
+
+/* Fixed row height. In expanded mode .ghd-list is a two-column grid, and a
+   grid row is as tall as its tallest cell — so one entry with an extra line
+   (or a name that wrapped) pushed its neighbour out of line and the two
+   columns drifted apart down the page. Same height everywhere = aligned. */
+.ghd-row{display:flex;align-items:center;gap:11px;padding:8px;border-radius:13px;text-decoration:none;color:inherit;
+  min-height:62px;box-sizing:border-box;overflow:hidden;
+  animation:ghdRow .4s cubic-bezier(.22,1,.36,1) both;transition:background .18s ease,transform .16s ease}
+/* every text line inside a row stays on ONE line, so nothing can grow it */
+.ghd-row .ghd-name,.ghd-row .ghd-user,.ghd-row .ghd-sub2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.ghd-row .ghd-name>*{flex:none}
+.ghd-row .ghd-right{white-space:nowrap}
+.ghd-row:hover{background:var(--surface-2)}
+.ghd-row:active{transform:scale(.985)}
+/* rows that open something inside the app (e.g. "see who these followers are") */
+.ghd-row-click{cursor:pointer}
+.ghd-row-click .ghd-right::after{content:'›';display:block;margin-top:2px;font-size:15px;font-weight:700;color:var(--accent-2);line-height:1;opacity:.7}
+.ghd-row-click:hover .ghd-right::after{opacity:1}
+.ghd-av{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;background:linear-gradient(140deg,#3a3a44,#55555f);
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px}
+.ghd-av img{width:100%;height:100%;object-fit:cover;display:block}
+/* active-story ring (Instagram-style gradient) */
+.ghd-av.has-story,.dos-av.has-story{overflow:visible;box-sizing:border-box;padding:3px;
+  background:conic-gradient(from 20deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75)}
+.ghd-av.has-story img,.dos-av.has-story img{width:100%;height:100%;box-sizing:border-box;border:2px solid #14141a;border-radius:50%;object-fit:cover}
+.dos-av.has-story{padding:4px}
+.ghd-info{min-width:0;flex:1}
+.ghd-name{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:5px}
+.ghd-user{font-size:11.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghd-sub2{font-size:10.5px;color:var(--accent-2);margin-top:2px}
+.ghd-ver{color:#3897f0;font-size:11px}
+.ghd-rank{font-size:10px;color:var(--accent-2);background:var(--accent-soft);border-radius:7px;padding:1px 6px}
+.ghd-right{margin-left:auto;text-align:right;flex:none}
+.ghd-time{font-size:10.5px;color:var(--ink-3)}
+.ghd-tag{display:inline-block;margin-top:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px}
+.ghd-tag.red{background:rgba(255,59,92,.16);color:var(--danger)}
+.ghd-tag.green{background:rgba(52,211,153,.15);color:#43e0a0}
+.ghd-tag.gray{background:var(--surface-2);color:var(--ink-2)}
+.ghd-tag.fan{background:var(--accent-grad);color:var(--on-accent)}
+.ghd-empty{text-align:center;color:var(--ink-3);font-size:12.5px;padding:34px 20px;line-height:1.55;animation:ghdFade .3s ease}
+
+.ghd-activity-head{margin:4px 2px 8px;padding:14px 13px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.ghd-activity-head h3{margin:0 0 4px;font-size:13.5px;color:var(--ink)}
+.ghd-activity-head p{margin:0;color:var(--ink-2);font-size:11px;line-height:1.45}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-form{display:flex;gap:7px;margin-top:12px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-input{min-width:0;flex:1;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;color:var(--ink);font:12px/1 var(--font);padding:10px 11px;outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-input:focus{border-color:rgba(138,58,185,.75);box-shadow:0 0 0 3px rgba(138,58,185,.16)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-input::placeholder{color:var(--ink-3)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-btn{border:0;border-radius:10px;background:var(--accent-grad);color:var(--on-accent);font:700 11.5px/1 var(--font);padding:0 14px;cursor:pointer;transition:filter .2s ease,transform .14s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-btn:hover{filter:brightness(1.08)}.ghd-watch-btn:active{transform:scale(.96)}.ghd-watch-btn:disabled{opacity:.55;cursor:default}
+/*#plus-on*/
+
+/* live suggestions dropdown */
+.ghd-sugg{display:none;margin-top:7px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;animation:ghdFade .18s ease}
+.ghd-sugg.show{display:block}
+.ghd-sugg-it{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:8px 10px;cursor:pointer;color:var(--ink);transition:background .15s ease}
+.ghd-sugg-it:last-child{border-bottom:0}
+.ghd-sugg-it:hover{background:var(--surface-2)}
+.ghd-sugg-it .ghd-av{width:32px;height:32px;font-size:12px;flex:none}
+.ghd-sugg-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px}
+.ghd-sugg-info b{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghd-sugg-info span{font-size:10.5px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghd-sugg-badge{flex:none;font-size:9px;font-weight:700;color:var(--accent-2);background:var(--accent-soft);border-radius:6px;padding:2px 6px}
+
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-list{margin-top:13px;padding-top:12px;border-top:1px solid var(--line)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-label{display:flex;align-items:center;gap:6px;width:100%;background:none;border:none;cursor:pointer;font:800 10px/1.2 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);margin:0 0 9px;padding:3px 2px;text-align:left;border-radius:7px;transition:color .18s ease,background .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-label:hover{color:var(--accent);background:var(--surface)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-caret{font-size:9px;line-height:1;display:inline-block;transition:transform .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-label.collapsed .ghd-watch-caret{transform:rotate(-90deg)}
+/*#plus-on*/
+/* Watch-profile cards — inspired by clean "tracker" apps: one full-width card
+   per profile, a stat row (real follower/following counts) and a "recently
+   followed" thumbnail strip, instead of a dense single-line row. */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-cards.collapsed{display:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-card{min-width:0;display:flex;flex-direction:column;gap:9px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--surface);transition:background .18s ease,border-color .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-card:hover{background:var(--surface-2);border-color:var(--line-2)}
+/*#plus-on*/
+.ghd-wc-top{display:flex;align-items:center;gap:8px}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-profile{min-width:0;flex:1;display:flex;align-items:center;gap:9px;color:inherit;text-decoration:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-profile .ghd-av{width:40px;height:40px;font-size:13px;flex:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-card-info{min-width:0;display:flex;flex-direction:column;gap:2px}.ghd-watch-card-info b,.ghd-watch-card-info small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-card-info b{font-size:12.5px;color:var(--ink)}.ghd-watch-card-info small{font-size:10.5px;color:var(--ink-3)}
+/*#plus-on*/
+.ghd-wc-ago{flex:none;font-size:9.5px;color:var(--ink-3);white-space:nowrap}
+/* stat row: two equal pills, like a mini profile-stats bar */
+.ghd-wc-stats{display:flex;gap:8px}
+.ghd-wc-stat{flex:1;text-align:center;padding:3px 4px;background:none;border:0}
+.ghd-wc-stat b{display:block;font-size:14px;font-weight:800;color:var(--ink)}
+.ghd-wc-stat span{display:block;font-size:9.5px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.03em;margin-top:1px}
+/* recently-followed thumbnail strip */
+.ghd-wc-recent{display:flex;flex-direction:column;gap:5px}
+.ghd-wc-recent-label{font-size:9.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.ghd-wc-recent-row{display:flex;align-items:center}
+.ghd-wc-recent-av{margin-right:-8px;display:block;border-radius:50%;border:2px solid var(--panel,#141419)}
+.ghd-wc-recent-av .ghd-av{width:26px;height:26px;font-size:10px}
+.ghd-wc-recent-more{margin-left:4px;font-size:10.5px;color:var(--ink-2);font-weight:700}
+.ghd-wc-hint{font-size:10px;color:var(--ink-3);line-height:1.4}
+/* ---- Watch-card controls ----
+   These were three unlabelled emoji (📖 👥 🔍) greyed out when off. Nobody can
+   tell a muted book from an active one, and two of them are ON/OFF switches
+   while the third is an action — all three looked identical. Now they read as
+   what they are: two toggles that say what they watch, and a separate action. */
+/* one row, never wrapping: wrapped, the third pill dropped to a lonely second
+   line and the card looked broken next to its neighbours */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-toggles{display:flex;gap:5px;flex-wrap:nowrap;align-items:center;margin-top:auto}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt{flex:0 1 auto;min-width:0;height:26px;padding:0 9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid var(--line-2);border-radius:99px;
+  background:var(--surface);color:var(--ink-2);font:600 11px/1 var(--font);cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:background .18s ease,border-color .18s ease,color .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt:hover{background:var(--surface-2);color:var(--ink)}
+/*#plus-on*/
+/* a dot carries the on/off state, so it survives at a glance */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt:not(.det)::before{content:"";width:6px;height:6px;border-radius:50%;flex:none;
+  background:var(--ink-3);transition:background .18s ease,box-shadow .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt.on{background:var(--accent-soft);border-color:rgba(138,58,185,.5);color:var(--on-soft)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt.on:not(.det)::before{background:#43e0a0;box-shadow:0 0 0 3px rgba(67,224,160,.18)}
+/*#plus-on*/
+/* the dossier button is an action, not a state — no dot, and set apart */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt.det{margin-left:auto;background:none;border-color:var(--line-2);color:var(--accent-2)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-wt.det:hover{background:var(--accent-soft);color:var(--on-soft)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-remove{width:26px;height:26px;flex:none;border:0;border-radius:9px;background:var(--surface);color:var(--ink-3);font:500 16px/1 var(--font);cursor:pointer}.ghd-watch-remove:hover{background:rgba(255,59,92,.16);color:#ff91a2}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-preview{display:flex;align-items:center;gap:9px;margin-top:10px;padding:10px;border-radius:12px;background:var(--accent-soft);border:1px solid rgba(138,58,185,.34)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-preview .ghd-av{width:36px;height:36px;font-size:13px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-preview-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-preview-info b{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ghd-watch-preview-info span{font-size:10.5px;color:var(--ink-2)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-preview-actions{display:flex;gap:5px;flex:none}.ghd-watch-preview-actions button{border:0;border-radius:9px;font:700 10.5px/1 var(--font);padding:9px 10px;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-cancel{background:var(--surface-2);color:var(--ink-2)}.ghd-watch-confirm{background:var(--accent-grad);color:var(--on-accent)}
+/*#plus-on*/
+
+/* "Do they follow each other?" tool */
+.ghd-mutual{margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+.ghd-mutual-head{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);margin:0 2px 4px}
+.ghd-mutual-hint{font-size:10px;color:var(--ink-3);margin:0 2px 9px;line-height:1.4}
+.ghd-mutual-row{display:flex;gap:6px}
+.ghd-mutual-in{min-width:0;flex:1;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;color:var(--ink);font:12px/1 var(--font);padding:10px 11px;outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+.ghd-mutual-in:focus{border-color:rgba(138,58,185,.75);box-shadow:0 0 0 3px rgba(138,58,185,.16)}
+.ghd-mutual-in::placeholder{color:var(--ink-3)}
+.ghd-mutual-btn{flex:none;border:0;border-radius:10px;background:var(--accent-grad);color:var(--on-accent);font:700 11.5px/1 var(--font);padding:0 14px;cursor:pointer;transition:filter .2s ease}
+.ghd-mutual-btn:hover{filter:brightness(1.08)}.ghd-mutual-btn:disabled{opacity:.55;cursor:default}
+.ghd-mutual-result{margin-top:9px;padding:9px 11px;border-radius:11px;font-size:11.5px;line-height:1.45;background:var(--surface);border:1px solid var(--line)}
+.ghd-mutual-result.ok{color:#43e0a0;background:rgba(52,211,153,.12);border-color:rgba(52,211,153,.3)}
+.ghd-mutual-result.half{color:#f2c14e;background:rgba(242,193,78,.1);border-color:rgba(242,193,78,.28)}
+.ghd-mutual-result.no{color:var(--ink-2)}
+.ghd-mutual-result.unknown{color:var(--ink-2);border-style:dashed}
+.ghd-mutual-via{display:block;margin-top:2px;font-size:10px;opacity:.75;font-style:italic}
+.ghd-mutual-result.err{color:var(--danger);background:rgba(255,59,92,.12);border-color:rgba(255,59,92,.28)}
+.dos-mutual-line{padding:2px 0}
+.dos-mutual-line+.dos-mutual-line{border-top:1px dashed var(--line);margin-top:5px;padding-top:6px}
+
+/* Detective (public profile dossier) — full-panel overlay */
+#ghd-dossier{position:absolute;inset:0;z-index:6;display:none;flex-direction:column;
+  background:rgba(18,18,22,.98);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-radius:22px;overflow:hidden;animation:ghdFade .2s ease}
+#ghd-dossier.show{display:flex}
+#ghd-panel.ghd-big #ghd-dossier{border-radius:26px}
+/* followers/following in-panel overlay */
+#ghd-relview{position:absolute;inset:0;z-index:7;display:none;flex-direction:column;
+  background:rgba(18,18,22,.98);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-radius:22px;overflow:hidden;padding:0 16px 14px;animation:ghdFade .2s ease}
+#ghd-relview.show{display:flex}
+/* Ghost mode story viewer */
+#ghd-stories,#ghd-posts-view,#ghd-hl-view,#ghd-cover-view{position:absolute;inset:0;z-index:8;display:none;flex-direction:column;background:rgba(10,10,14,.98);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);border-radius:22px;overflow:hidden;padding:0 14px 14px;animation:ghdFade .2s ease}
+#ghd-stories.show,#ghd-posts-view.show,#ghd-hl-view.show,#ghd-cover-view.show{display:flex}
+#ghd-panel.ghd-big #ghd-stories,#ghd-panel.ghd-big #ghd-posts-view,#ghd-panel.ghd-big #ghd-hl-view,#ghd-panel.ghd-big #ghd-cover-view{border-radius:26px}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-cnt{flex:none;font:600 11.5px/1 var(--font);color:var(--ink-2);background:var(--surface-2);border-radius:100px;padding:6px 11px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-cap{position:absolute;bottom:12px;left:12px;z-index:3;font:600 12px/1 var(--font);color:#fff;background:rgba(0,0,0,.5);border-radius:100px;padding:8px 13px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-slide-dots{position:absolute;top:10px;left:0;right:0;z-index:3;display:none;justify-content:center;gap:5px;pointer-events:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-slide-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-slide-dots span.active{background:#fff}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-head{display:flex;align-items:center;gap:10px;padding:16px 4px 10px;flex:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-ti{flex:1;min-width:0}.ghst-ti b{display:block;font-size:15px}.ghst-ti small{font-size:10.5px;color:var(--ink-2)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-all{flex:none;border:none;border-radius:100px;background:var(--accent-grad);color:#fff;font:700 11.5px/1 var(--font);padding:9px 13px;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-all:disabled{opacity:.7;cursor:default}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-stage{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;border-radius:14px;overflow:hidden;background:#000}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-bars{position:absolute;top:8px;left:10px;right:10px;z-index:3;display:flex;gap:4px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-bars span{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.28)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-bars span.active{background:#fff}.ghst-bars span.done{background:rgba(255,255,255,.7)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-media{width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-media img,.ghst-media video{max-width:100%;max-height:100%;object-fit:contain;display:block}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-nav{position:absolute;top:0;bottom:0;z-index:2;width:22%;border:none;background:transparent;color:#fff;font-size:34px;cursor:pointer;opacity:0;transition:opacity .2s}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-nav.prev{left:0}.ghst-nav.next{right:0}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-stage:hover .ghst-nav{opacity:.85}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghst-dl{position:absolute;bottom:12px;right:12px;z-index:3;border:none;border-radius:100px;background:var(--accent-grad);color:#fff;font:700 12px/1 var(--font);padding:10px 16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.4);text-decoration:none;display:inline-block}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.dos-act.ghost{background:var(--accent-grad);border-color:transparent;color:var(--on-accent)}
+/*#plus-on*/
+#ghd-panel.ghd-big #ghd-relview{border-radius:26px}
+#ghd-relview .dos-head{padding:16px 0 10px}
+#ghd-relview .dos-rel-search{flex:none;margin-bottom:10px}
+#ghd-relview .dos-rel-list{flex:1;min-height:0;max-height:none;overflow-y:auto}
+.dos-loading{padding:44px 20px;text-align:center;color:var(--ink-2);font-size:12.5px}
+.dos-head{display:flex;align-items:center;gap:12px;padding:16px 16px 12px}
+.dos-av{width:58px;height:58px;border-radius:50%;flex:none;overflow:hidden;background:linear-gradient(140deg,#3a3a44,#55555f);
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:20px}
+.dos-av img{width:100%;height:100%;object-fit:cover;display:block}
+.dos-hi{min-width:0;flex:1}
+.dos-name{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center}
+.dos-user{display:block;font-size:12px;color:var(--ink-2);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.dos-user:hover{color:var(--ink)}
+.dos-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.dos-badge{font-size:9.5px;font-weight:700;color:var(--accent-2);background:var(--accent-soft);border-radius:7px;padding:2px 7px}
+.dos-badge.gray{color:var(--ink-2);background:var(--surface-2)}
+.dos-x{background:var(--surface);border:none;color:var(--ink-2);font-size:20px;width:32px;height:32px;border-radius:9px;cursor:pointer;flex:none}
+.dos-x:hover{color:var(--ink);background:var(--surface-2)}
+.dos-exp{background:var(--surface);border:none;color:var(--ink-2);font-size:15px;width:32px;height:32px;border-radius:9px;cursor:pointer;flex:none;transition:transform .14s ease,background .2s ease}
+.dos-exp:hover{color:var(--ink);background:var(--surface-2)}.dos-exp:active{transform:scale(.9)}
+.dos-actions{display:flex;gap:6px;padding:0 16px 12px;flex-wrap:wrap}
+.dos-act{border:1px solid var(--line-2);border-radius:9px;background:var(--surface);color:var(--ink);font:600 11px/1 var(--font);padding:9px 11px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.dos-act:hover{background:var(--surface-2)}
+.dos-act.primary{background:var(--accent-grad);border-color:transparent;color:var(--on-accent)}
+.dos-act.watching{background:var(--accent-grad);border-color:transparent;color:var(--on-accent)}
+.dos-act.tiktok{gap:6px}
+.dos-act.tiktok svg{width:14px;height:14px;flex:none}
+.dos-act:disabled{opacity:.6;cursor:default}
+.dos-stats{display:flex;gap:8px;padding:0 16px 6px}
+.dos-stat{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center;transition:background .18s ease,border-color .18s ease}
+.dos-stat.clickable{cursor:pointer}
+.dos-stat.clickable:hover{background:var(--accent-soft);border-color:rgba(138,58,185,.45)}
+.dos-stat.clickable span{color:var(--accent-2)}
+.dos-post-empty{display:none}
+.dos-stat b{display:block;font-size:16px}
+.dos-stat span{font-size:10px;color:var(--ink-2)}
+.dos-body{flex:1;min-height:0;overflow-y:auto;padding:6px 16px 16px}
+.dos-body::-webkit-scrollbar{width:8px}.dos-body::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px}
+.dos-sec{margin-top:14px}
+.dos-sec-h{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);margin-bottom:8px}
+.dos-bio{font-size:12.5px;color:var(--ink);line-height:1.5;white-space:pre-wrap;margin-bottom:6px}
+.dos-hl-strip{display:flex;gap:14px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:thin;scrollbar-color:var(--line-2) transparent;overscroll-behavior-x:contain}
+.dos-hl-strip::-webkit-scrollbar{height:6px}
+.dos-hl-strip::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:6px}
+.dos-hl-strip::-webkit-scrollbar-track{background:transparent}
+.dos-more{margin:10px auto 0;display:block;border:1px solid var(--line-2);border-radius:9px;background:var(--surface);color:var(--ink);padding:9px 16px;cursor:pointer;font:600 11.5px/1 var(--font)}
+.dos-more:hover{background:var(--surface-2)}.dos-more:disabled{opacity:.6;cursor:default}
+.dos-hl-item{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:60px;text-decoration:none;color:inherit}
+.dos-hl-av{width:56px;height:56px;border-radius:50%;overflow:hidden;background:linear-gradient(140deg,#3a3a44,#55555f);
+  border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:18px;transition:border-color .18s ease}
+.dos-hl-av img{width:100%;height:100%;object-fit:cover;display:block}
+.dos-hl-item:hover .dos-hl-av{border-color:var(--accent)}
+.dos-hl-label{font-size:10.5px;color:var(--ink-2);max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
+.dos-hl-save{border:1px solid var(--line-2);background:var(--surface);color:var(--ink-2);font:700 8.5px/1 var(--font);border-radius:7px;padding:3px 6px;cursor:pointer;text-transform:uppercase;letter-spacing:.04em}
+.dos-hl-save:hover{background:var(--surface-2);color:var(--ink)}.dos-hl-save:disabled{opacity:.6;cursor:default}
+
+/* photo-history archive */
+.dos-arch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.dos-arch{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:var(--surface-2);display:block;border:1px solid var(--line)}
+.dos-arch img{width:100%;height:100%;object-fit:cover;display:block}
+.dos-arch-cap{position:absolute;left:0;right:0;bottom:0;padding:3px 5px;font-size:9px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.72));text-align:center}
+.dos-arch-tag{position:absolute;top:4px;right:5px;font-size:11px;color:#ffd76a;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+
+/* posts grid */
+.dos-eng{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px}
+.dos-eng-top{display:flex;align-items:center;gap:12px}
+.dos-eng-top b{font-size:26px;font-weight:800;background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dos-eng-lvl{font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px}
+.dos-eng-lvl.fire{background:linear-gradient(90deg,#ff6a00,#ff2d55);color:var(--on-accent)}
+.dos-eng-lvl.good{background:rgba(52,211,153,.16);color:#43e0a0}
+.dos-eng-lvl.ok{background:var(--surface-2);color:var(--ink-2)}
+.dos-eng-lvl.low{background:rgba(255,59,92,.16);color:#ff91a2}
+.dos-eng-lvl.hidden{background:var(--surface-2);color:var(--ink-2)}
+.dos-eng-sub{font-size:11.5px;color:var(--ink-2);margin-top:7px}
+.dos-post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.dos-post{position:relative;aspect-ratio:1/1;overflow:hidden;border-radius:8px;background:var(--surface-2);cursor:pointer}
+.dos-post img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+.dos-post:hover img{transform:scale(1.05)}
+.dos-post-badge{position:absolute;top:5px;right:6px;font-size:12px;color:var(--ink);text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.dos-post-meta{position:absolute;left:0;right:0;bottom:0;padding:8px 6px 4px;font-size:10px;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.7));opacity:0;transition:opacity .2s ease;text-align:center}
+.dos-post:hover .dos-post-meta{opacity:1}
+/*#plus-off descargas: boton de bajar la publicacion*/
+.dos-post-dl{position:absolute;top:5px;left:6px;width:22px;height:22px;border:0;border-radius:7px;background:rgba(0,0,0,.5);color:#fff;font-size:12px;cursor:pointer;opacity:0;transition:opacity .2s ease}
+.dos-post:hover .dos-post-dl{opacity:1}.dos-post-dl:hover{background:var(--accent)}
+/*#plus-on*/
+
+/* followers / following viewer */
+.dos-rel-btns{display:flex;gap:7px;margin-bottom:8px}
+.dos-rel-btn{flex:1;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);font:700 11px/1 var(--font);border-radius:9px;padding:9px;cursor:pointer;transition:background .2s ease,border-color .2s ease}
+.dos-rel-btn:hover{background:var(--surface-2)}
+.dos-rel-btn.active{background:var(--accent-soft);border-color:rgba(138,58,185,.45);color:var(--on-soft)}
+.dos-rel-search{width:100%;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;color:var(--ink);font:12px/1 var(--font);padding:10px 11px;outline:none;margin-bottom:8px;transition:border-color .18s ease,box-shadow .18s ease}
+.dos-rel-search:focus{border-color:rgba(138,58,185,.75);box-shadow:0 0 0 3px rgba(138,58,185,.16)}
+.dos-rel-search::placeholder{color:var(--ink-3)}
+.dos-rel-list{display:flex;flex-direction:column;max-height:340px;overflow-y:auto}
+.dos-rel-list::-webkit-scrollbar{width:8px}.dos-rel-list::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px}
+.dos-rel-row{display:flex;align-items:center;gap:10px;padding:7px 4px;border-radius:10px;text-decoration:none;color:inherit}
+.dos-rel-row:hover{background:var(--surface-2)}
+.dos-rel-row .ghd-av{width:38px;height:38px;flex:none}
+
+.dos-row{display:flex;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:12px}
+.dos-k{color:var(--ink-3);flex:none;min-width:60px}
+.dos-val{min-width:0;color:var(--ink);word-break:break-word}
+.dos-link{color:var(--accent-2);text-decoration:none;word-break:break-all}
+.dos-link:hover{text-decoration:underline}
+.dos-graph{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:8px}
+.dos-graph-head{font-size:11px;color:var(--ink-2)}
+.dos-graph-head b{font-size:18px;color:var(--ink);margin-right:3px}
+.dos-graph-delta{font-size:10.5px;font-weight:700;margin-top:3px}
+.dos-graph-delta.up{color:#43e0a0}.dos-graph-delta.down{color:var(--danger)}
+.dos-spark{width:100%;height:64px;display:block;margin-top:6px}
+.dos-ev{display:flex;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:12px;color:var(--ink)}
+.dos-ev-t{color:var(--ink-3);flex:none;min-width:64px}
+.dos-note{font-size:11px;color:var(--ink-3);line-height:1.5;padding:6px 0}
+
+/* activity timeline (grouped by date) */
+.dos-tl-filters{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 8px}
+.dos-tl-filter{border:1px solid var(--line-2);border-radius:999px;background:var(--surface);color:var(--ink-2);font:600 11px/1 var(--font);padding:6px 11px;cursor:pointer;transition:background .16s ease,color .16s ease,border-color .16s ease}
+.dos-tl-filter:hover{background:var(--surface-2)}
+.dos-tl-filter.active{background:var(--accent-grad);border-color:transparent;color:var(--on-accent)}
+.dos-timeline{margin-top:4px;padding-left:6px;border-left:2px solid var(--line)}
+.dos-tl-day{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-2);margin:12px 0 5px;padding-left:6px}
+.dos-tl-day:first-child{margin-top:2px}
+.dos-tl-row{display:flex;align-items:flex-start;gap:9px;padding:5px 6px;font-size:12.5px;color:var(--ink);line-height:1.4;border-radius:8px}
+.dos-tl-click{cursor:pointer}
+.dos-tl-click:hover{background:var(--surface)}
+.dos-tl-click .dos-tl-tx::after{content:' ›';color:var(--accent-2);font-weight:700}
+.dos-tl-ic{flex:none;font-size:13px;line-height:1.4}
+.dos-tl-tx{min-width:0}
+.dos-close-btn{margin:14px auto 0;display:block;border:1px solid var(--line-2);border-radius:9px;background:var(--surface);color:var(--ink);padding:8px 16px;cursor:pointer;font:600 11.5px/1 var(--font)}
+
+#ghd-panel.ghd-locked .ghd-chips,#ghd-panel.ghd-locked .ghd-tabs,#ghd-panel.ghd-locked .ghd-next,#ghd-panel.ghd-locked .ghd-foot{display:none}
+#ghd-panel.ghd-locked .ghd-list{display:flex;align-items:center;justify-content:center;padding:18px;min-height:230px}
+#ghd-panel.ghd-locked.ghd-big .ghd-list{display:flex;align-items:center;justify-content:center}
+.ghd-unlock{width:min(100%,340px);text-align:center;padding:8px 0;animation:ghdFade .25s ease}
+.ghd-unlock h2{margin:0 0 6px;font-size:18px}.ghd-unlock p{margin:0 auto;color:var(--ink-3);font-size:11.5px;line-height:1.45;max-width:300px}
+.ghd-unlock-buy{display:block;margin:13px auto 13px;max-width:220px;border-radius:10px;padding:10px 14px;background:var(--accent-grad);color:var(--on-accent);text-decoration:none;font:700 12px/1 var(--font)}
+.ghd-unlock-label{display:block;text-align:left;color:var(--ink-2);font-size:10.5px;margin:0 0 6px}.ghd-unlock-row{display:flex;gap:7px}
+.ghd-unlock-input{min-width:0;flex:1;background:var(--surface-2);border:1px solid var(--line-2);border-radius:9px;padding:10px;color:var(--ink);font:11px/1 var(--font);outline:none}.ghd-unlock-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(138,58,185,.16)}
+.ghd-unlock-activate{border:0;border-radius:9px;background:var(--surface-2);color:var(--ink);font:700 11px/1 var(--font);padding:0 12px;cursor:pointer}.ghd-unlock-activate:disabled{opacity:.55}.ghd-unlock-error{min-height:16px;text-align:left;color:var(--danger);font-size:10.5px;padding-top:7px}
+
+.ghd-upsell{margin:14px 10px;padding:22px 18px;text-align:center;border-radius:18px;
+  background:radial-gradient(120% 120% at 50% 0%,rgba(138,58,185,.2),rgba(79,91,213,.1) 60%,transparent);
+  border:1px solid rgba(138,58,185,.3);animation:ghdFade .3s ease}
+.ghd-upsell-badge{display:inline-block;font:700 10px/1 var(--font);letter-spacing:1px;color:var(--accent-2);
+  background:var(--accent-soft);border:1px solid rgba(138,58,185,.34);padding:4px 9px;border-radius:20px;margin-bottom:12px}
+.ghd-upsell h3{font-size:17px;margin:0 0 6px}
+.ghd-upsell p{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin:0 0 16px}
+.ghd-upsell-btn{display:inline-block;background:var(--accent-grad);color:var(--on-accent);text-decoration:none;
+  font:700 13px/1 var(--font);padding:12px 20px;border-radius:12px;box-shadow:0 8px 24px var(--glow);
+  transition:transform .16s ease,filter .2s ease}
+.ghd-upsell-btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.ghd-upsell-hint{font-size:10.5px;color:var(--ink-3);margin-top:12px;line-height:1.5}
+
+.ghd-chart{margin:12px 10px;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.ghd-chart-head{font-size:12px;color:var(--ink-2);margin-bottom:8px}
+.ghd-chart-head b{font-size:20px;color:var(--ink);margin-right:4px}
+.ghd-delta{font-size:11px;font-weight:700;margin-left:6px}
+.ghd-delta.up{color:#43e0a0}.ghd-delta.down{color:var(--danger)}
+.ghd-spark{width:100%;height:90px;display:block}
+/* Top interactions tab */
+.ghd-top-calc{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 8px 6px}
+.ghd-top-note{font-size:10.5px;color:var(--ink-3);line-height:1.45;flex:1;min-width:120px}
+/* the long disclaimer above the ranking reads as a footnote, not as body copy */
+.ghd-list > .ghd-top-note{flex:none;margin:2px 12px 12px;padding:9px 11px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--line);font-size:10px;color:var(--ink-3)}
+.ghd-top-sec{margin-top:12px}
+/* Per-story breakdown shown above the viewer ranking, so you can tell which
+   of several live stories any number refers to. */
+.ghd-story-sum{margin:6px 8px 2px;padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+.ghd-story-line{font-size:11px;color:var(--ink-2);line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* Search box to jump to one viewer. */
+.ghd-story-search{margin:8px 8px 4px}
+.ghd-nb-search{margin:2px 8px 6px}
+.ghd-live-entry{border-color:var(--line-2)}
+.ghd-gh-err{margin:6px 10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:rgba(255,80,80,.08);color:var(--ink);font-size:12px}
+.ghd-gh-who{display:flex;align-items:center;gap:10px;margin:4px 10px 8px}
+.ghd-gh-who-t{min-width:0}
+.ghd-gh-media{position:relative;margin:0 10px;border-radius:12px;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;max-height:60vh}
+.ghd-gh-media img,.ghd-gh-media video{display:block;width:100%;height:auto;max-height:60vh;object-fit:contain}
+.ghd-gh-nav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 10px 4px}
+.ghd-gh-arrow{flex:0 0 auto;width:38px;height:32px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:16px;line-height:1;cursor:pointer}
+.ghd-gh-arrow:hover:not(:disabled){border-color:var(--accent)}
+.ghd-gh-arrow:disabled{opacity:.35;cursor:default}
+.ghd-gh-count{flex:1 1 auto;text-align:center;color:var(--ink-3);font-size:11.5px}
+.ghd-nb-search-in{width:100%;box-sizing:border-box;padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:12.5px;outline:none}
+.ghd-nb-search-in::placeholder{color:var(--ink-3)}
+.ghd-nb-search-in:focus{border-color:var(--accent)}
+.ghd-story-search-in{width:100%;box-sizing:border-box;padding:8px 11px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--ink);font-size:12.5px;outline:none}
+.ghd-story-search-in::placeholder{color:var(--ink-3)}
+.ghd-story-search-in:focus{border-color:var(--accent)}
+/* Story archive gallery — Instagram "Stories archive" look */
+/* ---- Ghosted tab: one primary action, one secondary, then content ----
+   Was: two full-width slabs of near-equal weight (a saturated magenta→indigo
+   gradient and a tinted one) stacked on top of a wall of explanatory text,
+   with emoji standing in for icons. Nothing said which button mattered, and
+   the copy outweighed the controls. Now the actions sit in one row: a solid
+   primary and a quiet secondary, both 40px tall. */
+.ghd-archive-sub{margin:2px 12px 10px;font-size:12px;color:var(--ink-2);line-height:1.5}
+.ghd-actions{display:flex;gap:8px;margin:2px 12px 14px}
+.ghd-refresh-btn,.ghd-fans-entry{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;
+  gap:7px;height:40px;padding:0 14px;border-radius:11px;font:650 12.5px/1 var(--font);letter-spacing:0;
+  cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:background .18s ease,border-color .18s ease,transform .12s ease}
+.ghd-refresh-btn{border:0;background:var(--accent-grad);color:var(--on-accent);box-shadow:0 6px 16px -6px var(--glow)}
+.ghd-refresh-btn:hover:not(:disabled){filter:brightness(1.07)}
+.ghd-fans-entry{border:1px solid var(--line-2);background:var(--surface);color:var(--ink);text-align:center}
+.ghd-fans-entry:hover{background:var(--surface-2);border-color:var(--accent)}
+.ghd-refresh-btn:active:not(:disabled),.ghd-fans-entry:active{transform:scale(.98)}
+.ghd-refresh-btn:disabled,.ghd-fans-entry:disabled{opacity:.5;cursor:default}
+/* The brand ghost, as a real SVG. A previous attempt drew it with layered
+   CSS radial-gradient masks and rendered as a shapeless blob. */
+.ghd-fans-entry::before{content:"";width:15px;height:15px;flex:none;opacity:.8;
+  background:currentColor;
+  -webkit-mask:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M5%2010a7%207%200%200%201%2014%200v9.4a.6.6%200%200%201-.95.49L16%2018.2l-1.6%201.3a.6.6%200%200%201-.76%200L12%2018.4l-1.64%201.1a.6.6%200%200%201-.76%200L8%2018.2l-2.05%201.19A.6.6%200%200%201%205%2018.9Z%22%2F%3E%3Cellipse%20cx%3D%229.4%22%20cy%3D%2211.2%22%20rx%3D%221.25%22%20ry%3D%221.6%22%20fill%3D%22%23fff%22%2F%3E%3Cellipse%20cx%3D%2214.6%22%20cy%3D%2211.2%22%20rx%3D%221.25%22%20ry%3D%221.6%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E') center/contain no-repeat;
+  mask:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M5%2010a7%207%200%200%201%2014%200v9.4a.6.6%200%200%201-.95.49L16%2018.2l-1.6%201.3a.6.6%200%200%201-.76%200L12%2018.4l-1.64%201.1a.6.6%200%200%201-.76%200L8%2018.2l-2.05%201.19A.6.6%200%200%201%205%2018.9Z%22%2F%3E%3Cellipse%20cx%3D%229.4%22%20cy%3D%2211.2%22%20rx%3D%221.25%22%20ry%3D%221.6%22%20fill%3D%22%23fff%22%2F%3E%3Cellipse%20cx%3D%2214.6%22%20cy%3D%2211.2%22%20rx%3D%221.25%22%20ry%3D%221.6%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E') center/contain no-repeat}
+/* busy state replaces the ⏳ that used to be prepended to the label */
+.ghd-refresh-btn.is-busy,.ghd-refresh-sm.is-busy{pointer-events:none;opacity:.75}
+.ghd-refresh-btn.is-busy::after,.ghd-refresh-sm.is-busy::after{content:"";width:13px;height:13px;flex:none;
+  border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:var(--ink);animation:ghdSpin .7s linear infinite}
+@keyframes ghdSpin{to{transform:rotate(360deg)}}
+.ghd-story-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:8px 10px 14px}
+/* wider panel -> more, smaller tiles instead of 2 giant ones */
+#ghd-panel.ghd-big .ghd-story-grid{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))}
+.ghd-story-tile{padding:0;border:0;background:none;cursor:pointer;display:block;width:100%}
+.ghd-tile-thumb{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#0d0d12;border:1px solid var(--line)}
+.ghd-tile-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ghd-tile-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:40px;background:linear-gradient(160deg,#2a2a33,#15151b)}
+.ghd-story-tile:hover .ghd-tile-thumb{border-color:var(--accent);transform:translateY(-2px)}
+.ghd-tile-thumb{transition:transform .12s ease,border-color .12s ease}
+/* white day/month/year badge, top-left, like IG's archive */
+.ghd-tile-date{position:absolute;top:10px;left:10px;background:#fff;color:#0a0a0f;border-radius:10px;padding:5px 9px;text-align:center;line-height:1.02;box-shadow:0 2px 10px rgba(0,0,0,.35)}
+.ghd-tile-date b{display:block;font-size:18px;font-weight:800;letter-spacing:-.5px}
+.ghd-tile-date span{display:block;font-size:9.5px;font-weight:600;text-transform:lowercase;opacity:.85}
+.ghd-tile-vid{position:absolute;top:12px;right:12px;color:#fff;font-size:12px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.ghd-tile-meta{position:absolute;left:0;right:0;bottom:0;display:flex;gap:14px;justify-content:center;padding:14px 6px 8px;font-size:12px;font-weight:700;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+/* "Not following back" — multi-select + bulk unfollow */
+.ghd-nb-bar{display:flex;gap:8px;flex-wrap:wrap;padding:8px 10px 4px}
+#ghd-panel.ghd-big .ghd-nb-bar{grid-column:1/-1}
+.ghd-nb-btn{padding:8px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:12.5px;font-weight:700;cursor:pointer}
+.ghd-nb-btn:hover:not(:disabled){border-color:var(--accent)}
+.ghd-nb-btn:disabled{opacity:.5;cursor:default}
+.ghd-nb-btn.danger{border:0;background:var(--danger-solid);color:var(--on-accent)}
+.ghd-nb-btn.danger:hover:not(:disabled){filter:brightness(1.08)}
+.ghd-nb-btn.ghost{background:transparent;color:var(--ink-2)}
+#ghd-panel.ghd-big .ghd-nb-bar ~ .ghd-top-note{grid-column:1/-1}
+.ghd-row-check .ghd-check{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--ink);margin-right:2px}
+.ghd-row-check.ghd-sel{background:rgba(224,69,90,.10)}
+.ghd-row-check.ghd-sel .ghd-check{background:var(--danger-solid);border-color:var(--danger-solid)}
+.ghd-row-check{cursor:pointer}
+
+/* The whole Ghosted tab lives in one full-width column so big mode's 2-col
+   grid never chops the back button / search / list into separate columns. */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gview{display:flex;flex-direction:column;width:100%}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-big .ghd-gview{grid-column:1/-1}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gview .ghd-story-search{margin-left:10px;margin-right:10px}
+/*#plus-on*/
+/* detail top bar: back on the left, refresh pushed to the right */
+.ghd-detail-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 10px 4px}
+.ghd-back{padding:8px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:12.5px;font-weight:700;cursor:pointer}
+.ghd-back:hover{border-color:var(--accent)}
+.ghd-refresh-sm{margin-left:auto;padding:8px 15px;border:0;border-radius:10px;background:var(--accent-grad,linear-gradient(45deg,#d62976,#4f5bd5));color:var(--on-accent);font-size:12.5px;font-weight:800;cursor:pointer}
+.ghd-refresh-sm:disabled{opacity:.6;cursor:default}
+.ghd-refresh-sm:hover:not(:disabled){filter:brightness(1.08)}
+.ghd-detail-head{display:flex;gap:12px;align-items:center;margin:2px 10px 6px;padding:11px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.ghd-detail-thumb{flex:none;width:54px;height:96px;border-radius:9px;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center;font-size:22px}
+.ghd-detail-thumb img{width:100%;height:100%;object-fit:cover}
+.ghd-detail-title{font-size:14px;font-weight:800;color:var(--ink)}
+.ghd-detail-sub{font-size:12px;color:var(--ink-2);margin-top:3px}
+/* viewer rows: 2 columns in big mode for density, 1 column otherwise */
+#ghd-panel.ghd-big .ghd-vrows{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-content:start}
+/* Section headers carry a 3px colour bar keyed to the section instead of an
+   emoji (❤️ / 🔥 / 📈). Same instant recognition, no colour-emoji rendering
+   that clashes with the panel's type. */
+.ghd-top-h{display:flex;align-items:center;gap:9px;font:700 10.5px/1 var(--font);letter-spacing:.09em;
+  color:var(--ink-2);padding:10px 10px 8px;text-transform:uppercase}
+.ghd-top-h::before{content:"";width:3px;height:13px;border-radius:2px;flex:none;background:var(--ink-3)}
+.ghd-top-h.is-likes::before{background:#ff5c7a}
+.ghd-top-h.is-comments::before{background:#ffab3d}
+.ghd-top-h.is-growth::before{background:#43e0a0}
+.ghd-top-e{display:none}
+.ghd-loghead{font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.6px;padding:14px 12px 6px}
+.ghd-logrow{display:flex;justify-content:space-between;padding:7px 12px;font-size:12px;color:var(--ink-2);border-radius:9px}
+.ghd-logrow:hover{background:var(--surface)}
+.ghd-logrow b{color:var(--ink)}
+
+.ghd-foot{display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--line);flex-shrink:0}
+.ghd-status{font-size:11px;color:var(--ink-2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ghd-status.ok{color:#43e0a0}.ghd-status.alert{color:var(--danger)}.ghd-status.work{color:#f2c14e}
+.ghd-btn{background:var(--accent-grad);border:none;color:var(--on-accent);font:600 12px/1 var(--font);
+  padding:10px 14px;border-radius:11px;cursor:pointer;box-shadow:0 8px 20px var(--glow);transition:transform .14s ease,filter .2s ease}
+.ghd-btn:hover{filter:brightness(1.08)}.ghd-btn:active{transform:scale(.95)}.ghd-btn:disabled{opacity:.5;cursor:default;box-shadow:none}
+.ghd-gear{background:var(--surface);border:none;color:var(--ink-2);width:34px;height:34px;border-radius:10px;cursor:pointer;font-size:15px;
+  transition:transform .18s ease,background .2s ease}
+.ghd-gear:hover{background:var(--line-2)}.ghd-gear:active{transform:scale(.92) rotate(40deg)}
+.ghd-next{font-size:10px;color:var(--ink-3);padding:0 14px 10px;margin-top:-2px;flex-shrink:0}
+
+/* ---- Settings drawer ----
+   Was a single stack of full-width slabs: a dropdown, a stray number box, a
+   raw checkbox and four identical buttons, one of them a saturated gradient,
+   with no grouping and no hierarchy. Now: two labelled groups of label-left /
+   control-right rows, and the destructive actions pulled out at the bottom. */
+.ghd-settings{padding:10px 14px 14px;border-top:1px solid var(--line);display:none;gap:14px;flex-direction:column;max-height:300px;overflow-y:auto}
+.ghd-settings.show{display:flex;animation:ghdFade .25s ease}
+/* Settings is a FULL VIEW, not a drawer sharing the panel with the list.
+   Splitting the height gave two scrollbars and cut both halves: the list
+   showed two rows, settings stopped mid-group. Opening it now replaces the
+   list entirely, so everything fits without scrolling. */
+#ghd-panel:has(.ghd-settings.show) .ghd-list,
+#ghd-panel:has(.ghd-settings.show) .ghd-next{display:none}
+#ghd-panel:has(.ghd-settings.show) .ghd-settings{max-height:none;flex:1 1 auto;border-top:0}
+.ghd-set-group{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:2px 12px}
+.ghd-set-h{font:700 9.5px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:11px 0 8px}
+.ghd-set-row{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px;font-size:12.5px;color:var(--ink);border-top:1px solid var(--line)}
+.ghd-set-group .ghd-set-h + .ghd-set-row{border-top:0}
+.ghd-set-label{flex:none;color:var(--ink-2)}
+.ghd-set-group .ghd-reset{margin:0 0 10px}
+.ghd-set-h + .ghd-reset{margin-top:0}
+/* number + unit as one control instead of text floating around an input */
+.ghd-num{display:inline-flex;align-items:center;gap:0;background:var(--surface-2);border:1px solid var(--line-2);border-radius:9px;overflow:hidden}
+.ghd-num input[type=number]{width:52px;background:none;border:0;color:var(--ink);padding:7px 0 7px 10px;font:600 12.5px/1 var(--font);outline:none;-moz-appearance:textfield}
+.ghd-num input::-webkit-outer-spin-button,.ghd-num input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ghd-num i{font-style:normal;font-size:11px;color:var(--ink-3);padding:0 10px 0 4px}
+/* a real switch — the native checkbox looked like a form from 2003 */
+.ghd-switch{position:relative;flex:none;width:38px;height:22px;cursor:pointer}
+.ghd-switch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:2}
+.ghd-switch i{position:absolute;inset:0;border-radius:999px;background:var(--surface-2);border:1px solid var(--line-2);transition:background .2s ease,border-color .2s ease}
+.ghd-switch i::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#c9c9d1;transition:transform .2s cubic-bezier(.34,1.56,.64,1),background .2s ease}
+.ghd-switch input:checked + i{background:var(--accent-grad);border-color:transparent}
+.ghd-switch input:checked + i::after{transform:translateX(16px);background:#fff}
+.ghd-switch input:focus-visible + i{outline:2px solid var(--accent-2);outline-offset:2px}
+/* Language selector: full-width, IN-FLOW menu (never position:absolute — the
+   settings box has overflow-y:auto and would clip a floating menu). */
+.ghd-lang-row{flex-wrap:wrap}
+.ghd-lang-label{font-size:12.5px;color:var(--ink-2)}
+.ghd-lang-wrap{position:relative;flex:1;min-width:0;max-width:190px}
+.ghd-lang-btn{display:flex;align-items:center;justify-content:space-between;gap:7px;width:100%;
+  background:var(--surface-2);border:1px solid var(--line-2);
+  color:var(--ink);border-radius:8px;padding:8px 11px;font:600 12.5px/1 var(--font);cursor:pointer;transition:background .2s ease}
+.ghd-lang-btn:hover{background:var(--line-2)}
+.ghd-lang-btn svg{width:12px;height:12px;flex:none;color:var(--ink-2);transition:transform .2s ease}
+.ghd-lang-wrap.open .ghd-lang-btn svg{transform:rotate(180deg)}
+.ghd-lang-menu{width:100%;margin-top:6px;max-height:172px;overflow-y:auto;
+  background:var(--surface);border:1px solid var(--line-2);border-radius:10px;padding:4px;display:none}
+.ghd-lang-wrap.open .ghd-lang-menu{display:block}
+.ghd-lang-item{display:block;width:100%;text-align:left;background:none;border:none;color:var(--ink-2);
+  font:500 12.5px/1 var(--font);padding:9px 10px;border-radius:7px;cursor:pointer;transition:background .15s ease,color .15s ease}
+.ghd-lang-item:hover{background:var(--surface-2);color:var(--ink)}
+.ghd-lang-item.active{color:var(--ink);font-weight:700;background:var(--surface-2)}
+.ghd-lang-menu::-webkit-scrollbar{width:6px}
+.ghd-lang-menu::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:8px}
+.ghd-reset{width:100%;background:var(--surface);border:1px solid var(--line-2);color:var(--ink-2);padding:9px;border-radius:9px;font:600 11.5px/1 var(--font);cursor:pointer;transition:background .2s ease}
+.ghd-reset:hover{background:var(--line-2)}
+/* destructive actions: out of the button stack, quiet until hovered */
+.ghd-set-danger{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-top:2px}
+.ghd-sub{background:none;border:0;font:500 10.5px/1 var(--font);color:var(--ink-3);cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px 6px;border-radius:6px;transition:color .18s ease}
+.ghd-sub:hover{color:var(--danger)}
+.ghd-sub:hover{color:var(--accent-2)}
+
+/* Floating "investigate this @handle" ghost (text selection) */
+#ghd-sel-fab{position:fixed;z-index:2147483001;width:36px;height:36px;border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.9);cursor:pointer;padding:0;display:none;
+  align-items:center;justify-content:center;
+  background:linear-gradient(45deg,#feda75 0%,#fa7e1e 22%,#d62976 50%,#962fbf 74%,#4f5bd5 100%);
+  box-shadow:0 6px 18px rgba(0,0,0,.45);animation:ghdFabIn .18s ease}
+#ghd-sel-fab.show{display:flex}
+#ghd-sel-fab svg{width:20px;height:20px;fill:#fff;pointer-events:none}
+#ghd-sel-fab:hover{transform:scale(1.12)}
+#ghd-sel-fab:active{transform:scale(.94)}
+@keyframes ghdFabIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+
+/* Top-interactions polish — enhances the real classes (.ghd-top-sec/.ghd-top-h/.ghd-top-e/.ghd-top-calc) */
+.ghd-top-calc{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:0 12px 10px;padding:12px}
+.ghd-top-calc .ghd-btn{flex:0 0 auto}
+.ghd-top-sec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:2px 6px 6px;margin:0 12px 10px}
+.ghd-top-h{border-radius:9px}
+.ghd-top-sec .ghd-row{border-radius:10px}
+.ghd-top-sec .ghd-row:hover{background:var(--line)}
+.ghd-top-sec .ghd-empty{padding:10px 8px;font-size:11px;color:var(--ink-3);text-align:center}
+
+@media (prefers-reduced-motion: reduce){
+  #ghd-panel,#ghd-fab,#ghd-backdrop,.ghd-row,.ghd-list,.ghd-chip,.ghd-tab,.ghd-logo{animation:none!important;transition:none!important}
+}
+
+/* ---- mobile companion: connect button + QR overlay ---- */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-btn{background:var(--accent-soft);border-color:var(--accent);color:var(--on-soft)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-btn:hover{background:var(--accent);color:var(--on-accent)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-ov{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;
+  background:rgba(4,3,8,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:ghdFade .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-card{position:relative;width:min(92vw,320px);background:var(--surface-2);border:1px solid var(--line-2);
+  border-radius:20px;padding:22px 20px 18px;text-align:center;box-shadow:0 24px 70px -20px rgba(0,0,0,.85);font-family:var(--font)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-x{position:absolute;top:10px;right:12px;background:none;border:0;color:var(--ink-3);font-size:22px;line-height:1;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-x:hover{color:var(--ink)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-h{font-weight:800;font-size:16px;color:var(--ink);letter-spacing:-.02em;margin-bottom:14px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-qr{width:210px;height:210px;margin:0 auto 14px;background:#fff;border-radius:14px;padding:10px;display:flex;align-items:center;justify-content:center}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-qr svg{width:100%;height:100%;display:block}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-sub{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin-bottom:12px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-link{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;margin-bottom:14px;word-break:break-all}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-link:hover{text-decoration:underline}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-unpair{width:100%;background:transparent;border:1px solid var(--line-2);color:var(--ink-3);
+  padding:8px;border-radius:9px;font:600 11px/1 var(--font);cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-mobile-unpair:hover{color:var(--danger);border-color:var(--danger)}
+/*#plus-on*/
+@keyframes ghdFade{from{opacity:0}to{opacity:1}}
+
+/* ---- reproductor de historias a pantalla completa ---- */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv{position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;background:rgba(6,6,10,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);animation:ghd-gv-in .18s ease}
+/*#plus-on*/
+/*#plus-off animacion del visor de historias*/
+@keyframes ghd-gv-in{from{opacity:0}to{opacity:1}}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-in{position:relative;display:flex;flex-direction:column;--gvh:min(92vh,calc(94vw * 16 / 9),760px);height:var(--gvh);width:calc(var(--gvh) * 9 / 16);font-family:inherit}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-bars{position:absolute;top:8px;left:8px;right:8px;z-index:4;display:flex;gap:4px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-bar{flex:1 1 0;height:2.5px;border-radius:2px;background:rgba(255,255,255,.28);overflow:hidden}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-fill{display:block;height:100%;width:0;background:#fff;border-radius:2px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-fill.done{width:100%}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-fill-live{animation:ghd-gv-fill 5s linear forwards}
+/*#plus-on*/
+/*#plus-off animacion del visor de historias*/
+@keyframes ghd-gv-fill{from{width:0}to{width:100%}}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-top{position:absolute;top:20px;left:8px;right:8px;z-index:4;display:flex;align-items:center;gap:9px;padding:6px 4px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-top .ghd-av{width:32px;height:32px;flex:0 0 32px;font-size:12px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-who{flex:1 1 auto;min-width:0;line-height:1.25}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-who b{display:block;color:#fff;font-size:13px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-who span{display:block;color:rgba(255,255,255,.72);font-size:11px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn{flex:0 0 auto;width:30px;height:30px;border:0;border-radius:50%;background:rgba(0,0,0,.35);color:#fff;font-size:13px;line-height:1;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn:hover{background:rgba(0,0,0,.6)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-stage{position:relative;flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;border-radius:14px;overflow:hidden;background:#000}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-stage img,.ghd-gv-stage video{width:100%;height:100%;object-fit:contain}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-stage .ghd-empty{color:rgba(255,255,255,.7)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-zone{position:absolute;top:0;bottom:0;z-index:3;cursor:pointer;-webkit-tap-highlight-color:transparent}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-zone.left{left:0;width:32%}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-zone.right{right:0;width:68%}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-sound{position:absolute;right:10px;bottom:10px;z-index:5;width:34px;height:34px;border:0;border-radius:50%;background:rgba(0,0,0,.45);color:#fff;font-size:14px;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-foot{position:absolute;left:0;right:0;bottom:-22px;text-align:center;color:rgba(255,255,255,.55);font-size:11.5px;pointer-events:none}
+/*#plus-on*/
+/*#plus-off tamano del visor en pantallas bajas*/
+@media (max-height:560px){.ghd-gv-in{width:min(340px,94vw)}}
+/*#plus-on*/
+
+/* ---- Ghosted tab, second pass ----
+   Three magenta gradients were fighting on one screen (refresh, calculate,
+   the footer CTA), so nothing read as primary. Only the footer CTA and the
+   refresh action keep the gradient; "calculate" drops to a quiet button. */
+.ghd-top-calc{flex-wrap:nowrap;gap:12px;align-items:center}
+.ghd-top-calc .ghd-btn{background:var(--surface-2);border:1px solid var(--line-2);color:var(--ink);
+  box-shadow:none;font-weight:650;padding:9px 13px;border-radius:10px}
+.ghd-top-calc .ghd-btn:hover{background:var(--line-2);filter:none}
+/* Empty states inside this tab were 34px-padded blocks that pushed the real
+   content off screen. Half the padding, and the section ones smaller still. */
+.ghd-list > .ghd-empty{padding:18px 22px;font-size:12px}
+.ghd-top-sec .ghd-empty{padding:14px 12px 16px;font-size:11px;line-height:1.5}
+/* the like/comment count tag was a filled gradient pill for a single number */
+.ghd-top-sec .ghd-tag.fan{background:var(--accent-soft);color:var(--accent-2);font-weight:700}
+
+/* ---- Ghost mode: Instagram's own story tray ----
+   Was a vertical list of generic rows (avatar · name · "sin ver" pill ·
+   chevron), which read as a table of contacts, not as stories. This is the
+   shape people already know: a horizontal rail of ringed circles with the
+   handle underneath. The ring carries the state, so the pill and the chevron
+   both disappear. */
+/* A wrapping grid, not a horizontal rail. The rail matched Instagram, but
+   with 23 faces on one line the panel was left with ~230px of dead space
+   underneath. The grid fills the view and scrolls vertically with the
+   rest of the list, which is where the eye already expects to scroll. */
+.ghd-tray{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));
+  gap:15px 6px;padding:6px 12px 14px;margin:0}
+.ghd-tray-item{position:relative;width:100%;display:flex;flex-direction:column;
+  align-items:center;gap:7px;background:none;border:0;padding:0;cursor:pointer;color:inherit}
+/* the ring itself: Instagram's gradient when unseen, flat grey once watched */
+.ghd-tray-ring{width:66px;height:66px;border-radius:50%;padding:2.5px;display:block;
+  background:conic-gradient(from 200deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75);
+  transition:transform .16s cubic-bezier(.34,1.56,.64,1)}
+.ghd-tray-ring.seen{background:var(--line-2)}
+.ghd-tray-av{display:block;width:100%;height:100%;border-radius:50%;overflow:hidden;
+  border:2.5px solid var(--panel);background:linear-gradient(140deg,#3a3a44,#55555f);
+  display:flex;align-items:center;justify-content:center;font:700 20px/1 var(--font);color:#fff}
+.ghd-tray-av img{width:100%;height:100%;object-fit:cover;display:block}
+.ghd-tray-item:hover .ghd-tray-ring{transform:scale(1.06)}
+.ghd-tray-item:active .ghd-tray-ring{transform:scale(.96)}
+.ghd-tray-item:focus-visible{outline:none}
+.ghd-tray-item:focus-visible .ghd-tray-ring{outline:2px solid var(--accent-2);outline-offset:3px}
+.ghd-tray-name{max-width:74px;font-size:11px;color:var(--ink-2);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;text-align:center}
+.ghd-tray-item:hover .ghd-tray-name{color:var(--ink)}
+/* several stories from one person: the count sits on the ring, like IG's segments */
+.ghd-tray-count{position:absolute;top:0;right:4px;min-width:18px;height:18px;padding:0 5px;
+  border-radius:9px;background:var(--panel);border:1px solid var(--line-2);
+  font:700 10px/16px var(--font);color:var(--ink);text-align:center}
+/* "Play all" spans the row above the rail. It inherits .ghd-fans-entry, so
+   its ghost ::before is swapped for a play triangle — it used to carry the
+   ghost AND a literal '▶' in the label, two icons for one button. */
+.ghd-play-all{margin:0}
+.ghd-play-all::before{-webkit-mask:none;mask:none;background:none;
+  width:0;height:0;border-style:solid;border-width:6px 0 6px 9px;
+  border-color:transparent transparent transparent currentColor;opacity:.85;border-radius:0}
+
+/* ---- Ghost-mode view, layout pass ----
+   The two buttons sat ABOVE the rail and, in expanded mode, were dropped into
+   .ghd-list's two-column grid without a grid-column span, so they collided
+   into each other. They now live in one row BELOW the rail (where the eye
+   ends up after scanning the faces) and span the full width in both modes. */
+/* With the tray wrapping into a grid the list scrolls, and the two actions
+   fell below the fold. Pinned to the bottom of the scroller so they stay
+   reachable without scrolling back down. */
+.ghd-tray-actions{position:sticky;bottom:0;z-index:3;margin:2px 0 0;padding:10px 12px;
+  background:linear-gradient(to top,var(--panel) 62%,rgba(18,18,22,0));backdrop-filter:blur(3px)}
+.ghd-tray-actions .ghd-play-all{flex:1.4}
+/* Expanded panel: the rail became a single line with a lot of dead space under
+   it. With room for 23 faces, wrap them into a grid that fills the view. */
+#ghd-panel.ghd-big .ghd-tray{grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:16px 8px;padding:8px 12px 16px}
+
+/* ---- Download buttons in the fullscreen story viewer ----
+   The archive view already had a download, but it went through
+   fetchImage -> base64 data URL, which only works for photos: a video
+   base64-ed into a string is enormous and janks the tab. These use
+   chrome.downloads instead, so the browser pulls straight from the CDN and
+   both photos and videos land in Downloads/Ghosted/. */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-dl,.ghd-gv-dlall{font-weight:700;font-size:12px;letter-spacing:-.02em}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-dlall{width:auto;min-width:34px;padding:0 8px;border-radius:15px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-dl.busy,.ghd-gv-dlall.busy{opacity:.6;pointer-events:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-dl.done,.ghd-gv-dlall.done{background:rgba(52,211,153,.85)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-dl.fail,.ghd-gv-dlall.fail{background:rgba(224,69,90,.85)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn:disabled{cursor:default}
+/*#plus-on*/
+
+/* ---- Tooltips on the story-viewer buttons ----
+   The buttons carried aria-label, which a screen reader reads but a sighted
+   user never sees — so "3↓" was a mystery. This shows the same text on hover
+   and on keyboard focus, instantly, instead of waiting on the OS tooltip. */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn[data-tip]{position:relative}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn[data-tip]::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);
+  left:50%;transform:translateX(-50%) translateY(-3px);
+  padding:6px 9px;border-radius:8px;background:rgba(12,12,16,.94);color:#fff;
+  font:600 11px/1.2 var(--font);white-space:nowrap;letter-spacing:0;
+  border:1px solid rgba(255,255,255,.12);box-shadow:0 8px 22px -8px rgba(0,0,0,.8);
+  opacity:0;pointer-events:none;transition:opacity .14s ease,transform .14s ease;z-index:6}
+/*#plus-on*/
+/* little arrow pointing back up at the button */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn[data-tip]::before{content:"";position:absolute;top:calc(100% + 3px);left:50%;
+  transform:translateX(-50%) translateY(-3px);border:5px solid transparent;
+  border-bottom-color:rgba(12,12,16,.94);opacity:0;pointer-events:none;
+  transition:opacity .14s ease,transform .14s ease;z-index:6}
+/*#plus-on*/
+.ghd-gv-btn[data-tip]:hover::after,.ghd-gv-btn[data-tip]:focus-visible::after,
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn[data-tip]:hover::before,.ghd-gv-btn[data-tip]:focus-visible::before{
+  opacity:1;transform:translateX(-50%) translateY(0)}
+/*#plus-on*/
+/* the last buttons sit near the right edge — pull their tip inside the frame */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-top .ghd-gv-btn:last-child[data-tip]::after{left:auto;right:0;transform:translateX(0) translateY(-3px)}
+/*#plus-on*/
+.ghd-gv-top .ghd-gv-btn:last-child[data-tip]:hover::after,
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-top .ghd-gv-btn:last-child[data-tip]:focus-visible::after{transform:translateX(0) translateY(0)}
+/*#plus-on*/
+/* while the button is mid-download its label is stale — hide the tip */
+.ghd-gv-btn.busy::after,.ghd-gv-btn.busy::before,
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-gv-btn.done::after,.ghd-gv-btn.done::before{display:none}
+/*#plus-on*/
+
+/* ---- Activity tab, minimal pass ----
+   The head was a boxed card with a title, a two-sentence paragraph and a
+   search bar, followed by a second boxed block for "do they follow each
+   other" with its own paragraph — two cards of copy before any content.
+   Instagram shows a search field and gets out of the way. Same here: the
+   copy shrinks to a muted caption, the boxes lose their borders, the search
+   becomes a rounded IG-style field, and the mutual-check tool collapses into
+   one quiet row. */
+.ghd-activity-head{margin:2px 2px 6px;padding:4px 2px 0;background:none;border:0}
+.ghd-activity-head h3{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin:0 0 6px}
+.ghd-activity-head p{font-size:10.5px;color:var(--ink-3);line-height:1.4;margin:0 0 10px}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-form{margin-top:0;gap:8px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-input{border-radius:99px;padding:10px 16px;background:var(--surface-2);border-color:var(--line)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-btn{border-radius:99px;padding:0 16px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-list{margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+/*#plus-on*/
+.ghd-mutual{margin-top:8px;padding-top:10px;border-top:1px solid var(--line)}
+.ghd-mutual-head{font-size:10px;color:var(--ink-3)}
+.ghd-mutual-hint{display:none}
+.ghd-mutual-in{border-radius:99px;padding:9px 14px}
+.ghd-mutual-btn{border-radius:99px}
+/* the diagnostic line under a failed dossier — small, mono, selectable */
+.dos-dbg{font:11px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink-3);
+  text-align:center;padding:6px 14px;user-select:text;word-break:break-word}
+
+/* ---- Dossier (expediente), clean pass ----
+   Was: seven buttons in a row, three of them gradient (so nothing was THE
+   action), emoji inside two of them, three boxed stat tiles, and purple
+   uppercase section headers shouting over the content. Now it reads like an
+   Instagram profile: big avatar, name, stats as plain numbers in a row, ONE
+   primary button, everything else quiet, section labels muted. */
+.dos-head{padding:20px 18px 10px;gap:16px;align-items:center}
+.dos-av{width:78px;height:78px;font-size:26px}
+.dos-name{font-size:18px;letter-spacing:-.02em}
+.dos-user{font-size:12.5px;margin-top:2px}
+.dos-x,.dos-exp{background:none}
+/* stats: numbers, not boxes — like the IG profile header */
+.dos-stats{padding:2px 18px 12px;gap:22px}
+.dos-stat{flex:none;background:none;border:0;border-radius:0;padding:0;text-align:left}
+.dos-stat b{font-size:17px;font-weight:700;letter-spacing:-.02em;display:inline;margin-right:5px}
+.dos-stat span{font-size:12px;color:var(--ink-2);display:inline}
+.dos-stat.clickable:hover{background:none}
+.dos-stat.clickable:hover b{color:var(--accent-2)}
+/* actions: one primary, the rest one quiet family */
+.dos-actions{padding:0 18px 14px;gap:7px}
+.dos-act{border-radius:99px;padding:9px 13px;font-weight:600;border-color:var(--line-2);background:var(--surface)}
+.dos-act:hover{background:var(--surface-2)}
+.dos-act.primary{background:var(--ink);color:var(--panel);border-color:transparent;font-weight:700}
+.dos-act.primary:hover{filter:brightness(1.1)}
+.dos-act.ghost,.dos-act.watching{background:var(--surface);color:var(--ink);border-color:var(--line-2)}
+/* "watching" is a state: a green dot says it, the button stays quiet */
+.dos-act.watching::before{content:"";width:6px;height:6px;border-radius:50%;background:#43e0a0;margin-right:7px;
+  box-shadow:0 0 0 3px rgba(67,224,160,.18)}
+/* sections: muted labels, more air, thin rules between */
+.dos-body{padding:4px 18px 20px}
+.dos-sec{margin-top:18px}
+.dos-sec-h{color:var(--ink-3);font-weight:700;letter-spacing:.1em;font-size:9.5px;margin-bottom:10px}
+.dos-row{padding:9px 0;border-top:1px solid var(--line)}
+.dos-k{color:var(--ink-3);min-width:76px}
+.dos-graph{background:none;border:0;padding:0;margin-bottom:4px}
+.dos-graph-head b{font-size:22px;letter-spacing:-.02em}
+.dos-note{color:var(--ink-3)}
+
+/* ==========================================================================
+   LIGHT MODE
+   Set by content.js as .ghd-light on the panel/backdrop. Only the tokens are
+   redefined — the 900 lines above were converted to use them, so nothing else
+   needs a light-specific rule. Deliberately NOT applied to the fullscreen
+   story viewer or the media overlays: Instagram's own viewer is dark in both
+   themes, and photos read better against dark.
+   ========================================================================== */
+#ghd-panel.ghd-light,#ghd-backdrop.ghd-light{
+  --panel:#ffffff;
+  --ink:#16161a;--ink-2:#5f5f6a;--ink-3:#67676f;
+  --line:rgba(20,20,26,.13);--line-2:rgba(20,20,26,.22);
+  --surface:rgba(20,20,26,.035);--surface-2:rgba(20,20,26,.065);
+  --accent:#a03ad0;--accent-2:#8a3ab9;
+  --accent-soft:rgba(138,58,185,.12);
+  --glow:rgba(138,58,185,.22);
+  --danger:#d92d4a;
+  --on-soft:#7a2ea3;
+  --card-soft:#f6f1fb;     /* lila muy claro: distingue la tarjeta del panel blanco */
+}
+#ghd-panel.ghd-light{
+  background:rgba(255,255,255,.97);
+  box-shadow:0 24px 70px rgba(20,18,16,.16),0 6px 18px rgba(20,18,16,.10),inset 0 1px 0 rgba(255,255,255,.9);
+}
+#ghd-backdrop.ghd-light{background:rgba(20,20,26,.28)}
+/* surfaces that were "a bit lighter than the panel" must become "a bit darker" */
+#ghd-panel.ghd-light .ghd-chip,#ghd-panel.ghd-light .ghd-set-group,
+#ghd-panel.ghd-light .ghd-top-sec,#ghd-panel.ghd-light .ghd-top-calc,
+#ghd-panel.ghd-light .dos-eng{background:var(--surface)}
+/* una sola caja por tarjeta, en un lila claro que la separa del panel blanco */
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-light .ghd-watch-card{background:var(--card-soft);border-color:rgba(138,58,185,.18)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-light .ghd-watch-card:hover{background:#f1e9f9;border-color:rgba(138,58,185,.3)}
+/*#plus-on*/
+#ghd-panel.ghd-light .ghd-tab.active{background:var(--surface-2);color:var(--ink)}
+#ghd-panel.ghd-light .ghd-tag.gray{background:var(--surface-2);color:var(--ink-2)}
+#ghd-panel.ghd-light .ghd-status.ok{color:#0b6b45}
+#ghd-panel.ghd-light .ghd-status.work{color:#8a5a00}
+#ghd-panel.ghd-light .ghd-status.alert{color:var(--danger)}
+/* El resultado de "¿se siguen?" usaba los verdes y ambares pensados para el
+   panel oscuro. Sobre fondo claro el ambar casi no se leia: era texto crema
+   sobre crema. Aqui van los mismos tonos que ya usan los estados de abajo. */
+#ghd-panel.ghd-light .ghd-mutual-result{color:var(--ink)}
+#ghd-panel.ghd-light .ghd-mutual-result.ok{color:#0b6b45;background:rgba(11,107,69,.08);border-color:rgba(11,107,69,.22)}
+#ghd-panel.ghd-light .ghd-mutual-result.half{color:#7a4e00;background:rgba(122,78,0,.07);border-color:rgba(122,78,0,.2)}
+#ghd-panel.ghd-light .ghd-mutual-result.no{color:var(--ink-2)}
+#ghd-panel.ghd-light .ghd-mutual-result.unknown{color:var(--ink-2)}
+#ghd-panel.ghd-light .ghd-mutual-result.err{color:#a11020;background:rgba(161,16,32,.07);border-color:rgba(161,16,32,.22)}
+#ghd-panel.ghd-light .ghd-mutual-via{color:var(--ink-3)}
+#ghd-panel.ghd-light .ghd-tray-av,#ghd-panel.ghd-light .ghd-wc-recent-av{border-color:#fff}
+#ghd-panel.ghd-light .ghd-num,#ghd-panel.ghd-light .ghd-lang-btn,
+#ghd-panel.ghd-light .ghd-watch-input,#ghd-panel.ghd-light .ghd-mutual-in,
+#ghd-panel.ghd-light .dos-rel-search,#ghd-panel.ghd-light .ghd-nb-search-in{background:#fff}
+#ghd-panel.ghd-light .ghd-switch i{background:var(--surface-2)}
+#ghd-panel.ghd-light .ghd-switch i::after{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+/* overlays keep the dark ground so photos and video still read */
+#ghd-panel.ghd-light #ghd-dossier,#ghd-panel.ghd-light #ghd-relview{background:rgba(255,255,255,.985)}
+#ghd-panel.ghd-light #ghd-stories,#ghd-panel.ghd-light #ghd-posts-view,
+#ghd-panel.ghd-light #ghd-hl-view,#ghd-panel.ghd-light #ghd-cover-view{background:rgba(12,12,16,.97)}
+
+/* ==========================================================================
+   DOSSIER — layout to match the reference mockup
+   Actions in rows of pills, stats back as three boxed tiles, section header
+   in the accent colour, and the footer facts in two columns.
+   ========================================================================== */
+.dos-actions{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 12px}
+/* nada de rejilla de 3 fijas: con etiquetas como "Descargar foto (HD)" la
+   columna se quedaba corta y el texto se cortaba. Cada boton parte de su
+   propio ancho y crece para llenar la fila, asi nunca recorta. */
+.dos-act{flex:1 1 auto;border-radius:12px;padding:11px 13px;justify-content:center;
+  text-align:center;font-weight:600;font-size:11.5px;white-space:nowrap}
+.dos-act.primary{background:var(--accent-grad);color:var(--on-accent);border-color:transparent}
+.dos-act.tiktok{grid-column:span 1}
+/* the "search on TikTok" one is long — let it take the whole row */
+/* stats: three boxed tiles again, like the mockup */
+.dos-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:2px 18px 14px}
+.dos-stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;
+  padding:12px 6px;text-align:center;flex:none}
+.dos-stat b{display:block;font-size:19px;font-weight:700;letter-spacing:-.02em;margin:0}
+.dos-stat span{display:block;font-size:10.5px;color:var(--ink-2);margin-top:3px}
+.dos-stat.clickable:hover{background:var(--surface-2)}
+/* section header back to the accent, as in the mockup */
+.dos-sec-h{color:var(--accent-2);font-weight:800;letter-spacing:.09em;font-size:10px;margin-bottom:9px}
+/* the closing facts sit as two columns instead of a stack of rows */
+.dos-facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:12px;margin-top:6px;border-top:1px solid var(--line)}
+.dos-facts .dos-fact span{display:block;font-size:10.5px;color:var(--ink-3);margin-bottom:3px}
+.dos-facts .dos-fact b{font-size:12.5px;font-weight:600;color:var(--ink)}
+
+/* ==========================================================================
+   TOAST — confirmacion visible de una accion (vigilar / dejar de vigilar).
+   La linea de estado del pie era el unico aviso y nadie la mira: quedaba la
+   duda de si el clic habia hecho algo. Esto aparece encima del pie, sobre el
+   contenido, y se va solo.
+   ========================================================================== */
+@keyframes ghdToastIn{from{opacity:0;transform:translate(-50%,14px) scale(.94)}
+  to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes ghdToastOut{from{opacity:1;transform:translate(-50%,0)}
+  to{opacity:0;transform:translate(-50%,10px)}}
+.ghd-toast{position:absolute;left:50%;bottom:64px;z-index:60;pointer-events:none;
+  /* el centrado va en la regla base, no solo en el fotograma final: al acabar
+     la animacion el transform se pierde y el aviso se salia del panel */
+  transform:translate(-50%,0);
+  display:flex;align-items:center;gap:9px;max-width:calc(100% - 32px);
+  padding:10px 15px 10px 11px;border-radius:99px;
+  background:var(--panel);border:1px solid var(--line-2);
+  box-shadow:0 12px 32px rgba(0,0,0,.38),0 2px 8px rgba(0,0,0,.22);
+  font:600 12px/1.25 var(--font);color:var(--ink);
+  animation:ghdToastIn .26s cubic-bezier(.22,1,.36,1)}
+.ghd-toast.out{animation:ghdToastOut .22s ease forwards}
+.ghd-toast span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ghd-toast-ic{flex:none;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--accent-grad);color:var(--on-accent);
+  font:700 12px/1 var(--font);font-style:normal}
+.ghd-toast.alert .ghd-toast-ic{background:var(--danger-solid)}
+#ghd-panel.ghd-light .ghd-toast{box-shadow:0 12px 32px rgba(20,18,16,.18),0 2px 8px rgba(20,18,16,.10)}
+
+/* y ademas la tarjeta recien anadida se senala sola, para saber cual es */
+@keyframes ghdCardNew{0%{box-shadow:0 0 0 0 var(--glow)}
+  35%{box-shadow:0 0 0 5px var(--glow)}
+  100%{box-shadow:0 0 0 0 rgba(0,0,0,0)}}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-card.ghd-just{border-color:var(--accent);animation:ghdCardNew 1.6s ease-out}
+/*#plus-on*/
+
+/* buscador de la bandeja de historias + estados de la lista de sugerencias */
+.ghd-tray-filter{width:100%;box-sizing:border-box;margin:0 0 9px;padding:9px 14px;border-radius:99px;
+  background:var(--surface-2);border:1px solid var(--line);color:var(--ink);
+  font:12px/1 var(--font);outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+.ghd-tray-filter::placeholder{color:var(--ink-3)}
+.ghd-tray-filter:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.ghd-tray-none{padding:16px 4px;text-align:center;font-size:12px;color:var(--ink-2)}
+.ghd-sugg-note{padding:11px 12px;font-size:11.5px;color:var(--ink-2)}
+#ghd-panel.ghd-light .ghd-tray-filter{background:#fff}
+
+/* ==========================================================================
+   HISTORIAL — la seccion del archivo de historias.
+   Estaba dominada por un boton en degradado a todo lo ancho y dos parrafos
+   sueltos sin contenedor. La accion pasa a ser una pastilla del tamano de su
+   texto y los textos se agrupan y se estrechan para poder leerlos.
+   ========================================================================== */
+.ghd-actions{justify-content:center}
+.ghd-refresh-btn{flex:0 1 auto;min-width:190px;max-width:300px;height:40px;
+  border-radius:99px;padding:0 24px;font-weight:700;
+  box-shadow:0 4px 14px -6px var(--glow)}
+.ghd-archive-sub{max-width:38ch;margin:6px auto 12px;text-align:center;
+  font-size:12px;color:var(--ink-2)}
+/* una linea corta se lee; un parrafo centrado a todo lo ancho, no */
+.ghd-empty{max-width:40ch;margin:0 auto;padding:24px 16px}
+/* la nota informativa deja de flotar suelta al pie */
+.ghd-sec-note{margin:16px 12px 4px;padding:11px 13px;border-radius:12px;
+  background:var(--surface);border:1px solid var(--line);
+  font-size:10.5px;line-height:1.5;color:var(--ink-3)}
+/* y la fila de calcular deja de ser boton-a-un-lado-texto-al-otro */
+.ghd-top-calc{flex-wrap:wrap;gap:9px;align-items:flex-start;margin:12px 12px 10px}
+.ghd-top-calc .ghd-btn{flex:0 0 auto;border-radius:99px;padding:0 18px;height:36px}
+.ghd-top-calc .ghd-top-note{flex:1 1 100%;min-width:0}
+
+/* ==========================================================================
+   PAREJAS VIGILADAS, PAPELERA DE ACTIVIDAD Y COMPARADOR DE FOTOS
+   ========================================================================== */
+.dos-mutual-line{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-btn{margin-left:auto;flex:none;border:1px solid var(--line-2);border-radius:99px;
+  background:var(--surface);color:var(--ink-2);font:600 10.5px/1 var(--font);
+  padding:6px 11px;cursor:pointer;white-space:nowrap;
+  transition:background .18s ease,color .18s ease,border-color .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-btn:hover{background:var(--surface-2);color:var(--ink)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--on-soft)}
+/*#plus-on*/
+
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-list{margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-h{font:800 10px/1.2 var(--font);letter-spacing:.09em;color:var(--accent-2);margin-bottom:8px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-row{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--line)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-row:last-child{border-bottom:0}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-tx{flex:1;min-width:0;font-size:11.5px;color:var(--ink);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-st{flex:none;font:700 12px/1 var(--font)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-st.yes{color:#0b8a5a}.ghd-pair-st.no{color:var(--danger)}.ghd-pair-st.unk{color:var(--ink-3)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel:not(.ghd-light) .ghd-pair-st.yes{color:#43e0a0}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-x{flex:none;width:22px;height:22px;border:0;border-radius:7px;background:none;
+  color:var(--ink-3);font:500 15px/1 var(--font);cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-pair-x:hover{background:var(--surface-2);color:var(--ink)}
+/*#plus-on*/
+
+.ghd-act-clear{margin:14px 0 18px;align-self:flex-start;border:1px solid var(--line-2);border-radius:99px;
+  background:var(--surface);color:var(--ink-2);font:600 11px/1 var(--font);padding:8px 15px;cursor:pointer;
+  transition:background .18s ease,color .18s ease,border-color .18s ease}
+.ghd-act-clear:hover{background:var(--surface-2);color:var(--ink)}
+.ghd-act-clear.armed{background:var(--danger);border-color:transparent;color:#fff}
+
+.ghd-cmp-head{padding:16px 18px 4px;font:700 13px/1.2 var(--font);color:var(--ink)}
+.ghd-cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 18px}
+.ghd-cmp-side{display:flex;flex-direction:column;align-items:center;gap:7px}
+.ghd-cmp-side img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;
+  border:1px solid var(--line);cursor:zoom-in;display:block}
+.ghd-cmp-none{width:100%;aspect-ratio:1;border-radius:14px;border:1px dashed var(--line-2);
+  display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:20px}
+.ghd-cmp-lb{font:700 9.5px/1 var(--font);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ==========================================================================
+   PANTALLA DE CARGA — tapa el panel entero mientras baja la lista de
+   seguidores. Los datos a medias no valen para nada y verlos moverse
+   mientras se cargan confunde: mejor una sola pantalla honesta.
+   ========================================================================== */
+@keyframes ghdLoadFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes ghdLoadHalo{0%,100%{opacity:.35;transform:scale(.94)}50%{opacity:.7;transform:scale(1.06)}}
+@keyframes ghdLoadSweep{0%{transform:translateX(-100%)}100%{transform:translateX(320%)}}
+@keyframes ghdLoadNum{from{opacity:.45}to{opacity:1}}
+#ghd-loading{position:absolute;left:0;right:0;bottom:0;top:0;z-index:90;display:none;
+  flex-direction:column;align-items:center;justify-content:center;gap:0;
+  background:var(--panel);border-radius:0 0 21px 21px;animation:ghdFade .2s ease}
+#ghd-loading.show{display:flex}
+/* el mismo distintivo de la cabecera, en grande: disco con el degradado
+   completo de Instagram y el fantasma en blanco encima */
+.ghd-load-ghost{position:relative;width:84px;height:84px;border-radius:50%;
+  background:var(--fab-grad);box-shadow:0 14px 34px -8px var(--glow);
+  display:flex;align-items:center;justify-content:center;
+  animation:ghdLoadFloat 2.4s ease-in-out infinite}
+.ghd-load-ghost::before{content:"";position:absolute;inset:-18px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow) 0%,transparent 70%);
+  animation:ghdLoadHalo 2.4s ease-in-out infinite}
+/* el fill va solo en el svg, como en la cabecera: las elipses de los ojos
+   traen su propio color en el atributo y una regla CSS se lo pisaria */
+.ghd-load-ghost svg{position:relative;width:48px;height:48px;fill:#fff}
+.ghd-load-lb{margin-top:22px;font:600 13px/1.3 var(--font);color:var(--ink-2);
+  letter-spacing:.02em;text-align:center}
+.ghd-load-n{margin-top:4px;font:800 46px/1.05 var(--font);letter-spacing:-.03em;
+  background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  font-variant-numeric:tabular-nums;min-height:48px;animation:ghdLoadNum .25s ease}
+.ghd-load-of{margin-top:2px;font:600 11px/1 var(--font);color:var(--ink-3);
+  font-variant-numeric:tabular-nums;min-height:12px}
+.ghd-load-bar{margin-top:16px;width:190px;height:4px;border-radius:99px;
+  background:var(--surface-2);overflow:hidden}
+.ghd-load-bar i{display:block;width:32%;height:100%;border-radius:99px;
+  background:var(--accent-grad);animation:ghdLoadSweep 1.25s cubic-bezier(.65,0,.35,1) infinite}
+/* cuando se sabe cuanta gente hay, la barra deja de barrer y avanza de verdad */
+.ghd-load-bar.det i{animation:none;transition:width .3s ease}
+.ghd-load-sub{margin-top:16px;font-size:11px;color:var(--ink-3);text-align:center;
+  max-width:30ch;line-height:1.45}
+
+/* ==========================================================================
+   SOLICITUDES DE SEGUIMIENTO
+   ========================================================================== */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req{margin:0 12px 16px;padding:13px;border-radius:16px;
+  background:var(--surface);border:1px solid var(--line)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-h{font:800 10px/1.2 var(--font);letter-spacing:.09em;color:var(--accent-2);margin-bottom:11px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-rules{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-rl{flex:1 0 100%;font-size:10.5px;color:var(--ink-3);margin-bottom:2px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-rule{border:1px solid var(--line-2);border-radius:99px;background:var(--surface-2);
+  color:var(--ink-2);font:600 11px/1 var(--font);padding:8px 13px;cursor:pointer;
+  transition:background .18s ease,color .18s ease,border-color .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-rule:hover{color:var(--ink)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-rule.on{background:var(--accent-soft);border-color:var(--accent);color:var(--on-soft)}
+/*#plus-on*/
+/* aceptar a todo el mundo abre una cuenta privada de par en par: se avisa */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-warn{margin-top:9px;padding:9px 11px;border-radius:10px;font-size:11px;line-height:1.45;
+  color:var(--danger);background:rgba(217,45,74,.08);border:1px solid rgba(217,45,74,.25)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-run{margin-top:10px;width:100%;border:0;border-radius:99px;background:var(--accent-grad);
+  color:var(--on-accent);font:700 12px/1 var(--font);padding:11px;cursor:pointer}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-run:disabled{opacity:.55;cursor:default}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-list{margin-top:11px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-row{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--line)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-row:last-child{border-bottom:0}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-row .ghd-av{width:34px;height:34px;font-size:12px;flex:none}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-info{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-info b{font-size:12px;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-info span{font-size:10.5px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-yes,.ghd-req-no{flex:none;border-radius:99px;font:700 10.5px/1 var(--font);
+  padding:8px 12px;cursor:pointer;border:1px solid transparent}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-yes{background:var(--accent-grad);color:var(--on-accent)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-no{background:var(--surface-2);color:var(--ink-2);border-color:var(--line-2)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-no:hover{color:var(--ink)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-yes:disabled,.ghd-req-no:disabled{opacity:.5;cursor:default}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-big .ghd-req{grid-column:1/-1}
+/*#plus-on*/
+
+/* la nota que explica por que las acciones sobre Instagram van despacio.
+   Solo aparece al escribir (bajas y aprobaciones), no al leer listas. */
+.ghd-load-safe{margin-top:22px;max-width:34ch;padding:12px 14px;border-radius:14px;
+  background:var(--surface);border:1px solid var(--line);
+  display:flex;flex-direction:column;gap:4px;text-align:left}
+.ghd-load-safe b{font:700 11px/1.3 var(--font);color:var(--ink-2)}
+.ghd-load-safe span{font-size:10.5px;line-height:1.5;color:var(--ink-3)}
+
+/* la cabecera de solicitudes pliega el bloque, igual que la de vigilancia */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-h{display:flex;align-items:center;gap:7px;width:100%;background:none;border:0;
+  cursor:pointer;text-align:left;padding:2px;border-radius:8px;
+  transition:color .18s ease,background .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-h:hover{background:var(--surface-2)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-h.collapsed{margin-bottom:0}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-h .ghd-watch-caret{font-size:9px;line-height:1;display:inline-block;transition:transform .18s ease}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-h.collapsed .ghd-watch-caret{transform:rotate(-90deg)}
+/*#plus-on*/
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req-body.collapsed{display:none}
+/*#plus-on*/
+
+/* ==========================================================================
+   AIRE ENTRE BLOQUES DE ACTIVIDAD
+   Las solicitudes, los avisos de perfiles, el punto de mira y "¿se siguen?"
+   iban pegados y se leian como un unico bloque continuo.
+   ========================================================================== */
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-req{margin:0 12px 20px}
+/*#plus-on*/
+.ghd-activity-head{margin:4px 2px 14px}
+/*#plus-off estilos de lo que Plus no lleva*/
+.ghd-watch-list{margin-top:22px;padding-top:18px}
+/*#plus-on*/
+.ghd-mutual{margin-top:22px;padding-top:18px}
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-big .ghd-req{margin-bottom:22px}
+/*#plus-on*/
+#ghd-panel.ghd-big .ghd-activity-head{margin-bottom:16px}
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-big .ghd-watch-list{margin-top:24px;padding-top:20px}
+/*#plus-on*/
+#ghd-panel.ghd-big .ghd-mutual{margin-top:24px;padding-top:20px}
+
+/* ==========================================================================
+   CABECERAS PLEGABLES
+   La flechita de 9 px a la izquierda no se veia como un boton. Ahora la
+   cabecera ocupa toda la fila, la flecha va al borde derecho —donde se busca
+   un desplegable— y tiene su propio circulo con fondo al pasar por encima.
+   ========================================================================== */
+.ghd-req-h,.ghd-fold-h{display:flex;align-items:center;gap:10px;width:100%;
+  background:none;border:0;cursor:pointer;text-align:left;
+  padding:8px 8px 8px 10px;border-radius:11px;
+  transition:background .18s ease}
+.ghd-req-h:hover,.ghd-fold-h:hover{background:var(--surface-2)}
+.ghd-fold-tx{flex:1;min-width:0;font:800 10px/1.2 var(--font);letter-spacing:.09em;
+  text-transform:uppercase;color:var(--accent-2);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ghd-fold-car{flex:none;width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--surface-2);border:1px solid var(--line);
+  color:var(--ink-2);font:400 15px/1 var(--font);
+  transform:rotate(-90deg);transition:transform .2s ease,background .18s ease,color .18s ease}
+.ghd-req-h:hover .ghd-fold-car,.ghd-fold-h:hover .ghd-fold-car{background:var(--accent-soft);
+  border-color:var(--accent);color:var(--on-soft)}
+/* plegado: la punta mira hacia abajo, "hay mas cosa aqui" */
+.ghd-req-h.collapsed .ghd-fold-car,.ghd-fold-h.collapsed .ghd-fold-car{transform:rotate(-180deg)}
+.ghd-act-body.collapsed{display:none}
+.ghd-fold-h.collapsed{margin-bottom:0}
+.ghd-fold-h + .ghd-act-body{margin-top:4px}
+
+/* ==========================================================================
+   LAS TRES SECCIONES DE ACTIVIDAD, IGUALADAS
+   Solicitudes iba dentro de una tarjeta con borde y actividad de perfiles no,
+   asi que sus cabeceras no casaban ni en altura ni en aspecto. Ahora las dos
+   son cabeceras desnudas sobre el fondo del panel, con el mismo hueco por
+   dentro, y cada seccion cierra con una linea: sin ella "¿se siguen?" parecia
+   el principio de la lista de avisos que viene detras.
+   ========================================================================== */
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel .ghd-req{background:none;border:0;padding:0 0 20px;margin:2px 12px 4px;
+  border-bottom:1px solid var(--line-2)}
+/*#plus-on*/
+#ghd-panel .ghd-activity-head{background:none;border:0;padding:0 0 20px;margin:18px 12px 4px;
+  border-bottom:1px solid var(--line-2)}
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel.ghd-big .ghd-req{margin:2px 2px 4px}
+/*#plus-on*/
+#ghd-panel.ghd-big .ghd-activity-head{margin:18px 2px 4px}
+/* la lista de avisos arranca despues de esa linea, no pegada a ella */
+#ghd-panel .ghd-activity-head + *{margin-top:18px}
+/* las cabeceras de las dos secciones, a la misma altura y con el mismo hueco */
+#ghd-panel .ghd-req-h,#ghd-panel .ghd-fold-h{min-height:38px;padding:8px 8px 8px 10px;margin:0}
+/* dentro de la seccion, "¿se siguen?" ya no necesita su propia linea arriba:
+   la separacion la da el aire, no dos rayas seguidas */
+#ghd-panel .ghd-mutual{border-top:0;margin-top:24px;padding-top:0}
+/*#plus-off estilos de lo que Plus no lleva*/
+#ghd-panel .ghd-watch-list{margin-top:24px;padding-top:20px}
+/*#plus-on*/
+
+/* ==========================================================================
+   HISTORIAL — mismo sistema de secciones que el resto de la app.
+   El archivo de historias y el bloque de interacciones iban sueltos sobre el
+   fondo mientras los rankings si tenian tarjeta, asi que nada casaba.
+   ========================================================================== */
+.ghd-top-h.is-stories::before{background:var(--accent-2)}
+.ghd-top-h.is-calc::before{background:#7aa7ff}
+.ghd-top-sec .ghd-archive-sub{max-width:none;margin:2px 6px 12px;text-align:left;
+  font-size:11.5px;color:var(--ink-2);line-height:1.5}
+.ghd-top-sec .ghd-actions{margin:0 6px 4px}
+.ghd-top-sec .ghd-refresh-btn{width:100%;max-width:none;min-width:0}
+.ghd-top-sec .ghd-fans-entry{margin:10px 6px 4px}
+/* el vacio dentro de una seccion no necesita ocupar media pantalla */
+.ghd-top-sec .ghd-empty{max-width:36ch;margin:0 auto;padding:14px 10px 16px}
+/* la fila de calcular ya esta dentro de su tarjeta: sin doble caja */
+.ghd-top-sec .ghd-top-calc{background:none;border:0;margin:0;padding:2px 6px 8px}
+.ghd-top-sec .ghd-story-grid{padding:0 6px 6px}
+
+/* ==========================================================================
+   AVISO DE VERSIÓN
+   La extensión se instala descomprimida, así que el navegador nunca la
+   actualiza sola. Lo único honesto es que ella lo diga y te dé el enlace.
+   ========================================================================== */
+.ghd-upd{display:flex;align-items:center;gap:10px;margin:0 14px 10px;padding:10px 12px;
+  border-radius:12px;background:var(--accent-soft);border:1px solid rgba(138,58,185,.35);
+  animation:ghdFade .25s ease}
+.ghd-upd.warn{background:rgba(217,45,74,.10);border-color:rgba(217,45,74,.35)}
+.ghd-upd-tx{flex:1;min-width:0;font-size:11.5px;line-height:1.4;color:var(--ink)}
+.ghd-upd-go{flex:none;border-radius:99px;padding:7px 13px;font:700 11px/1 var(--font);
+  background:var(--accent-grad);color:var(--on-accent);text-decoration:none;white-space:nowrap}
+.ghd-upd-x{flex:none;width:22px;height:22px;border:0;border-radius:7px;background:none;
+  color:var(--ink-3);font:400 15px/1 var(--font);cursor:pointer}
+.ghd-upd-x:hover{background:var(--surface-2);color:var(--ink)}

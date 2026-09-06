@@ -1,0 +1,14 @@
+{
+  "name": "Ghosted",
+  "short_name": "Ghosted",
+  "description": "Tu Ghosted en el móvil — espejo de la extensión.",
+  "start_url": "/m",
+  "scope": "/m",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#08070d",
+  "theme_color": "#08070d",
+  "icons": [
+    { "src": "/assets/icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

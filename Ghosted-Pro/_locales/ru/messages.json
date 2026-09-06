@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "Смотрите, кто отписался от вас в Instagram. Данные остаются на вашем устройстве."
+  },
+  "ago_s": {
+    "message": "$1s назад"
+  },
+  "ago_m": {
+    "message": "$1m назад"
+  },
+  "ago_h": {
+    "message": "$1h назад"
+  },
+  "ago_d": {
+    "message": "$1d назад"
+  },
+  "ago_w": {
+    "message": "$1w назад"
+  },
+  "ago_mo": {
+    "message": "$1mo назад"
+  },
+  "status_starting": {
+    "message": "Запуск…"
+  },
+  "status_first": {
+    "message": "Готовлю первый анализ…"
+  },
+  "status_checking": {
+    "message": "Проверяю подписчиков…"
+  },
+  "status_loading_followers": {
+    "message": "Загружаю подписчиков… $1"
+  },
+  "status_loading_following": {
+    "message": "Загружаю подписки…"
+  },
+  "status_loading_following_n": {
+    "message": "Загружаю подписки… $1"
+  },
+  "status_partial": {
+    "message": "Instagram вернул неполный список — оставляю базовый снимок. Скоро повторю."
+  },
+  "status_baseline": {
+    "message": "Базовый снимок сохранён ✓ Теперь отслеживаю изменения."
+  },
+  "status_unfollowers": {
+    "message": "$1 отписались от тебя."
+  },
+  "status_nochanges": {
+    "message": "Без изменений. Всё актуально ✓"
+  },
+  "status_rate": {
+    "message": "Instagram просит сбавить темп · код $1. Твои данные сохранены."
+  },
+  "status_auth": {
+    "message": "Instagram отклонил запрос · код $1. Можешь проверить снова."
+  },
+  "status_challenge": {
+    "message": "Instagram требует проверку на своём сайте · код $1."
+  },
+  "status_cooldown": {
+    "message": "Готов проверить Instagram."
+  },
+  "status_network": {
+    "message": "Ошибка сети. Повторю."
+  },
+  "status_transport": {
+    "message": "Instagram вернул свой сайт вместо подписчиков · код $1."
+  },
+  "status_http": {
+    "message": "Instagram отклонил запрос · код $1. Пробую другой способ."
+  },
+  "status_other_tab": {
+    "message": "Другая вкладка Instagram уже проверяет этот аккаунт."
+  },
+  "status_error": {
+    "message": "Что-то пошло не так. Повторю."
+  },
+  "status_reload": {
+    "message": "Расширение обновилось — перезагрузите эту вкладку Instagram."
+  },
+  "status_upto": {
+    "message": "Всё актуально ✓ (последняя: $1)"
+  },
+  "status_pro_needed": {
+    "message": "Отслеживание сторис — функция Ghoosted Pro."
+  },
+  "status_story_reading": {
+    "message": "Читаю твои сторис…"
+  },
+  "status_story_none": {
+    "message": "Нет активных историй. Сначала опубликуйте одну."
+  },
+  "status_story_item": {
+    "message": "Читаю сторис $1…"
+  },
+  "status_story_viewers": {
+    "message": "Читаем зрителей… $1"
+  },
+  "status_story_done": {
+    "message": "Прочитано зрителей: $1 ✓"
+  },
+  "status_watch_adding": {
+    "message": "Добавляю профиль в слежку…"
+  },
+  "status_watch_added": {
+    "message": "$1 добавлен в слежку ✓"
+  },
+  "status_no_photos": {
+    "message": "Нет сохранённых фото для удаления."
+  },
+  "status_photos_cleared": {
+    "message": "Сохранённые фото удалены ✓"
+  },
+  "status_save_failed": {
+    "message": "Не удалось сохранить — возможно, хранилище переполнено. Попробуйте «очистить сохранённые фото» в настройках."
+  },
+  "status_watch_invalid": {
+    "message": "Введи корректный ник."
+  },
+  "status_watch_notfound": {
+    "message": "Не нашёл такой профиль в Instagram."
+  },
+  "status_watch_found": {
+    "message": "$1 найден. Подтверди слежку."
+  },
+  "notif_one": {
+    "message": "Кто-то от тебя отписался 👀"
+  },
+  "notif_many": {
+    "message": "$1 человек отписались от тебя 👀"
+  },
+  "ui_subtitle": {
+    "message": "кто смотрит, кто уходит"
+  },
+  "big_mode": {
+    "message": "Большой режим"
+  },
+  "close": {
+    "message": "Закрыть"
+  },
+  "settings": {
+    "message": "Настройки"
+  },
+  "chip_followers": {
+    "message": "подписчики"
+  },
+  "chip_following": {
+    "message": "подписки"
+  },
+  "chip_notback": {
+    "message": "не взаимные"
+  },
+  "tab_unfollow": {
+    "message": "Отписались"
+  },
+  "tab_new": {
+    "message": "Новые"
+  },
+  "tab_notback": {
+    "message": "Не взаимные"
+  },
+  "tab_live": {
+    "message": "Истории"
+  },
+  "tab_activity": {
+    "message": "Активность"
+  },
+  "tab_history": {
+    "message": "История"
+  },
+  "tab_top": {
+    "message": "Топ"
+  },
+  "top_likes": {
+    "message": "Больше всего лайков"
+  },
+  "top_comments": {
+    "message": "Больше всего комментов"
+  },
+  "top_stories": {
+    "message": "Больше всего просмотров сторис"
+  },
+  "top_growth": {
+    "message": "Новые подписчики"
+  },
+  "top_calc": {
+    "message": "Посчитать лайки и комменты"
+  },
+  "top_recalc": {
+    "message": "Обновить"
+  },
+  "top_calculating": {
+    "message": "Считаю…"
+  },
+  "top_calc_hint": {
+    "message": "Нажми, чтобы собрать лайки и комменты последних постов."
+  },
+  "top_from": {
+    "message": "Из последних $1 постов."
+  },
+  "top_progress": {
+    "message": "Читаю пост $1/$2…"
+  },
+  "top_likes_n": {
+    "message": "$1 лайков"
+  },
+  "top_cmts_n": {
+    "message": "$1 комментов"
+  },
+  "top_empty": {
+    "message": "Пока пусто."
+  },
+  "top_growth_empty": {
+    "message": "Пока нет новых подписчиков."
+  },
+  "btn_check": {
+    "message": "Проверить"
+  },
+  "btn_capture": {
+    "message": "Посмотреть зрителей"
+  },
+  "next_review": {
+    "message": "Следующий авто-анализ ~ $1"
+  },
+  "private": {
+    "message": "приватный"
+  },
+  "empty_unfollow": {
+    "message": "Никто не отписался с начала слежки.<br>Сообщу тебе здесь и уведомлением 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "Пока не удалось загрузить подписчиков.<br>Нажми «Проверить», чтобы повторить."
+  },
+  "empty_new": {
+    "message": "Пока нет новых подписчиков."
+  },
+  "empty_notback_load": {
+    "message": "Нажми \"Проверить\", чтобы загрузить твои подписки."
+  },
+  "empty_notback_none": {
+    "message": "Все, на кого ты подписан, подписаны в ответ 🙌"
+  },
+  "empty_ghosted": {
+    "message": "Опубликуйте историю и нажмите «Посмотреть зрителей», чтобы начать рейтинг."
+  },
+  "empty_ghosted_pub": {
+    "message": "Зрителей пока нет. Опубликуйте историю и посмотрите снова."
+  },
+  "empty_history": {
+    "message": "Пока мало данных. Здесь появится динамика подписчиков."
+  },
+  "empty_activity": {
+    "message": "Пока нет изменений профилей.<br>Ghoosted сохранит смену фото, имени, ника и описания с первого анализа."
+  },
+  "activity_title": {
+    "message": "Активность профилей"
+  },
+  "activity_desc": {
+    "message": "Твои подписчики и подписки отслеживаются автоматически. Добавь любой аккаунт, чтобы получать уведомление, когда он выложит сторис или сменит подписки. Проверки идут, пока Instagram открыт во вкладке."
+  },
+  "activity_watch_placeholder": {
+    "message": "Найди ник для слежки…"
+  },
+  "sugg_following": {
+    "message": "ты подписан"
+  },
+  "spy_hint": {
+    "message": "Работает только с публичными аккаунтами или теми, на кого ты уже подписан."
+  },
+  "activity_watch_add": {
+    "message": "Добавить"
+  },
+  "activity_watch_search": {
+    "message": "Найти"
+  },
+  "activity_watch_confirm": {
+    "message": "Следить за профилем"
+  },
+  "activity_watch_cancel": {
+    "message": "Отмена"
+  },
+  "activity_manual": {
+    "message": "На прицеле · $1"
+  },
+  "activity_remove": {
+    "message": "Перестать следить"
+  },
+  "activity_changed_photo": {
+    "message": "Сменил фото профиля"
+  },
+  "activity_changed_bio": {
+    "message": "Обновил описание"
+  },
+  "activity_changed_name": {
+    "message": "Сменил имя"
+  },
+  "activity_changed_username": {
+    "message": "Сменил ник"
+  },
+  "activity_changed_profile": {
+    "message": "Обновил профиль"
+  },
+  "activity_tag_photo": {
+    "message": "фото"
+  },
+  "activity_tag_bio": {
+    "message": "описание"
+  },
+  "activity_tag_profile": {
+    "message": "профиль"
+  },
+  "activity_tag_followers": {
+    "message": "подписчики"
+  },
+  "activity_story": {
+    "message": "Выложил сторис"
+  },
+  "activity_link": {
+    "message": "Сменил ссылку"
+  },
+  "activity_followers_up": {
+    "message": "Набрал $1 подписчиков"
+  },
+  "activity_followers_down": {
+    "message": "Потерял $1 подписчиков"
+  },
+  "activity_new_follower": {
+    "message": "Новый подписчик: $1"
+  },
+  "new_followers_title": {
+    "message": "Новые подписчики"
+  },
+  "activity_lost_follower": {
+    "message": "$1 отписался от него"
+  },
+  "lost_followers_title": {
+    "message": "Отписались от него"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — открыть этот профиль"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "Искать в TikTok"
+  },
+  "dos_more": {
+    "message": "Показать ещё"
+  },
+  "dos_loading_more": {
+    "message": "Загрузка…"
+  },
+  "dos_ghost": {
+    "message": "Сторис"
+  },
+  "dos_ghost_hint": {
+    "message": "Смотри его сторис так, чтобы он не узнал"
+  },
+  "dos_ghost_note": {
+    "message": "Режим призрака · не оставляет следа в «просмотрах»"
+  },
+  "dos_ghost_none": {
+    "message": "Сейчас нет активных сторис."
+  },
+  "dos_ghost_all": {
+    "message": "⬇ Скачать все"
+  },
+  "dos_ghost_all_prog": {
+    "message": "Скачиваю $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "$1 скачано ✓"
+  },
+  "dos_filter_all": {
+    "message": "Все"
+  },
+  "activity_follow_add": {
+    "message": "Подписался на $1"
+  },
+  "activity_follow_rem": {
+    "message": "Отписался от $1"
+  },
+  "activity_tag_story": {
+    "message": "сторис"
+  },
+  "activity_tag_follow": {
+    "message": "подписался"
+  },
+  "activity_tag_unfollow2": {
+    "message": "отписался"
+  },
+  "notif_story": {
+    "message": "$1 выложил сторис 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 подписался на кого-то нового"
+  },
+  "notif_follow_rem": {
+    "message": "$1 от кого-то отписался"
+  },
+  "spy_now_follows": {
+    "message": "Теперь подписан на $1"
+  },
+  "spy_unfollowed": {
+    "message": "Отписался от $1"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 отписался ОТ ТЕБЯ 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 сменил подписки"
+  },
+  "spy_added_c": {
+    "message": "+$1 подписок"
+  },
+  "spy_removed_c": {
+    "message": "−$1 подписок"
+  },
+  "watch_toggle_story": {
+    "message": "Уведомлять о его сторис"
+  },
+  "watch_toggle_following": {
+    "message": "Следить за его подписками"
+  },
+  "wt_story": {
+    "message": "Истории"
+  },
+  "wt_following": {
+    "message": "Подписки"
+  },
+  "wt_profile": {
+    "message": "Профиль"
+  },
+  "spy_check_title": {
+    "message": "Подписаны ли они друг на друга?"
+  },
+  "spy_a_ph": {
+    "message": "аккаунт A (@user)"
+  },
+  "spy_b_ph": {
+    "message": "аккаунт B (@user)"
+  },
+  "spy_check_btn": {
+    "message": "Проверить"
+  },
+  "spy_checking": {
+    "message": "Проверяю…"
+  },
+  "spy_checking_dir": {
+    "message": "Проверяю подписки $1… для больших аккаунтов это займёт пару секунд"
+  },
+  "spy_need_two": {
+    "message": "Введи оба ника."
+  },
+  "spy_result_mutual": {
+    "message": "$1 и $2 подписаны друг на друга"
+  },
+  "spy_result_a": {
+    "message": "$1 подписан на $2, но не наоборот"
+  },
+  "spy_result_b": {
+    "message": "$2 подписан на $1, но не наоборот"
+  },
+  "spy_result_none": {
+    "message": "Ни $1, ни $2 не подписаны друг на друга"
+  },
+  "spy_result_err": {
+    "message": "Не удалось проверить (приватный или несуществующий аккаунт?)"
+  },
+  "spy_direction_yes": {
+    "message": "$1 подписан на $2"
+  },
+  "spy_direction_no": {
+    "message": "$1 не подписан на $2"
+  },
+  "spy_direction_unknown": {
+    "message": "Нельзя проверить, подписан ли $1 на $2 — приватный аккаунт, на который ты не подписан"
+  },
+  "dos_open": {
+    "message": "Детектив — изучить профиль"
+  },
+  "dos_loading": {
+    "message": "Загружаю досье…"
+  },
+  "dos_err": {
+    "message": "Не удалось загрузить профиль."
+  },
+  "dos_err_auth": {
+    "message": "Instagram отклонил запрос. Попробуй ещё раз."
+  },
+  "dos_download": {
+    "message": "Скачать фото (HD)"
+  },
+  "dos_downloading": {
+    "message": "Скачиваю…"
+  },
+  "dos_downloaded": {
+    "message": "Сохранено ✓"
+  },
+  "dos_openpic": {
+    "message": "Открыть фото"
+  },
+  "dos_copyid": {
+    "message": "Копировать ID"
+  },
+  "dos_watch": {
+    "message": "На прицел"
+  },
+  "dos_watching": {
+    "message": "На прицеле ✓"
+  },
+  "dos_copied": {
+    "message": "Скопировано ✓"
+  },
+  "dos_posts": {
+    "message": "постов"
+  },
+  "dos_profile": {
+    "message": "Профиль"
+  },
+  "dos_web": {
+    "message": "Сайт"
+  },
+  "dos_category": {
+    "message": "Категория"
+  },
+  "dos_contact": {
+    "message": "Публичный контакт"
+  },
+  "dos_address": {
+    "message": "Адрес"
+  },
+  "dos_business": {
+    "message": "Бизнес"
+  },
+  "dos_highlights": {
+    "message": "Актуальные сторис"
+  },
+  "dos_save": {
+    "message": "Смотреть фото"
+  },
+  "dos_save_hint": {
+    "message": "Сохраняет обложку и показывает её тебе"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "Сохранено ✓"
+  },
+  "dos_saved_already": {
+    "message": "Уже сохранено"
+  },
+  "dos_photo_history": {
+    "message": "История фото"
+  },
+  "dos_posts_sec": {
+    "message": "Посты"
+  },
+  "dos_engagement": {
+    "message": "Вовлечённость"
+  },
+  "dos_eng_avg": {
+    "message": "В среднем: $1 лайков · $2 комментов на пост"
+  },
+  "eng_fire": {
+    "message": "🔥 Огонь"
+  },
+  "eng_good": {
+    "message": "Отлично"
+  },
+  "eng_ok": {
+    "message": "Средне"
+  },
+  "eng_low": {
+    "message": "Низкая"
+  },
+  "dos_relations": {
+    "message": "Подписчики и подписки"
+  },
+  "dos_see_followers": {
+    "message": "Смотреть подписчиков"
+  },
+  "dos_see_following": {
+    "message": "Смотреть подписки"
+  },
+  "dos_rel_hint": {
+    "message": "Публичные аккаунты или те, на кого ты подписан. Показывает часть, не весь список."
+  },
+  "dos_rel_loading": {
+    "message": "Загрузка…"
+  },
+  "dos_rel_empty": {
+    "message": "Нельзя прочитать список (приватный аккаунт, на который ты не подписан)."
+  },
+  "dos_rel_more": {
+    "message": "Показаны первые $1. Открой профиль для полного списка."
+  },
+  "dos_rel_search": {
+    "message": "Искать в списке…"
+  },
+  "dos_rel_click_hint": {
+    "message": "Нажми на число подписчиков или подписок сверху, чтобы увидеть список здесь."
+  },
+  "dos_rel_nomatch": {
+    "message": "Нет совпадений в загруженном списке."
+  },
+  "dos_history": {
+    "message": "История"
+  },
+  "dos_history_empty": {
+    "message": "Пока нет изменений по этому аккаунту."
+  },
+  "dos_graph_empty": {
+    "message": "График подписчиков строится по мере того, как ты открываешь профиль со временем."
+  },
+  "dos_investigate": {
+    "message": "Изучить"
+  },
+  "unlock_title": {
+    "message": "Активируй Ghoosted"
+  },
+  "unlock_copy": {
+    "message": "Один ключ активирует Ghoosted для этого аккаунта Instagram — навсегда. Разовый платёж."
+  },
+  "unlock_price": {
+    "message": "€5 · навсегда, разовый ключ"
+  },
+  "unlock_buy": {
+    "message": "Купить · €5 разово"
+  },
+  "unlock_label": {
+    "message": "Уже есть ключ?"
+  },
+  "unlock_activate": {
+    "message": "Активировать"
+  },
+  "unlock_enter_key": {
+    "message": "Введи ключ продукта."
+  },
+  "unlock_checking": {
+    "message": "Проверяю ключ…"
+  },
+  "unlock_active": {
+    "message": "Ghoosted активирован для этого аккаунта ✓"
+  },
+  "unlock_bound": {
+    "message": "Этот ключ уже привязан к другому аккаунту Instagram."
+  },
+  "unlock_expired": {
+    "message": "Этот ключ деактивирован."
+  },
+  "unlock_invalid": {
+    "message": "Ключ неверный или ещё не выпущен."
+  },
+  "unlock_network": {
+    "message": "Не удалось проверить ключ. Попробуй ещё раз."
+  },
+  "unlock_status": {
+    "message": "Активируй Ghoosted, чтобы начать."
+  },
+  "tag_unfollow": {
+    "message": "отписался"
+  },
+  "tag_new": {
+    "message": "новый"
+  },
+  "tag_notfollowing": {
+    "message": "не взаимный"
+  },
+  "tag_fan": {
+    "message": "фанат №1"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "Открой Ghoosted Pro"
+  },
+  "pro_desc": {
+    "message": "Смотри, кто просматривает твои сторис, собери постоянный рейтинг самых преданных зрителей, получай мгновенные уведомления об отписках и полную историю."
+  },
+  "pro_unlock": {
+    "message": "Открыть — €5 разово"
+  },
+  "pro_havekey": {
+    "message": "Уже купил? Нажми на иконку Ghoosted на панели браузера, чтобы ввести ключ."
+  },
+  "history_captures": {
+    "message": "Недавние проверки"
+  },
+  "history_viewers": {
+    "message": "$1 зрителей"
+  },
+  "confirm_reset": {
+    "message": "Пересобрать базовый снимок? Заново прочитаю текущих подписчиков как новую точку отсчёта. История \"Отписались\" и \"Новые\" НЕ удаляется."
+  },
+  "confirm_clear": {
+    "message": "Удалить ВСЮ историю (отписки, новые подписчики и статистика сторис)? Это нельзя отменить."
+  },
+  "confirm_clear_photos": {
+    "message": "Удалить все сохранённые фото ($1 шт. — аватары, обложки актуального)? Это освободит место и необратимо."
+  },
+  "settings_interval": {
+    "message": "Проверять каждые"
+  },
+  "settings_notify": {
+    "message": "Уведомлять меня"
+  },
+  "settings_reset": {
+    "message": "Пересобрать базу (история сохранится)"
+  },
+  "settings_export": {
+    "message": "Экспорт моих данных (JSON)"
+  },
+  "settings_clear": {
+    "message": "очистить историю"
+  },
+  "settings_clear_photos": {
+    "message": "очистить сохранённые фото"
+  },
+  "popup_tagline": {
+    "message": "кто смотрит, кто уходит"
+  },
+  "popup_status_free": {
+    "message": "Бесплатный план"
+  },
+  "popup_status_locked": {
+    "message": "Ожидает активации"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · активен"
+  },
+  "popup_free_desc": {
+    "message": "Активируй ключ Ghoosted, чтобы пользоваться расширением с этим аккаунтом Instagram."
+  },
+  "popup_pro_desc": {
+    "message": "Все функции открыты. Спасибо за поддержку"
+  },
+  "popup_buy": {
+    "message": "Получить Ghoosted · €5"
+  },
+  "popup_license_label": {
+    "message": "Уже купил? Введи лицензионный ключ"
+  },
+  "popup_activate": {
+    "message": "Активировать"
+  },
+  "popup_open_ig": {
+    "message": "Открыть Instagram"
+  },
+  "popup_privacy": {
+    "message": "Конфиденциальность"
+  },
+  "popup_help": {
+    "message": "Помощь"
+  },
+  "popup_remove": {
+    "message": "Удалить лицензию"
+  },
+  "popup_enter_key": {
+    "message": "Сначала введи лицензионный ключ."
+  },
+  "popup_activating": {
+    "message": "Проверяю…"
+  },
+  "popup_active": {
+    "message": "Pro активирован. Наслаждайся 🎉"
+  },
+  "popup_refunded": {
+    "message": "Эта лицензия возвращена или оспорена."
+  },
+  "popup_network": {
+    "message": "Не удалось связаться с сервером. Попробуй ещё раз."
+  },
+  "popup_invalid": {
+    "message": "Ключ выглядит неверным. Проверь и повтори."
+  },
+  "popup_removed": {
+    "message": "Лицензия удалена."
+  },
+  "popup_need_ig": {
+    "message": "Открой Instagram в этом окне, чтобы активировать ключ."
+  },
+  "popup_bound": {
+    "message": "Этот ключ уже привязан к другому аккаунту Instagram."
+  },
+  "eng_hidden": {
+    "message": "Скрывает лайки"
+  },
+  "eng_hidden_sub": {
+    "message": "Нельзя посчитать реальный охват: лайки скрыты."
+  },
+  "settings_language": {
+    "message": "Язык"
+  },
+  "settings_data": {
+    "message": "Данные"
+  },
+  "settings_connect_mobile": {
+    "message": "Подключить телефон"
+  },
+  "mobile_title": {
+    "message": "Ghoosted на телефоне"
+  },
+  "mobile_body": {
+    "message": "Отсканируй камерой телефона. Телефон отражает расширение, только чтение. Обновляется при каждой проверке на ПК."
+  },
+  "mobile_unpair": {
+    "message": "Отвязать телефон"
+  },
+  "popup_wrong_product": {
+    "message": "Этот ключ предназначен для другой версии Ghoosted."
+  },
+  "gs_saw": {
+    "message": "Посмотрел(а) $1 из ваших $2 историй"
+  },
+  "gs_saw_total": {
+    "message": "всего просмотрено ваших историй: $1"
+  },
+  "gs_days_one": {
+    "message": "$1 день"
+  },
+  "gs_days_many": {
+    "message": "дней: $1"
+  },
+  "gs_pos": {
+    "message": "№$1 в списке"
+  },
+  "tag_dropoff": {
+    "message": "не досмотрел(а)"
+  },
+  "gs_note": {
+    "message": "Из списка зрителей Instagram: кто посмотрел и кто лайкнул. Скриншоты и повторные просмотры Instagram не сообщает."
+  },
+  "gs_liked": {
+    "message": "❤️ лайкнул(а) $1"
+  },
+  "gs_story_n": {
+    "message": "История $1 ($2) · зрителей: $3 · лайков: $4"
+  },
+  "gs_search": {
+    "message": "Найти зрителя…"
+  },
+  "gs_no_match": {
+    "message": "Нет зрителя с таким именем."
+  },
+  "gs_alltime": {
+    "message": "всего просмотрено ваших историй: $1"
+  },
+  "gs_archive_title": {
+    "message": "Мои сторис",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "Назад"
+  },
+  "gs_all_fans": {
+    "message": "Фанаты всех ваших историй"
+  },
+  "gs_order_note": {
+    "message": "Зрители в порядке Instagram. Когда кто-то повторно открывает вашу историю, он снова поднимается наверх — Ghoosted это замечает и считает как повторное открытие (🔁). Это оценка, зависящая от частоты чтения списка, а не официальный счётчик Instagram — его не существует."
+  },
+  "gs_detail_meta": {
+    "message": "зрителей: $1 · лайков: $2"
+  },
+  "gs_no_viewers": {
+    "message": "Для этой истории не сохранены зрители."
+  },
+  "gs_video": {
+    "message": "Видео"
+  },
+  "gs_photo": {
+    "message": "Фото"
+  },
+  "gs_archive_sub": {
+    "message": "Только вы можете видеть свои архивные истории, если не решите поделиться ими."
+  },
+  "gs_refresh": {
+    "message": "Обновить мои истории"
+  },
+  "gs_capturing": {
+    "message": "Читаем зрителей вашей истории…"
+  },
+  "gs_empty_archive": {
+    "message": "Пока ничего не сохранено. Если сторис активна, обновите, чтобы сохранить."
+  },
+  "gs_reopen": {
+    "message": "снова вверх $1×"
+  },
+  "nb_select": {
+    "message": "Выбрать"
+  },
+  "nb_cancel": {
+    "message": "Отмена"
+  },
+  "nb_all": {
+    "message": "Все"
+  },
+  "nb_none": {
+    "message": "Снять"
+  },
+  "nb_unfollow_n": {
+    "message": "Отписаться ($1)"
+  },
+  "nb_hint": {
+    "message": "Отметьте, от кого отписаться, затем «Отписаться». По одному, с паузами — Instagram блокирует аккаунты, которые отписываются слишком быстро."
+  },
+  "nb_confirm": {
+    "message": "Отписаться от $1 аккаунтов? Ghoosted делает это медленно (несколько секунд между каждым), чтобы избежать блокировки Instagram. Не закрывайте вкладку."
+  },
+  "nb_progress": {
+    "message": "Отписываемся… $1/$2"
+  },
+  "nb_done": {
+    "message": "Готово — отписались от $1."
+  },
+  "nb_blocked": {
+    "message": "Instagram попросил помедленнее. Остановлено после $1. Продолжите позже."
+  },
+  "wprof_updated": {
+    "message": "Обновл. $1"
+  },
+  "wprof_followers": {
+    "message": "Подписчики"
+  },
+  "wprof_following": {
+    "message": "Подписки"
+  },
+  "wprof_recent": {
+    "message": "Недавно подписались"
+  },
+  "wprof_recent_none": {
+    "message": "Новых подписок пока не обнаружено."
+  },
+  "wprof_track_hint": {
+    "message": "Включите 👥, чтобы отслеживать, на кого подписан этот аккаунт, и видеть статистику здесь."
+  },
+  "unit_min": {
+    "message": "мин"
+  },
+  "dos_link": {
+    "message": "ссылка"
+  },
+  "dos_id": {
+    "message": "ID"
+  },
+  "dos_email": {
+    "message": "Эл. почта"
+  },
+  "dos_tel": {
+    "message": "Тел."
+  },
+  "status_newfollowers": {
+    "message": "+$1 новых подписчик(ов)."
+  },
+  "nb_search": {
+    "message": "Поиск по имени или @нику"
+  },
+  "nb_no_match": {
+    "message": "Нет аккаунтов с таким именем."
+  },
+  "gh_entry": {
+    "message": "Активные истории (режим призрака)"
+  },
+  "gh_note": {
+    "message": "У этих людей сейчас есть история. Откройте её здесь — Instagram об этом не узнает, вас не будет в списке просмотревших."
+  },
+  "gh_watch_note": {
+    "message": "Режим призрака — Instagram не знает, что вы это смотрели."
+  },
+  "gh_refresh": {
+    "message": "Обновить"
+  },
+  "gh_loading": {
+    "message": "Ищем активные истории…"
+  },
+  "gh_loading_one": {
+    "message": "Загружаем историю…"
+  },
+  "gh_empty": {
+    "message": "Сейчас ни у кого из тех, на кого вы подписаны, нет историй."
+  },
+  "gh_no_media": {
+    "message": "Не удалось загрузить историю."
+  },
+  "gh_err": {
+    "message": "Instagram не вернул список. Попробуйте через минуту."
+  },
+  "gh_err_rate": {
+    "message": "Instagram просит сбавить темп. Подождите немного и попробуйте снова."
+  },
+  "gh_stories_n": {
+    "message": "историй: $1"
+  },
+  "gh_story_1": {
+    "message": "1 история"
+  },
+  "gh_unseen": {
+    "message": "не просмотрено"
+  },
+  "gh_slide": {
+    "message": "$1 из $2"
+  },
+  "nb_failed": {
+    "message": "Отписались от $1. Не удалось: $2 — Instagram отклонил."
+  },
+  "gh_play_all": {
+    "message": "Смотреть все ($1)"
+  },
+  "gh_person_of": {
+    "message": "$1 из $2"
+  },
+  "gh_badge": {
+    "message": "режим призрака"
+  },
+  "gh_pause": {
+    "message": "Пауза"
+  },
+  "gh_resume": {
+    "message": "Продолжить"
+  },
+  "gh_close": {
+    "message": "Закрыть"
+  },
+  "gh_download": {
+    "message": "Скачать"
+  },
+  "gh_download_all": {
+    "message": "Скачать все"
+  },
+  "gh_sound": {
+    "message": "Звук"
+  },
+  "dos_posts_none": {
+    "message": "Нет доступа к публикациям"
+  },
+  "settings_appearance": {
+    "message": "Оформление"
+  },
+  "settings_light": {
+    "message": "Светлая тема"
+  },
+  "toast_watching": {
+    "message": "Вы следите за $1",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "Вы больше не следите за $1",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "Instagram просит сбавить темп. Повторите через $1 мин.",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "Найти человека…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "Никого с таким именем",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "Поиск…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "Ничего не найдено",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "Пока мало истории. Загляните через день.",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "с $1",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "Сообщить, если изменится",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "Слежу",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "Слежу за $1",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "$1 больше не отслеживается",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "ОТСЛЕЖИВАЕМЫЕ ПАРЫ",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1 отписался от $2",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1 подписался на $2",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1 отписался от $2",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1 подписался на $2",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "пара",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "Очистить",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "Уверены?",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "Активность очищена",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "было",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "стало",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "Загрузка подписчиков",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "Минуту, это может занять время",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "Не удалось прочитать весь список подписок. Оставлен прежний.",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "Список подписок от $1 · нажмите «Проверить» для обновления",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "Загрузка подписок",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "Сравнение и сохранение",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "из $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "ЗАПРОСЫ НА ПОДПИСКУ",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "Вручную",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "Только те, на кого я подписан",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "Все",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "Любой, кто попросит, попадёт в ваш закрытый аккаунт без проверки.",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "Одобрить",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "Одобряю…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "Нет новых запросов.",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "Принять",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "Отклонить",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "$1 принят",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "$1 отклонён",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "Принято: $1",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "Не удалось загрузить запросы.",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "Одобрять автоматически",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "Одобрение запросов",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "Отписка",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "осталось около $1",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 мин",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 с",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "Мы намеренно идём медленно",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "Instagram блокирует аккаунты, которые делают это слишком быстро. Неравномерные паузы не привлекают внимания. Панель можно закрыть: работа продолжится в фоне.",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "Нажмите, чтобы свернуть или развернуть",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "Взаимодействия",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "Вышла новая версия ($1)",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "Скачать",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "Ваша версия больше не работает с Instagram. Обновите, чтобы продолжить.",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "Скрыть",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "Здесь фиксируются изменения среди ваших подписчиков и подписок: кто пришёл, кто ушёл и когда. Проверки идут, пока Instagram открыт во вкладке."
+  },
+  "empty_unfollow_own": {
+    "message": "С первой проверки никто не отписался.<br>Сообщу здесь и уведомлением 👀"
+  },
+  "load_pair": {
+    "message": "Проверяем, подписаны ли друг на друга"
+  },
+  "spy_checking_rev": {
+    "message": "Ищем среди подписчиков $1…"
+  },
+  "spy_via_followers": {
+    "message": "проверено по списку подписчиков $1"
+  },
+  "busy_other": {
+    "message": "Уже идёт другая проверка. Дождитесь её окончания."
+  }
+}

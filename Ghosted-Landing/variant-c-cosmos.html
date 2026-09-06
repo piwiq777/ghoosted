@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ghoosted — The real story behind every profile</title>
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --bg:#F7F5F0;          /* warm near-white, cosmos.so base */
+    --ink:#111110;         /* near-black text / primary pill */
+    --ink-soft:#57544d;    /* muted body */
+    --line:rgba(20,18,14,.16);
+    --chip-shadow:0 10px 30px rgba(30,24,14,.16), 0 2px 6px rgba(30,24,14,.10);
+    --chip-shadow-hi:0 24px 60px rgba(30,24,14,.26), 0 6px 14px rgba(30,24,14,.16);
+    --maxw:1240px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter','Helvetica Neue',Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ============ NAV ============ */
+  .nav{
+    position:relative;z-index:40;
+    max-width:var(--maxw);margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:26px 28px;
+  }
+  .brand{
+    font-weight:600;font-size:16px;letter-spacing:-.03em;
+    display:flex;align-items:center;gap:9px;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--ink);display:inline-block}
+  .nav-links{display:flex;gap:26px;font-size:14px;color:var(--ink-soft);letter-spacing:-.01em}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{
+    font-size:14px;font-weight:500;letter-spacing:-.01em;
+    border:1px solid var(--line);border-radius:100px;padding:9px 16px;
+    transition:background .2s ease,color .2s ease;
+  }
+  .nav-cta:hover{background:var(--ink);color:var(--bg)}
+  @media(max-width:720px){.nav-links{display:none}}
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:clamp(640px,92vh,940px);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+    padding:40px 20px 80px;
+  }
+  /* the floating-chip field spans the whole hero, behind the text */
+  .field{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .chip{
+    position:absolute;
+    top:0;left:0;                 /* positioned via translate in JS */
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--chip-shadow);
+    pointer-events:auto;
+    cursor:grab;
+    will-change:transform;
+    background:#ddd;
+    /* transform is fully driven by JS every frame */
+    transition:box-shadow .28s ease, filter .28s ease;
+    -webkit-user-select:none;user-select:none;
+    touch-action:none;           /* JS decides when to hijack the gesture */
+  }
+  .chip img{
+    display:block;width:100%;height:100%;object-fit:cover;
+    pointer-events:none;-webkit-user-drag:none;user-select:none;
+  }
+  .chip::after{ /* soft inner ring, gallery feel */
+    content:"";position:absolute;inset:0;border-radius:inherit;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);pointer-events:none;
+  }
+  .chip.grabbing{cursor:grabbing}
+  .chip.hovered{box-shadow:var(--chip-shadow-hi)}
+  /* a gentle wash so the headline stays readable over the busiest chips */
+  .hero-veil{
+    position:absolute;z-index:2;left:50%;top:50%;
+    width:min(1100px,120vw);height:min(560px,70vh);
+    transform:translate(-50%,-50%);
+    background:radial-gradient(ellipse at center,
+        rgba(247,245,240,.86) 0%,
+        rgba(247,245,240,.66) 34%,
+        rgba(247,245,240,0) 68%);
+    pointer-events:none;
+  }
+
+  .hero-inner{position:relative;z-index:3;text-align:center;max-width:900px;pointer-events:none}
+  .hero-inner a,.hero-inner button{pointer-events:auto}
+  .eyebrow{
+    font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);margin:0 0 22px;
+  }
+  h1{
+    margin:0;
+    font-weight:500;
+    font-size:clamp(44px,8.2vw,86px);
+    line-height:1.0;
+    letter-spacing:-.045em;    /* cosmos-tight tracking */
+  }
+  h1 .l2{display:block}
+  h1 .accent{font-style:italic;font-weight:500;letter-spacing:-.05em}
+  .sub{
+    margin:26px auto 0;max-width:540px;
+    font-size:clamp(15px,1.7vw,18px);line-height:1.5;
+    color:var(--ink-soft);letter-spacing:-.011em;
+  }
+  .cta-row{
+    margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:inherit;font-size:15px;font-weight:500;letter-spacing:-.012em;
+    border-radius:100px;padding:15px 26px;cursor:pointer;border:1px solid transparent;
+    transition:transform .16s ease, box-shadow .22s ease, background .2s ease, color .2s ease;
+  }
+  .pill-primary{background:var(--ink);color:#fbfaf7;box-shadow:0 6px 18px rgba(20,18,14,.22)}
+  .pill-primary:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(20,18,14,.30)}
+  .pill-secondary{background:rgba(255,255,255,.5);border-color:var(--line);color:var(--ink);backdrop-filter:blur(6px)}
+  .pill-secondary:hover{transform:translateY(-1px);background:rgba(255,255,255,.85)}
+  .trust{margin-top:18px;font-size:13px;color:var(--ink-soft);letter-spacing:-.006em}
+  .trust::before{content:"●";font-size:7px;vertical-align:middle;margin-right:8px;color:#9aa06a}
+
+  /* ============ SECTIONS BELOW HERO ============ */
+  .section{max-width:var(--maxw);margin:0 auto;padding:40px 28px}
+  .film{
+    position:relative;border-radius:26px;overflow:hidden;
+    aspect-ratio:16/8;background:#111;box-shadow:var(--chip-shadow);
+  }
+  .film img{width:100%;height:100%;object-fit:cover;opacity:.86}
+  .film .play{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    gap:12px;color:#fff;
+  }
+  .film .play .circle{
+    width:66px;height:66px;border-radius:50%;
+    background:rgba(255,255,255,.16);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.4);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .film .play .circle::before{
+    content:"";border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:4px;
+  }
+  .film .label{position:absolute;left:24px;bottom:22px;color:#fff;font-size:16px;font-weight:500;letter-spacing:-.02em}
+
+  .grid-head{
+    font-weight:500;letter-spacing:-.045em;line-height:1.02;
+    font-size:clamp(34px,5.4vw,62px);max-width:760px;margin:80px 0 34px;
+  }
+  .grid-head .accent{font-style:italic}
+  .masonry{columns:3 240px;column-gap:16px}
+  .masonry img{width:100%;border-radius:14px;margin:0 0 16px;display:block;box-shadow:var(--chip-shadow)}
+  @media(max-width:560px){.masonry{columns:2 150px}}
+
+  .foot{max-width:var(--maxw);margin:0 auto;padding:60px 28px 80px;color:var(--ink-soft);font-size:13px;
+        display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;letter-spacing:-.01em}
+
+  /* ============ REDUCED MOTION ============ */
+  @media(prefers-reduced-motion:reduce){
+    .chip{transition:box-shadow .2s ease}
+  }
+</style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="brand"><span class="dot"></span>Ghoosted</div>
+    <div class="nav-links">
+      <a href="#">Features</a>
+      <a href="#">How it works</a>
+      <a href="#">Privacy</a>
+    </div>
+    <a class="nav-cta" href="#">Add to Chrome</a>
+  </nav>
+
+  <header class="hero">
+    <!-- floating chip field (populated by JS) -->
+    <div class="field" id="field" aria-hidden="true"></div>
+    <div class="hero-veil"></div>
+
+    <div class="hero-inner">
+      <p class="eyebrow">Chrome extension · Instagram</p>
+      <h1>
+        The real story.
+        <span class="l2"><span class="accent">Behind every profile.</span></span>
+      </h1>
+      <p class="sub">Watch &amp; save anyone's stories, pull up their full profile, and see who's really engaging with yours. Everything Instagram hides.</p>
+      <div class="cta-row">
+        <button class="pill pill-primary">Try it · €5 forever</button>
+        <button class="pill pill-secondary">See what it does</button>
+      </div>
+      <p class="trust">No password. All on your phone.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="film">
+        <img src="assets/mood/m8.jpg" alt="">
+        <div class="play"><span class="circle"></span></div>
+        <span class="label">Watch the film</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="grid-head">See who's watching. <span class="accent">Before they know you noticed.</span></h2>
+      <div class="masonry">
+        <img src="assets/mood/m4.jpg" alt="">
+        <img src="assets/mood/m5.jpg" alt="">
+        <img src="assets/mood/m2.jpg" alt="">
+        <img src="assets/mood/m6.jpg" alt="">
+        <img src="assets/mood/m3.jpg" alt="">
+        <img src="assets/mood/m1.jpg" alt="">
+        <img src="assets/mood/m7.jpg" alt="">
+        <img src="assets/mood/m9.jpg" alt="">
+        <img src="assets/mood/m8.jpg" alt="">
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>© 2026 Ghoosted — everything Instagram hides.</span>
+      <span>Privacy · Terms · Refund</span>
+    </footer>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =====================================================================
+     MOTION MODEL (one RAF loop, additive layering per chip):
+       render = HOME + DRIFT(idle sine) + PARALLAX(mouse·depth) + DRAG(spring)
+     - DRIFT & PARALLAX are purely visual offsets, computed each frame.
+     - DRAG lives in a tiny spring integrator (offset ox/oy + velocity vx/vy):
+         grabbing  -> offset follows the pointer directly (spring paused),
+         released  -> spring pulls offset back to 0 with the fling momentum.
+     - Because drift/parallax are added AFTER the spring, idle motion never
+       fights a chip you're actively holding.
+     ===================================================================== */
+
+  /* ---- TUNING CONSTANTS -------------------------------------------- */
+  var PARALLAX     = 26;    // px the nearest chip shifts across full mouse travel
+  var DRIFT_AMP    = 7;     // px base idle-drift amplitude (scaled up by depth)
+  var DRIFT_SPEED  = 0.10;  // idle-drift base angular speed
+  var SPRING_K     = 0.055; // spring stiffness pulling a flung chip home (0..1)
+  var SPRING_DAMP  = 0.86;  // velocity damping per frame after release
+  var FLING_SCALE  = 0.9;   // how much release velocity becomes momentum
+  var HOVER_SCALE  = 1.06;  // extra scale on hover / grab
+  var TILT_MAX     = 3;     // deg of extra tilt from drag velocity
+  var EASE_MOUSE   = 0.08;  // smoothing of the global mouse vector
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- CHIP LAYOUT -------------------------------------------------
+     x/y are HOME position as % of the hero box (chip CENTER).
+     w = width in px (desktop). depth 0(far)..1(near) drives parallax,
+     drift amplitude, blur, opacity and base scale. rot = base rotation.
+     A deliberate donut: chips ring the headline, center kept clearer.   */
+  var LAYOUT = [
+    {img:"m8", x: 15, y: 30, w:150, depth:1.00, rot:-8 },
+    {img:"m4", x: 84, y: 26, w:170, depth:0.92, rot: 9 },
+    {img:"m3", x: 78, y: 74, w:158, depth:0.86, rot:-11},
+    {img:"m1", x: 22, y: 76, w:162, depth:0.90, rot: 7 },
+    {img:"m2", x: 50, y: 13, w:120, depth:0.70, rot:-6 },
+    {img:"m6", x: 91, y: 55, w:112, depth:0.52, rot: 12},
+    {img:"m5", x:  8, y: 54, w:118, depth:0.55, rot:-13},
+    {img:"m7", x: 66, y: 90, w: 96, depth:0.44, rot: 6 },
+    {img:"m9", x: 33, y: 92, w: 84, depth:0.40, rot:-9 },
+    {img:"m3", x: 50, y: 88, w:104, depth:0.30, rot: 4 },  // far, blurred, background
+    {img:"m2", x: 94, y: 84, w: 80, depth:0.26, rot:14 },  // repeat, far
+    {img:"m6", x:  4, y: 20, w: 92, depth:0.34, rot:-5 },  // repeat, far
+    {img:"m1", x: 62, y: 40, w: 90, depth:0.22, rot: 10}   // far, deep behind text
+  ];
+
+  /* On small screens: thin the field and shrink chips (no overflow, readable). */
+  var isMobile = window.innerWidth < 720;
+  if(isMobile){
+    LAYOUT = LAYOUT.filter(function(_,i){ return i<8; });
+  }
+
+  var field = document.getElementById("field");
+  var ASSET = "assets/mood/";
+  var chips = [];
+
+  LAYOUT.forEach(function(cfg){
+    var el = document.createElement("div");
+    el.className = "chip";
+    var w = isMobile ? cfg.w*0.62 : cfg.w;
+    // slight portrait/landscape variety from source ratios; keep near 5:4
+    var h = Math.round(w * (cfg.img==="m8" ? 1.38 : (cfg.img==="m9"||cfg.img==="m7") ? 1.0 : 0.82));
+    el.style.width = w+"px";
+    el.style.height = h+"px";
+    // DEPTH STYLING: far chips smaller-feeling (via baseScale), blurred, faded.
+    var baseScale = 0.72 + cfg.depth*0.28;                 // 0.72..1.0
+    var blur = (1 - cfg.depth) * 3.2;                       // up to ~3.2px
+    var op   = 0.55 + cfg.depth*0.45;                       // 0.55..1.0
+    el.style.filter = "blur("+blur.toFixed(2)+"px)";
+    el.style.opacity = op.toFixed(2);
+    el.style.zIndex = Math.round(cfg.depth*20) + 1;        // near chips above far ones (still under veil z=2)
+
+    var img = document.createElement("img");
+    img.src = ASSET + cfg.img + ".jpg";
+    img.alt = "";
+    el.appendChild(img);
+    field.appendChild(el);
+
+    chips.push({
+      el:el, cfg:cfg, w:w, h:h,
+      baseScale:baseScale, blur:blur, op:op,
+      // spring state (drag offset from home)
+      ox:0, oy:0, vx:0, vy:0,
+      dragging:false, hover:false,
+      // per-chip idle phases so nothing marches in sync
+      px:Math.random()*Math.PI*2, py:Math.random()*Math.PI*2,
+      fx:DRIFT_SPEED*(0.7+Math.random()*0.6),
+      fy:DRIFT_SPEED*(0.7+Math.random()*0.6),
+      hoverScale:1
+    });
+  });
+
+  /* ---- geometry helpers (home px from % of hero) ------------------ */
+  var heroRect;
+  function measure(){ heroRect = field.getBoundingClientRect(); }
+  measure();
+  window.addEventListener("resize", measure);
+  window.addEventListener("scroll", measure, {passive:true});
+
+  function homeXY(c){
+    return {
+      x: heroRect.width  * c.cfg.x/100 - c.w/2,
+      y: heroRect.height * c.cfg.y/100 - c.h/2
+    };
+  }
+
+  /* ---- global mouse vector (smoothed), -1..1 around hero center --- */
+  var mouseTX=0, mouseTY=0, mouseX=0, mouseY=0;
+  window.addEventListener("mousemove", function(e){
+    if(!heroRect) return;
+    mouseTX = (e.clientX - (heroRect.left+heroRect.width/2)) / (heroRect.width/2);
+    mouseTY = (e.clientY - (heroRect.top +heroRect.height/2)) / (heroRect.height/2);
+    mouseTX = Math.max(-1,Math.min(1,mouseTX));
+    mouseTY = Math.max(-1,Math.min(1,mouseTY));
+  });
+
+  /* ---- DRAG (pointer events, mouse + touch) ----------------------- */
+  var active=null, startPx=0, startPy=0, lastPx=0, lastPy=0, grabOX=0, grabOY=0;
+
+  chips.forEach(function(c){
+    c.el.addEventListener("pointerenter", function(){
+      c.hover=true; c.el.classList.add("hovered");
+    });
+    c.el.addEventListener("pointerleave", function(){
+      c.hover=false; c.el.classList.remove("hovered");
+    });
+    c.el.addEventListener("pointerdown", function(e){
+      if(reduce) return;
+      active=c; c.dragging=true;
+      c.el.classList.add("grabbing");
+      c.el.setPointerCapture(e.pointerId);
+      startPx=lastPx=e.clientX; startPy=lastPy=e.clientY;
+      grabOX=c.ox; grabOY=c.oy;
+      c.vx=c.vy=0;
+      e.preventDefault();
+    });
+    c.el.addEventListener("pointermove", function(e){
+      if(!c.dragging || active!==c) return;
+      // offset from home = grab offset + pointer travel since grab
+      c.ox = grabOX + (e.clientX-startPx);
+      c.oy = grabOY + (e.clientY-startPy);
+      // instantaneous velocity for the fling + tilt
+      c.vx = e.clientX-lastPx; c.vy = e.clientY-lastPy;
+      lastPx=e.clientX; lastPy=e.clientY;
+      e.preventDefault();
+    });
+    function release(e){
+      if(active!==c) return;
+      c.dragging=false; active=null;
+      c.el.classList.remove("grabbing");
+      // convert last pointer velocity into spring momentum
+      c.vx *= FLING_SCALE*3; c.vy *= FLING_SCALE*3;
+      try{ c.el.releasePointerCapture(e.pointerId); }catch(_){}
+    }
+    c.el.addEventListener("pointerup", release);
+    c.el.addEventListener("pointercancel", release);
+  });
+
+  /* ---- THE SINGLE RAF LOOP ---------------------------------------- */
+  var t=0;
+  function frame(){
+    t += 1;
+    // smooth the global mouse vector once per frame
+    mouseX += (mouseTX-mouseX)*EASE_MOUSE;
+    mouseY += (mouseTY-mouseY)*EASE_MOUSE;
+
+    for(var i=0;i<chips.length;i++){
+      var c=chips[i];
+      var home=homeXY(c);
+
+      // (1) idle drift — sine paths, amplitude grows with depth (near floats more)
+      var driftX=0, driftY=0;
+      if(!reduce){
+        var amp = DRIFT_AMP*(0.5+c.cfg.depth);
+        c.px += c.fx*0.02; c.py += c.fy*0.02;
+        driftX = Math.sin(c.px + t*c.fx) * amp;
+        driftY = Math.cos(c.py + t*c.fy) * amp*0.8;
+      }
+
+      // (2) parallax — scaled by depth; skip while this chip is held
+      var paraX=0, paraY=0;
+      if(!reduce && !c.dragging){
+        paraX = -mouseX * PARALLAX * c.cfg.depth;
+        paraY = -mouseY * PARALLAX * c.cfg.depth;
+      }
+
+      // (3) drag spring — integrate offset back toward home unless held
+      if(!c.dragging && !reduce){
+        c.vx += (0 - c.ox)*SPRING_K;
+        c.vy += (0 - c.oy)*SPRING_K;
+        c.vx *= SPRING_DAMP; c.vy *= SPRING_DAMP;
+        c.ox += c.vx; c.oy += c.vy;
+        if(Math.abs(c.ox)<0.05 && Math.abs(c.vx)<0.05) {c.ox=0;c.vx=0;}
+        if(Math.abs(c.oy)<0.05 && Math.abs(c.vy)<0.05) {c.oy=0;c.vy=0;}
+      }
+
+      // hover / grab scale eased
+      var targetScale = (c.hover||c.dragging) ? HOVER_SCALE : 1;
+      c.hoverScale += (targetScale - c.hoverScale)*0.15;
+
+      // tilt from horizontal drag velocity (organic, capped)
+      var tilt = Math.max(-TILT_MAX,Math.min(TILT_MAX, c.vx*0.25));
+
+      var X = home.x + driftX + paraX + c.ox;
+      var Y = home.y + driftY + paraY + c.oy;
+      var S = c.baseScale * c.hoverScale;
+      var R = c.cfg.rot + tilt;
+
+      c.el.style.transform =
+        "translate3d("+X.toFixed(2)+"px,"+Y.toFixed(2)+"px,0) rotate("+R.toFixed(2)+"deg) scale("+S.toFixed(3)+")";
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // place chips at home immediately (so reduced-motion users see a static field)
+  measure();
+  chips.forEach(function(c){
+    var h=homeXY(c);
+    c.el.style.transform="translate3d("+h.x+"px,"+h.y+"px,0) rotate("+c.cfg.rot+"deg) scale("+c.baseScale+")";
+  });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

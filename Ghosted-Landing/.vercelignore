@@ -1,0 +1,20 @@
+# never deploy drafts / dead assets
+# El pack de capturas para la tienda y redes: 28 MB de los que 21 son un ZIP.
+# No lo referencia ni una linea del sitio, asi que si sube queda accesible a
+# quien adivine la ruta, y sin ninguna utilidad. Se queda en local.
+assets/shots-2026/
+assets/mood/
+panel-demo.css
+assets/geist.woff2
+desplegar.bat
+lib/kv.js.bak
+_hero_*.html
+_spec.json
+
+# Superseded landing drafts. These were shipping as live, indexable URLs and
+# still carry the pre-compliance copy the main landing no longer makes —
+# variant-a-playful.html publicly claimed "Ghost mode — they never see you
+# looked". A third party quoting the site could quote these instead.
+variant-a-playful.html
+variant-b.html
+variant-c-cosmos.html

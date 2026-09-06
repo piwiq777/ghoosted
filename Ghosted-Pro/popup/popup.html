@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="hdr">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.4" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/><ellipse cx="14.6" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/></svg>
+      </div>
+      <div class="hdr-txt">
+        <b>Ghoosted</b>
+        <span data-i18n="popup_tagline">who watches, who leaves</span>
+      </div>
+    </header>
+
+    <div id="plan" class="plan locked">
+      <div class="plan-row">
+        <span class="dot"></span>
+        <span id="plan-name" data-i18n="popup_status_locked">Awaiting activation</span>
+      </div>
+      <p id="plan-desc" data-i18n="popup_free_desc">Activate a Ghoosted key to use the extension with this Instagram account.</p>
+    </div>
+
+    <div id="buy-block">
+      <a id="buy" class="btn primary" target="_blank" rel="noopener" data-i18n="popup_buy">Get Ghoosted Pro · €5</a>
+    </div>
+
+    <div class="license">
+      <label data-i18n="popup_license_label">Already bought? Enter your license key</label>
+      <div class="lic-row">
+        <input id="key" type="text" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" spellcheck="false" autocomplete="off">
+        <button id="activate" class="btn" data-i18n="popup_activate">Activate</button>
+      </div>
+      <div id="msg" class="msg"></div>
+      <button id="remove" class="link-btn" hidden data-i18n="popup_remove">Remove license</button>
+    </div>
+
+    <a id="open-ig" class="btn ghost" target="_blank" rel="noopener" data-i18n="popup_open_ig">Open Instagram</a>
+
+    <footer class="ft">
+      <a id="privacy" href="#" target="_blank" rel="noopener" data-i18n="popup_privacy">Privacy</a>
+      <span>·</span>
+      <a id="help" href="#" target="_blank" rel="noopener" data-i18n="popup_help">Help</a>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

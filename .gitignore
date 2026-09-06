@@ -1,0 +1,42 @@
+# ============================================================
+#  SECRETOS — nada de esto sale de este ordenador
+# ============================================================
+.env
+.env.*
+!.env.example
+.vercel/
+
+# ============================================================
+#  EL PRODUCTO QUE SE VENDE
+#  Los ZIP que api/download.js entrega contra una clave. Si entran
+#  aqui, cualquiera con acceso al repositorio se lleva Pro sin pagar.
+# ============================================================
+Ghosted-Landing/api/_private/
+dist/
+*.zip
+
+# ============================================================
+#  PESO MUERTO
+# ============================================================
+node_modules/
+# 28 MB de capturas para la tienda y redes; no las usa ninguna pagina
+Ghosted-Landing/assets/shots-2026/
+# copia del Plus viejo (26 de julio), guardada por si acaso
+Ghosted-Plus.ANTES-20260906/
+# historico del codigo ofuscado
+codigo-ofuscado-anterior/
+
+# ============================================================
+#  GENERADO — nunca se edita a mano
+#  Plus SE CONSTRUYE desde Pro con tools/construir-plus.js.
+#  Versionarlo invitaria a editarlo directamente, que es justo
+#  como se quedo atras en julio.
+# ============================================================
+Ghosted-Plus/
+
+# ============================================================
+#  SISTEMA
+# ============================================================
+.DS_Store
+Thumbs.db
+*.bak

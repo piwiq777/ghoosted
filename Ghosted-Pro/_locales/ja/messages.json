@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "Instagram でフォローを外した人がわかります。データは端末内に残ります。"
+  },
+  "ago_s": {
+    "message": "$1s前"
+  },
+  "ago_m": {
+    "message": "$1m前"
+  },
+  "ago_h": {
+    "message": "$1h前"
+  },
+  "ago_d": {
+    "message": "$1d前"
+  },
+  "ago_w": {
+    "message": "$1w前"
+  },
+  "ago_mo": {
+    "message": "$1mo前"
+  },
+  "status_starting": {
+    "message": "開始中…"
+  },
+  "status_first": {
+    "message": "最初のスキャンを準備中…"
+  },
+  "status_checking": {
+    "message": "フォロワーを確認中…"
+  },
+  "status_loading_followers": {
+    "message": "フォロワーを読み込み中… $1"
+  },
+  "status_loading_following": {
+    "message": "フォロー中のアカウントを読み込み中…"
+  },
+  "status_loading_following_n": {
+    "message": "フォロー中のアカウントを読み込み中… $1"
+  },
+  "status_partial": {
+    "message": "Instagramが不完全なリストを返しました — 基準データは維持します。まもなく再試行します。"
+  },
+  "status_baseline": {
+    "message": "基準データを保存しました ✓ これから変化を記録します。"
+  },
+  "status_unfollowers": {
+    "message": "$1人があなたのフォローを外しました。"
+  },
+  "status_nochanges": {
+    "message": "変化なし。すべて最新です ✓"
+  },
+  "status_rate": {
+    "message": "Instagramからペースを落とすよう求められました · コード $1。データは保存されています。"
+  },
+  "status_auth": {
+    "message": "Instagramが読み取りを拒否しました · コード $1。もう一度確認できます。"
+  },
+  "status_challenge": {
+    "message": "Instagram側のサイトで確認が必要です · コード $1。"
+  },
+  "status_cooldown": {
+    "message": "Instagramを確認する準備ができました。"
+  },
+  "status_network": {
+    "message": "ネットワークエラー。再試行します。"
+  },
+  "status_transport": {
+    "message": "Instagramがフォロワーではなくサイトを返しました · コード $1。"
+  },
+  "status_http": {
+    "message": "Instagramがリクエストを拒否しました · コード$1。別の方法で再試行します。"
+  },
+  "status_other_tab": {
+    "message": "別のInstagramタブがこのアカウントを確認中です。"
+  },
+  "status_error": {
+    "message": "問題が発生しました。再試行します。"
+  },
+  "status_reload": {
+    "message": "拡張機能が更新されました — このInstagramタブを再読み込みしてください。"
+  },
+  "status_upto": {
+    "message": "最新です ✓（前回: $1）"
+  },
+  "status_pro_needed": {
+    "message": "ストーリーの追跡は Ghoosted Pro の機能です。"
+  },
+  "status_story_reading": {
+    "message": "ストーリーを読み取り中…"
+  },
+  "status_story_none": {
+    "message": "アクティブなストーリーがありません。まず投稿してください。"
+  },
+  "status_story_item": {
+    "message": "ストーリー $1 を読み取り中…"
+  },
+  "status_story_viewers": {
+    "message": "閲覧者を読み込み中… $1"
+  },
+  "status_story_done": {
+    "message": "$1人の閲覧者を読み込みました ✓"
+  },
+  "status_watch_adding": {
+    "message": "プロフィールを監視リストに追加中…"
+  },
+  "status_watch_added": {
+    "message": "$1 を監視リストに追加しました ✓"
+  },
+  "status_no_photos": {
+    "message": "削除する保存済み写真はありません。"
+  },
+  "status_photos_cleared": {
+    "message": "保存済み写真を消去しました ✓"
+  },
+  "status_save_failed": {
+    "message": "保存できませんでした — ストレージが満杯の可能性があります。設定の「保存した写真を消去」をお試しください。"
+  },
+  "status_watch_invalid": {
+    "message": "有効なユーザー名を入力してください。"
+  },
+  "status_watch_notfound": {
+    "message": "そのInstagramプロフィールが見つかりませんでした。"
+  },
+  "status_watch_found": {
+    "message": "$1 が見つかりました。監視する前に確認してください。"
+  },
+  "notif_one": {
+    "message": "誰かがあなたのフォローを外しました 👀"
+  },
+  "notif_many": {
+    "message": "$1人があなたのフォローを外しました 👀"
+  },
+  "ui_subtitle": {
+    "message": "見てる人、去った人"
+  },
+  "big_mode": {
+    "message": "拡大モード"
+  },
+  "close": {
+    "message": "閉じる"
+  },
+  "settings": {
+    "message": "設定"
+  },
+  "chip_followers": {
+    "message": "フォロワー"
+  },
+  "chip_following": {
+    "message": "フォロー中"
+  },
+  "chip_notback": {
+    "message": "片思い"
+  },
+  "tab_unfollow": {
+    "message": "外された"
+  },
+  "tab_new": {
+    "message": "新規"
+  },
+  "tab_notback": {
+    "message": "片思い"
+  },
+  "tab_live": {
+    "message": "ストーリー"
+  },
+  "tab_activity": {
+    "message": "アクティビティ"
+  },
+  "tab_history": {
+    "message": "履歴"
+  },
+  "tab_top": {
+    "message": "トップ"
+  },
+  "top_likes": {
+    "message": "いいねが多い人"
+  },
+  "top_comments": {
+    "message": "コメントが多い人"
+  },
+  "top_stories": {
+    "message": "ストーリーをよく見る人"
+  },
+  "top_growth": {
+    "message": "新しいフォロワー"
+  },
+  "top_calc": {
+    "message": "いいね・コメントを集計"
+  },
+  "top_recalc": {
+    "message": "更新"
+  },
+  "top_calculating": {
+    "message": "集計中…"
+  },
+  "top_calc_hint": {
+    "message": "タップして最近の投稿のいいね・コメントを読み取ります。"
+  },
+  "top_from": {
+    "message": "直近 $1 件の投稿から。"
+  },
+  "top_progress": {
+    "message": "投稿 $1/$2 を読み取り中…"
+  },
+  "top_likes_n": {
+    "message": "$1 いいね"
+  },
+  "top_cmts_n": {
+    "message": "$1 コメント"
+  },
+  "top_empty": {
+    "message": "まだ何もありません。"
+  },
+  "top_growth_empty": {
+    "message": "まだ新しいフォロワーは記録されていません。"
+  },
+  "btn_check": {
+    "message": "今すぐ確認"
+  },
+  "btn_capture": {
+    "message": "閲覧者を見る"
+  },
+  "next_review": {
+    "message": "次の自動スキャン ~ $1"
+  },
+  "private": {
+    "message": "非公開"
+  },
+  "empty_unfollow": {
+    "message": "追跡を始めてから、フォローを外した人はいません。<br>ここと通知でお知らせします 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "まだフォロワーを読み込めていません。<br>「今すぐ確認」をタップしてもう一度お試しください。"
+  },
+  "empty_new": {
+    "message": "まだ新しいフォロワーは記録されていません。"
+  },
+  "empty_notback_load": {
+    "message": "「今すぐ確認」をタップして、フォロー中のアカウントを読み込みます。"
+  },
+  "empty_notback_none": {
+    "message": "フォロー中のみんながフォロバしてくれてる 🙌"
+  },
+  "empty_ghosted": {
+    "message": "ストーリーを投稿し、「閲覧者を見る」をタップしてランキングを開始します。"
+  },
+  "empty_ghosted_pub": {
+    "message": "まだ閲覧者がいません。ストーリーを投稿して再確認してください。"
+  },
+  "empty_history": {
+    "message": "まだデータが足りません。フォロワーの推移がここに表示されます。"
+  },
+  "empty_activity": {
+    "message": "まだプロフィールの変化はありません。<br>Ghoosted は最初のスキャン以降、アイコン・名前・ユーザー名・自己紹介の変化を保存します。"
+  },
+  "activity_title": {
+    "message": "プロフィールのアクティビティ"
+  },
+  "activity_desc": {
+    "message": "フォロワーとフォロー中を自動で監視します。気になるアカウントを追加すると、ストーリーの投稿やフォローの変化を通知します。確認は、Instagramをタブで開いている間に実行されます。"
+  },
+  "activity_watch_placeholder": {
+    "message": "監視するユーザー名を検索…"
+  },
+  "sugg_following": {
+    "message": "フォロー中"
+  },
+  "spy_hint": {
+    "message": "公開アカウント、またはすでにフォロー中のアカウントでのみ機能します。"
+  },
+  "activity_watch_add": {
+    "message": "追加"
+  },
+  "activity_watch_search": {
+    "message": "検索"
+  },
+  "activity_watch_confirm": {
+    "message": "プロフィールを監視"
+  },
+  "activity_watch_cancel": {
+    "message": "キャンセル"
+  },
+  "activity_manual": {
+    "message": "ロックオン中 · $1"
+  },
+  "activity_remove": {
+    "message": "監視をやめる"
+  },
+  "activity_changed_photo": {
+    "message": "プロフィール写真を変更"
+  },
+  "activity_changed_bio": {
+    "message": "自己紹介を更新"
+  },
+  "activity_changed_name": {
+    "message": "名前を変更"
+  },
+  "activity_changed_username": {
+    "message": "ユーザー名を変更"
+  },
+  "activity_changed_profile": {
+    "message": "プロフィールを更新"
+  },
+  "activity_tag_photo": {
+    "message": "写真"
+  },
+  "activity_tag_bio": {
+    "message": "自己紹介"
+  },
+  "activity_tag_profile": {
+    "message": "プロフィール"
+  },
+  "activity_tag_followers": {
+    "message": "フォロワー"
+  },
+  "activity_story": {
+    "message": "ストーリーを投稿"
+  },
+  "activity_link": {
+    "message": "リンクを変更"
+  },
+  "activity_followers_up": {
+    "message": "フォロワーが $1人増加"
+  },
+  "activity_followers_down": {
+    "message": "フォロワーが $1人減少"
+  },
+  "activity_new_follower": {
+    "message": "新しいフォロワー: $1"
+  },
+  "new_followers_title": {
+    "message": "新しいフォロワー"
+  },
+  "activity_lost_follower": {
+    "message": "$1 がフォローを外した"
+  },
+  "lost_followers_title": {
+    "message": "フォローを外した人"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — このプロフィールを開く"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "TikTokで検索"
+  },
+  "dos_more": {
+    "message": "もっと見る"
+  },
+  "dos_loading_more": {
+    "message": "読み込み中…"
+  },
+  "dos_ghost": {
+    "message": "ストーリー"
+  },
+  "dos_ghost_hint": {
+    "message": "見たことを相手に知られずにストーリーを見る"
+  },
+  "dos_ghost_note": {
+    "message": "ゴーストモード · 「閲覧者」に残らない"
+  },
+  "dos_ghost_none": {
+    "message": "今はアクティブなストーリーがありません。"
+  },
+  "dos_ghost_all": {
+    "message": "⬇ すべてダウンロード"
+  },
+  "dos_ghost_all_prog": {
+    "message": "ダウンロード中 $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "$1 件ダウンロードしました ✓"
+  },
+  "dos_filter_all": {
+    "message": "すべて"
+  },
+  "activity_follow_add": {
+    "message": "$1 をフォローし始めた"
+  },
+  "activity_follow_rem": {
+    "message": "$1 のフォローを外した"
+  },
+  "activity_tag_story": {
+    "message": "ストーリー"
+  },
+  "activity_tag_follow": {
+    "message": "フォロー"
+  },
+  "activity_tag_unfollow2": {
+    "message": "解除"
+  },
+  "notif_story": {
+    "message": "$1 がストーリーを投稿 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 が新しく誰かをフォロー"
+  },
+  "notif_follow_rem": {
+    "message": "$1 が誰かのフォローを外した"
+  },
+  "spy_now_follows": {
+    "message": "$1 をフォローするようになった"
+  },
+  "spy_unfollowed": {
+    "message": "$1 のフォローを外した"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 があなたのフォローを外しました 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 がフォローを変更しました"
+  },
+  "spy_added_c": {
+    "message": "+$1 フォロー"
+  },
+  "spy_removed_c": {
+    "message": "−$1 フォロー"
+  },
+  "watch_toggle_story": {
+    "message": "ストーリーを通知する"
+  },
+  "watch_toggle_following": {
+    "message": "フォローの変化を追跡する"
+  },
+  "wt_story": {
+    "message": "ストーリー"
+  },
+  "wt_following": {
+    "message": "フォロー中"
+  },
+  "wt_profile": {
+    "message": "プロフィール"
+  },
+  "spy_check_title": {
+    "message": "お互いフォローしてる？"
+  },
+  "spy_a_ph": {
+    "message": "アカウントA（@ユーザー）"
+  },
+  "spy_b_ph": {
+    "message": "アカウントB（@ユーザー）"
+  },
+  "spy_check_btn": {
+    "message": "チェック"
+  },
+  "spy_checking": {
+    "message": "チェック中…"
+  },
+  "spy_checking_dir": {
+    "message": "$1 のフォロー中リストを確認中… アカウントが大きいと数秒かかることがあります"
+  },
+  "spy_need_two": {
+    "message": "両方のユーザー名を入力してください。"
+  },
+  "spy_result_mutual": {
+    "message": "$1 と $2 は相互フォロー"
+  },
+  "spy_result_a": {
+    "message": "$1 は $2 をフォローしているが、逆はフォローしていない"
+  },
+  "spy_result_b": {
+    "message": "$2 は $1 をフォローしているが、逆はフォローしていない"
+  },
+  "spy_result_none": {
+    "message": "$1 も $2 もお互いフォローしていない"
+  },
+  "spy_result_err": {
+    "message": "確認できませんでした（非公開または存在しないアカウント？）"
+  },
+  "spy_direction_yes": {
+    "message": "$1 は $2 をフォローしている"
+  },
+  "spy_direction_no": {
+    "message": "$1 は $2 をフォローしていない"
+  },
+  "spy_direction_unknown": {
+    "message": "$1 が $2 をフォローしているか確認できません — フォローしていない非公開アカウントです"
+  },
+  "dos_open": {
+    "message": "探偵 — プロフィールを調査"
+  },
+  "dos_loading": {
+    "message": "調査ファイルを読み込み中…"
+  },
+  "dos_err": {
+    "message": "このプロフィールを読み込めませんでした。"
+  },
+  "dos_err_auth": {
+    "message": "Instagramが読み取りを拒否しました。もう一度お試しください。"
+  },
+  "dos_download": {
+    "message": "写真をダウンロード（HD）"
+  },
+  "dos_downloading": {
+    "message": "ダウンロード中…"
+  },
+  "dos_downloaded": {
+    "message": "保存しました ✓"
+  },
+  "dos_openpic": {
+    "message": "写真を開く"
+  },
+  "dos_copyid": {
+    "message": "IDをコピー"
+  },
+  "dos_watch": {
+    "message": "ロックオン"
+  },
+  "dos_watching": {
+    "message": "ロックオン中 ✓"
+  },
+  "dos_copied": {
+    "message": "コピーしました ✓"
+  },
+  "dos_posts": {
+    "message": "投稿"
+  },
+  "dos_profile": {
+    "message": "プロフィール"
+  },
+  "dos_web": {
+    "message": "ウェブサイト"
+  },
+  "dos_category": {
+    "message": "カテゴリ"
+  },
+  "dos_contact": {
+    "message": "公開連絡先"
+  },
+  "dos_address": {
+    "message": "住所"
+  },
+  "dos_business": {
+    "message": "ビジネス"
+  },
+  "dos_highlights": {
+    "message": "ハイライト"
+  },
+  "dos_save": {
+    "message": "写真を見る"
+  },
+  "dos_save_hint": {
+    "message": "このカバーを保存して表示します"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "保存しました ✓"
+  },
+  "dos_saved_already": {
+    "message": "保存済み"
+  },
+  "dos_photo_history": {
+    "message": "写真履歴"
+  },
+  "dos_posts_sec": {
+    "message": "投稿"
+  },
+  "dos_engagement": {
+    "message": "エンゲージメント"
+  },
+  "dos_eng_avg": {
+    "message": "平均: 1投稿あたり $1 いいね · $2 コメント"
+  },
+  "eng_fire": {
+    "message": "🔥 ヤバい"
+  },
+  "eng_good": {
+    "message": "いい感じ"
+  },
+  "eng_ok": {
+    "message": "普通"
+  },
+  "eng_low": {
+    "message": "低い"
+  },
+  "dos_relations": {
+    "message": "フォロワーとフォロー中"
+  },
+  "dos_see_followers": {
+    "message": "フォロワーを見る"
+  },
+  "dos_see_following": {
+    "message": "フォロー中を見る"
+  },
+  "dos_rel_hint": {
+    "message": "公開アカウント、またはフォロー中のアカウントのみ。一部を表示し、全リストではありません。"
+  },
+  "dos_rel_loading": {
+    "message": "読み込み中…"
+  },
+  "dos_rel_empty": {
+    "message": "このリストは読み取れません（フォローしていない非公開アカウント）。"
+  },
+  "dos_rel_more": {
+    "message": "最初の $1 件を表示中。全リストはプロフィールを開いてください。"
+  },
+  "dos_rel_search": {
+    "message": "このリストを検索…"
+  },
+  "dos_rel_click_hint": {
+    "message": "上のフォロワーまたはフォロー中の数字をタップすると、ここにリストが表示されます。"
+  },
+  "dos_rel_nomatch": {
+    "message": "読み込んだリストに一致するものはありません。"
+  },
+  "dos_history": {
+    "message": "履歴"
+  },
+  "dos_history_empty": {
+    "message": "このアカウントの変化はまだ記録されていません。"
+  },
+  "dos_graph_empty": {
+    "message": "フォロワーのグラフは、このプロフィールを開くたびに少しずつ作られます。"
+  },
+  "dos_investigate": {
+    "message": "調査する"
+  },
+  "unlock_title": {
+    "message": "Ghoosted を有効化"
+  },
+  "unlock_copy": {
+    "message": "1つのキーで、この Instagram アカウントの Ghoosted を永久に有効化。買い切りです。"
+  },
+  "unlock_price": {
+    "message": "€5 · 買い切り・1回のみ"
+  },
+  "unlock_buy": {
+    "message": "購入 · €5 買い切り"
+  },
+  "unlock_label": {
+    "message": "すでにキーをお持ちですか？"
+  },
+  "unlock_activate": {
+    "message": "有効化"
+  },
+  "unlock_enter_key": {
+    "message": "プロダクトキーを入力してください。"
+  },
+  "unlock_checking": {
+    "message": "キーを確認中…"
+  },
+  "unlock_active": {
+    "message": "このアカウントで Ghoosted を有効化しました ✓"
+  },
+  "unlock_bound": {
+    "message": "このキーはすでに別の Instagram アカウントに紐づいています。"
+  },
+  "unlock_expired": {
+    "message": "このキーは無効化されています。"
+  },
+  "unlock_invalid": {
+    "message": "キーが無効か、まだ発行されていません。"
+  },
+  "unlock_network": {
+    "message": "キーを確認できませんでした。もう一度お試しください。"
+  },
+  "unlock_status": {
+    "message": "始めるには Ghoosted を有効化してください。"
+  },
+  "tag_unfollow": {
+    "message": "外された"
+  },
+  "tag_new": {
+    "message": "新規"
+  },
+  "tag_notfollowing": {
+    "message": "片思い"
+  },
+  "tag_fan": {
+    "message": "神ファン"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "Ghoosted Pro をアンロック"
+  },
+  "pro_desc": {
+    "message": "ストーリーを見た人を確認し、いちばん熱心な閲覧者の永久ランキングを作成。フォロー解除の通知と全履歴も手に入ります。"
+  },
+  "pro_unlock": {
+    "message": "アンロック — €5 買い切り"
+  },
+  "pro_havekey": {
+    "message": "もう購入済み？ ブラウザのツールバーにある Ghoosted アイコンをクリックしてキーを入力してください。"
+  },
+  "history_captures": {
+    "message": "最近の確認"
+  },
+  "history_viewers": {
+    "message": "$1人の閲覧者"
+  },
+  "confirm_reset": {
+    "message": "基準データを作り直しますか？ 現在のフォロワーを新しい出発点として読み直します。「外された」と「新規」の履歴は削除されません。"
+  },
+  "confirm_clear": {
+    "message": "すべての履歴（フォロー解除・新しいフォロワー・ストーリー統計）を削除しますか？ この操作は元に戻せません。"
+  },
+  "confirm_clear_photos": {
+    "message": "保存済みの写真$1件を削除しますか（アバター、ハイライトのカバー）？ストレージ容量が解放されます。元に戻せません。"
+  },
+  "settings_interval": {
+    "message": "確認の間隔"
+  },
+  "settings_notify": {
+    "message": "通知する"
+  },
+  "settings_reset": {
+    "message": "基準データを作り直す（履歴は保持）"
+  },
+  "settings_export": {
+    "message": "データをエクスポート（JSON）"
+  },
+  "settings_clear": {
+    "message": "履歴を消去"
+  },
+  "settings_clear_photos": {
+    "message": "保存した写真を消去"
+  },
+  "popup_tagline": {
+    "message": "見てる人、去った人"
+  },
+  "popup_status_free": {
+    "message": "無料プラン"
+  },
+  "popup_status_locked": {
+    "message": "有効化待ち"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · 有効"
+  },
+  "popup_free_desc": {
+    "message": "この Instagram アカウントで拡張機能を使うには、Ghoosted キーを有効化してください。"
+  },
+  "popup_pro_desc": {
+    "message": "すべての機能が解除されています。応援ありがとう"
+  },
+  "popup_buy": {
+    "message": "Ghoosted を入手 · €5"
+  },
+  "popup_license_label": {
+    "message": "もう購入済み？ ライセンスキーを入力"
+  },
+  "popup_activate": {
+    "message": "有効化"
+  },
+  "popup_open_ig": {
+    "message": "Instagram を開く"
+  },
+  "popup_privacy": {
+    "message": "プライバシー"
+  },
+  "popup_help": {
+    "message": "ヘルプ"
+  },
+  "popup_remove": {
+    "message": "ライセンスを削除"
+  },
+  "popup_enter_key": {
+    "message": "先にライセンスキーを入力してください。"
+  },
+  "popup_activating": {
+    "message": "確認中…"
+  },
+  "popup_active": {
+    "message": "Pro を有効化しました。楽しんでね 🎉"
+  },
+  "popup_refunded": {
+    "message": "このライセンスは返金または異議申し立てされました。"
+  },
+  "popup_network": {
+    "message": "サーバーに接続できませんでした。もう一度お試しください。"
+  },
+  "popup_invalid": {
+    "message": "そのキーは無効のようです。確認してもう一度お試しください。"
+  },
+  "popup_removed": {
+    "message": "ライセンスを削除しました。"
+  },
+  "popup_need_ig": {
+    "message": "キーを有効化するには、このウィンドウで Instagram を開いてください。"
+  },
+  "popup_bound": {
+    "message": "このキーはすでに別の Instagram アカウントに紐づいています。"
+  },
+  "eng_hidden": {
+    "message": "いいねを非公開"
+  },
+  "eng_hidden_sub": {
+    "message": "本当のエンゲージメントは計算できません(いいね数が非公開のため)。"
+  },
+  "settings_language": {
+    "message": "言語"
+  },
+  "settings_data": {
+    "message": "データ"
+  },
+  "settings_connect_mobile": {
+    "message": "スマホと連携"
+  },
+  "mobile_title": {
+    "message": "スマホでGhoosted"
+  },
+  "mobile_body": {
+    "message": "スマホのカメラで読み取ってください。スマホは拡張機能を読み取り専用でミラーします。PCが確認するたびに更新されます。"
+  },
+  "mobile_unpair": {
+    "message": "連携を解除"
+  },
+  "popup_wrong_product": {
+    "message": "このキーは別のバージョンのGhoosted用です。"
+  },
+  "gs_saw": {
+    "message": "あなたの$2件中$1件を閲覧"
+  },
+  "gs_saw_total": {
+    "message": "合計$1件のストーリーを閲覧"
+  },
+  "gs_days_one": {
+    "message": "$1日"
+  },
+  "gs_days_many": {
+    "message": "$1日"
+  },
+  "gs_pos": {
+    "message": "リスト$1番目"
+  },
+  "tag_dropoff": {
+    "message": "最後まで見ず"
+  },
+  "gs_note": {
+    "message": "Instagram の閲覧者リストより。誰が見て誰がいいねしたか。スクリーンショットや再視聴は Instagram が通知しません。"
+  },
+  "gs_liked": {
+    "message": "❤️ $1件にいいね"
+  },
+  "gs_story_n": {
+    "message": "ストーリー$1 ($2) · 閲覧$3人 · いいね$4"
+  },
+  "gs_search": {
+    "message": "閲覧者を検索…"
+  },
+  "gs_no_match": {
+    "message": "その名前の閲覧者はいません。"
+  },
+  "gs_alltime": {
+    "message": "累計であなたの$1件のストーリーを閲覧"
+  },
+  "gs_archive_title": {
+    "message": "自分のストーリー",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "戻る"
+  },
+  "gs_all_fans": {
+    "message": "全ストーリーのファン"
+  },
+  "gs_order_note": {
+    "message": "Instagramの順序の閲覧者です。誰かがストーリーを再度開くと上位に戻ります。Ghoostedはそれを検知して再オープン（🔁）として数えます。Ghoostedがリストを読む頻度に基づく推定であり、Instagramの公式カウンターではありません（存在しません）。"
+  },
+  "gs_detail_meta": {
+    "message": "閲覧$1人 · いいね$2"
+  },
+  "gs_no_viewers": {
+    "message": "このストーリーの閲覧者は保存されていません。"
+  },
+  "gs_video": {
+    "message": "動画"
+  },
+  "gs_photo": {
+    "message": "写真"
+  },
+  "gs_archive_sub": {
+    "message": "アーカイブしたストーリーは、共有しない限りあなただけが見られます。"
+  },
+  "gs_refresh": {
+    "message": "ストーリーを更新"
+  },
+  "gs_capturing": {
+    "message": "ストーリーの閲覧者を読み込み中…"
+  },
+  "gs_empty_archive": {
+    "message": "まだ保存されていません。ストーリーが公開中なら更新して保存します。"
+  },
+  "gs_reopen": {
+    "message": "再び上位に $1回"
+  },
+  "nb_select": {
+    "message": "選択"
+  },
+  "nb_cancel": {
+    "message": "キャンセル"
+  },
+  "nb_all": {
+    "message": "すべて"
+  },
+  "nb_none": {
+    "message": "解除"
+  },
+  "nb_unfollow_n": {
+    "message": "フォロー解除 ($1)"
+  },
+  "nb_hint": {
+    "message": "解除したい人をタップして「フォロー解除」。間隔をあけて1件ずつ実行します。速すぎるとInstagramにブロックされます。"
+  },
+  "nb_confirm": {
+    "message": "$1件のフォローを解除しますか？Ghoostedはブロックを避けるためゆっくり行います（各件の間に数秒）。このタブは開いたままに。"
+  },
+  "nb_progress": {
+    "message": "解除中… $1/$2"
+  },
+  "nb_done": {
+    "message": "完了 — $1件解除しました。"
+  },
+  "nb_blocked": {
+    "message": "Instagramが速度を落とすよう求めました。$1件で停止。残りは後で。"
+  },
+  "wprof_updated": {
+    "message": "更新 $1"
+  },
+  "wprof_followers": {
+    "message": "フォロワー"
+  },
+  "wprof_following": {
+    "message": "フォロー中"
+  },
+  "wprof_recent": {
+    "message": "最近フォローした人"
+  },
+  "wprof_recent_none": {
+    "message": "まだ新しいフォローは検出されていません。"
+  },
+  "wprof_track_hint": {
+    "message": "誰をフォローしているか追跡し、統計をここで見るには👥をオンにしてください。"
+  },
+  "unit_min": {
+    "message": "分"
+  },
+  "dos_link": {
+    "message": "リンク"
+  },
+  "dos_id": {
+    "message": "ID"
+  },
+  "dos_email": {
+    "message": "メール"
+  },
+  "dos_tel": {
+    "message": "電話"
+  },
+  "status_newfollowers": {
+    "message": "新しいフォロワー +$1人。"
+  },
+  "nb_search": {
+    "message": "名前または@ユーザー名で検索"
+  },
+  "nb_no_match": {
+    "message": "その名前のアカウントはありません。"
+  },
+  "gh_entry": {
+    "message": "公開中のストーリー（ゴーストモード）"
+  },
+  "gh_note": {
+    "message": "この人たちは今ストーリーを公開中です。ここで開けばInstagramには伝わらず、閲覧者リストに残りません。"
+  },
+  "gh_watch_note": {
+    "message": "ゴーストモード — 見たことはInstagramに伝わりません。"
+  },
+  "gh_refresh": {
+    "message": "更新"
+  },
+  "gh_loading": {
+    "message": "公開中のストーリーを探しています…"
+  },
+  "gh_loading_one": {
+    "message": "ストーリーを読み込み中…"
+  },
+  "gh_empty": {
+    "message": "今フォロー中の人にストーリーはありません。"
+  },
+  "gh_no_media": {
+    "message": "ストーリーを読み込めませんでした。"
+  },
+  "gh_err": {
+    "message": "Instagramがリストを返しませんでした。少し待って再試行してください。"
+  },
+  "gh_err_rate": {
+    "message": "Instagramから速度を落とすよう求められました。少し待って再試行してください。"
+  },
+  "gh_stories_n": {
+    "message": "ストーリー $1 件"
+  },
+  "gh_story_1": {
+    "message": "ストーリー 1 件"
+  },
+  "gh_unseen": {
+    "message": "未読"
+  },
+  "gh_slide": {
+    "message": "$2 件中 $1 件目"
+  },
+  "nb_failed": {
+    "message": "$1 件のフォローを解除しました。$2 件は失敗 — Instagramに拒否されました。"
+  },
+  "gh_play_all": {
+    "message": "すべて再生（$1）"
+  },
+  "gh_person_of": {
+    "message": "$2 人中 $1 人目"
+  },
+  "gh_badge": {
+    "message": "ゴーストモード"
+  },
+  "gh_pause": {
+    "message": "一時停止"
+  },
+  "gh_resume": {
+    "message": "再開"
+  },
+  "gh_close": {
+    "message": "閉じる"
+  },
+  "gh_download": {
+    "message": "保存"
+  },
+  "gh_download_all": {
+    "message": "すべて保存"
+  },
+  "gh_sound": {
+    "message": "音声"
+  },
+  "dos_posts_none": {
+    "message": "投稿にアクセスできません"
+  },
+  "settings_appearance": {
+    "message": "外観"
+  },
+  "settings_light": {
+    "message": "ライトモード"
+  },
+  "toast_watching": {
+    "message": "$1 の監視を開始しました",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "$1 の監視を解除しました",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "Instagram に速度を落とすよう求められました。$1 分後にやり直してください。",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "誰かを検索…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "その名前の人はいません",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "検索中…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "一致なし",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "まだ履歴が足りません。1日後にご確認ください。",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "$1 以降",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "変化したら知らせる",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "通知中",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "$1 を監視中",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "$1 の監視を解除しました",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "監視中のペア",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1 が $2 のフォローをやめました",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1 が $2 をフォローしました",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1 が $2 のフォローをやめました",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1 が $2 をフォローしました",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "ペア",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "消去",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "よろしいですか？",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "アクティビティを消去しました",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "以前",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "現在",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "フォロワーを読み込み中",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "少々お待ちください",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "フォロー中リストを最後まで読めませんでした。以前のものを保持します。",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "$1 時点のフォロー中リスト・「今すぐ確認」で更新",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "フォロー中を読み込み中",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "照合して保存しています",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "/ $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "フォローリクエスト",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "手動",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "自分がフォローしている人だけ",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "すべて",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "誰でも確認なしに非公開アカウントに入れるようになります。",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "今すぐ承認",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "承認中…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "保留中のリクエストはありません。",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "承認",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "拒否",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "$1 を承認",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "$1 を拒否",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "$1 件承認",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "リクエストを読み込めませんでした。",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "自動で承認",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "リクエストを承認中",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "フォロー解除中",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "残り約 $1",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 分",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 秒",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "わざとゆっくり進めています",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "速すぎるとInstagramにアカウントを制限されます。不規則な間隔なら検知されません。パネルは閉じても構いません。バックグラウンドで続きます。",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "クリックで折りたたみ／展開",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "インタラクション",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "新しいバージョンがあります（$1）",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "ダウンロード",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "お使いのバージョンは Instagram で動作しません。更新してください。",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "閉じる",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "フォロワーとフォロー中の変化をここに記録します。誰が増え、誰が去り、いつだったか。確認はInstagramをタブで開いている間に行われます。"
+  },
+  "empty_unfollow_own": {
+    "message": "最初の確認以降、フォローを外した人はいません。<br>ここと通知でお知らせします 👀"
+  },
+  "load_pair": {
+    "message": "お互いをフォローしているか確認中"
+  },
+  "spy_checking_rev": {
+    "message": "$1 のフォロワーを確認中…"
+  },
+  "spy_via_followers": {
+    "message": "$1 のフォロワー一覧で確認"
+  },
+  "busy_other": {
+    "message": "別の確認が実行中です。終わるまでお待ちください。"
+  }
+}

@@ -1,0 +1,1304 @@
+{
+  "extName": {
+    "message": "Ghoosted"
+  },
+  "extDesc": {
+    "message": "اعرف من ألغى متابعتك على إنستغرام. تبقى بياناتك على جهازك."
+  },
+  "ago_s": {
+    "message": "قبل $1s"
+  },
+  "ago_m": {
+    "message": "قبل $1m"
+  },
+  "ago_h": {
+    "message": "قبل $1h"
+  },
+  "ago_d": {
+    "message": "قبل $1d"
+  },
+  "ago_w": {
+    "message": "قبل $1w"
+  },
+  "ago_mo": {
+    "message": "قبل $1mo"
+  },
+  "status_starting": {
+    "message": "جارٍ البدء…"
+  },
+  "status_first": {
+    "message": "جارٍ تجهيز أول فحص…"
+  },
+  "status_checking": {
+    "message": "جارٍ فحص المتابِعين…"
+  },
+  "status_loading_followers": {
+    "message": "جارٍ تحميل المتابِعين… $1"
+  },
+  "status_loading_following": {
+    "message": "جارٍ تحميل مَن تتابعهم…"
+  },
+  "status_loading_following_n": {
+    "message": "جارٍ تحميل مَن تتابعهم… $1"
+  },
+  "status_partial": {
+    "message": "أعاد Instagram قائمة غير مكتملة — سأحتفظ بخط الأساس. سأعيد المحاولة قريبًا."
+  },
+  "status_baseline": {
+    "message": "تم حفظ خط الأساس ✓ سأتتبّع التغييرات من الآن فصاعدًا."
+  },
+  "status_unfollowers": {
+    "message": "$1 ألغوا متابعتك."
+  },
+  "status_nochanges": {
+    "message": "لا تغييرات. كل شيء محدَّث ✓"
+  },
+  "status_rate": {
+    "message": "طلب Instagram التمهّل · رمز $1. بياناتك ما زالت محفوظة."
+  },
+  "status_auth": {
+    "message": "رفض Instagram القراءة · رمز $1. يمكنك المحاولة مجددًا."
+  },
+  "status_challenge": {
+    "message": "يطلب Instagram تحققًا على موقعه · رمز $1."
+  },
+  "status_cooldown": {
+    "message": "جاهز لفحص Instagram."
+  },
+  "status_network": {
+    "message": "خطأ في الشبكة. سأعيد المحاولة."
+  },
+  "status_transport": {
+    "message": "أعاد Instagram موقعه بدلًا من قائمة المتابِعين · رمز $1."
+  },
+  "status_http": {
+    "message": "رفض Instagram الطلب · الرمز $1. أحاول بطريقة أخرى."
+  },
+  "status_other_tab": {
+    "message": "هناك تبويب Instagram آخر يفحص هذا الحساب بالفعل."
+  },
+  "status_error": {
+    "message": "حدث خطأ ما. سأعيد المحاولة."
+  },
+  "status_reload": {
+    "message": "تم تحديث الإضافة — أعد تحميل علامة تبويب Instagram هذه."
+  },
+  "status_upto": {
+    "message": "محدَّث ✓ (آخر مرة: $1)"
+  },
+  "status_pro_needed": {
+    "message": "تتبّع القصص ميزة في Ghoosted Pro."
+  },
+  "status_story_reading": {
+    "message": "جارٍ قراءة قصصك…"
+  },
+  "status_story_none": {
+    "message": "لا توجد قصص نشطة. انشر واحدة أولاً."
+  },
+  "status_story_item": {
+    "message": "جارٍ قراءة القصة $1…"
+  },
+  "status_story_viewers": {
+    "message": "جارٍ قراءة المشاهدين… $1"
+  },
+  "status_story_done": {
+    "message": "تمت قراءة $1 مشاهد ✓"
+  },
+  "status_watch_adding": {
+    "message": "جارٍ إضافة الحساب إلى قائمة المراقبة…"
+  },
+  "status_watch_added": {
+    "message": "تمت إضافة $1 إلى قائمة المراقبة ✓"
+  },
+  "status_no_photos": {
+    "message": "لا توجد صور محفوظة لمسحها."
+  },
+  "status_photos_cleared": {
+    "message": "تم مسح الصور المحفوظة ✓"
+  },
+  "status_save_failed": {
+    "message": "تعذر الحفظ — قد تكون مساحة التخزين ممتلئة. جرب \"مسح الصور المحفوظة\" في الإعدادات."
+  },
+  "status_watch_invalid": {
+    "message": "أدخل اسم مستخدم صحيحًا."
+  },
+  "status_watch_notfound": {
+    "message": "تعذّر العثور على هذا الحساب في Instagram."
+  },
+  "status_watch_found": {
+    "message": "تم العثور على $1. أكّد قبل مراقبته."
+  },
+  "notif_one": {
+    "message": "أحدهم ألغى متابعتك 👀"
+  },
+  "notif_many": {
+    "message": "$1 أشخاص ألغوا متابعتك 👀"
+  },
+  "ui_subtitle": {
+    "message": "مَن يشاهدك، ومَن يتركك"
+  },
+  "big_mode": {
+    "message": "الوضع الكبير"
+  },
+  "close": {
+    "message": "إغلاق"
+  },
+  "settings": {
+    "message": "الإعدادات"
+  },
+  "chip_followers": {
+    "message": "متابِعون"
+  },
+  "chip_following": {
+    "message": "متابَعون"
+  },
+  "chip_notback": {
+    "message": "لا يتابعونك"
+  },
+  "tab_unfollow": {
+    "message": "ألغوا المتابعة"
+  },
+  "tab_new": {
+    "message": "الجدد"
+  },
+  "tab_notback": {
+    "message": "لا يتابعونك"
+  },
+  "tab_live": {
+    "message": "القصص"
+  },
+  "tab_activity": {
+    "message": "النشاط"
+  },
+  "tab_history": {
+    "message": "السجلّ"
+  },
+  "tab_top": {
+    "message": "الأبرز"
+  },
+  "top_likes": {
+    "message": "الأكثر إعجابًا بك"
+  },
+  "top_comments": {
+    "message": "الأكثر تعليقًا"
+  },
+  "top_stories": {
+    "message": "الأكثر مشاهدةً لقصصك"
+  },
+  "top_growth": {
+    "message": "متابِعون جدد"
+  },
+  "top_calc": {
+    "message": "احسب الإعجابات والتعليقات"
+  },
+  "top_recalc": {
+    "message": "تحديث"
+  },
+  "top_calculating": {
+    "message": "جارٍ الحساب…"
+  },
+  "top_calc_hint": {
+    "message": "اضغط لقراءة الإعجابات والتعليقات على منشوراتك الأخيرة."
+  },
+  "top_from": {
+    "message": "من آخر $1 منشور لك."
+  },
+  "top_progress": {
+    "message": "جارٍ قراءة المنشور $1/$2…"
+  },
+  "top_likes_n": {
+    "message": "$1 إعجاب"
+  },
+  "top_cmts_n": {
+    "message": "$1 تعليق"
+  },
+  "top_empty": {
+    "message": "لا شيء بعد."
+  },
+  "top_growth_empty": {
+    "message": "لا متابِعين جدد مسجّلين بعد."
+  },
+  "btn_check": {
+    "message": "افحص الآن"
+  },
+  "btn_capture": {
+    "message": "عرض المشاهدين"
+  },
+  "next_review": {
+    "message": "الفحص التلقائي التالي ~ $1"
+  },
+  "private": {
+    "message": "خاص"
+  },
+  "empty_unfollow": {
+    "message": "لم يُلغِ أحد متابعتك منذ بدء التتبّع.<br>سأنبّهك هنا وعبر إشعار 👀"
+  },
+  "empty_unfollow_load": {
+    "message": "تعذّر تحميل متابِعيك بعد.<br>اضغط على “افحص الآن” للمحاولة مجددًا."
+  },
+  "empty_new": {
+    "message": "لا متابِعين جدد مسجّلين بعد."
+  },
+  "empty_notback_load": {
+    "message": "اضغط \"افحص الآن\" لتحميل مَن تتابعهم."
+  },
+  "empty_notback_none": {
+    "message": "كل مَن تتابعهم يتابعونك 🙌"
+  },
+  "empty_ghosted": {
+    "message": "انشر قصة ثم اضغط \"عرض المشاهدين\" لبدء ترتيب الأوفياء."
+  },
+  "empty_ghosted_pub": {
+    "message": "لا يوجد مشاهدون بعد. انشر قصة وتحقق مجددًا."
+  },
+  "empty_history": {
+    "message": "لا توجد بيانات كافية بعد. سيظهر هنا تطوّر متابِعيك."
+  },
+  "empty_activity": {
+    "message": "لا تغييرات في الحسابات بعد.<br>سيحفظ Ghoosted تغييرات الصورة والاسم واسم المستخدم والسيرة من أول فحص."
+  },
+  "activity_title": {
+    "message": "نشاط الحسابات"
+  },
+  "activity_desc": {
+    "message": "تتم مراقبة متابِعيك ومَن تتابعهم تلقائيًا. أضِف أي حساب لينبّهك عند نشره قصة أو تغييره لمَن يتابع. تجري الفحوصات أثناء فتح Instagram في تبويب."
+  },
+  "activity_watch_placeholder": {
+    "message": "ابحث عن اسم مستخدم لمراقبته…"
+  },
+  "sugg_following": {
+    "message": "تتابعه"
+  },
+  "spy_hint": {
+    "message": "يعمل فقط مع الحسابات العامة أو التي تتابعها بالفعل."
+  },
+  "activity_watch_add": {
+    "message": "إضافة"
+  },
+  "activity_watch_search": {
+    "message": "بحث"
+  },
+  "activity_watch_confirm": {
+    "message": "راقب الحساب"
+  },
+  "activity_watch_cancel": {
+    "message": "إلغاء"
+  },
+  "activity_manual": {
+    "message": "في مرمى المراقبة · $1"
+  },
+  "activity_remove": {
+    "message": "إيقاف المراقبة"
+  },
+  "activity_changed_photo": {
+    "message": "غيّر صورة حسابه"
+  },
+  "activity_changed_bio": {
+    "message": "حدّث سيرته"
+  },
+  "activity_changed_name": {
+    "message": "غيّر اسمه"
+  },
+  "activity_changed_username": {
+    "message": "غيّر اسم المستخدم"
+  },
+  "activity_changed_profile": {
+    "message": "حدّث حسابه"
+  },
+  "activity_tag_photo": {
+    "message": "صورة"
+  },
+  "activity_tag_bio": {
+    "message": "سيرة"
+  },
+  "activity_tag_profile": {
+    "message": "حساب"
+  },
+  "activity_tag_followers": {
+    "message": "متابِعون"
+  },
+  "activity_story": {
+    "message": "نشر قصة"
+  },
+  "activity_link": {
+    "message": "غيّر رابطه"
+  },
+  "activity_followers_up": {
+    "message": "اكتسب $1 متابِع"
+  },
+  "activity_followers_down": {
+    "message": "فقد $1 متابِع"
+  },
+  "activity_new_follower": {
+    "message": "متابِع جديد: $1"
+  },
+  "new_followers_title": {
+    "message": "متابِعون جدد"
+  },
+  "activity_lost_follower": {
+    "message": "$1 ألغى متابعته"
+  },
+  "lost_followers_title": {
+    "message": "ألغوا متابعته"
+  },
+  "sel_investigate": {
+    "message": "Ghoosted — افتح هذا الحساب"
+  },
+  "dos_tiktok": {
+    "message": "TikTok"
+  },
+  "dos_tiktok_search": {
+    "message": "ابحث في TikTok"
+  },
+  "dos_more": {
+    "message": "عرض المزيد"
+  },
+  "dos_loading_more": {
+    "message": "جارٍ التحميل…"
+  },
+  "dos_ghost": {
+    "message": "القصص"
+  },
+  "dos_ghost_hint": {
+    "message": "شاهد قصصه دون أن يعرف أنك شاهدتها"
+  },
+  "dos_ghost_note": {
+    "message": "الوضع الشبح · لا يترك أثرًا في “شوهد بواسطة”"
+  },
+  "dos_ghost_none": {
+    "message": "لا توجد قصص نشطة الآن."
+  },
+  "dos_ghost_all": {
+    "message": "⬇ تنزيل الكل"
+  },
+  "dos_ghost_all_prog": {
+    "message": "جارٍ التنزيل $1/$2…"
+  },
+  "dos_ghost_all_done": {
+    "message": "تم تنزيل $1 ✓"
+  },
+  "dos_filter_all": {
+    "message": "الكل"
+  },
+  "activity_follow_add": {
+    "message": "بدأ متابعة $1"
+  },
+  "activity_follow_rem": {
+    "message": "ألغى متابعة $1"
+  },
+  "activity_tag_story": {
+    "message": "قصة"
+  },
+  "activity_tag_follow": {
+    "message": "يتابِع"
+  },
+  "activity_tag_unfollow2": {
+    "message": "ألغى المتابعة"
+  },
+  "notif_story": {
+    "message": "$1 نشر قصة 👀"
+  },
+  "notif_follow_add": {
+    "message": "$1 تابع شخصًا جديدًا"
+  },
+  "notif_follow_rem": {
+    "message": "$1 ألغى متابعة أحدهم"
+  },
+  "spy_now_follows": {
+    "message": "يتابع الآن $1"
+  },
+  "spy_unfollowed": {
+    "message": "ألغى متابعة $1"
+  },
+  "notif_watch_unfollowed_you": {
+    "message": "$1 ألغى متابعتك أنت 👀"
+  },
+  "notif_watch_changed": {
+    "message": "$1 غيّر مَن يتابع"
+  },
+  "spy_added_c": {
+    "message": "+$1 متابَع"
+  },
+  "spy_removed_c": {
+    "message": "−$1 متابَع"
+  },
+  "watch_toggle_story": {
+    "message": "نبّهني عن قصصه"
+  },
+  "watch_toggle_following": {
+    "message": "تتبّع مَن يتابع"
+  },
+  "wt_story": {
+    "message": "القصص"
+  },
+  "wt_following": {
+    "message": "يتابع"
+  },
+  "wt_profile": {
+    "message": "الملف"
+  },
+  "spy_check_title": {
+    "message": "هل يتابع أحدهما الآخر؟"
+  },
+  "spy_a_ph": {
+    "message": "الحساب A (@user)"
+  },
+  "spy_b_ph": {
+    "message": "الحساب B (@user)"
+  },
+  "spy_check_btn": {
+    "message": "تحقّق"
+  },
+  "spy_checking": {
+    "message": "جارٍ التحقّق…"
+  },
+  "spy_checking_dir": {
+    "message": "جارٍ فحص مَن يتابعهم $1… قد يستغرق بضع ثوانٍ للحسابات الكبيرة"
+  },
+  "spy_need_two": {
+    "message": "أدخل كلا اسمَي المستخدم."
+  },
+  "spy_result_mutual": {
+    "message": "$1 و$2 يتابع كلٌّ منهما الآخر"
+  },
+  "spy_result_a": {
+    "message": "$1 يتابع $2، لكن ليس العكس"
+  },
+  "spy_result_b": {
+    "message": "$2 يتابع $1، لكن ليس العكس"
+  },
+  "spy_result_none": {
+    "message": "لا $1 ولا $2 يتابع أحدهما الآخر"
+  },
+  "spy_result_err": {
+    "message": "تعذّر التحقّق (حساب خاص أو غير موجود؟)"
+  },
+  "spy_direction_yes": {
+    "message": "$1 يتابع $2"
+  },
+  "spy_direction_no": {
+    "message": "$1 لا يتابع $2"
+  },
+  "spy_direction_unknown": {
+    "message": "تعذّر التحقّق مما إذا كان $1 يتابع $2 — حساب خاص لا تتابعه"
+  },
+  "dos_open": {
+    "message": "المحقّق — استقصِ الحساب"
+  },
+  "dos_loading": {
+    "message": "جارٍ تحميل الملف…"
+  },
+  "dos_err": {
+    "message": "تعذّر تحميل هذا الحساب."
+  },
+  "dos_err_auth": {
+    "message": "رفض Instagram القراءة. حاول مجددًا."
+  },
+  "dos_download": {
+    "message": "تنزيل الصورة (HD)"
+  },
+  "dos_downloading": {
+    "message": "جارٍ التنزيل…"
+  },
+  "dos_downloaded": {
+    "message": "تم الحفظ ✓"
+  },
+  "dos_openpic": {
+    "message": "افتح الصورة"
+  },
+  "dos_copyid": {
+    "message": "نسخ المعرّف"
+  },
+  "dos_watch": {
+    "message": "راقب"
+  },
+  "dos_watching": {
+    "message": "قيد المراقبة ✓"
+  },
+  "dos_copied": {
+    "message": "تم النسخ ✓"
+  },
+  "dos_posts": {
+    "message": "منشورات"
+  },
+  "dos_profile": {
+    "message": "الملف الشخصي"
+  },
+  "dos_web": {
+    "message": "الموقع الإلكتروني"
+  },
+  "dos_category": {
+    "message": "الفئة"
+  },
+  "dos_contact": {
+    "message": "جهة اتصال عامة"
+  },
+  "dos_address": {
+    "message": "العنوان"
+  },
+  "dos_business": {
+    "message": "نشاط تجاري"
+  },
+  "dos_highlights": {
+    "message": "القصص المميّزة"
+  },
+  "dos_save": {
+    "message": "عرض الصورة"
+  },
+  "dos_save_hint": {
+    "message": "يحفظ هذا الغلاف ويعرضه لك"
+  },
+  "dos_saving": {
+    "message": "…"
+  },
+  "dos_saved": {
+    "message": "تم الحفظ ✓"
+  },
+  "dos_saved_already": {
+    "message": "محفوظ مسبقًا"
+  },
+  "dos_photo_history": {
+    "message": "سجلّ الصور"
+  },
+  "dos_posts_sec": {
+    "message": "المنشورات"
+  },
+  "dos_engagement": {
+    "message": "التفاعل"
+  },
+  "dos_eng_avg": {
+    "message": "المعدّل: $1 إعجاب · $2 تعليق لكل منشور"
+  },
+  "eng_fire": {
+    "message": "🔥 جنوني"
+  },
+  "eng_good": {
+    "message": "رائع"
+  },
+  "eng_ok": {
+    "message": "متوسّط"
+  },
+  "eng_low": {
+    "message": "منخفض"
+  },
+  "dos_relations": {
+    "message": "المتابِعون ومَن يتابعهم"
+  },
+  "dos_see_followers": {
+    "message": "عرض المتابِعين"
+  },
+  "dos_see_following": {
+    "message": "عرض مَن يتابعهم"
+  },
+  "dos_rel_hint": {
+    "message": "الحسابات العامة أو التي تتابعها. يعرض عيّنة، لا القائمة كاملة."
+  },
+  "dos_rel_loading": {
+    "message": "جارٍ التحميل…"
+  },
+  "dos_rel_empty": {
+    "message": "تعذّر قراءة هذه القائمة (حساب خاص لا تتابعه)."
+  },
+  "dos_rel_more": {
+    "message": "يعرض أول $1. افتح حسابه للقائمة الكاملة."
+  },
+  "dos_rel_search": {
+    "message": "ابحث في هذه القائمة…"
+  },
+  "dos_rel_click_hint": {
+    "message": "اضغط على رقم المتابِعين أو مَن يتابعهم بالأعلى لعرض القائمة هنا."
+  },
+  "dos_rel_nomatch": {
+    "message": "لا نتائج مطابقة في القائمة المحمّلة."
+  },
+  "dos_history": {
+    "message": "السجلّ"
+  },
+  "dos_history_empty": {
+    "message": "لا تغييرات مسجّلة بعد لهذا الحساب."
+  },
+  "dos_graph_empty": {
+    "message": "يُبنى رسم المتابِعين تدريجيًا كلما فتحت هذا الحساب مع الوقت."
+  },
+  "dos_investigate": {
+    "message": "استقصِ"
+  },
+  "unlock_title": {
+    "message": "فعّل Ghoosted"
+  },
+  "unlock_copy": {
+    "message": "مفتاح واحد يفعّل Ghoosted لحساب Instagram هذا — للأبد. ادفع مرة واحدة."
+  },
+  "unlock_price": {
+    "message": "€5 · مدى الحياة، استخدام واحد"
+  },
+  "unlock_buy": {
+    "message": "اشترِ · €5 مرة واحدة"
+  },
+  "unlock_label": {
+    "message": "لديك مفتاح بالفعل؟"
+  },
+  "unlock_activate": {
+    "message": "تفعيل"
+  },
+  "unlock_enter_key": {
+    "message": "أدخل مفتاح المنتج."
+  },
+  "unlock_checking": {
+    "message": "جارٍ التحقّق من المفتاح…"
+  },
+  "unlock_active": {
+    "message": "تم تفعيل Ghoosted لهذا الحساب ✓"
+  },
+  "unlock_bound": {
+    "message": "هذا المفتاح مرتبط بالفعل بحساب Instagram آخر."
+  },
+  "unlock_expired": {
+    "message": "تم إلغاء تفعيل هذا المفتاح."
+  },
+  "unlock_invalid": {
+    "message": "المفتاح غير صالح أو لم يُصدر بعد."
+  },
+  "unlock_network": {
+    "message": "تعذّر التحقّق من المفتاح. حاول مجددًا."
+  },
+  "unlock_status": {
+    "message": "فعّل Ghoosted للبدء."
+  },
+  "tag_unfollow": {
+    "message": "ألغى متابعتك"
+  },
+  "tag_new": {
+    "message": "جديد"
+  },
+  "tag_notfollowing": {
+    "message": "لا يتابعك"
+  },
+  "tag_fan": {
+    "message": "المعجب الأول"
+  },
+  "pro": {
+    "message": "PRO"
+  },
+  "pro_title": {
+    "message": "افتح Ghoosted Pro"
+  },
+  "pro_desc": {
+    "message": "اكتشف مَن يشاهد قصصك، وابنِ تصنيفًا دائمًا لأكثر مشاهديك وفاءً، واحصل على تنبيهات فورية عند إلغاء المتابعة وسجلّك الكامل."
+  },
+  "pro_unlock": {
+    "message": "افتح — €5 مرة واحدة"
+  },
+  "pro_havekey": {
+    "message": "اشتريته بالفعل؟ اضغط على أيقونة Ghoosted في شريط أدوات متصفّحك لإدخال مفتاحك."
+  },
+  "history_captures": {
+    "message": "عمليات التحقق الأخيرة"
+  },
+  "history_viewers": {
+    "message": "$1 مشاهد"
+  },
+  "confirm_reset": {
+    "message": "إعادة بناء خط الأساس؟ سأقرأ متابِعيك الحاليين من جديد كنقطة انطلاق جديدة. لن يُحذف سجلّ \"ألغوا المتابعة\" و\"الجدد\"."
+  },
+  "confirm_clear": {
+    "message": "حذف كل السجلّ (إلغاءات المتابعة والمتابِعين الجدد وإحصاءات القصص)؟ لا يمكن التراجع عن هذا."
+  },
+  "confirm_clear_photos": {
+    "message": "حذف $1 صورة محفوظة (الصور الرمزية، أغلفة المميزة)؟ سيؤدي هذا إلى تحرير مساحة التخزين ولا يمكن التراجع عنه."
+  },
+  "settings_interval": {
+    "message": "افحص كل"
+  },
+  "settings_notify": {
+    "message": "نبّهني"
+  },
+  "settings_reset": {
+    "message": "إعادة بناء خط الأساس (يحتفظ بالسجلّ)"
+  },
+  "settings_export": {
+    "message": "تصدير بياناتي (JSON)"
+  },
+  "settings_clear": {
+    "message": "مسح السجلّ"
+  },
+  "settings_clear_photos": {
+    "message": "مسح الصور المحفوظة"
+  },
+  "popup_tagline": {
+    "message": "مَن يشاهدك، ومَن يتركك"
+  },
+  "popup_status_free": {
+    "message": "الخطة المجانية"
+  },
+  "popup_status_locked": {
+    "message": "بانتظار التفعيل"
+  },
+  "popup_status_pro": {
+    "message": "Ghoosted Pro · نشط"
+  },
+  "popup_free_desc": {
+    "message": "فعّل مفتاح Ghoosted لاستخدام الإضافة مع حساب Instagram هذا."
+  },
+  "popup_pro_desc": {
+    "message": "كل المزايا مفتوحة. شكرًا لدعمك"
+  },
+  "popup_buy": {
+    "message": "احصل على Ghoosted · €5"
+  },
+  "popup_license_label": {
+    "message": "اشتريته بالفعل؟ أدخل مفتاح الترخيص"
+  },
+  "popup_activate": {
+    "message": "تفعيل"
+  },
+  "popup_open_ig": {
+    "message": "افتح Instagram"
+  },
+  "popup_privacy": {
+    "message": "الخصوصية"
+  },
+  "popup_help": {
+    "message": "المساعدة"
+  },
+  "popup_remove": {
+    "message": "إزالة الترخيص"
+  },
+  "popup_enter_key": {
+    "message": "أدخل مفتاح الترخيص أولًا."
+  },
+  "popup_activating": {
+    "message": "جارٍ التحقّق…"
+  },
+  "popup_active": {
+    "message": "تم تفعيل Pro. استمتع 🎉"
+  },
+  "popup_refunded": {
+    "message": "تم استرداد هذا الترخيص أو الاعتراض عليه."
+  },
+  "popup_network": {
+    "message": "تعذّر الوصول إلى الخادم. حاول مجددًا."
+  },
+  "popup_invalid": {
+    "message": "لا يبدو هذا المفتاح صالحًا. تحقّق منه وأعد المحاولة."
+  },
+  "popup_removed": {
+    "message": "تمت إزالة الترخيص."
+  },
+  "popup_need_ig": {
+    "message": "افتح Instagram في هذه النافذة لتفعيل مفتاحك."
+  },
+  "popup_bound": {
+    "message": "هذا المفتاح مرتبط بالفعل بحساب Instagram آخر."
+  },
+  "eng_hidden": {
+    "message": "يخفي الإعجابات"
+  },
+  "eng_hidden_sub": {
+    "message": "لا يمكن حساب التفاعل الحقيقي: عدد الإعجابات مخفي."
+  },
+  "settings_language": {
+    "message": "اللغة"
+  },
+  "settings_data": {
+    "message": "البيانات"
+  },
+  "settings_connect_mobile": {
+    "message": "ربط الهاتف"
+  },
+  "mobile_title": {
+    "message": "Ghoosted على هاتفك"
+  },
+  "mobile_body": {
+    "message": "امسح بكاميرا هاتفك. يعكس هاتفك الإضافة للقراءة فقط. يتحدث كلما أجرى الكمبيوتر فحصًا."
+  },
+  "mobile_unpair": {
+    "message": "إلغاء ربط الهاتف"
+  },
+  "popup_wrong_product": {
+    "message": "هذا المفتاح لإصدار مختلف من Ghoosted."
+  },
+  "gs_saw": {
+    "message": "شاهد $1 من قصصك الـ$2"
+  },
+  "gs_saw_total": {
+    "message": "تمت مشاهدة $1 من قصصك إجمالاً"
+  },
+  "gs_days_one": {
+    "message": "يوم واحد"
+  },
+  "gs_days_many": {
+    "message": "$1 أيام"
+  },
+  "gs_pos": {
+    "message": "رقم $1 في القائمة"
+  },
+  "tag_dropoff": {
+    "message": "لم يُكمل"
+  },
+  "gs_note": {
+    "message": "من قائمة مشاهدي إنستغرام: من شاهدها ومن أعجب بها. إنستغرام لا يبلّغ عن لقطات الشاشة ولا عن مرات إعادة المشاهدة."
+  },
+  "gs_liked": {
+    "message": "❤️ أعجبه $1"
+  },
+  "gs_story_n": {
+    "message": "قصة $1 ($2) · $3 مشاهد · $4 إعجاب"
+  },
+  "gs_search": {
+    "message": "ابحث عن مشاهد…"
+  },
+  "gs_no_match": {
+    "message": "لا يوجد مشاهد بهذا الاسم."
+  },
+  "gs_alltime": {
+    "message": "تمت مشاهدة $1 من قصصك إجمالاً"
+  },
+  "gs_archive_title": {
+    "message": "قصصي",
+    "description": "Section header of the saved-stories block in the History tab."
+  },
+  "gs_back": {
+    "message": "رجوع"
+  },
+  "gs_all_fans": {
+    "message": "معجبو كل قصصك"
+  },
+  "gs_order_note": {
+    "message": "المشاهدون بترتيب Instagram. عندما يعيد أحدهم فتح قصتك يقفز إلى الأعلى — يرصد Ghoosted ذلك ويعدّه إعادة فتح (🔁). إنه تقدير حسب عدد مرات قراءة Ghoosted للقائمة، وليس عدّادًا رسميًا من Instagram: هذا غير موجود."
+  },
+  "gs_detail_meta": {
+    "message": "$1 مشاهد · $2 إعجاب"
+  },
+  "gs_no_viewers": {
+    "message": "لا يوجد مشاهدون محفوظون لهذه القصة."
+  },
+  "gs_video": {
+    "message": "فيديو"
+  },
+  "gs_photo": {
+    "message": "صورة"
+  },
+  "gs_archive_sub": {
+    "message": "أنت وحدك من يمكنه رؤية قصصك المؤرشفة، ما لم تختر مشاركتها."
+  },
+  "gs_refresh": {
+    "message": "تحديث قصصي"
+  },
+  "gs_capturing": {
+    "message": "جارٍ قراءة مشاهدي قصتك…"
+  },
+  "gs_empty_archive": {
+    "message": "لا شيء محفوظ بعد. إذا كانت لديك قصة نشطة، حدّثها الآن."
+  },
+  "gs_reopen": {
+    "message": "عاد للأعلى $1×"
+  },
+  "nb_select": {
+    "message": "تحديد"
+  },
+  "nb_cancel": {
+    "message": "إلغاء"
+  },
+  "nb_all": {
+    "message": "الكل"
+  },
+  "nb_none": {
+    "message": "إلغاء التحديد"
+  },
+  "nb_unfollow_n": {
+    "message": "إلغاء المتابعة ($1)"
+  },
+  "nb_hint": {
+    "message": "انقر على من تريد إلغاء متابعتهم ثم “إلغاء المتابعة”. يتم واحدًا تلو الآخر مع توقف — يحظر Instagram الحسابات التي تلغي المتابعة بسرعة."
+  },
+  "nb_confirm": {
+    "message": "إلغاء متابعة $1 حساب؟ يفعلها Ghoosted ببطء (بضع ثوانٍ بين كل واحد) لتجنب حظر Instagram. أبقِ هذه التبويبة مفتوحة."
+  },
+  "nb_progress": {
+    "message": "جارٍ الإلغاء… $1/$2"
+  },
+  "nb_done": {
+    "message": "تم — ألغيت متابعة $1."
+  },
+  "nb_blocked": {
+    "message": "طلب Instagram التمهّل. توقف بعد $1. أكمل الباقي لاحقًا."
+  },
+  "wprof_updated": {
+    "message": "تحديث $1"
+  },
+  "wprof_followers": {
+    "message": "المتابعون"
+  },
+  "wprof_following": {
+    "message": "يتابع"
+  },
+  "wprof_recent": {
+    "message": "تمت متابعتهم مؤخرًا"
+  },
+  "wprof_recent_none": {
+    "message": "لم يُكتشف أي متابَعين جدد بعد."
+  },
+  "wprof_track_hint": {
+    "message": "فعّل 👥 لتتبع من يتابعونه ورؤية إحصائياته هنا."
+  },
+  "unit_min": {
+    "message": "دقيقة"
+  },
+  "dos_link": {
+    "message": "رابط"
+  },
+  "dos_id": {
+    "message": "المعرف"
+  },
+  "dos_email": {
+    "message": "البريد الإلكتروني"
+  },
+  "dos_tel": {
+    "message": "الهاتف"
+  },
+  "status_newfollowers": {
+    "message": "+$1 متابع(ين) جدد."
+  },
+  "nb_search": {
+    "message": "ابحث بالاسم أو @اسم المستخدم"
+  },
+  "nb_no_match": {
+    "message": "لا يوجد حساب بهذا الاسم."
+  },
+  "gh_entry": {
+    "message": "القصص النشطة (وضع الشبح)"
+  },
+  "gh_note": {
+    "message": "هؤلاء لديهم قصة الآن. افتحها من هنا — لن يصل إلى إنستغرام شيء ولن تظهر في قائمة المشاهدين."
+  },
+  "gh_watch_note": {
+    "message": "وضع الشبح — إنستغرام لا يعرف أنك شاهدت هذا."
+  },
+  "gh_refresh": {
+    "message": "تحديث"
+  },
+  "gh_loading": {
+    "message": "نبحث عن القصص النشطة…"
+  },
+  "gh_loading_one": {
+    "message": "جارٍ تحميل قصته…"
+  },
+  "gh_empty": {
+    "message": "لا أحد ممن تتابعهم لديه قصة الآن."
+  },
+  "gh_no_media": {
+    "message": "تعذّر تحميل القصة."
+  },
+  "gh_err": {
+    "message": "لم يُرجع إنستغرام القائمة. حاول بعد قليل."
+  },
+  "gh_err_rate": {
+    "message": "طلب إنستغرام التمهّل. انتظر قليلاً ثم أعد المحاولة."
+  },
+  "gh_stories_n": {
+    "message": "$1 قصص"
+  },
+  "gh_story_1": {
+    "message": "قصة واحدة"
+  },
+  "gh_unseen": {
+    "message": "غير مُشاهدة"
+  },
+  "gh_slide": {
+    "message": "$1 من $2"
+  },
+  "nb_failed": {
+    "message": "أُلغيت متابعة $1. فشل $2 — رفضها إنستغرام."
+  },
+  "gh_play_all": {
+    "message": "مشاهدة الكل ($1)"
+  },
+  "gh_person_of": {
+    "message": "$1 من $2"
+  },
+  "gh_badge": {
+    "message": "وضع الشبح"
+  },
+  "gh_pause": {
+    "message": "إيقاف مؤقت"
+  },
+  "gh_resume": {
+    "message": "متابعة"
+  },
+  "gh_close": {
+    "message": "إغلاق"
+  },
+  "gh_download": {
+    "message": "تنزيل"
+  },
+  "gh_download_all": {
+    "message": "تنزيل الكل"
+  },
+  "gh_sound": {
+    "message": "الصوت"
+  },
+  "dos_posts_none": {
+    "message": "لا يمكن الوصول إلى المنشورات"
+  },
+  "settings_appearance": {
+    "message": "المظهر"
+  },
+  "settings_light": {
+    "message": "الوضع الفاتح"
+  },
+  "toast_watching": {
+    "message": "أنت تراقب $1 الآن",
+    "description": "Toast confirming the profile is now watched. $1 is the @handle."
+  },
+  "toast_unwatched": {
+    "message": "لم تعد تراقب $1",
+    "description": "Toast confirming the profile is no longer watched. $1 is the @handle."
+  },
+  "err_rate_wait": {
+    "message": "طلب إنستغرام التمهّل. أعد المحاولة خلال $1 دقيقة.",
+    "description": "Shown when Instagram rate-limited us. $1 is the whole minutes left of the cooldown."
+  },
+  "stories_filter": {
+    "message": "ابحث عن شخص…",
+    "description": "Placeholder of the box that filters the story tray by name."
+  },
+  "stories_filter_none": {
+    "message": "لا أحد بهذا الاسم",
+    "description": "Shown when the story-tray filter matches nobody."
+  },
+  "sugg_searching": {
+    "message": "جارٍ البحث…",
+    "description": "Shown in the username suggestion list while the search runs."
+  },
+  "sugg_none": {
+    "message": "لا نتائج",
+    "description": "Shown in the username suggestion list when the search returns nobody."
+  },
+  "dos_graph_soon": {
+    "message": "لا يوجد سجل كافٍ بعد. عُد بعد يوم.",
+    "description": "Shown instead of a follower trend when the recorded samples span less than a day."
+  },
+  "dos_since_from": {
+    "message": "منذ $1",
+    "description": "Suffix for the follower delta. $1 is the date of the first recorded sample."
+  },
+  "pair_watch_btn": {
+    "message": "نبّهني إذا تغيّر",
+    "description": "Button that starts alerting when one account stops following another."
+  },
+  "pair_watching": {
+    "message": "التنبيه مفعّل",
+    "description": "Label on the button once the pair is being watched."
+  },
+  "pair_added": {
+    "message": "تتم مراقبة $1",
+    "description": "Toast when a pair starts being watched. $1 is '@a → @b'."
+  },
+  "pair_removed": {
+    "message": "لم تعد تراقب $1",
+    "description": "Toast when a pair stops being watched. $1 is '@a → @b'."
+  },
+  "pair_list_title": {
+    "message": "الأزواج المراقَبة",
+    "description": "Heading of the watched-pairs list."
+  },
+  "activity_pair_unfollow": {
+    "message": "$1 ألغى متابعة $2",
+    "description": "Activity row: $1 stopped following $2. Both are @handles."
+  },
+  "activity_pair_follow": {
+    "message": "$1 بدأ متابعة $2",
+    "description": "Activity row: $1 started following $2. Both are @handles."
+  },
+  "notif_pair_unfollow": {
+    "message": "$1 ألغى متابعة $2",
+    "description": "Desktop notification: $1 stopped following $2."
+  },
+  "notif_pair_follow": {
+    "message": "$1 بدأ متابعة $2",
+    "description": "Desktop notification: $1 started following $2."
+  },
+  "activity_tag_pair": {
+    "message": "زوج",
+    "description": "Small tag on a watched-pair activity row."
+  },
+  "activity_clear": {
+    "message": "إفراغ",
+    "description": "Button that empties the activity list."
+  },
+  "activity_clear_confirm": {
+    "message": "متأكد؟",
+    "description": "Second state of the clear button, asking to confirm."
+  },
+  "activity_cleared": {
+    "message": "تم إفراغ النشاط",
+    "description": "Toast after the activity list is emptied."
+  },
+  "cmp_before": {
+    "message": "قبل",
+    "description": "Label under the previous profile picture in the before/after view."
+  },
+  "cmp_after": {
+    "message": "الآن",
+    "description": "Label under the current profile picture in the before/after view."
+  },
+  "load_followers": {
+    "message": "جارٍ تحميل المتابعين",
+    "description": "Title of the full-panel loading screen shown while the follower list downloads."
+  },
+  "load_wait": {
+    "message": "لحظة، قد يستغرق هذا وقتًا",
+    "description": "Subtitle of the loading screen."
+  },
+  "status_following_partial": {
+    "message": "تعذّرت قراءة قائمة متابَعيك بالكامل. تم الإبقاء على السابقة.",
+    "description": "Warning when the following-list crawl did not finish and the old list was kept."
+  },
+  "nb_stale": {
+    "message": "قائمة المتابَعين بتاريخ $1 · اضغط «تحقق الآن» للتحديث",
+    "description": "Note above the not-following-back list when the stored following list is old. $1 is a date."
+  },
+  "load_following": {
+    "message": "جارٍ تحميل المتابَعين",
+    "description": "Loading-screen title while the following list downloads."
+  },
+  "load_saving": {
+    "message": "المقارنة والحفظ",
+    "description": "Loading-screen title during the final compare-and-save step."
+  },
+  "load_of": {
+    "message": "من $1",
+    "description": "Shown under the counter: 'of <total>'. $1 is the expected total."
+  },
+  "req_title": {
+    "message": "طلبات المتابعة",
+    "description": "Heading of the follow-requests block."
+  },
+  "req_rule_manual": {
+    "message": "يدوي",
+    "description": "Rule: do nothing automatically."
+  },
+  "req_rule_following": {
+    "message": "فقط من أتابعهم",
+    "description": "Rule: auto-approve only accounts the user already follows."
+  },
+  "req_rule_all": {
+    "message": "الجميع",
+    "description": "Rule: auto-approve every request."
+  },
+  "req_rule_all_warn": {
+    "message": "أي شخص يطلب سيدخل حسابك الخاص دون مراجعتك.",
+    "description": "Warning shown when the 'everyone' rule is selected."
+  },
+  "req_run": {
+    "message": "اقبل الآن",
+    "description": "Button that runs the rule over the pending list now."
+  },
+  "req_running": {
+    "message": "جارٍ القبول…",
+    "description": "Label on the run button while it works."
+  },
+  "req_none": {
+    "message": "لا توجد طلبات معلّقة.",
+    "description": "Shown when there are no pending requests."
+  },
+  "req_approve": {
+    "message": "قبول",
+    "description": "Per-row accept button."
+  },
+  "req_ignore": {
+    "message": "رفض",
+    "description": "Per-row decline button."
+  },
+  "req_approved": {
+    "message": "تم قبول $1",
+    "description": "Toast after accepting one request. $1 is the @handle."
+  },
+  "req_ignored": {
+    "message": "تم رفض $1",
+    "description": "Toast after declining one request. $1 is the @handle."
+  },
+  "req_done": {
+    "message": "تم قبول $1",
+    "description": "Toast after a bulk run. $1 is how many were accepted."
+  },
+  "req_load_err": {
+    "message": "تعذّر تحميل الطلبات.",
+    "description": "Shown when the pending list could not be loaded."
+  },
+  "req_rule_label": {
+    "message": "القبول تلقائيًا",
+    "description": "Label of the auto-approve rule selector."
+  },
+  "load_approving": {
+    "message": "جارٍ قبول الطلبات",
+    "description": "Loading-screen title while follow requests are being approved in bulk."
+  },
+  "load_unfollowing": {
+    "message": "جارٍ إلغاء المتابعة",
+    "description": "Loading-screen title while a bulk unfollow runs."
+  },
+  "load_eta": {
+    "message": "يتبقى نحو $1",
+    "description": "Estimated time left on the loading screen. $1 is an already-formatted duration."
+  },
+  "load_min": {
+    "message": "$1 دقيقة",
+    "description": "Duration in minutes. $1 is the number."
+  },
+  "load_sec": {
+    "message": "$1 ثانية",
+    "description": "Duration in seconds. $1 is the number."
+  },
+  "load_safe_t": {
+    "message": "نتقدّم ببطء عن قصد",
+    "description": "Heading of the note explaining why bulk write actions are paced slowly."
+  },
+  "load_safe_d": {
+    "message": "إنستغرام يحظر الحسابات التي تفعل ذلك بسرعة كبيرة. الفواصل غير المنتظمة لا تُكتشف. يمكنك إغلاق اللوحة: يستمر في الخلفية.",
+    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+  },
+  "fold_hint": {
+    "message": "اضغط للطي أو التوسيع",
+    "description": "Tooltip on a section header that collapses and expands its content."
+  },
+  "top_section": {
+    "message": "التفاعلات",
+    "description": "Section header of the likes/comments block in the History tab."
+  },
+  "upd_new": {
+    "message": "يتوفر إصدار جديد ($1)",
+    "description": "Banner text when a newer build exists. $1 is the version number."
+  },
+  "upd_get": {
+    "message": "تنزيل",
+    "description": "Button on the update banner that opens the download page."
+  },
+  "upd_forced": {
+    "message": "إصدارك لم يعد يعمل مع إنستغرام. حدّثه للمتابعة.",
+    "description": "Banner text when the installed version is below the supported minimum."
+  },
+  "upd_dismiss": {
+    "message": "إخفاء",
+    "description": "Button that hides the banner until the next version or notice."
+  },
+  "activity_desc_own": {
+    "message": "تُسجَّل هنا التغييرات في متابعيك ومن تتابعهم: من أتى ومن غادر ومتى. تجري الفحوصات ما دام Instagram مفتوحًا في تبويب."
+  },
+  "empty_unfollow_own": {
+    "message": "لم يلغِ أحد متابعتك منذ أول فحص.<br>سأخبرك هنا وبإشعار 👀"
+  },
+  "load_pair": {
+    "message": "جارٍ التحقق مما إذا كانا يتابعان بعضهما"
+  },
+  "spy_checking_rev": {
+    "message": "البحث بين متابعي $1…"
+  },
+  "spy_via_followers": {
+    "message": "تم التحقق من قائمة متابعي $1"
+  },
+  "busy_other": {
+    "message": "هناك فحص آخر قيد التشغيل. انتظر حتى ينتهي."
+  }
+}

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="meta_title">Ghoosted — Advanced insights for Instagram profiles</title>
+  <meta name="description" data-i18n-attr="content|meta_desc" content="Story viewer insights, unfollow detection and profile analysis for supported public profiles. An independent Chrome extension — analysis runs on your device.">
+  <meta name="theme-color" content="#F7F5F0">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="apple-touch-icon" href="assets/icon.png">
+  <link rel="canonical" href="https://ghoosted.net/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ghoosted">
+  <meta property="og:title" content="Ghoosted — Advanced insights for Instagram profiles">
+  <meta property="og:description" content="Story viewer insights, unfollow detection and profile analysis for supported public profiles. Analysis runs on your device.">
+  <meta property="og:image" content="https://ghoosted.net/assets/og.png">
+  <meta property="og:url" content="https://ghoosted.net">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ghoosted — Advanced insights for Instagram profiles">
+  <meta name="twitter:description" content="Story viewer insights, unfollow detection and profile analysis for supported public profiles. Analysis runs on your device.">
+  <meta name="twitter:image" content="https://ghoosted.net/assets/og.png">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Ghoosted",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "url": "https://ghoosted.net",
+    "description": "Independent Chrome extension for Instagram profile insights: story viewer analytics, unfollow detection and profile analysis on supported public profiles. Analysis runs on your device; no account required. Not affiliated with Instagram or Meta.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "3.50",
+      "highPrice": "5",
+      "priceCurrency": "EUR",
+      "offerCount": "2",
+      "availability": "https://schema.org/InStock"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I give my password?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Ghoosted works inside your own logged-in session — it doesn't ask for, see or store your password." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it private?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Your profile data is analysed on your device and is designed to stay there. Two things do reach a server: your purchase and licence key, and - only if you switch on the phone mirror - an encrypted snapshot the relay cannot read. Export or delete your local data anytime." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can they tell I watched their story?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ghost mode is designed to open stories without registering a view. That depends on how Instagram currently works and can change if Instagram updates its systems." }
+      },
+      {
+        "@type": "Question",
+        "name": "Will my account get banned?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Ghoosted is designed to work without modifying your account — it reads what Instagram already shows you. Even so, Instagram can update its systems or policies at any time, and using any third-party tool may conflict with its terms. Use it at your own discretion." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it lifetime?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes — both plans are a lifetime licence. Pay once (€5 Pro, €3.50 Plus), with no subscription, renewals or recurring fees." }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
+  <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
+  <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
+  <link rel="stylesheet" href="styles.css?v=84">
+</head>
+<body id="top">
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <div class="nav-wrap">
+    <header class="nav" id="nav">
+      <a class="brand" href="#top" aria-label="Ghoosted">
+        <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.4" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/><ellipse cx="14.6" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/></svg></span>
+        Ghoosted
+      </a>
+      <button type="button" class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+        <a href="#pair" data-i18n="nav_pair">Pair phone</a>
+      </nav>
+      <a class="nav-search" href="#worlds" aria-label="See example profiles">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
+        <span id="navSearchHint" aria-hidden="true">@emilysunshine</span>
+      </a>
+      <div class="nav-right">
+        <div class="lang-wrap" id="langWrap">
+          <button type="button" class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+            <span class="lang-flag" id="langFlag">🌐</span><span class="lang-name" id="langName">English</span><span class="lang-caret">▾</span>
+          </button>
+          <div class="lang-menu" id="langMenu" role="listbox" tabindex="-1"></div>
+        </div>
+        <a class="btn btn-primary btn-sm" data-cta="buy" href="#pricing"><span data-i18n="nav_cta">Get Ghoosted</span> <span class="arr">→</span></a>
+      </div>
+    </header>
+  </div>
+
+  <main>
+
+    <!-- HERO — floating photo-chip field (cosmos-style) -->
+    <section class="hero" id="hero">
+      <div class="field" id="field" aria-hidden="true"></div>
+      <div class="hero-center">
+        <h1 class="hero-title"><span data-i18n="hero_l1">The real story.</span> <span class="grad" data-i18n="hero_l2">Behind the profile.</span></h1>
+        <div class="hero-cta">
+          <a class="btn btn-primary btn-lg" data-cta="buy" href="#pricing"><span data-i18n="hero_cta1">Get it · €5 lifetime</span></a>
+          <a class="btn btn-ghost btn-lg" href="#features" data-i18n="hero_cta2">See what it does</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="over">
+
+    <!-- FILM MOMENT — product in context -->
+    <section class="film" aria-label="Ghoosted in context">
+      <p class="film-cap"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.2v9.6L10.6 6Z"/></svg> <span data-i18n="showcase_cap">Profile insights in one click, without leaving the page.</span></p>
+      <div class="film-card">
+        <img src="assets/shots/profile-dossier.jpg?v=3" alt="Ghoosted panel open over an Instagram profile" width="1448" height="1086" loading="lazy" decoding="async">
+      </div>
+    </section>
+
+    <!-- EVERY PROFILE HIDES A STORY — cycling collage panel -->
+    <section class="worlds" id="worlds" aria-label="Every profile hides a story">
+      <h2 class="worlds-title" data-i18n="worlds_title">There’s a story behind the profile.</h2>
+      <div class="worlds-panel" id="worldsPanel" aria-hidden="true">
+        <div class="w-slot w-left">
+          <img src="assets/photos/sea.jpg" alt="" class="on" width="506" height="900" loading="eager" fetchpriority="high" decoding="async">
+          <img src="assets/photos/table.jpg" alt="" width="507" height="900" loading="eager" fetchpriority="high" decoding="async">
+          <img src="assets/photos/palms.jpg" alt="" width="506" height="900" loading="eager" fetchpriority="high" decoding="async">
+        </div>
+        <div class="w-slot w-center">
+          <img src="assets/photos/pool.jpg" alt="" class="on" width="506" height="900" loading="eager" fetchpriority="high" decoding="async">
+          <img src="assets/photos/pasta.jpg" alt="" width="723" height="900" loading="eager" fetchpriority="high" decoding="async">
+          <img src="assets/photos/pizza.jpg" alt="" width="675" height="900" loading="eager" fetchpriority="high" decoding="async">
+        </div>
+        <div class="w-slot w-right">
+          <img src="assets/photos/cove.jpg" alt="" class="on" width="675" height="900" loading="eager" fetchpriority="high" decoding="async">
+          <img src="assets/photos/positano.jpg" alt="" width="732" height="900" loading="eager" fetchpriority="high" decoding="async">
+          <img src="assets/photos/boat.jpg" alt="" width="663" height="900" loading="eager" fetchpriority="high" decoding="async">
+        </div>
+        <div class="worlds-pill"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg><span id="worldsPillText">golden hour ✨</span></div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats">
+      <div class="stats-inner">
+        <div class="stat"><b class="g">Local</b><span data-i18n="stat_1">profile analysis</span></div>
+        <div class="stat"><b class="g">0</b><span data-i18n="stat_2">accounts to create</span></div>
+        <div class="stat"><b class="g">€5</b><span data-i18n="stat_3">one payment · lifetime licence</span></div>
+        <div class="stat"><b class="g">12</b><span data-i18n="stat_4">languages</span></div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <div class="features-head" id="features">
+      <div class="features-head-copy">
+        <div class="kicker" data-i18n="feat_kicker">What you get</div>
+        <h2 class="section-title" data-i18n="more_title">Twelve tools. One panel.</h2>
+      </div>
+      <p class="features-sub" data-i18n="feat_intro">Twelve tools that live quietly in your browser.</p>
+    </div>
+
+    <section class="fb-grid">
+      <div class="fb-lg">
+        <div class="fb-lg-copy">
+          <h3 data-i18n="fx_watchlist_t">Watchlist</h3>
+          <p data-i18n="fx_watchlist_d">Tells you when they post a story or change who they follow.</p>
+        </div>
+        <div class="fb-lg-media"><img src="assets/shots/panel.jpg?v=1" alt="Watchlist ranking panel" loading="lazy" decoding="async"></div>
+      </div>
+
+      <div class="fb-side">
+        <div class="fb-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0-4-4m4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3 data-i18n="fx_download_t">Download it all</h3><p data-i18n="fx_download_d">Stories, highlights, posts and the HD profile photo.</p><p class="fb-note" data-i18n="fx_download_note">Respect other people’s rights over the content you save.</p></div></div>
+        <div class="fb-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.4 17a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2Z" fill="currentColor"/><path d="M12 14.4V4l7-1.6v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><div><h3 data-i18n="fx_tiktok_t">Find them on TikTok</h3><p data-i18n="fx_tiktok_d">Same @, one tap away.</p></div></div>
+      </div>
+
+      <div class="fb-row3">
+        <div class="fb-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="13" width="4" height="7" rx="1" fill="currentColor"/><rect x="10" y="8" width="4" height="12" rx="1" fill="currentColor"/><rect x="16" y="4" width="4" height="16" rx="1" fill="currentColor"/></svg><div><h3 data-i18n="fx_engagement_t">Real engagement</h3><p data-i18n="fx_engagement_d">True influencer, or bought followers?</p></div></div>
+        <div class="fb-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="15" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><div><h3 data-i18n="fx_mutual_t">Do they follow each other?</h3><p data-i18n="fx_mutual_d">Check two accounts at once, and get told the day one drops the other.</p></div></div>
+        <div class="fb-tile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6.3 6.9.7-5.2 4.7 1.5 6.8L12 17.8 5.9 21l1.5-6.8-5.2-4.7 6.9-.7Z" fill="currentColor"/></svg><div><h3 data-i18n="m7_t">Top fans</h3><p data-i18n="m7_d">Who gives you the most likes and comments.</p></div></div>
+      </div>
+
+      <div class="fb-wide">
+        <div class="fb-wide-copy">
+          <h3 data-i18n="fx_unfollow_t">Not following back</h3>
+          <p data-i18n="fx_unfollow_d">Who doesn't follow you back. Unfollow them from here, at a safe pace.</p>
+        </div>
+        <div class="fb-wide-media"><img src="assets/shots/unfollow.jpg?v=1" alt="Not-following-back list" loading="lazy" decoding="async"></div>
+      </div>
+
+      <div class="fb-row2">
+        <div class="fb-tile-flat"><div><h3 data-i18n="fx_ghost_t">Ghost mode</h3><p data-i18n="fx_ghost_d">Opens stories without registering a view. Depends on Instagram.</p></div></div>
+        <div class="fb-tile-flat"><div><h3 data-i18n="fx_history_t">Your own stories, kept</h3><p data-i18n="fx_history_d">Your stories stay archived with who watched them, long after Instagram forgets.</p></div></div>
+      </div>
+
+      <div class="fb-row3">
+        <div class="fb-tile-flat"><div><h3 data-i18n="fx_requests_t">Follow requests, handled</h3><p data-i18n="fx_requests_d">One by one, or automatically for people you already follow. Never declines anyone.</p></div></div>
+        <div class="fb-tile-flat"><div><h3 data-i18n="fx_changes_t">Every change, logged</h3><p data-i18n="fx_changes_d">Photo, name, username and bio. Tap a photo change to see old and new side by side.</p></div></div>
+        <div class="fb-tile-flat"><div><h3 data-i18n="fx_dossier_t">The full dossier</h3><p data-i18n="fx_dossier_d">HD photo, posts, highlights, follower graph and everything they changed.</p></div></div>
+      </div>
+    </section>
+
+    <!-- SHOWCASE — auto-cycling product slides (paired with the features bento) -->
+    <section class="show" id="showcase">
+      <h2 class="show-title" data-i18n="show_title">Story viewer insights.</h2>
+
+      <div class="show-stage" id="showStage" role="button" tabindex="0" aria-label="Next slide">
+        <div class="show-slide is-on" data-slide="0">
+          <img src="assets/app/story.jpg?v=1" alt="Ghoosted profile dossier next to an Instagram profile" loading="lazy" decoding="async">
+        </div>
+        <div class="show-slide" data-slide="1">
+          <img src="assets/app/panel.jpg?v=1" alt="Ghoosted panel showing followers, the ghosted list and activity" loading="lazy" decoding="async">
+        </div>
+        <div class="show-slide" data-slide="2">
+          <img src="assets/app/phone.jpg?v=1" alt="Ghoosted mirrored on a phone, showing who unfollowed you" width="738" height="1024" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="show-copy">
+        <p class="show-lede is-on" data-lede="0" data-i18n="show_lede_0">Opens stories with ghost mode and saves them in HD.</p>
+        <p class="show-lede" data-lede="1" data-i18n="show_lede_1">Spots unfollows from the profile data available, refreshed each time you check.</p>
+        <p class="show-lede" data-lede="2" data-i18n="show_lede_2">The same panel on your phone. Scan the QR once — nothing to install.</p>
+        <div class="show-tabs">
+          <button type="button" class="show-tab is-on" data-tab="0">
+            <span class="show-bar"><i></i></span>
+            <span data-i18n="show_tab_0">Ghost mode &amp; downloads</span>
+          </button>
+          <button type="button" class="show-tab" data-tab="1">
+            <span class="show-bar"><i></i></span>
+            <span data-i18n="show_tab_1">Not following back</span>
+          </button>
+          <button type="button" class="show-tab" data-tab="2">
+            <span class="show-bar"><i></i></span>
+            <span data-i18n="show_tab_2">On your phone</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAIR PHONE — desktop-to-phone handoff (design 4b) -->
+    <section class="pair" id="pair">
+      <div class="pair-card is-linked" id="pairStage">
+        <div class="pair-glow" aria-hidden="true"></div>
+        <div class="pair-inner">
+
+          <div class="pair-head">
+            <span class="pair-badge"><span class="pair-dot"></span><span id="pairLabel" data-i18n="pair_badge_linked">Linked</span></span>
+            <h2 data-i18n="pair_title">Scan once. It follows you.</h2>
+            <p data-i18n="pair_sub">Your phone becomes a read-only mirror. No app store, no second account.</p>
+          </div>
+
+          <div class="pair-grid">
+
+            <div class="pair-qr-side">
+              <div class="pair-qr-card">
+                <div class="pair-qr-titlebar"><i></i><i></i><i></i><span>Ghoosted · extension</span></div>
+                <div class="pair-qr-body">
+                  <span class="pair-qr-label" data-i18n="pair_qr_label">Pair phone</span>
+                  <div class="pair-qr-window">
+                    <div class="pair-qr-slot" id="pairQrSlot" aria-hidden="true"></div>
+                    <div class="pair-scanline" aria-hidden="true"></div>
+                    <div class="pair-done" aria-hidden="true">
+                      <i><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 8.6l3.3 3.2 7.7-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg></i>
+                    </div>
+                  </div>
+                  <div class="pair-qr-foot">
+                    <span data-i18n="pair_qr_note">Ends when you unpair</span>
+                    <span id="pairLabel2" data-i18n="pair_badge_linked">Linked</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pair-connector" aria-hidden="true">
+              <div class="pair-connector-dot"></div>
+            </div>
+
+            <div class="pair-phone-side">
+              <div class="pair-phone-wrap">
+                <div class="pair-phone-glow" aria-hidden="true"></div>
+                <div class="pair-phone">
+                  <div class="pair-phone-screen">
+                    <div class="pair-phone-os" aria-hidden="true">
+                      <div class="pair-phone-status">
+                        <span>9:41</span>
+                        <span class="pair-phone-icons">
+                          <svg viewBox="0 0 24 14" aria-hidden="true"><rect x="1" y="9" width="3.4" height="4" rx="1" fill="currentColor"></rect><rect x="6.4" y="6.4" width="3.4" height="6.6" rx="1" fill="currentColor"></rect><rect x="11.8" y="3.4" width="3.4" height="9.6" rx="1" fill="currentColor"></rect><rect x="17.2" y="1" width="3.4" height="12" rx="1" fill="currentColor" opacity=".3"></rect></svg>
+                          <svg viewBox="0 0 26 13" aria-hidden="true"><rect x="1" y="1.6" width="20" height="9.8" rx="3" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".45"></rect><rect x="2.8" y="3.4" width="13" height="6.2" rx="1.8" fill="currentColor"></rect><path d="M23 5.2v2.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".45"></path></svg>
+                        </span>
+                      </div>
+                      <div class="pair-phone-sheet">
+                        <img src="assets/app/panel.jpg?v=1" alt="Ghoosted panel mirrored on the phone" loading="lazy" decoding="async">
+                      </div>
+                    </div>
+                    <div class="pair-phone-notch"></div>
+                    <div class="pair-phone-sheen" aria-hidden="true"></div>
+                    <div class="pair-phone-home"></div>
+                    <div class="pair-mirrored-pill"><i></i><span data-i18n="pair_mirrored">Mirrored · read only</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="pair-trust">
+            <div class="pair-trust-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"></rect><path d="M8.4 10.5V8a3.6 3.6 0 0 1 7.2 0v2.5" fill="none" stroke="currentColor" stroke-width="1.7"></path></svg>
+              <span data-i18n="pair_trust_1">Encrypted before it leaves your device</span>
+            </div>
+            <span class="pair-trust-sep" aria-hidden="true"></span>
+            <div class="pair-trust-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.7"></circle><path d="M12 7.6V12l3.1 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>
+              <span data-i18n="pair_trust_2">Unpair anytime, instantly</span>
+            </div>
+            <span class="pair-trust-sep" aria-hidden="true"></span>
+            <div class="pair-trust-item">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l6.5 2.4v5.3c0 4-2.7 7.2-6.5 9.3-3.8-2.1-6.5-5.3-6.5-9.3V5.9L12 3.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"></path></svg>
+              <span data-i18n="pair_trust_3">The relay only ever sees ciphertext</span>
+            </div>
+          </div>
+
+          <div class="pair-steps">
+            <div class="pair-step"><span class="pair-step-n">01</span><span data-i18n-html="pair_step_1">Open Ghoosted's settings and tap <b>Connect phone</b>.</span></div>
+            <div class="pair-step"><span class="pair-step-n">02</span><span data-i18n="pair_step_2">Point the camera at the code — nothing to install.</span></div>
+            <div class="pair-step"><span class="pair-step-n">03</span><span data-i18n="pair_step_3">Unpair whenever you like — the mirror disappears.</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TRANSPARENCY — deliberately placed BEFORE pricing: the limitations are
+         stated before anyone is asked to pay, not buried in the FAQ after. -->
+    <section class="compat" id="transparency" aria-labelledby="compatTitle">
+      <div class="compat-head">
+        <div class="kicker" style="justify-content:center" data-i18n="compat_kicker">Transparency</div>
+        <h2 class="section-title" id="compatTitle" data-i18n="compat_title">What Ghoosted does — and what it doesn’t.</h2>
+      </div>
+      <div class="compat-grid">
+        <div class="compat-col">
+          <h3 data-i18n="compat_does_t">What it does</h3>
+          <ul>
+            <li data-i18n="compat_does_1">Reads what is already visible inside your own logged-in session.</li>
+            <li data-i18n="compat_does_2">Keeps the analysis on your device, under your control.</li>
+            <li data-i18n="compat_does_3">Runs as an independent browser extension you install yourself.</li>
+          </ul>
+        </div>
+        <div class="compat-col">
+          <h3 data-i18n="compat_not_t">What it doesn’t do</h3>
+          <ul>
+            <li data-i18n="compat_not_1">Ask for, see or store your Instagram password.</li>
+            <li data-i18n="compat_not_2">Post, like, comment or follow on your behalf.</li>
+            <li data-i18n="compat_not_3">Change your account, its settings or its privacy options.</li>
+          </ul>
+        </div>
+        <div class="compat-col">
+          <h3 data-i18n="compat_dep_t">What depends on Instagram</h3>
+          <ul>
+            <li data-i18n="compat_dep_1">Ghost mode and viewer insights depend on how Instagram works today.</li>
+            <li data-i18n="compat_dep_2">Features can change, or stop working, after an Instagram update.</li>
+            <li data-i18n="compat_dep_3">How much data is available varies by profile and its privacy settings.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="compat-foot" data-i18n="compat_foot">Ghoosted is independent. We keep it working, but we don't control Instagram.</p>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing" id="pricing">
+      <div class="price-head">
+        <h2 class="price-title" data-i18n="price_title">Pay once. Yours for life.</h2>
+        <p class="price-sub" data-i18n="price_sub">No subscription. No renewals.</p>
+      </div>
+
+      <!-- Requirements, stated BEFORE the buy buttons. app.js promotes this to
+           an alert on phones: a visitor on iOS/Android cannot run a Chrome
+           extension at all, and finding that out after paying means a refund
+           request or a card dispute. -->
+      <p class="price-req" id="priceReq">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"></rect><path d="M2 19.5h20" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path></svg>
+        <span data-i18n="price_req">A desktop extension: Chrome, Edge or Brave. From your phone you can only read what it already collected, paired with a QR code.</span>
+      </p>
+
+      <div class="price-grid">
+        <div class="pcard pcard-pro">
+          <div class="pcard-top">
+            <span class="pcard-name">Ghoosted Pro</span>
+            <span class="pcard-tier" data-i18n="pro_tier">Full</span>
+          </div>
+          <div class="pcard-price">
+            <span class="pcard-amount">
+              <b class="pcard-now">€5</b>
+            </span>
+            <span class="pcard-period" data-i18n="price_period">one-time · lifetime licence</span>
+          </div>
+          <!-- Solo lo que Pro ANADE. Repetir aqui la lista de Plus alargaba la
+               tarjeta al doble sin decir nada nuevo: la linea de arriba ya deja
+               claro que lo de Plus va incluido. -->
+          <p class="pcard-all" data-i18n="price_all">Everything in Plus, and:</p>
+          <ul class="pcard-feats">
+            <li data-i18n="price_f1">Unfollow straight from the list, at a safe pace</li>
+            <li data-i18n="price_f4">Profile changes: photo, name, username and bio</li>
+            <li data-i18n="price_f5">Do they follow each other? Check two accounts at once</li>
+            <li data-i18n="price_f6">Full dossier per person + history</li>
+            <li data-i18n="price_f7">Story-viewer ranking + view counts</li>
+            <li data-i18n="price_f8">Your stories archived: who watched each one</li>
+            <li data-i18n="price_f9">Ghost mode: open stories without leaving a trace</li>
+            <li data-i18n="price_f10">HD downloads: stories, highlights and posts</li>
+            <li data-i18n="price_f11">Watchlist: track accounts and pairs</li>
+            <li data-i18n="price_f12">Follow requests approved on their own</li>
+            <li data-i18n="price_f13">Mirror it on your phone — read-only, encrypted</li>
+          </ul>
+          <a class="pcard-cta" data-cta="buy" data-plan="pro" href="#" data-i18n="price_cta">Get Ghoosted Pro · €5 lifetime</a>
+        </div>
+
+        <div class="pcard pcard-plus">
+          <div class="pcard-top">
+            <span class="pcard-name">Ghoosted Plus</span>
+            <span class="pcard-tier" data-i18n="plus_tier">Essentials</span>
+          </div>
+          <div class="pcard-price">
+            <span class="pcard-amount">
+              <b class="pcard-now" data-i18n="plus_price">€3.50</b>
+            </span>
+            <span class="pcard-period" data-i18n="price_period">one-time · lifetime licence</span>
+          </div>
+          <ul class="pcard-feats">
+            <li data-i18n="plus_f1">Who unfollowed you, live</li>
+            <li data-i18n="plus_f2">Who doesn't follow you back</li>
+            <li data-i18n="plus_f3">New followers, tracked automatically</li>
+            <li data-i18n="plus_f4">Profile analysis runs on your device</li>
+            <li class="is-excluded" data-i18n="plus_excl">No ghost mode or downloads</li>
+          </ul>
+          <a class="pcard-cta pcard-cta-ghost" data-cta="buy" data-plan="plus" href="#" data-i18n="plus_cta">Get Ghoosted Plus · €3.50 lifetime</a>
+        </div>
+      </div>
+
+      <p class="price-foot" data-i18n="price_foot">One-time payment · no account needed · analysis runs on your device</p>
+    </section>
+
+    <!-- FAQ -->
+    <div class="section-head" id="faq">
+      <div class="kicker" style="justify-content:center" data-i18n="faq_kicker">FAQ</div>
+      <h2 class="section-title" data-i18n="faq_title">Quick answers.</h2>
+    </div>
+    <!-- El FAQ cierra la parte clara antes de la banda oscura del final.
+         Con el cierre normal (56px) el borde negro empezaba pegado a la
+         ultima pregunta y parecia un corte, no un cambio de seccion. -->
+    <section class="pricing faq-close" style="padding-top:20px">
+      <div class="faq-list">
+        <details class="faq-item"><summary data-i18n="q1">Do I give my password?</summary><p data-i18n="a1">No. Ghoosted works inside your own logged-in session — it doesn’t ask for, see or store your password.</p></details>
+        <details class="faq-item"><summary data-i18n="q2">Is it private?</summary><p data-i18n="a2">Analysed on your device and meant to stay there. Only two things reach a server: your purchase with its licence key, and — only if you turn on the phone mirror — an encrypted snapshot the relay cannot read.</p></details>
+        <details class="faq-item"><summary data-i18n="q3">Can they tell I watched their story?</summary><p data-i18n="a3">Ghost mode is designed to open stories without registering a view. That depends on how Instagram works and can change.</p></details>
+        <details class="faq-item"><summary data-i18n="q4">Will my account get banned?</summary><p data-i18n="a4">It reads what Instagram already shows you, without changing your account. Even so, Instagram can update its systems or policies at any time, and any third-party tool may conflict with its terms.</p></details>
+        <details class="faq-item"><summary data-i18n="q8">Is it lifetime?</summary><p data-i18n="a8">Yes. One payment (€5 Pro, €3.50 Plus), no subscription and no renewals.</p></details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-band" id="cta">
+      <div class="field" id="ctaField" aria-hidden="true"></div>
+      <h2 data-i18n="cta_title">Stop imagining. See it.</h2>
+      <p data-i18n="cta_sub">Add Ghoosted to Chrome and see what your profile data reveals.</p>
+      <a class="btn btn-primary btn-lg" data-cta="buy" href="#pricing"><span data-i18n="cta_btn">Get Ghoosted · €5 lifetime</span> <span class="arr">→</span></a>
+    </section>
+
+    </div><!-- /.over -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <span class="brand-mark sm"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.4" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/><ellipse cx="14.6" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/></svg></span>
+        <b translate="no">Ghoosted</b>
+        <span class="foot-tag" data-i18n="foot_tag">the signals behind the profile</span>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><h4 data-i18n="foot_product">Product</h4><a href="#features" data-i18n="nav_features">Features</a><a href="#pricing" data-i18n="nav_pricing">Pricing</a><a href="#faq" data-i18n="nav_faq">FAQ</a></div>
+        <div class="foot-col"><h4 data-i18n="foot_legal">Legal</h4><a href="aviso-legal.html" data-i18n="foot_notice">Legal Notice</a><a href="terms.html" data-i18n="foot_terms">Terms</a><a href="privacy.html" data-i18n="foot_privacy">Privacy</a><a href="cookies.html" data-i18n="foot_cookies">Cookies</a><a href="refund.html" data-i18n="foot_refund">Refund</a></div>
+      </div>
+    </div>
+    <div class="indep">
+      <p class="indep-lead" data-i18n="indep_lead">Ghoosted is an independent browser extension. It is not affiliated with, endorsed by or sponsored by Instagram or Meta.</p>
+      <p class="indep-sub" data-i18n="indep_sub">Instagram® and Meta® are trademarks of their respective owners. Some features depend on Instagram’s current behaviour and may change over time.</p>
+    </div>
+    <p class="foot-disclaimer" data-i18n="foot_disclaimer">No refunds for change of mind — your statutory rights, including the legal guarantee of conformity, are unaffected. See the Refund Policy and the Terms.</p>
+    <p class="foot-rights"><span data-i18n="foot_rights">© 2026 Ghoosted. All rights reserved.</span></p>
+    </div>
+  </footer>
+
+  <!-- COOKIES (informational only: language preference is consent-exempt,
+       there are no advertising or tracking cookies on this site) -->
+  <div class="cookie" id="cookie" role="dialog" aria-label="Cookies">
+    <p data-i18n-html="cookie_text">This site only stores small settings on your device — your language and which notices you've closed. No ads, no tracking. More in the <a href="cookies.html">Cookie Policy</a>.</p>
+    <div class="cookie-btns">
+      <button type="button" class="btn btn-primary btn-sm" id="cookieAccept" data-i18n="cookie_accept">OK</button>
+    </div>
+  </div>
+
+  <script src="qr.js"></script>
+  <script src="i18n.js?v=32"></script>
+  <script src="app.js?v=39"></script>
+  <script src="hero.js?v=37"></script>
+</body>
+</html>
