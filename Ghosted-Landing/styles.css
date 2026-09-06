@@ -351,7 +351,7 @@ img,svg{display:block;max-width:100%}
      Solicitudes va recortada al boton y dos filas: el panel completo no
      aporta nada aqui y el detalle se lee mejor. */
   .fb-tile-shot .fb-shot{aspect-ratio:16/10}
-  .fb-tile-shot:last-child .fb-shot{aspect-ratio:855/530}
+  .fb-tile-shot:last-child .fb-shot{aspect-ratio:900/604}
 }
 .fb-tile-flat h3{font-family:var(--display);font-size:21px;font-weight:500;letter-spacing:-.03em;color:var(--ink);margin:0 0 6px}
 .fb-tile-flat p{font-size:14px;line-height:1.5;color:var(--ink-2);margin:0}
