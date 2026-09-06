@@ -1,4 +1,5 @@
 const { json, options, origin, readJson } = require('../lib/http');
+const { frenar } = require('../lib/freno');
 const { isConfigured } = require('../lib/kv');
 
 // Two products share this one endpoint: Pro (STRIPE_PRICE_ID, 5€) and Plus
@@ -12,6 +13,9 @@ const PRICE_ENV = { pro: 'STRIPE_PRICE_ID', plus: 'STRIPE_PRICE_ID_PLUS' };
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
+  // Freno por IP: 20 intentos cada 10 minutos.
+  const freno = await frenar(req, 'pagar', 20, 600);
+  if (!freno.permitido) return json(res, 429, { error: 'demasiados_intentos' });
 
   const body = await readJson(req).catch(() => ({}));
   const plan = PRICE_ENV[body.plan] ? body.plan : 'pro';
@@ -43,6 +47,21 @@ module.exports = async (req, res) => {
     success_url: site + '/success?session_id={CHECKOUT_SESSION_ID}',
     cancel_url: site + '/#pricing',
     allow_promotion_codes: 'true',
+    // IVA calculado por Stripe y desglosado en el recibo.
+    //
+    // HOY NO CAMBIA NADA para el cliente: la cuenta no tiene ninguna region
+    // registrada en Stripe Tax, asi que calcula 0 y sigue pagando 5 EUR.
+    // El dia que se anada el alta (Espana, y OSS si se pasa del umbral) el
+    // IVA aparece separado en el recibo y se declara solo, sin tocar codigo.
+    //
+    // Los precios siguen en 'inclusive' A PROPOSITO: vendiendo a consumidores
+    // en la UE hay que anunciar el precio final con impuestos (Directiva
+    // 98/6/CE y art. 60 TRLGDCU). Poner 5 EUR en la web y cobrar 6,05 en la
+    // pantalla de pago seria publicidad enganosa. Si algun dia hay que cubrir
+    // el IVA, se sube el precio anunciado, no se le suma por detras.
+    'automatic_tax[enabled]': 'true',
+    // Stripe Tax necesita saber donde esta el comprador para calcular.
+    'billing_address_collection': 'required',
     // EU/ES consumer law: digital content delivered immediately. The buyer
     // must EXPRESSLY consent to immediate performance and acknowledge losing
     // the 14-day withdrawal right (Art. 16(m) Directive 2011/83/EU, Art.

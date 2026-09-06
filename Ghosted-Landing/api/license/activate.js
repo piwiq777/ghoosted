@@ -1,10 +1,14 @@
 const { json, options, readJson } = require('../../lib/http');
+const { frenar } = require('../../lib/freno');
 const { ConfigError } = require('../../lib/kv');
 const { activate } = require('../../lib/licenses');
 
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { valid: false, error: 'method_not_allowed' });
+  // Freno por IP: 10 intentos cada 10 minutos.
+  const freno = await frenar(req, 'activar', 10, 600);
+  if (!freno.permitido) return json(res, 429, { valid: false, error: 'demasiados_intentos' });
   try {
     const body = await readJson(req);
     const result = await activate(body.key, body.accountId, body.product);
