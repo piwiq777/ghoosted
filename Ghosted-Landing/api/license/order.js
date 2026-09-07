@@ -1,4 +1,5 @@
 const { json, options } = require('../../lib/http');
+const { frenar } = require('../../lib/freno');
 const { ConfigError, command, getJson } = require('../../lib/kv');
 const { downloadFor } = require('../../lib/downloads');
 const { issueLicense } = require('../../lib/licenses');
@@ -7,6 +8,14 @@ const { entregar } = require('../../lib/entrega');
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'GET') return json(res, 405, { error: 'method_not_allowed' });
+  /* Este endpoint es el unico sin clave que, cuando no encuentra la licencia,
+     LLAMA A STRIPE. Sin freno, cualquiera puede dispararle sesiones inventadas
+     y gastarnos la cuota de la API de Stripe desde fuera. La pantalla de
+     gracias sondea cada 2-5 s durante unos minutos, asi que 120 por cuarto de
+     hora le sobra a un comprador de verdad. */
+  const freno = await frenar(req, 'pedido', 120, 900);
+  if (!freno.permitido) return json(res, 429, { error: 'demasiados_intentos' });
+
   const sessionId = String(req.query.session_id || '');
   if (!/^cs_[A-Za-z0-9_]+$/.test(sessionId)) return json(res, 400, { error: 'invalid_session' });
   try {

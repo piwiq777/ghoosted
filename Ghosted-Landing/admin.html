@@ -70,6 +70,17 @@
     var datos = null;
     var $ = function (id) { return document.getElementById(id); };
 
+    /* El correo y el telefono los escribe el COMPRADOR en la pantalla de
+       Stripe. Aqui se pintan dentro de una tabla, y este panel es el sitio con
+       mas que perder: quien logre ejecutar algo en esta pagina se lleva el
+       token y puede revocar todas las licencias. Que Stripe valide el formato
+       no es defensa: la defensa es escapar aqui. */
+    function esc(v) {
+      return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
     function pedir(ruta, opciones) {
       opciones = opciones || {};
       opciones.headers = Object.assign({ Authorization: 'Bearer ' + TOK }, opciones.headers || {});
@@ -101,12 +112,12 @@
     }
 
     function cifra(valor, etiqueta) {
-      return '<div class="cifra"><b>' + valor + '</b><span>' + etiqueta + '</span></div>';
+      return '<div class="cifra"><b>' + esc(valor) + '</b><span>' + esc(etiqueta) + '</span></div>';
     }
 
     function pintar() {
       var r = datos.resumen;
-      var planes = Object.keys(r.porPlan).map(function (p) { return p + ' ' + r.porPlan[p]; }).join(' · ');
+      var planes = Object.keys(r.porPlan).map(function (p) { return esc(p) + ' ' + esc(r.porPlan[p]); }).join(' · ');
       $('cifras').innerHTML =
         cifra(r.total, 'ventas') +
         cifra(r.activas, 'claves activas') +
@@ -131,24 +142,24 @@
         if (l.enviado && l.enviado.email) entrega.push('correo');
         if (l.enviado && l.enviado.sms) entrega.push('sms');
         var abuso = l.abuso && l.abuso.veces
-          ? ' <span class="pill warn" title="' + (l.abuso.cuentas || []).join(', ') + '">'
-            + l.abuso.veces + ' intentos</span>' : '';
+          ? ' <span class="pill warn" title="' + esc((l.abuso.cuentas || []).join(', ')) + '">'
+            + esc(l.abuso.veces) + ' intentos</span>' : '';
         html += '<tr>'
-          + '<td class="k">' + l.key + '</td>'
-          + '<td>' + l.plan + '</td>'
-          + '<td>' + (l.email || '<span class="gris2">—</span>')
-            + (l.telefono ? '<br><span class="gris2">' + l.telefono + '</span>' : '') + '</td>'
-          + '<td class="gris2">' + fecha(l.comprada) + '</td>'
-          + '<td class="k">' + (l.cuenta || '<span class="gris2">sin activar</span>') + abuso + '</td>'
-          + '<td class="gris2">' + (entrega.length ? entrega.join(' + ') : 'nada') + '</td>'
+          + '<td class="k">' + esc(l.key) + '</td>'
+          + '<td>' + esc(l.plan) + '</td>'
+          + '<td>' + (l.email ? esc(l.email) : '<span class="gris2">—</span>')
+            + (l.telefono ? '<br><span class="gris2">' + esc(l.telefono) + '</span>' : '') + '</td>'
+          + '<td class="gris2">' + esc(fecha(l.comprada)) + '</td>'
+          + '<td class="k">' + (l.cuenta ? esc(l.cuenta) : '<span class="gris2">sin activar</span>') + abuso + '</td>'
+          + '<td class="gris2">' + (entrega.length ? esc(entrega.join(' + ')) : 'nada') + '</td>'
           + '<td><span class="pill ' + (l.estado === 'active' ? 'ok' : 'no') + '">'
             + (l.estado === 'active' ? 'activa' : 'revocada') + '</span></td>'
           + '<td style="white-space:nowrap">'
           + (l.estado === 'active'
-              ? '<button class="mini rojo" data-a="revocar" data-k="' + l.key + '">Revocar</button>'
-              : '<button class="mini gris" data-a="reactivar" data-k="' + l.key + '">Reactivar</button>')
-          + '<button class="mini gris" data-a="soltar" data-k="' + l.key + '">Soltar cuenta</button>'
-          + '<button class="mini gris" data-a="reenviar" data-k="' + l.key + '">Reenviar</button>'
+              ? '<button class="mini rojo" data-a="revocar" data-k="' + esc(l.key) + '">Revocar</button>'
+              : '<button class="mini gris" data-a="reactivar" data-k="' + esc(l.key) + '">Reactivar</button>')
+          + '<button class="mini gris" data-a="soltar" data-k="' + esc(l.key) + '">Soltar cuenta</button>'
+          + '<button class="mini gris" data-a="reenviar" data-k="' + esc(l.key) + '">Reenviar</button>'
           + '</td></tr>';
       });
       $('tabla').innerHTML = html;
