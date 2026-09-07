@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# El panel de ventas y la pagina de gracias no pintan nada en un buscador.
+# Esto no protege nada por si solo —robots.txt lo lee cualquiera— pero evita
+# que acaben indexadas. Quien las protege de verdad es ADMIN_TOKEN y el
+# session_id de Stripe.
+Disallow: /admin
+Disallow: /success
+Disallow: /recuperar
+
 Sitemap: https://ghoosted.net/sitemap.xml

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ghoosted — Ventas</title>
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .ad{max-width:1140px;margin:0 auto;padding:26px 18px 60px}
+    .ad h1{font-family:var(--display);font-size:30px;letter-spacing:-1px;margin:0 0 4px}
+    .ad .sub{color:var(--ink-2);font-size:14px;margin:0 0 22px}
+    .ad-login{max-width:380px;margin:12vh auto;text-align:center}
+    .ad input[type=password],.ad input[type=search]{width:100%;box-sizing:border-box;border:1px solid var(--line-2);
+      border-radius:12px;padding:12px 14px;font:400 15px var(--font);background:var(--paper);color:var(--ink)}
+    .ad button{border:0;border-radius:12px;background:var(--ink);color:#F7F5F0;padding:12px 18px;
+      font:700 14px var(--font);cursor:pointer}
+    .ad button.mini{padding:6px 10px;font-size:12px;border-radius:9px;margin:0 2px 2px 0}
+    .ad button.gris{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+    .ad button.rojo{background:var(--alert)}
+    .cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:11px;margin:0 0 22px}
+    .cifra{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:var(--paper)}
+    .cifra b{display:block;font:700 24px var(--font);letter-spacing:-.5px}
+    .cifra span{font-size:12px;color:var(--ink-2)}
+    .barra{display:flex;gap:10px;align-items:center;margin:0 0 14px}
+    .tabla{width:100%;border-collapse:collapse;font-size:13px;background:var(--paper);
+      border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .tabla th{text-align:left;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;
+      color:var(--ink-2);padding:10px 11px;border-bottom:1px solid var(--line);white-space:nowrap}
+    .tabla td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+    .tabla tr:last-child td{border-bottom:0}
+    .k{font:600 12px ui-monospace,monospace;white-space:nowrap}
+    .pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700}
+    .ok{background:rgba(40,140,80,.14);color:#1F6B43}
+    .no{background:rgba(196,68,58,.14);color:#8E2C24}
+    .warn{background:rgba(214,66,126,.14);color:#A5245C}
+    .gris2{color:var(--ink-3)}
+    .envuelve{overflow-x:auto}
+    .msg{margin:12px 0 0;font-size:13.5px}
+  </style>
+</head>
+<body>
+  <main class="ad">
+    <div id="login" class="ad-login">
+      <h1>Ventas</h1>
+      <p class="sub">Pega el token del panel.</p>
+      <input id="tok" type="password" autocomplete="off" placeholder="ADMIN_TOKEN">
+      <p><button id="entrar" style="width:100%;margin-top:10px">Entrar</button></p>
+      <p id="loginMsg" class="msg"></p>
+    </div>
+
+    <div id="panel" hidden>
+      <h1>Ventas</h1>
+      <p class="sub" id="sub"></p>
+      <div class="cifras" id="cifras"></div>
+      <div class="barra">
+        <input id="buscar" type="search" placeholder="Buscar por correo, clave o cuenta…">
+        <button id="recargar" class="gris">Recargar</button>
+      </div>
+      <div class="envuelve"><table class="tabla" id="tabla"></table></div>
+      <p id="msg" class="msg"></p>
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    var TOK = '';
+    try { TOK = sessionStorage.getItem('ghd_admin') || ''; } catch (e) {}
+    var datos = null;
+    var $ = function (id) { return document.getElementById(id); };
+
+    function pedir(ruta, opciones) {
+      opciones = opciones || {};
+      opciones.headers = Object.assign({ Authorization: 'Bearer ' + TOK }, opciones.headers || {});
+      return fetch(ruta, opciones).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d }; });
+      });
+    }
+
+    function fecha(iso) {
+      if (!iso) return '—';
+      var d = new Date(iso);
+      return d.toLocaleDateString() + ' ' + d.toLocaleTimeString().slice(0, 5);
+    }
+
+    function cargar() {
+      $('msg').textContent = 'Cargando…';
+      return pedir('/api/admin/licencias').then(function (r) {
+        if (r.status === 401) { salir('Token incorrecto.'); return; }
+        if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
+        datos = r.d; $('msg').textContent = '';
+        pintar();
+      });
+    }
+
+    function salir(texto) {
+      try { sessionStorage.removeItem('ghd_admin'); } catch (e) {}
+      TOK = ''; $('panel').hidden = true; $('login').hidden = false;
+      $('loginMsg').textContent = texto || '';
+    }
+
+    function cifra(valor, etiqueta) {
+      return '<div class="cifra"><b>' + valor + '</b><span>' + etiqueta + '</span></div>';
+    }
+
+    function pintar() {
+      var r = datos.resumen;
+      var planes = Object.keys(r.porPlan).map(function (p) { return p + ' ' + r.porPlan[p]; }).join(' · ');
+      $('cifras').innerHTML =
+        cifra(r.total, 'ventas') +
+        cifra(r.activas, 'claves activas') +
+        cifra(r.activadas, 'ya instaladas') +
+        cifra(r.revocadas, 'revocadas') +
+        cifra(r.conAbuso, 'con intentos de otra cuenta') +
+        cifra(r.ingresosBrutos + ' €', 'bruto aproximado');
+      $('sub').textContent = planes + (datos.completo ? '' : ' · lista recortada');
+      filtrar();
+    }
+
+    function filtrar() {
+      var q = $('buscar').value.trim().toLowerCase();
+      var filas = datos.licencias.filter(function (l) {
+        if (!q) return true;
+        return [l.key, l.email, l.cuenta, l.plan].join(' ').toLowerCase().indexOf(q) !== -1;
+      });
+      var html = '<tr><th>Clave</th><th>Plan</th><th>Comprador</th><th>Comprada</th>'
+        + '<th>Cuenta IG</th><th>Entrega</th><th>Estado</th><th></th></tr>';
+      filas.forEach(function (l) {
+        var entrega = [];
+        if (l.enviado && l.enviado.email) entrega.push('correo');
+        if (l.enviado && l.enviado.sms) entrega.push('sms');
+        var abuso = l.abuso && l.abuso.veces
+          ? ' <span class="pill warn" title="' + (l.abuso.cuentas || []).join(', ') + '">'
+            + l.abuso.veces + ' intentos</span>' : '';
+        html += '<tr>'
+          + '<td class="k">' + l.key + '</td>'
+          + '<td>' + l.plan + '</td>'
+          + '<td>' + (l.email || '<span class="gris2">—</span>')
+            + (l.telefono ? '<br><span class="gris2">' + l.telefono + '</span>' : '') + '</td>'
+          + '<td class="gris2">' + fecha(l.comprada) + '</td>'
+          + '<td class="k">' + (l.cuenta || '<span class="gris2">sin activar</span>') + abuso + '</td>'
+          + '<td class="gris2">' + (entrega.length ? entrega.join(' + ') : 'nada') + '</td>'
+          + '<td><span class="pill ' + (l.estado === 'active' ? 'ok' : 'no') + '">'
+            + (l.estado === 'active' ? 'activa' : 'revocada') + '</span></td>'
+          + '<td style="white-space:nowrap">'
+          + (l.estado === 'active'
+              ? '<button class="mini rojo" data-a="revocar" data-k="' + l.key + '">Revocar</button>'
+              : '<button class="mini gris" data-a="reactivar" data-k="' + l.key + '">Reactivar</button>')
+          + '<button class="mini gris" data-a="soltar" data-k="' + l.key + '">Soltar cuenta</button>'
+          + '<button class="mini gris" data-a="reenviar" data-k="' + l.key + '">Reenviar</button>'
+          + '</td></tr>';
+      });
+      $('tabla').innerHTML = html;
+    }
+
+    var TEXTO = {
+      revocar: 'Revocar esta clave? Deja de activar y de descargar. Uselo para devoluciones o fraude.',
+      reactivar: 'Volver a dejarla activa?',
+      soltar: 'Desatarla de su cuenta de Instagram? La proxima cuenta que la active se queda con ella.',
+      reenviar: 'Volver a mandar el correo con la clave?',
+    };
+
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest && e.target.closest('button[data-a]');
+      if (!b) return;
+      var accion = b.dataset.a, key = b.dataset.k;
+      if (!confirm(TEXTO[accion] + '\n\n' + key)) return;
+      b.disabled = true;
+      pedir('/api/admin/accion', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accion: accion, key: key }),
+      }).then(function (r) {
+        b.disabled = false;
+        if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
+        $('msg').textContent = 'Hecho: ' + accion + ' · ' + key;
+        cargar();
+      });
+    });
+
+    $('entrar').addEventListener('click', function () {
+      TOK = $('tok').value.trim();
+      if (!TOK) return;
+      try { sessionStorage.setItem('ghd_admin', TOK); } catch (e) {}
+      $('login').hidden = true; $('panel').hidden = false;
+      cargar();
+    });
+    $('tok').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('entrar').click(); });
+    $('buscar').addEventListener('input', function () { if (datos) filtrar(); });
+    $('recargar').addEventListener('click', cargar);
+
+    if (TOK) { $('login').hidden = true; $('panel').hidden = false; cargar(); }
+  })();
+  </script>
+</body>
+</html>
