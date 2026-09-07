@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { json, options } = require('../lib/http');
+const { filePath } = require('../lib/downloads');
 
 /* Canal de avisos hacia las extensiones ya instaladas.
  *
@@ -27,6 +28,20 @@ module.exports = async (req, res) => {
   if (req.method !== 'GET') return json(res, 405, { error: 'method_not_allowed' });
   const estado = leerEstado();
   if (!estado) return json(res, 503, { error: 'status_unavailable' });
+  /* `?salud=1` responde si los zip estan de verdad en el servidor. Vercel
+     despliega clonando el repositorio, asi que un zip sin versionar
+     desaparece sin avisar y la descarga revienta DESPUES de haber cobrado.
+     Esto permite comprobarlo sin gastarse una compra. No expone nada: solo
+     dice si el fichero se puede leer. */
+  if (req.query && req.query.salud) {
+    res.setHeader('Cache-Control', 'no-store');
+    return json(res, 200, {
+      version: String(estado.latest || ''),
+      pro: !!filePath('pro'),
+      plus: !!filePath('plus'),
+    });
+  }
+
   res.setHeader('Cache-Control', 'public, max-age=600, s-maxage=600');
   return json(res, 200, {
     latest: String(estado.latest || ''),
