@@ -5,8 +5,12 @@ const path = require('path');
 // new build is zipped in. success.html, order.js, api/download.js and the
 // license-email sender all read from this instead of hardcoding the name.
 const DOWNLOADS = {
-  pro: { file: 'Ghosted-Pro-v1.57.0-b3a61977b6.zip', name: 'Ghoosted Pro' },
-  plus: { file: 'Ghosted-Plus-v1.1.1-fa7e83ada2.zip', name: 'Ghoosted Plus' },
+  // OJO al cambiar de version: estos nombres tienen que existir en
+  // api/_private/ o la descarga falla despues de haber cobrado.
+  // Pro sale ofuscado (tools/empaquetar-pro.js); Plus no, porque va tal cual
+  // a la Chrome Web Store cuando se pueda enviar.
+  pro: { file: 'Ghoosted-Pro-v1.57.0.zip', name: 'Ghoosted Pro' },
+  plus: { file: 'Ghoosted-Plus-v1.57.0.zip', name: 'Ghoosted Plus' },
 };
 
 // The zips live under api/ ON PURPOSE: Vercel serves the repo root statically
