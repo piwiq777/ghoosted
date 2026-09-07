@@ -743,8 +743,11 @@
   "popup_pro_desc": {
     "message": "Tüm özellikler açık. Desteğin için teşekkürler"
   },
-  "popup_buy": {
-    "message": "Ghoosted'i al · €5"
+  "popup_buy_pro": {
+    "message": "Ghoosted Pro al · 7 €"
+  },
+  "popup_buy_plus": {
+    "message": "Ghoosted Plus al · 5 €"
   },
   "popup_license_label": {
     "message": "Zaten aldın mı? Lisans anahtarını gir"

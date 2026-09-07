@@ -743,8 +743,11 @@
   "popup_pro_desc": {
     "message": "Все функции открыты. Спасибо за поддержку"
   },
-  "popup_buy": {
-    "message": "Получить Ghoosted · €5"
+  "popup_buy_pro": {
+    "message": "Получить Ghoosted Pro · 7 €"
+  },
+  "popup_buy_plus": {
+    "message": "Получить Ghoosted Plus · 5 €"
   },
   "popup_license_label": {
     "message": "Уже купил? Введи лицензионный ключ"

@@ -743,8 +743,11 @@
   "popup_pro_desc": {
     "message": "Tutte le funzioni sbloccate. Grazie per il supporto"
   },
-  "popup_buy": {
-    "message": "Ottieni Ghoosted · €5"
+  "popup_buy_pro": {
+    "message": "Ottieni Ghoosted Pro · 7 €"
+  },
+  "popup_buy_plus": {
+    "message": "Ottieni Ghoosted Plus · 5 €"
   },
   "popup_license_label": {
     "message": "Già comprato? Inserisci la chiave di licenza"

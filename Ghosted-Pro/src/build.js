@@ -12,13 +12,16 @@
    ---------------------------------------------------------------------------
    FREE_MODE
      true  → every feature is unlocked for everyone and the licence is never
-             checked. This is how the extension ships TODAY.
+             checked.
      false → licence enforced: the key must be activated and bound to the
              Instagram account, and it must have been bought for THIS product.
+             This is how the extension SHIPS, and test/licencia.test.js falla
+             si alguien lo deja en true: sin esto la clave que se cobra no
+             abre nada, porque no habia nada cerrado.
 
-     Flipping this to false is the launch switch. Before flipping it, be aware
-     that anyone already running the extension loses access unless they buy —
-     there is no grandfathering built in.
+     Para trabajar en local sin clave esta tools/escritorio.js, que copia al
+     escritorio con la puerta abierta. Eso es SOLO tu copia: lo que se
+     empaqueta y se vende sale de aqui, y sale cerrado.
 
    PRODUCT
      'pro' or 'plus'. Sent to /api/license/{activate,verify} and checked
@@ -29,7 +32,7 @@
 (function () {
   'use strict';
   globalThis.GhostedBuild = {
-    FREE_MODE: true,
+    FREE_MODE: false,
     PRODUCT: 'pro',
   };
 })();

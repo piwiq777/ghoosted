@@ -743,8 +743,11 @@
   "popup_pro_desc": {
     "message": "Alle Funktionen freigeschaltet. Danke für deinen Support"
   },
-  "popup_buy": {
-    "message": "Ghoosted holen · €5"
+  "popup_buy_pro": {
+    "message": "Ghoosted Pro holen · 7 €"
+  },
+  "popup_buy_plus": {
+    "message": "Ghoosted Plus holen · 5 €"
   },
   "popup_license_label": {
     "message": "Schon gekauft? Gib deinen Lizenz-Key ein"

@@ -21,11 +21,26 @@ function newKey() {
 function licenseKey(key) { return 'ghosted:license:' + key; }
 function bindingKey(key) { return 'ghosted:binding:' + key; }
 
+// Una clave libre, y de verdad libre. Son 80 bits al azar, asi que dos
+// compradores sacando la misma es practicamente imposible — pero si pasara,
+// el segundo heredaria la ficha del primero, ya atada a otra cuenta de
+// Instagram, y se quedaria sin producto DESPUES de pagar. El hueco se reclama
+// con SET NX, que es atomico: si otro lo cogio antes, se prueba con otra.
+async function claimFreeKey() {
+  for (let intento = 0; intento < 5; intento++) {
+    const key = newKey();
+    if (await command(['SET', 'ghosted:keyclaim:' + key, '1', 'NX'])) return key;
+  }
+  throw new Error('license_key_exhausted');
+}
+
 async function issueLicense(session) {
   const sessionKey = 'ghosted:stripe:session:' + session.id;
   let key = await command(['GET', sessionKey]);
   if (!key) {
-    key = newKey();
+    key = await claimFreeKey();
+    // El webhook de Stripe se reintenta: si otra pasada ya emitio la clave de
+    // esta compra, vale la suya y esta se descarta. Una compra, una clave.
     const claimed = await command(['SET', sessionKey, key, 'NX']);
     if (!claimed) key = await command(['GET', sessionKey]);
   }
