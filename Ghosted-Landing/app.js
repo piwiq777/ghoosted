@@ -261,7 +261,12 @@
         const response = await fetch('/api/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ plan: button.dataset.plan || 'pro' }),
+          // El idioma viaja con la compra: decide en que idioma llega el
+          // correo con la clave y en cual se pinta la pantalla de Stripe.
+          body: JSON.stringify({
+            plan: button.dataset.plan || 'pro',
+            lang: document.documentElement.lang || 'en',
+          }),
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok || !payload.url) throw new Error(payload.error || 'checkout_unavailable');

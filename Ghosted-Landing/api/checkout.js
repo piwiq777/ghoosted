@@ -19,6 +19,7 @@ module.exports = async (req, res) => {
 
   const body = await readJson(req).catch(() => ({}));
   const plan = PRICE_ENV[body.plan] ? body.plan : 'pro';
+  const lang = IDIOMAS.indexOf(String(body.lang || '')) !== -1 ? String(body.lang) : 'en';
   const priceId = process.env[PRICE_ENV[plan]];
 
   if (!isConfigured() || !process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET || !priceId) {
@@ -36,6 +37,13 @@ module.exports = async (req, res) => {
     'line_items[0][price]': priceId,
     'line_items[0][quantity]': '1',
     'metadata[plan]': plan,
+    // Para el correo con la clave (lib/correo.js). Se valida contra la lista
+    // de la web: cualquier otra cosa se queda en ingles.
+    'metadata[lang]': lang,
+    // Y la pantalla de pago de Stripe, en el mismo idioma. Stripe no tiene
+    // arabe ni hindi en Checkout, asi que esos van en 'auto' y los resuelve el
+    // navegador del comprador.
+    'locale': STRIPE_LOCALE[lang] || 'auto',
     // La cuenta de Stripe se comparte con otro producto, asi que por defecto
     // el cargo saldria en el extracto con el nombre de esa otra marca. Quien
     // no reconoce un cargo lo reclama al banco, y una reclamacion cuesta el

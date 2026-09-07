@@ -17,6 +17,7 @@
  */
 const { downloadFor } = require('./downloads');
 const { markDelivered } = require('./licenses');
+const { correoLicencia } = require('./correo');
 
 function sitio() {
   return process.env.SITE_URL || 'https://ghoosted.net';
@@ -31,6 +32,13 @@ function enlaceDescarga(record) {
 async function porCorreo(record) {
   if (!process.env.RESEND_API_KEY || !record.customerEmail) return false;
   const dl = downloadFor(record.plan || 'pro');
+  const carta = correoLicencia({
+    key: record.key,
+    producto: dl.name,
+    lang: record.lang || 'en',
+    urlDescarga: enlaceDescarga(record),
+    sitio: sitio(),
+  });
   // MAIL_FROM tiene que ser una direccion de un dominio verificado en Resend;
   // el remitente de pruebas solo entrega al dueño de la cuenta.
   const from = process.env.MAIL_FROM || 'Ghoosted <onboarding@resend.dev>';
@@ -41,15 +49,12 @@ async function porCorreo(record) {
       body: JSON.stringify({
         from,
         to: record.customerEmail,
-        subject: 'Tu clave de ' + dl.name,
-        html: '<p>Gracias por tu compra de <b>' + dl.name + '</b>.</p>'
-          + '<p>Tu clave de licencia (guárdala, la necesitarás para activar la extensión):</p>'
-          + '<p style="font:700 18px monospace;letter-spacing:1px">' + record.key + '</p>'
-          + '<p><a href="' + enlaceDescarga(record) + '">Descargar ' + dl.name + ' (.zip)</a></p>'
-          + '<p>Descomprime el .zip, abre chrome://extensions, activa el Modo de desarrollador y pulsa "Cargar descomprimida".</p>'
-          + '<p style="color:#888;font-size:12px">Al comprar solicitaste la entrega inmediata del contenido digital y '
-          + 'aceptaste perder el derecho de desistimiento de 14 días una vez entregada la clave '
-          + '(art. 103.m TRLGDCU / art. 16.m Directiva 2011/83/UE). Tus garantías legales de conformidad no se ven afectadas.</p>',
+        // Responder al correo tiene que llegar a un buzon que alguien lee: es
+        // lo primero que hace quien se queda atascado instalando.
+        reply_to: process.env.MAIL_REPLY_TO || 'hello@ghoosted.net',
+        subject: carta.subject,
+        html: carta.html,
+        text: carta.text,
       }),
     });
     if (!r.ok) { console.error('resend_failed', r.status, await r.text().catch(() => '')); return false; }

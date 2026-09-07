@@ -53,6 +53,8 @@ async function issueLicense(session) {
       // 3.50€) — set from the Checkout Session metadata (checkout.js stamps
       // it). Defaults to 'pro' for any session created before this existed.
       plan: (session.metadata && session.metadata.plan) || 'pro',
+      // Idioma en el que se hizo la compra: en ese llega el correo.
+      lang: (session.metadata && session.metadata.lang) || 'en',
       createdAt: new Date().toISOString(),
       checkoutSessionId: session.id,
       paymentIntent: session.payment_intent || null,
