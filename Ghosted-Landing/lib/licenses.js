@@ -57,11 +57,24 @@ async function issueLicense(session) {
       checkoutSessionId: session.id,
       paymentIntent: session.payment_intent || null,
       customerEmail: (session.customer_details && session.customer_details.email) || null,
+      // Opcional: Stripe solo lo trae si el comprador lo dejo. Segunda via
+      // para la clave, ver lib/entrega.js.
+      customerPhone: (session.customer_details && session.customer_details.phone) || null,
     };
     await setJson(licenseKey(key), record);
     if (record.paymentIntent) await command(['SET', 'ghosted:stripe:payment:' + record.paymentIntent, key]);
   }
   return key;
+}
+
+// Deja constancia de por donde salio la clave. La pantalla de gracias lo lee
+// para decir la verdad: si el correo no salio, no dice que lo ha mandado.
+async function markDelivered(key, sent) {
+  const record = await getJson(licenseKey(key));
+  if (!record) return null;
+  record.sent = Object.assign({}, record.sent, sent, { at: new Date().toISOString() });
+  await setJson(licenseKey(key), record);
+  return record;
 }
 
 async function resolve(key) {
@@ -144,4 +157,4 @@ async function revokePayment(paymentIntent) {
   await setJson(licenseKey(key), record);
 }
 
-module.exports = { activate, issueLicense, normalizeKey, resolve, revokePayment, verify };
+module.exports = { activate, issueLicense, markDelivered, normalizeKey, resolve, revokePayment, verify };

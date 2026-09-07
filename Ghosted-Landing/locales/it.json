@@ -137,7 +137,7 @@
   "plus_excl": "Niente modalità fantasma né download",
   "price_foot": "Pagamento unico · nessun account · l'analisi gira sul tuo dispositivo",
   "after_key_t": "La tua chiave è tua",
-  "after_key": "Ogni acquisto genera la sua chiave, unica e solo tua. Arriva via e-mail, sblocca l'estensione sul tuo account Instagram e non scade mai.",
+  "after_key": "Ogni acquisto genera la sua chiave, unica e solo tua. Compare sullo schermo appena paghi e te la inviamo anche via e-mail — e via SMS, se lasci un numero. Non scade mai.",
   "after_store_t": "Presto sul Chrome Web Store",
   "after_store": "Nel frattempo si installa dal file che scarichi, in circa cinque minuti. Quando sarà nello store, la stessa chiave funziona anche lì: non paghi due volte.",
   "after_upd_t": "Aggiornamenti inclusi",
@@ -204,5 +204,9 @@
   "price_f12": "Richieste di seguirti approvate da sole",
   "price_f13": "Anche sul telefono: uno specchio cifrato, sola lettura",
   "price_all": "Tutto il Plus, e in più:",
-  "foot_install": "Come installare"
+  "foot_install": "Come installare",
+  "sx_save": "Conserva questa chiave: è l'unico modo per attivare l'estensione.",
+  "sx_sent_mail": "Te l'abbiamo inviata anche via e-mail.",
+  "sx_sent_sms": "E via SMS sul tuo cellulare.",
+  "sx_sent_none": "Non siamo riusciti a inviarla da nessuna parte: copiala prima di chiudere questa pagina."
 }

@@ -2,6 +2,7 @@ const { json, options } = require('../../lib/http');
 const { ConfigError, command, getJson } = require('../../lib/kv');
 const { downloadFor } = require('../../lib/downloads');
 const { issueLicense } = require('../../lib/licenses');
+const { entregar } = require('../../lib/entrega');
 
 module.exports = async (req, res) => {
   if (options(req, res)) return;
@@ -22,6 +23,9 @@ module.exports = async (req, res) => {
       if (r.ok && session && session.payment_status === 'paid') {
         const k = await issueLicense(session);
         record = await getJson('ghosted:license:' + k);
+        /* Si se emite aqui es que el webhook no llego, asi que tampoco salio
+           el correo ni el SMS. entregar() se protege sola contra repetir. */
+        if (record) await entregar(record);
       }
     }
     if (!record || record.status !== 'active') return json(res, 404, { error: 'key_pending' });
@@ -36,6 +40,9 @@ module.exports = async (req, res) => {
       downloadUrl: 'api/download?session_id=' + encodeURIComponent(sessionId),
       downloadName: dl.name,
       downloadFile: dl.file,
+      /* Por donde salio de verdad. La pantalla de gracias lo dice tal cual:
+         prometer un correo que no se envio es como se pierde una clave. */
+      sent: { email: !!(record.sent && record.sent.email), sms: !!(record.sent && record.sent.sms) },
     });
   } catch (error) {
     return json(res, error instanceof ConfigError ? 503 : 500, { error: error instanceof ConfigError ? 'license_service_not_configured' : 'license_service_error' });

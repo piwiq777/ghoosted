@@ -137,7 +137,7 @@
   "plus_excl": "Sin modo fantasma ni descargas",
   "price_foot": "Pago único · sin cuenta · el análisis se ejecuta en tu dispositivo",
   "after_key_t": "Tu clave es tuya",
-  "after_key": "Cada compra genera su propia clave, única y solo tuya. Llega por correo, abre la extensión en tu cuenta de Instagram y no caduca nunca.",
+  "after_key": "Cada compra genera su propia clave, única y solo tuya. Aparece en pantalla nada más pagar y te la mandamos también al correo — y al móvil por SMS, si dejas tu número. No caduca nunca.",
   "after_store_t": "Próximamente en la Chrome Web Store",
   "after_store": "Mientras tanto se instala desde el archivo que descargas, en unos cinco minutos. Cuando esté en la tienda, la misma clave te vale allí: no pagas dos veces.",
   "after_upd_t": "Actualizaciones incluidas",
@@ -204,5 +204,9 @@
   "price_f12": "Solicitudes de seguimiento aprobadas solas",
   "price_f13": "También en tu móvil: un espejo cifrado, solo lectura",
   "price_all": "Todo lo de Plus, y además:",
-  "foot_install": "Cómo instalar"
+  "foot_install": "Cómo instalar",
+  "sx_save": "Guárdala: es la única forma de activar la extensión.",
+  "sx_sent_mail": "También te la hemos enviado a tu correo.",
+  "sx_sent_sms": "Y por SMS a tu móvil.",
+  "sx_sent_none": "No hemos podido enviarla a ningún sitio, así que cópiala antes de cerrar esta página."
 }

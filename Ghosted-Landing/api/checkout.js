@@ -62,6 +62,16 @@ module.exports = async (req, res) => {
     'automatic_tax[enabled]': 'true',
     // Stripe Tax necesita saber donde esta el comprador para calcular.
     'billing_address_collection': 'required',
+    // El movil, para mandar la clave tambien por SMS. Segunda via cuando el
+    // correo se va a spam o el comprador cierra la pestaña sin copiar la
+    // clave. Stripe lo pide como opcional: quien no quiera darlo compra igual.
+    //
+    // SOLO se pide si el SMS puede salir de verdad (lib/entrega.js necesita
+    // las variables de Twilio). Pedir un telefono que no se va a usar para
+    // nada es recoger un dato personal sin finalidad, que es justo lo que el
+    // RGPD llama minimizacion.
+    ...(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM
+      ? { 'phone_number_collection[enabled]': 'true' } : {}),
     // EU/ES consumer law: digital content delivered immediately. The buyer
     // must EXPRESSLY consent to immediate performance and acknowledge losing
     // the 14-day withdrawal right (Art. 16(m) Directive 2011/83/EU, Art.

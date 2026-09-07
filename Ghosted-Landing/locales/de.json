@@ -137,7 +137,7 @@
   "plus_excl": "Kein Geistermodus, keine Downloads",
   "price_foot": "Einmalzahlung · kein Konto nötig · die Analyse läuft auf deinem Gerät",
   "after_key_t": "Dein Schlüssel gehört dir",
-  "after_key": "Jeder Kauf erzeugt einen eigenen Schlüssel, einmalig und nur deiner. Er kommt per E-Mail, schaltet die Erweiterung für dein Instagram-Konto frei und läuft nie ab.",
+  "after_key": "Jeder Kauf erzeugt einen eigenen Schlüssel, einmalig und nur deiner. Er erscheint direkt nach der Zahlung auf dem Bildschirm, kommt zusätzlich per E-Mail — und per SMS, wenn du eine Nummer hinterlässt. Er läuft nie ab.",
   "after_store_t": "Bald im Chrome Web Store",
   "after_store": "Bis dahin wird sie aus der heruntergeladenen Datei installiert, in etwa fünf Minuten. Sobald sie im Store ist, gilt derselbe Schlüssel auch dort — du zahlst nicht zweimal.",
   "after_upd_t": "Updates inklusive",
@@ -204,5 +204,9 @@
   "price_f12": "Follower-Anfragen genehmigen sich von selbst",
   "price_f13": "Auch am Handy: ein verschlüsselter Spiegel, nur lesen",
   "price_all": "Alles aus Plus, und dazu:",
-  "foot_install": "Installationsanleitung"
+  "foot_install": "Installationsanleitung",
+  "sx_save": "Bewahre diesen Schlüssel auf: nur damit lässt sich die Erweiterung aktivieren.",
+  "sx_sent_mail": "Wir haben ihn dir auch per E-Mail geschickt.",
+  "sx_sent_sms": "Und per SMS auf dein Handy.",
+  "sx_sent_none": "Wir konnten ihn nirgends hinschicken — kopiere ihn, bevor du diese Seite schließt."
 }

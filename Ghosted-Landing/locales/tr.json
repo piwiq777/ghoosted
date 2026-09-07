@@ -137,7 +137,7 @@
   "plus_excl": "Hayalet mod veya indirme yok",
   "price_foot": "Tek ödeme · hesap gerekmez · analiz cihazında çalışır",
   "after_key_t": "Anahtarın senindir",
-  "after_key": "Her satın alma kendi anahtarını üretir; benzersiz ve yalnızca senin. E-postayla gelir, uzantıyı Instagram hesabında açar ve hiç sona ermez.",
+  "after_key": "Her satın alma kendi anahtarını üretir; benzersiz ve yalnızca senin. Ödeme biter bitmez ekranda çıkar, ayrıca e-postayla — numara bırakırsan SMS'le de — gönderilir. Hiç sona ermez.",
   "after_store_t": "Yakında Chrome Web Mağazası'nda",
   "after_store": "O zamana kadar indirdiğin dosyadan, yaklaşık beş dakikada kuruluyor. Mağazaya girdiğinde aynı anahtar orada da geçerli: iki kez ödemezsin.",
   "after_upd_t": "Güncellemeler dahil",
@@ -204,5 +204,9 @@
   "price_f12": "Takip istekleri kendiliğinden onaylanır",
   "price_f13": "Telefonunda da: şifreli, salt okunur ayna",
   "price_all": "Plus'taki her şey, ayrıca:",
-  "foot_install": "Kurulum rehberi"
+  "foot_install": "Kurulum rehberi",
+  "sx_save": "Bu anahtarı sakla: uzantıyı etkinleştirmenin tek yolu bu.",
+  "sx_sent_mail": "Ayrıca e-postana da gönderdik.",
+  "sx_sent_sms": "Ve cep telefonuna SMS ile.",
+  "sx_sent_none": "Hiçbir yere gönderemedik; bu sayfayı kapatmadan önce kopyala."
 }

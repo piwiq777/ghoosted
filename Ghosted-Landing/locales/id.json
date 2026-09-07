@@ -137,7 +137,7 @@
   "plus_excl": "Nggak ada mode hantu atau unduhan",
   "price_foot": "Sekali bayar · tanpa akun · analisis berjalan di perangkatmu",
   "after_key_t": "Kuncimu milikmu",
-  "after_key": "Setiap pembelian menghasilkan kuncinya sendiri, unik dan hanya milikmu. Dikirim lewat email, membuka ekstensi di akun Instagram-mu, dan tidak pernah kedaluwarsa.",
+  "after_key": "Setiap pembelian menghasilkan kuncinya sendiri, unik dan hanya milikmu. Kunci muncul di layar begitu kamu membayar, dan kami kirim juga lewat email — serta lewat SMS kalau kamu meninggalkan nomor. Tidak pernah kedaluwarsa.",
   "after_store_t": "Segera di Chrome Web Store",
   "after_store": "Sementara itu dipasang dari file yang kamu unduh, sekitar lima menit. Begitu ada di toko, kunci yang sama berlaku di sana: kamu tidak membayar dua kali.",
   "after_upd_t": "Pembaruan termasuk",
@@ -204,5 +204,9 @@
   "price_f12": "Permintaan mengikuti disetujui otomatis",
   "price_f13": "Juga di ponsel: cermin terenkripsi, baca-saja",
   "price_all": "Semua yang ada di Plus, dan:",
-  "foot_install": "Panduan instalasi"
+  "foot_install": "Panduan instalasi",
+  "sx_save": "Simpan kunci ini: hanya dengan ini ekstensi bisa diaktifkan.",
+  "sx_sent_mail": "Kami juga mengirimkannya ke emailmu.",
+  "sx_sent_sms": "Dan lewat SMS ke ponselmu.",
+  "sx_sent_none": "Kami tidak bisa mengirimkannya ke mana pun, jadi salin sebelum menutup halaman ini."
 }
