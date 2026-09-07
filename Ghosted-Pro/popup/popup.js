@@ -36,14 +36,22 @@ async function cargarIdioma() {
 }
 const idiomaListo = cargarIdioma();
 
-const t = (clave) => {
+/* El respaldo NUNCA es el nombre de la clave. Si un texto falta —porque la
+   version instalada es mas vieja que este fichero, que es justo lo que pasa al
+   cargar la extension descomprimida— el usuario veia "popup_buy_pro" escrito
+   en un boton rosa. Ahora ve el texto en ingles que ya trae el HTML. */
+const t = (clave, respaldo) => {
   if (CUSTOM && CUSTOM[clave] != null) return CUSTOM[clave];
-  try { return chrome.i18n.getMessage(clave) || clave; } catch (e) { return clave; }
+  let v = '';
+  try { v = chrome.i18n.getMessage(clave) || ''; } catch (e) { v = ''; }
+  return v || respaldo || '';
 };
 
 function traducir() {
   document.querySelectorAll('[data-i18n]').forEach((el) => {
-    const texto = t(el.getAttribute('data-i18n'));
+    /* Lo que ya hay escrito en el HTML es el ingles de siempre: sirve de
+       respaldo sin tener que repetirlo en ningun sitio. */
+    const texto = t(el.getAttribute('data-i18n'), el.textContent);
     if (texto) el.textContent = texto;
   });
 }
@@ -130,8 +138,12 @@ async function quitar() {
 document.addEventListener('DOMContentLoaded', async () => {
   await idiomaListo;
   traducir();
-  /* El precio depende de que version sea esta, y no son el mismo. */
-  $('buy').textContent = t(BUILD.PRODUCT === 'plus' ? 'popup_buy_plus' : 'popup_buy_pro');
+  /* El precio depende de que version sea esta, y no son el mismo. El respaldo
+     va escrito aqui porque este boton no tiene texto en el HTML: lo pone el
+     script, y sin respaldo se quedaria en blanco o con el nombre de la clave. */
+  const esPlus = BUILD.PRODUCT === 'plus';
+  $('buy').textContent = t(esPlus ? 'popup_buy_plus' : 'popup_buy_pro',
+    esPlus ? 'Get Ghoosted Plus · €5' : 'Get Ghoosted Pro · €7');
   $('buy').href = BUY_URL;
   $('privacy').href = PRIVACY_URL;
   $('help').href = HELP_URL;

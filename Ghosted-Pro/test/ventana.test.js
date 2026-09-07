@@ -40,6 +40,15 @@ module.exports = () => {
   s.eq('ningun texto de la ventana sin traducir',
     [...usadas, ...marcadas].filter((k) => !(k in en)), []);
 
+  /* NUNCA el nombre de la clave en pantalla. Al cargar la extension
+     descomprimida el navegador no la actualiza sola, asi que es normal que
+     popup.js sea mas nuevo que los textos instalados — y ahi es donde salia
+     "popup_buy_pro" escrito en un boton rosa, en una captura del tutorial. */
+  s.ok('el respaldo no es el nombre de la clave', !/getMessage\(clave\) \|\| clave/.test(js));
+  s.ok('t() acepta un texto de respaldo', /const t = \(clave, respaldo\)/.test(js));
+  s.ok('los data-i18n caen en el texto del HTML', /t\(el\.getAttribute\('data-i18n'\), el\.textContent\)/.test(js));
+  s.ok('el boton de comprar lleva su propio respaldo', /'Get Ghoosted Pro · €7'/.test(js));
+
   /* El precio no es el mismo en las dos versiones. */
   s.ok('el boton de comprar distingue Pro de Plus',
     /popup_buy_plus/.test(js) && /popup_buy_pro/.test(js));

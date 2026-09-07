@@ -29,4 +29,13 @@
 .legal-table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:14px;display:block;overflow-x:auto}
 .legal-table th,.legal-table td{text-align:start;padding:10px 14px;border:1px solid var(--line);color:var(--ink-2);white-space:normal}
 .legal-table th{background:var(--surface);color:var(--ink);font-weight:600;font-size:12px;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+
+/* ---------- capturas de la guia de instalacion ---------- */
+/* Bordes redondos como el resto de imagenes del sitio. width/height van en el
+   HTML para que el hueco este reservado antes de que cargue y el texto no de
+   un salto. La del paso 5 es estrecha a proposito: se queda a su tamaño. */
+.guia-shot{margin:14px 0 22px;max-width:100%}
+.guia-shot img{display:block;max-width:100%;height:auto;border-radius:14px;
+  border:1px solid var(--line);background:var(--surface)}
+.guia-shot figcaption{margin-top:8px;font-size:12.5px;color:var(--ink-3);line-height:1.5}
 .lang-es{display:none}
