@@ -30,8 +30,12 @@ module.exports = () => {
   const sello = JSON.parse(leer('lib/cache.json'));
 
   for (const [nombre, ficheros] of Object.entries(GRUPOS)) {
+    /* Igual que el sellador: los propios ?v= no cuentan, o sellar los idiomas
+       ensuciaria i18n.js, que lleva ese numero escrito dentro. */
     const h = crypto.createHash('sha256');
-    for (const f of ficheros) h.update(fs.readFileSync(path.join(WEB, f)));
+    for (const f of ficheros) {
+      h.update(fs.readFileSync(path.join(WEB, f), 'utf8').replace(/\?v=\d+/g, '?v='));
+    }
     const actual = h.digest('hex').slice(0, 16);
     const guardado = sello[nombre];
     if (!guardado) { s.ok(nombre + ': sellado', false); continue; }

@@ -73,7 +73,7 @@
       }
       function arrancar(cb) {
         if (lang === 'en') { pintar(); cb(); return; }
-        fetch('locales/' + lang + '.json?v=34')
+        fetch('locales/' + lang + '.json?v=35')
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (d) { dict = d; pintar(); cb(); })
           .catch(function () { pintar(); cb(); });
