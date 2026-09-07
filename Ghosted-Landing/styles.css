@@ -364,8 +364,8 @@ img,svg{display:block;max-width:100%}
 /* En oscuro, los mismos tonos que la franja ancha de "No te siguen": blanco
    puro para el titulo y blanco al 66% para el texto, que a plena opacidad
    sobre negro deslumbra y cansa de leer. */
-.fb-tile-strip h3{color:#fff}
-.fb-tile-strip p{color:rgba(255,255,255,.66)}
+.fb-tile-flat.fb-tile-strip h3{color:#fff}
+.fb-tile-flat.fb-tile-strip p{color:rgba(255,255,255,.66)}
 /* Las capturas son claras: sobre negro necesitan un filo tenue, no la linea
    oscura que sirve sobre el fondo crema. */
 .fb-tile-strip .fb-shot{aspect-ratio:1100/366;border:1px solid rgba(255,255,255,.14);
