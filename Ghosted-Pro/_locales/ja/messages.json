@@ -913,7 +913,7 @@
     "message": "解除したい人をタップして「フォロー解除」。間隔をあけて1件ずつ実行します。速すぎるとInstagramにブロックされます。"
   },
   "nb_confirm": {
-    "message": "$1件のフォローを解除しますか？Ghoostedはブロックを避けるためゆっくり行います（各件の間に数秒）。このタブは開いたままに。"
+    "message": "$1 件のフォローを解除しますか？Ghoostedはわざとゆっくり進みます（1件ごとに数秒）。速く行うアカウントをInstagramが制限するためです。このタブは開いたままに。"
   },
   "nb_progress": {
     "message": "解除中… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "誰でも確認なしに非公開アカウントに入れるようになります。",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "申請した人は誰でも、あなたが確認しないまま非公開アカウントに入ります。そして一括承認は、Instagramがアカウントを問題視する行動のひとつです。"
   },
   "req_run": {
     "message": "今すぐ承認",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "速すぎるとInstagramにアカウントを制限されます。不規則な間隔なら検知されません。パネルは閉じても構いません。バックグラウンドで続きます。",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagramは速く行うアカウントを制限するため、Ghoostedは不規則に間を空けます。効果はありますが保証ではありません。1日に大量に行えばやはり目を付けられます。パネルは閉じても続きます。"
   },
   "fold_hint": {
     "message": "クリックで折りたたみ／展開",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "別の確認が実行中です。終わるまでお待ちください。"
+  },
+  "nb_confirm_big": {
+    "message": "⚠ 一度に $1 件は多すぎます。\n\nInstagramはこれでアカウントを制限します。Ghoostedには防げません。ゆっくり進むのは助けになりますが、見えなくなるわけではありません。\n\n安全な目安：1日 $2 件まで。数日続けて行わないこと。\n\nそれでも続けますか？"
+  },
+  "req_confirm": {
+    "message": "保留中のリクエストを承認しますか？\n\nGhoostedは1回あたり最大20件を、間を空けて承認します。それでも一度に大量に承認することは、大量のフォロー解除と並んでInstagramが最も注視する行動のひとつです。\n\n最近「自動化された動作」の警告が出たなら、数日空けてください。\n\n続けますか？"
   }
 }

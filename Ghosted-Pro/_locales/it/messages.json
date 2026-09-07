@@ -913,7 +913,7 @@
     "message": "Tocca le persone da non seguire più, poi “Smetti di seguire”. Va una alla volta con una pausa — Instagram blocca gli account troppo veloci."
   },
   "nb_confirm": {
-    "message": "Smettere di seguire $1 account? Ghoosted lo fa lentamente (pochi secondi tra ognuno) per evitare un blocco di Instagram. Lascia questa scheda aperta."
+    "message": "Smettere di seguire $1 account? Ghoosted va lento apposta, qualche secondo tra uno e l'altro, perché Instagram limita chi lo fa in fretta. Lascia questa scheda aperta."
   },
   "nb_progress": {
     "message": "In corso… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "Chiunque chieda entrerà nel tuo account privato senza che tu lo controlli.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "Chiunque lo chieda entra nel tuo account privato senza che tu lo controlli. E approvare in blocco è tra le cose per cui Instagram segnala gli account."
   },
   "req_run": {
     "message": "Approva ora",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram blocca gli account che vanno troppo veloci. Le pause irregolari non si notano. Puoi chiudere il pannello: continua in background.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram limita gli account che vanno veloci, quindi Ghoosted fa pause irregolari. Aiuta, ma non è una garanzia: farne molte in un giorno può segnalarti lo stesso. Puoi chiudere il pannello."
   },
   "fold_hint": {
     "message": "Tocca per comprimere o espandere",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "C'è un altro controllo in corso. Aspetta che finisca."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ $1 in una volta sono tante.\n\nInstagram limita gli account per questo, e Ghoosted non può evitarlo: andare piano aiuta, non ti rende invisibile.\n\nPiù sicuro: non più di $2 al giorno, e non ripeterlo per più giorni di fila.\n\nContinuare comunque?"
+  },
+  "req_confirm": {
+    "message": "Approvare le richieste in sospeso?\n\nGhoosted ne approva fino a 20 per volta, con pause. Anche così, approvarne molte in una volta è tra le cose che Instagram controlla di più, insieme allo smettere di seguire in massa.\n\nSe di recente ti è uscito un avviso di \"comportamento automatizzato\", lascia stare qualche giorno.\n\nContinuare?"
   }
 }

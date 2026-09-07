@@ -913,7 +913,7 @@
     "message": "Takibi bırakmak istediklerine dokun, sonra “Takibi bırak”. Aralarında bekleyerek tek tek yapılır — Instagram çok hızlı bırakan hesapları engeller."
   },
   "nb_confirm": {
-    "message": "$1 hesabın takibi bırakılsın mı? Ghoosted, Instagram engelinden kaçınmak için yavaş yapar (aralarında birkaç saniye). Bu sekmeyi açık bırak."
+    "message": "$1 hesabı takipten çıkılsın mı? Ghoosted bilerek yavaş gider, her biri arasında birkaç saniye, çünkü Instagram bunu hızlı yapan hesapları kısıtlar. Bu sekmeyi açık bırak."
   },
   "nb_progress": {
     "message": "Bırakılıyor… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "İsteyen herkes sen bakmadan gizli hesabına girer.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "İsteyen herkes, sen bakmadan gizli hesabına girer. Ve toplu onay, Instagram'ın hesapları işaretleme sebeplerinden biri."
   },
   "req_run": {
     "message": "Şimdi onayla",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram bunu çok hızlı yapan hesapları engeller. Düzensiz aralıklar fark edilmez. Paneli kapatabilirsin: arka planda devam eder.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram bunu hızlı yapan hesapları kısıtlar, bu yüzden Ghoosted düzensiz aralar verir. Yardımcı olur ama garanti değil: bir günde çok yapmak yine de seni işaretleyebilir. Paneli kapatabilirsin."
   },
   "fold_hint": {
     "message": "Katlamak veya açmak için tıkla",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "Başka bir kontrol sürüyor. Bitmesini bekle."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ Bir seferde $1 çok fazla.\n\nInstagram bunun için hesapları kısıtlar ve Ghoosted bunu engelleyemez: yavaş gitmek yardımcı olur, görünmez yapmaz.\n\nDaha güvenli: günde en fazla $2, ve arka arkaya günlerce tekrarlama.\n\nYine de devam edilsin mi?"
+  },
+  "req_confirm": {
+    "message": "Bekleyen istekler onaylansın mı?\n\nGhoosted her turda en fazla 20 tanesini onaylar, aralar vererek. Yine de bir seferde çok onaylamak, toplu takipten çıkmayla birlikte Instagram'ın en çok izlediği şeylerden biri.\n\nYakın zamanda \"otomatik davranış\" uyarısı aldıysan birkaç gün ara ver.\n\nDevam edilsin mi?"
   }
 }

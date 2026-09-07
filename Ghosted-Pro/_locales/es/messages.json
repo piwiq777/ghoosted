@@ -913,7 +913,7 @@
     "message": "Toca a quién quieres dejar de seguir y pulsa “Dejar de seguir”. Va de una en una con una pausa entre cada — Instagram bloquea las cuentas que dejan de seguir muy rápido."
   },
   "nb_confirm": {
-    "message": "¿Dejar de seguir a $1 cuentas? Ghoosted lo hace despacio (unos segundos entre cada una) para evitar un bloqueo de Instagram. Deja esta pestaña abierta."
+    "message": "¿Dejar de seguir a $1 cuentas? Ghoosted va despacio a propósito, unos segundos entre cada una, porque Instagram restringe las cuentas que hacen esto rápido. Deja esta pestaña abierta."
   },
   "nb_progress": {
     "message": "Dejando de seguir… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "Cualquiera que lo pida entrará en tu cuenta privada sin que la revises.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "Cualquiera que lo pida entrará en tu cuenta privada sin que la revises. Y aprobar en lote es de las cosas por las que Instagram marca cuentas."
   },
   "req_run": {
     "message": "Aprobar ahora",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram bloquea las cuentas que hacen esto muy rápido. Con pausas irregulares no lo detecta. Puedes cerrar el panel: sigue en segundo plano.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram restringe las cuentas que hacen esto rápido, así que Ghoosted hace pausas irregulares entre cada una. Ayuda, pero no es garantía: hacer muchas en un día puede marcarte igual. Puedes cerrar el panel: sigue en segundo plano."
   },
   "fold_hint": {
     "message": "Pulsa para plegar o desplegar",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "Hay otra comprobación en marcha. Espera a que termine."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ $1 de golpe son muchas.\n\nInstagram restringe cuentas por esto, y Ghoosted no puede evitarlo: ir despacio ayuda, no te hace invisible.\n\nMás seguro: no más de $2 al día, y no lo repitas varios días seguidos.\n\n¿Continuar de todas formas?"
+  },
+  "req_confirm": {
+    "message": "¿Aprobar las solicitudes pendientes?\n\nGhoosted aprueba hasta 20 por pasada, con pausas. Aun así, aprobar muchas de golpe es de lo que más vigila Instagram, junto con dejar de seguir en masa.\n\nSi te ha salido hace poco un aviso de \"comportamiento automatizado\", déjalo unos días.\n\n¿Continuar?"
   }
 }

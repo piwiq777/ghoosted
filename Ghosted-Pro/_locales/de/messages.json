@@ -913,7 +913,7 @@
     "message": "Tippe die Leute an, denen du entfolgen willst, dann „Entfolgen“. Läuft einzeln mit Pause — Instagram sperrt Konten, die zu schnell entfolgen."
   },
   "nb_confirm": {
-    "message": "$1 Konten entfolgen? Ghoosted macht es langsam (ein paar Sekunden dazwischen), um eine Instagram-Sperre zu vermeiden. Lass diesen Tab offen."
+    "message": "$1 Konten entfolgen? Ghoosted geht absichtlich langsam vor, ein paar Sekunden zwischen jedem, weil Instagram Konten einschränkt, die das schnell tun. Lass diesen Tab offen."
   },
   "nb_progress": {
     "message": "Entfolge… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "Jeder, der fragt, kommt ungeprüft in dein privates Konto.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "Jeder, der fragt, kommt in dein privates Konto, ohne dass du es prüfst. Und Massengenehmigung ist einer der Gründe, aus denen Instagram Konten markiert."
   },
   "req_run": {
     "message": "Jetzt bestätigen",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram sperrt Konten, die das zu schnell tun. Unregelmäßige Pausen fallen nicht auf. Du kannst das Fenster schließen: es läuft im Hintergrund weiter.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram schränkt Konten ein, die das schnell tun, also macht Ghoosted unregelmäßige Pausen. Das hilft, ist aber keine Garantie: viele an einem Tag können dich trotzdem auffällig machen. Du kannst das Panel schließen."
   },
   "fold_hint": {
     "message": "Zum Ein- oder Ausklappen klicken",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "Es läuft schon eine Prüfung. Warte, bis sie fertig ist."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ $1 auf einmal ist viel.\n\nInstagram schränkt Konten dafür ein, und Ghoosted kann das nicht verhindern: Langsam sein hilft, macht dich aber nicht unsichtbar.\n\nSicherer: nicht mehr als $2 am Tag, und nicht mehrere Tage hintereinander.\n\nTrotzdem fortfahren?"
+  },
+  "req_confirm": {
+    "message": "Ausstehende Anfragen genehmigen?\n\nGhoosted genehmigt bis zu 20 pro Durchlauf, mit Pausen. Trotzdem gehört das Genehmigen vieler auf einmal zu dem, was Instagram am genauesten beobachtet — zusammen mit Massen-Entfolgen.\n\nWenn du kürzlich eine Warnung wegen „automatisiertem Verhalten\" hattest, lass es ein paar Tage.\n\nFortfahren?"
   }
 }

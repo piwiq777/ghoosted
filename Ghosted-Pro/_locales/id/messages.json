@@ -913,7 +913,7 @@
     "message": "Ketuk orang yang ingin kamu berhenti ikuti, lalu “Berhenti ikuti”. Dijalankan satu per satu dengan jeda — Instagram memblokir akun yang terlalu cepat."
   },
   "nb_confirm": {
-    "message": "Berhenti mengikuti $1 akun? Ghoosted melakukannya perlahan (beberapa detik jeda) agar tidak diblokir Instagram. Biarkan tab ini terbuka."
+    "message": "Berhenti mengikuti $1 akun? Ghoosted sengaja pelan, beberapa detik antar akun, karena Instagram membatasi yang melakukannya cepat. Biarkan tab ini terbuka."
   },
   "nb_progress": {
     "message": "Memproses… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "Siapa pun yang meminta masuk ke akun privatmu tanpa kamu periksa.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "Siapa pun yang minta masuk ke akun privatmu tanpa kamu tinjau. Dan menyetujui massal termasuk hal yang membuat Instagram menandai akun."
   },
   "req_run": {
     "message": "Setujui sekarang",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram memblokir akun yang melakukannya terlalu cepat. Jeda tak beraturan tidak terdeteksi. Panel boleh ditutup: tetap jalan di latar.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram membatasi akun yang melakukannya cepat, jadi Ghoosted memberi jeda tak beraturan. Membantu, tapi bukan jaminan: banyak dalam sehari tetap bisa menandaimu. Panel boleh ditutup."
   },
   "fold_hint": {
     "message": "Klik untuk melipat atau membuka",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "Ada pemeriksaan lain yang berjalan. Tunggu sampai selesai."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ $1 sekaligus itu banyak.\n\nInstagram membatasi akun karena ini, dan Ghoosted tidak bisa mencegahnya: pelan-pelan membantu, tapi tidak membuatmu tak terlihat.\n\nLebih aman: maksimal $2 sehari, dan jangan diulang beberapa hari berturut-turut.\n\nTetap lanjut?"
+  },
+  "req_confirm": {
+    "message": "Setujui permintaan yang tertunda?\n\nGhoosted menyetujui maksimal 20 per putaran, dengan jeda. Meski begitu, menyetujui banyak sekaligus adalah salah satu hal yang paling diawasi Instagram, bersama berhenti mengikuti massal.\n\nKalau baru-baru ini kamu dapat peringatan \"perilaku otomatis\", tunggu beberapa hari.\n\nLanjutkan?"
   }
 }

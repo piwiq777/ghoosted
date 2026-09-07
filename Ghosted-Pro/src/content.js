@@ -1772,6 +1772,9 @@
       const gc = document.createElement("button");
       gc.type = "button", gc.className = "ghd-req-run", gc.textContent = ghdReqBusy ? Y("req_running") : Y("req_run"), 
       gc.disabled = ghdReqBusy, gc.addEventListener("click", async () => {
+        // Aprobar en lote es, junto con dejar de seguir, lo que mas dispara el
+        // detector de Instagram. Se avisa antes, no despues.
+        if (!confirm(Y("req_confirm"))) return;
         gc.disabled = true, gc.textContent = Y("req_running");
         const gS = await ghdReqRun(gX, true);
         ghdToast(Y("req_done", String(gS)));
@@ -4129,9 +4132,16 @@
       }));
     }
   }
+  // Cuantas se consideran "muchas de golpe". No es un numero de Instagram —
+  // ellos no lo publican — sino el punto donde la experiencia dice que empiezan
+  // los avisos. Por encima se pide una confirmacion aparte y mas seria.
+  const GHD_LOTE_GRANDE = 50;
+
   async function g2(gq) {
     if (r || !gq.length) return;
     if (!confirm(Y("nb_confirm", String(gq.length)))) return;
+    // Segundo aviso solo para lotes grandes: el primero se acepta sin leer.
+    if (gq.length > GHD_LOTE_GRANDE && !confirm(Y("nb_confirm_big", [String(gq.length), String(GHD_LOTE_GRANDE)]))) return;
     r = true;
     let gx = 0, gU = 0, gj = 0, gy = "";
     gt();

@@ -48,6 +48,13 @@
     .tab .cnt{font-size:11px;background:rgba(255,255,255,.12);color:var(--ink-2);border-radius:100px;padding:1px 7px;min-width:18px;text-align:center}
     .tab.active .cnt{background:rgba(0,0,0,.12);color:#0a0a0f}
 
+    /* Sin buscador, una lista de 200 nombres en un movil no sirve de nada:
+       no hay Ctrl+F y hacer scroll hasta encontrar a alguien es inviable. */
+    .find{width:100%;margin:0 0 10px;padding:11px 14px;border-radius:12px;
+      border:1px solid var(--line,rgba(255,255,255,.14));background:rgba(255,255,255,.05);
+      color:inherit;font:inherit;font-size:15px;-webkit-appearance:none;appearance:none}
+    .find::placeholder{color:rgba(255,255,255,.42)}
+    .find:focus{outline:none;border-color:rgba(255,255,255,.3)}
     .list{display:flex;flex-direction:column;gap:2px}
     .row{display:flex;align-items:center;gap:11px;padding:10px 6px;border-radius:12px}
     .row:active{background:var(--surface)}
@@ -90,6 +97,7 @@
       <div class="card alert"><b id="cNb">–</b><span id="lNb">no te siguen</span></div>
     </div>
     <div class="tabs" id="tabs"></div>
+    <input class="find" id="find" type="search" autocomplete="off" spellcheck="false" hidden>
     <div class="list" id="list"></div>
   </main>
 
@@ -113,6 +121,8 @@
       seguidores: ES ? 'seguidores' : 'followers',
       seguidos:   ES ? 'seguidos'   : 'following',
       notback:    ES ? 'no te siguen' : "don't follow back",
+      find_ph: ES ? 'Buscar por nombre o @usuario…' : 'Search by name or @username…',
+      find_none: ES ? 'Nadie coincide con esa búsqueda.' : 'Nobody matches that search.',
       tab_unfollow: ES ? 'Te dejaron' : 'Unfollowed',
       tab_new:      ES ? 'Nuevos' : 'New',
       tab_notback:  ES ? 'No te siguen' : 'Not back',
@@ -233,6 +243,13 @@
       return e.type || '';
     }
 
+    // Misma normalizacion que el panel: "María" se encuentra escribiendo
+    // "maria", y los nombres en letras decorativas de Instagram tambien.
+    function norm(t) {
+      return String(t || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    }
+    var busqueda = '';
+
     function renderList() {
       var d = lastData; if (!d) return;
       var tabs = d.tabs || {};
@@ -243,7 +260,19 @@
       else { items = tabs.activity || []; empty = T.empty_activity; }
 
       var list = document.getElementById('list');
+      var find = document.getElementById('find');
+      // El buscador solo aparece cuando hay bastante que buscar.
+      find.hidden = items.length < 8;
+      find.placeholder = T.find_ph;
       if (!items.length) { list.innerHTML = '<div class="state" style="padding:44px 20px"><p>' + esc(empty) + '</p></div>'; return; }
+
+      if (busqueda) {
+        var q = norm(busqueda);
+        items = items.filter(function (e) {
+          return norm(e.username).indexOf(q) >= 0 || norm(e.full_name).indexOf(q) >= 0;
+        });
+        if (!items.length) { list.innerHTML = '<div class="state" style="padding:44px 20px"><p>' + esc(T.find_none) + '</p></div>'; return; }
+      }
       if (activeTab === 'activity') {
         list.innerHTML = items.map(function (e) {
           var p = { username: e.username, full_name: actLabel(e), pic: e.pic, ts: e.ts };
@@ -268,9 +297,19 @@
           esc(t[1]) + '<span class="cnt">' + t[2] + '</span></button>';
       }).join('');
       Array.prototype.forEach.call(el.querySelectorAll('.tab'), function (b) {
-        b.addEventListener('click', function () { activeTab = b.getAttribute('data-t'); renderTabs(); renderList(); });
+        b.addEventListener('click', function () {
+          activeTab = b.getAttribute('data-t');
+          // Se limpia al cambiar de pestaña: si no, se ve una lista vacia y
+          // parece que no hay nada, cuando lo que hay es un filtro puesto.
+          busqueda = ''; var f = document.getElementById('find'); if (f) f.value = '';
+          renderTabs(); renderList();
+        });
       });
     }
+
+    document.getElementById('find').addEventListener('input', function () {
+      busqueda = this.value; renderList();
+    });
 
     function render(d) {
       lastData = d;

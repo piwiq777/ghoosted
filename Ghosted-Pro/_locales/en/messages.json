@@ -913,7 +913,7 @@
     "message": "Tap the people you want to unfollow, then “Unfollow”. It runs one at a time with a pause between each — Instagram blocks accounts that unfollow too fast."
   },
   "nb_confirm": {
-    "message": "Unfollow $1 accounts? Ghoosted does it slowly (a few seconds between each) to avoid an Instagram block. Keep this tab open."
+    "message": "Unfollow $1 accounts? Ghoosted goes slowly on purpose — a few seconds between each — because Instagram restricts accounts that do this fast. Keep this tab open."
   },
   "nb_progress": {
     "message": "Unfollowing… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "Anyone who asks gets into your private account without you reviewing it.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "Anyone who asks gets into your private account without you reviewing it. And approving in bulk is one of the things Instagram flags accounts for."
   },
   "req_run": {
     "message": "Approve now",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram blocks accounts that do this too fast. Irregular pauses keep you under the radar. You can close the panel: it keeps going in the background.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram restricts accounts that do this fast, so Ghoosted pauses irregularly between each one. It helps, but it is not a guarantee: doing a lot in one day can still get you flagged. You can close the panel — it keeps going."
   },
   "fold_hint": {
     "message": "Click to collapse or expand",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "Another check is running. Wait for it to finish."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ $1 at once is a lot.\n\nInstagram restricts accounts for this, and Ghoosted cannot prevent it: going slowly helps, it doesn't make you invisible.\n\nSafer: no more than $2 a day, and don't repeat it several days running.\n\nContinue anyway?"
+  },
+  "req_confirm": {
+    "message": "Approve the pending requests?\n\nGhoosted approves up to 20 per pass, with pauses. Even so, approving many at once is one of the things Instagram watches most closely — along with mass unfollowing.\n\nIf you got an \"automated behaviour\" warning recently, leave this alone for a few days.\n\nContinue?"
   }
 }

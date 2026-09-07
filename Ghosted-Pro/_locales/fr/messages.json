@@ -913,7 +913,7 @@
     "message": "Touche les personnes à ne plus suivre, puis « Ne plus suivre ». Ça se fait une par une avec une pause — Instagram bloque les comptes trop rapides."
   },
   "nb_confirm": {
-    "message": "Ne plus suivre $1 comptes ? Ghoosted le fait lentement (quelques secondes entre chaque) pour éviter un blocage Instagram. Laisse cet onglet ouvert."
+    "message": "Se désabonner de $1 comptes ? Ghoosted va lentement exprès, quelques secondes entre chacun, parce qu'Instagram restreint les comptes qui vont vite. Laissez cet onglet ouvert."
   },
   "nb_progress": {
     "message": "En cours… $1/$2"
@@ -1188,8 +1188,7 @@
     "description": "Rule: auto-approve every request."
   },
   "req_rule_all_warn": {
-    "message": "N'importe qui entrera dans votre compte privé sans que vous le validiez.",
-    "description": "Warning shown when the 'everyone' rule is selected."
+    "message": "N'importe qui entre dans votre compte privé sans que vous le revoyiez. Et approuver en masse fait partie de ce pour quoi Instagram signale des comptes."
   },
   "req_run": {
     "message": "Approuver",
@@ -1256,8 +1255,7 @@
     "description": "Heading of the note explaining why bulk write actions are paced slowly."
   },
   "load_safe_d": {
-    "message": "Instagram bloque les comptes qui vont trop vite. Des pauses irrégulières passent inaperçues. Vous pouvez fermer le panneau : ça continue en arrière-plan.",
-    "description": "Body of that note: rate-limit risk, irregular pauses, and that it continues in the background."
+    "message": "Instagram restreint les comptes qui vont vite, alors Ghoosted fait des pauses irrégulières. Ça aide, mais ce n'est pas une garantie : beaucoup en un jour peut quand même vous signaler. Vous pouvez fermer le panneau."
   },
   "fold_hint": {
     "message": "Cliquez pour replier ou déplier",
@@ -1300,5 +1298,11 @@
   },
   "busy_other": {
     "message": "Une autre vérification est en cours. Attendez qu'elle finisse."
+  },
+  "nb_confirm_big": {
+    "message": "⚠ $1 d'un coup, c'est beaucoup.\n\nInstagram restreint des comptes pour ça, et Ghoosted ne peut pas l'empêcher : aller lentement aide, ça ne rend pas invisible.\n\nPlus sûr : pas plus de $2 par jour, et ne recommencez pas plusieurs jours de suite.\n\nContinuer quand même ?"
+  },
+  "req_confirm": {
+    "message": "Approuver les demandes en attente ?\n\nGhoosted en approuve jusqu'à 20 par passage, avec des pauses. Malgré tout, en approuver beaucoup d'un coup est l'une des choses qu'Instagram surveille le plus, avec le désabonnement de masse.\n\nSi vous avez eu récemment un avertissement de « comportement automatisé », attendez quelques jours.\n\nContinuer ?"
   }
 }
