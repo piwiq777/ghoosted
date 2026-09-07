@@ -6,7 +6,9 @@ const { ConfigError, command } = require('../../lib/kv');
 // the AES key never leaves the two devices (it rides in the QR's URL fragment
 // and lives in the extension locally), so this relay cannot read the data.
 const CHANNEL_RE = /^[A-Za-z0-9_-]{16,64}$/;
-const MAX_BLOB = 400000; // ~300KB of plaintext once base64-decoded
+// 1 MB de base64 ~ 700 KB de texto cifrado. Se subio con el presupuesto de
+// miniaturas: con el tope anterior el movil se quedaba sin caras.
+const MAX_BLOB = 1000000;
 const TTL_SECONDS = 7 * 24 * 60 * 60; // a stale phone view expires after a week
 
 module.exports = async (req, res) => {

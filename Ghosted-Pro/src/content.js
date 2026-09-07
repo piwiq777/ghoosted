@@ -1250,9 +1250,34 @@
       unfollow: gO.filter(gj => gj.type === "unfollow").slice(0, 120).map(gl),
       new: gO.filter(gj => gj.type === "new").slice(0, 120).map(gl),
       notback: gL.slice(0, 200).map(gc),
-      activity: gX.slice(0, 120).map(gS)
+      activity: gX.slice(0, 120).map(gS),
+      // Espectadores de tus historias, del mas visto al menos. En el movil es
+      // la pestaña "Historias": quien te ve, cuantas veces y cuantos me gusta.
+      stories: Object.values(g.get(J.storyStats, {}))
+        .filter(gj => gj && gj.username)
+        .sort((gj, gy) => (gy.slides || 0) - (gj.slides || 0))
+        .slice(0, 60)
+        .map(gj => ({
+          pk: gj.pk,
+          username: gj.username,
+          full_name: gj.full_name,
+          pic: gj.pic,
+          slides: gj.slides || 0,
+          captures: gj.captures || 0,
+          likes: gj.likes || 0,
+          days: (gj.days || []).length,
+          ts: gj.lastSeen
+        }))
     };
-    await YV(gC.activity, 12), await YV(gC.unfollow, 8), await YV(gC.new, 8), await YV(gC.notback, 8);
+    // El historial son solo fechas y numeros: no gasta presupuesto de fotos.
+    const gHist = (g.get(J.storyLog, []) || []).slice(0, 60)
+      .map(gj => ({ ts: gj.ts, viewers: gj.viewers || 0 }));
+    /* Presupuesto de miniaturas. Antes eran 36 en total y el resto de filas
+       salian sin foto en el movil: la `pic` que queda es una URL firmada del
+       CDN de Instagram, que caduca y que ademas el movil no puede pedir porque
+       no lleva la sesion. O viaja incrustada, o no hay foto. */
+    await YV(gC.activity, 24), await YV(gC.unfollow, 24), await YV(gC.new, 24),
+    await YV(gC.notback, 24), await YV(gC.stories, 24);
     const gU = {
       v: 1,
       ts: Date.now(),
@@ -1261,14 +1286,18 @@
         following: gF ? gF.following : gx.length,
         notback: gx.length ? gL.length : 0
       },
-      tabs: gC
+      tabs: gC,
+      history: gHist
     };
     return YD(gU);
   }
   function YD(gq) {
-    const gx = 28e4;
+    /* 700 KB. Con 280 no cabian las miniaturas de las cinco listas y el movil
+       se quedaba sin caras. Sobre 4G son menos de dos segundos, y solo se
+       manda cuando hay revision nueva. */
+    const gx = 7e5;
     if (JSON.stringify(gq).length <= gx) return gq;
-    const gz = [ "notback", "activity", "new", "unfollow" ];
+    const gz = [ "notback", "activity", "new", "unfollow", "stories" ];
     for (let gL = 0; gL < gz.length && JSON.stringify(gq).length > gx; gL++) (gq.tabs[gz[gL]] || []).forEach(gO => {
       delete gO.picData, delete gO.pic;
     });
