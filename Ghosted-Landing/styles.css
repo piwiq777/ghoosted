@@ -353,6 +353,17 @@ img,svg{display:block;max-width:100%}
   .fb-tile-shot .fb-shot{aspect-ratio:16/10}
   .fb-tile-shot:last-child .fb-shot{aspect-ratio:900/604}
 }
+/* Las tres tarjetas de la ultima fila, con su franja de panel debajo.
+   Debajo y no al lado: en una columna de un tercio no cabe texto e imagen en
+   horizontal. Y como las TRES la llevan, la fila crece pareja — el problema
+   de antes era mezclar tarjetas con captura y tarjetas sin ella.
+   Franja 3:1: alta lo justo para reconocer la funcion, no tanto como para
+   convertir esta fila en la protagonista de la pagina. */
+.fb-tile-strip{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:16px}
+.fb-tile-strip .fb-shot{aspect-ratio:1100/366;border:1px solid var(--line);background:var(--paper)}
+.fb-tile-strip .fb-shot img{object-position:left center}
+@media (max-width:900px){.fb-tile-strip .fb-shot{aspect-ratio:1100/300}}
+
 .fb-tile-flat h3{font-family:var(--display);font-size:21px;font-weight:500;letter-spacing:-.03em;color:var(--ink);margin:0 0 6px}
 .fb-tile-flat p{font-size:14px;line-height:1.5;color:var(--ink-2);margin:0}
 
