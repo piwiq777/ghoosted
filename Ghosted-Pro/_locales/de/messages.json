@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "Ausstehende Anfragen genehmigen?\n\nGhoosted genehmigt bis zu 20 pro Durchlauf, mit Pausen. Trotzdem gehört das Genehmigen vieler auf einmal zu dem, was Instagram am genauesten beobachtet — zusammen mit Massen-Entfolgen.\n\nWenn du kürzlich eine Warnung wegen „automatisiertem Verhalten\" hattest, lass es ein paar Tage.\n\nFortfahren?"
+  },
+  "req_auto_warn": {
+    "message": "AUTOMATISCHE GENEHMIGUNG\n\nGhoosted genehmigt Anfragen von selbst, während du etwas anderes machst.\n\nDas Risiko: Instagram schränkt Konten für Massengenehmigungen ein. Zusammen mit Massen-Entfolgen ist es das, was am genauesten beobachtet wird. Ghoosted genehmigt höchstens 20 pro Durchlauf, mit Pausen — das senkt das Risiko, es beseitigt es nicht."
+  },
+  "req_auto_warn_all": {
+    "message": "Und mit „Alle\": Jeder, der fragt, kommt in dein privates Konto, ohne dass du siehst, wer es ist."
+  },
+  "req_auto_warn_end": {
+    "message": "Du kannst jederzeit auf Manuell zurück.\n\nAktivieren und das Risiko akzeptieren?"
   }
 }

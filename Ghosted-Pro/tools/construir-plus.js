@@ -271,5 +271,16 @@ if (!SECO) {
     huerfanos.forEach((h) => console.log('  ' + h));
     process.exit(1);
   }
-  console.log('\n\x1b[32mPlus construido: sintaxis correcta y sin llamadas huerfanas\x1b[0m\n');
+  console.log('\n\x1b[32mPlus construido: sintaxis correcta y sin llamadas huerfanas\x1b[0m');
+
+  /* El zip va al mismo sitio que el de Pro, que es de donde lo sirve la web.
+     Plus no se ofusca nunca: la tienda rechaza el codigo ilegible. */
+  const version = JSON.parse(fs.readFileSync(path.join(PLUS, 'manifest.json'), 'utf8')).version;
+  const salida = path.resolve(PRO, '..', 'Ghosted-Landing', 'api', '_private');
+  fs.mkdirSync(salida, { recursive: true });
+  const zip = path.join(salida, `Ghoosted-Plus-v${version}.zip`);
+  fs.rmSync(zip, { force: true });
+  execFileSync('zip', ['-qr', zip, '.'], { cwd: PLUS });
+  const kb = Math.round(fs.statSync(zip).size / 1024);
+  console.log(`  ${path.relative(PRO, zip)} \u00b7 ${kb} KB\n`);
 }

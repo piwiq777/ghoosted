@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "¿Aprobar las solicitudes pendientes?\n\nGhoosted aprueba hasta 20 por pasada, con pausas. Aun así, aprobar muchas de golpe es de lo que más vigila Instagram, junto con dejar de seguir en masa.\n\nSi te ha salido hace poco un aviso de \"comportamiento automatizado\", déjalo unos días.\n\n¿Continuar?"
+  },
+  "req_auto_warn": {
+    "message": "APROBACIÓN AUTOMÁTICA\n\nGhoosted aprobará solicitudes por su cuenta, mientras tú estás en otra cosa.\n\nEl riesgo: Instagram restringe cuentas por aprobar en lote. Junto con dejar de seguir en masa, es lo que más vigila. Ghoosted aprueba como mucho 20 por pasada y con pausas — eso reduce el riesgo, no lo elimina."
+  },
+  "req_auto_warn_all": {
+    "message": "Y con \"Todas\": entrará cualquiera que lo pida en tu cuenta privada, sin que tú mires quién es."
+  },
+  "req_auto_warn_end": {
+    "message": "Puedes volver a Manual cuando quieras.\n\n¿Activarlo asumiendo el riesgo?"
   }
 }

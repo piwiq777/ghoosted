@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "Setujui permintaan yang tertunda?\n\nGhoosted menyetujui maksimal 20 per putaran, dengan jeda. Meski begitu, menyetujui banyak sekaligus adalah salah satu hal yang paling diawasi Instagram, bersama berhenti mengikuti massal.\n\nKalau baru-baru ini kamu dapat peringatan \"perilaku otomatis\", tunggu beberapa hari.\n\nLanjutkan?"
+  },
+  "req_auto_warn": {
+    "message": "PERSETUJUAN OTOMATIS\n\nGhoosted akan menyetujui permintaan sendiri, saat kamu sedang melakukan hal lain.\n\nRisikonya: Instagram membatasi akun karena menyetujui massal. Bersama berhenti mengikuti massal, itu yang paling diawasi. Ghoosted menyetujui maksimal 20 per putaran dengan jeda — itu mengurangi risiko, bukan menghilangkannya."
+  },
+  "req_auto_warn_all": {
+    "message": "Dan dengan \"Semua\": siapa pun yang minta masuk ke akun privatmu, tanpa kamu lihat siapa dia."
+  },
+  "req_auto_warn_end": {
+    "message": "Kamu bisa kembali ke Manual kapan saja.\n\nAktifkan dengan menerima risikonya?"
   }
 }

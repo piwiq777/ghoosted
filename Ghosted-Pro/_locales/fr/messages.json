@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "Approuver les demandes en attente ?\n\nGhoosted en approuve jusqu'à 20 par passage, avec des pauses. Malgré tout, en approuver beaucoup d'un coup est l'une des choses qu'Instagram surveille le plus, avec le désabonnement de masse.\n\nSi vous avez eu récemment un avertissement de « comportement automatisé », attendez quelques jours.\n\nContinuer ?"
+  },
+  "req_auto_warn": {
+    "message": "APPROBATION AUTOMATIQUE\n\nGhoosted approuvera des demandes tout seul, pendant que vous faites autre chose.\n\nLe risque : Instagram restreint les comptes qui approuvent en masse. Avec le désabonnement de masse, c'est ce qu'il surveille le plus. Ghoosted en approuve 20 au maximum par passage, avec des pauses — cela réduit le risque, ça ne l'élimine pas."
+  },
+  "req_auto_warn_all": {
+    "message": "Et avec « Toutes » : n'importe qui entre dans votre compte privé, sans que vous regardiez qui c'est."
+  },
+  "req_auto_warn_end": {
+    "message": "Vous pouvez revenir en Manuel quand vous voulez.\n\nL'activer en acceptant le risque ?"
   }
 }

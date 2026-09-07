@@ -8,10 +8,19 @@
 
 # ============================================================
 #  EL PRODUCTO QUE SE VENDE
-#  Los ZIP que api/download.js entrega contra una clave. Si entran
-#  aqui, cualquiera con acceso al repositorio se lleva Pro sin pagar.
+#  Los ZIP que api/download.js entrega contra una clave.
+#
+#  OJO: Vercel despliega CLONANDO ESTE REPOSITORIO. Lo que git no
+#  tenga no llega al servidor, y api/download.js lee el zip del disco
+#  (fs.readFile), asi que un zip ignorado = 500 despues de haber
+#  cobrado. Por eso los dos zip EN USO si van versionados: ver la
+#  excepcion al final de este fichero.
+#
+#  Esto solo es aceptable mientras el repositorio siga siendo PRIVADO.
+#  Si algun dia se hace publico, Pro queda gratis para cualquiera: hay
+#  que sacar los zip a un almacen aparte (Vercel Blob) ANTES de abrirlo.
 # ============================================================
-Ghosted-Landing/api/_private/
+Ghosted-Landing/api/_private/*
 dist/
 *.zip
 
@@ -44,3 +53,13 @@ Thumbs.db
 # script que pide claves por teclado: no tiene secretos dentro, pero
 # tampoco pinta en el repositorio
 Ghosted-Landing/poner-claves.sh
+
+# ============================================================
+#  EXCEPCION, al final a proposito: en .gitignore gana la ultima
+#  regla que encaja, y mas arriba hay un *.zip que taparia esto.
+#  Solo los dos zip que nombra lib/downloads.js. Las versiones
+#  viejas se borran al subir una nueva, que si no el repositorio
+#  engorda medio mega por version.
+# ============================================================
+!Ghosted-Landing/api/_private/Ghoosted-Pro-v*.zip
+!Ghosted-Landing/api/_private/Ghoosted-Plus-v*.zip

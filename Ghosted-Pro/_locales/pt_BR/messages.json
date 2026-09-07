@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "Aprovar os pedidos pendentes?\n\nO Ghoosted aprova até 20 por vez, com pausas. Mesmo assim, aprovar muitos de uma vez é do que o Instagram mais vigia, junto com deixar de seguir em massa.\n\nSe você recebeu há pouco um aviso de \"comportamento automatizado\", espere alguns dias.\n\nContinuar?"
+  },
+  "req_auto_warn": {
+    "message": "APROVAÇÃO AUTOMÁTICA\n\nO Ghoosted vai aprovar pedidos sozinho, enquanto você faz outra coisa.\n\nO risco: o Instagram restringe contas por aprovar em lote. Junto com deixar de seguir em massa, é o que ele mais vigia. O Ghoosted aprova no máximo 20 por vez, com pausas — isso reduz o risco, não elimina."
+  },
+  "req_auto_warn_all": {
+    "message": "E com \"Todas\": qualquer um que pedir entra na sua conta privada, sem você olhar quem é."
+  },
+  "req_auto_warn_end": {
+    "message": "Você pode voltar ao Manual quando quiser.\n\nAtivar assumindo o risco?"
   }
 }

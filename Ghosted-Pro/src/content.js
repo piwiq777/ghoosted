@@ -1759,6 +1759,13 @@
       const gF = document.createElement("button");
       gF.type = "button", gF.className = "ghd-req-rule" + (gX === gJ[0] ? " on" : ""), 
       gF.textContent = Y(gJ[1]), gF.addEventListener("click", () => {
+        // Pasar a automatico se acepta a conciencia. Solo se pregunta al
+        // cambiar, no en cada repintado, asi que no da la lata.
+        if (gJ[0] !== "manual" && ghdReqRule() !== gJ[0]) {
+          const gAviso = Y("req_auto_warn") + (gJ[0] === "all" ? "\n\n" + Y("req_auto_warn_all") : "")
+            + "\n\n" + Y("req_auto_warn_end");
+          if (!confirm(gAviso)) return;
+        }
         g.set(J.reqRule, gJ[0]);
         g5();
       }), gL.appendChild(gF);

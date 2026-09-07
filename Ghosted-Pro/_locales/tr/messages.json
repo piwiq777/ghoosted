@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "Bekleyen istekler onaylansın mı?\n\nGhoosted her turda en fazla 20 tanesini onaylar, aralar vererek. Yine de bir seferde çok onaylamak, toplu takipten çıkmayla birlikte Instagram'ın en çok izlediği şeylerden biri.\n\nYakın zamanda \"otomatik davranış\" uyarısı aldıysan birkaç gün ara ver.\n\nDevam edilsin mi?"
+  },
+  "req_auto_warn": {
+    "message": "OTOMATİK ONAY\n\nGhoosted istekleri kendi başına onaylayacak, sen başka şeyle uğraşırken.\n\nRisk: Instagram toplu onay yüzünden hesapları kısıtlar. Toplu takipten çıkmayla birlikte en çok izlediği şey bu. Ghoosted her turda en fazla 20 tanesini, aralar vererek onaylar — bu riski azaltır, yok etmez."
+  },
+  "req_auto_warn_all": {
+    "message": "Ve \"Hepsi\" ile: isteyen herkes, sen kim olduğuna bakmadan gizli hesabına girer."
+  },
+  "req_auto_warn_end": {
+    "message": "İstediğin zaman Manuel'e dönebilirsin.\n\nRiski kabul ederek açılsın mı?"
   }
 }

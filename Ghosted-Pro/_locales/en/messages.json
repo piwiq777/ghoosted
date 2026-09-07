@@ -1304,5 +1304,14 @@
   },
   "req_confirm": {
     "message": "Approve the pending requests?\n\nGhoosted approves up to 20 per pass, with pauses. Even so, approving many at once is one of the things Instagram watches most closely — along with mass unfollowing.\n\nIf you got an \"automated behaviour\" warning recently, leave this alone for a few days.\n\nContinue?"
+  },
+  "req_auto_warn": {
+    "message": "AUTOMATIC APPROVAL\n\nGhoosted will approve requests on its own, while you're doing something else.\n\nThe risk: Instagram restricts accounts for approving in bulk. Along with mass unfollowing, it's what they watch most. Ghoosted approves at most 20 per pass, with pauses — that lowers the risk, it doesn't remove it."
+  },
+  "req_auto_warn_all": {
+    "message": "And with \"Everyone\": anyone who asks gets into your private account, without you looking at who they are."
+  },
+  "req_auto_warn_end": {
+    "message": "You can switch back to Manual whenever you want.\n\nTurn it on, accepting the risk?"
   }
 }
