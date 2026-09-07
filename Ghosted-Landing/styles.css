@@ -334,7 +334,11 @@ img,svg{display:block;max-width:100%}
    que ocupan DOS columnas ponen la captura al lado del texto; las de una
    sola, debajo. Antes eran tres filas sueltas —una ancha, una de dos y una de
    tres— y se leian como tres bloques sin relacion entre ellos. */
-.fb-bento{grid-column:span 3;display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:20px}
+/* Separacion distinta en cada eje: 20px entre columnas y 44 entre filas.
+   Asi las tres bandas se leen como tres bloques y no como una mancha de
+   seis cajas pegadas. */
+.fb-bento{grid-column:span 3;display:grid;grid-template-columns:1.15fr 1fr 1fr;
+  column-gap:20px;row-gap:44px}
 .bt-nofollow{grid-column:1;grid-row:1/span 2}
 .bt-ghost{grid-column:2/4;grid-row:1}
 .bt-req{grid-column:2;grid-row:2}
@@ -365,14 +369,17 @@ img,svg{display:block;max-width:100%}
    un hueco muerto debajo del texto. */
 .bt-nofollow .fb-shot{flex:1 1 auto;min-height:220px}
 
-.bt-req .fb-shot{aspect-ratio:855/603}
-.bt-changes .fb-shot{aspect-ratio:813/271}
-.bt-stories .fb-shot{aspect-ratio:1100/380}
+/* La proporcion es el minimo, no el tamano final: con flex:1 la captura crece
+   hasta llenar la tarjeta cuando la vecina de al lado es mas alta. Antes
+   quedaba media tarjeta de negro vacio debajo de la imagen. */
+.bt-req .fb-shot{aspect-ratio:855/603;flex:1 1 auto}
+.bt-changes .fb-shot{aspect-ratio:820/580;flex:1 1 auto}
+.bt-stories .fb-shot{aspect-ratio:1100/380;flex:1 1 auto}
 
 @media (max-width:900px){
   /* En una columna no hay huecos que rellenar: todas iguales, texto arriba y
      captura debajo. */
-  .fb-bento{grid-column:span 1;grid-template-columns:1fr}
+  .fb-bento{grid-column:span 1;grid-template-columns:1fr;row-gap:20px}
   .bt{grid-column:1;grid-row:auto;padding:24px}
   .bt-ghost,.bt-dossier{flex-direction:column;align-items:stretch;gap:22px}
   .bt-ghost .bt-copy,.bt-dossier .bt-copy,
