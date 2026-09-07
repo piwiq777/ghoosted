@@ -19,6 +19,12 @@ const TEXTOS = {
     subject: (p) => 'Your ' + p + ' key',
     hi: 'Thanks for buying',
     keep: 'This is your licence key. Keep this email — it is how you activate the extension, and it never expires.',
+    tagline: 'who watches, who leaves',
+    label: 'Your licence key',
+    attach: 'Also attached as a file, in case you lose this email.',
+    lost: 'Lost it? Ask for it again with the email you paid with:',
+    recover: 'Recover my key',
+    save: 'Save the key',
     dl: 'Download',
     steps: 'Installing',
     s1: 'Unzip the file into a folder you will not delete. The browser reads the extension from there every time.',
@@ -32,6 +38,12 @@ const TEXTOS = {
     subject: (p) => 'Tu clave de ' + p,
     hi: 'Gracias por comprar',
     keep: 'Esta es tu clave de licencia. Guarda este correo: es con lo que activas la extensión, y no caduca.',
+    tagline: 'quién te mira, quién te deja',
+    label: 'Tu clave de licencia',
+    attach: 'Va también adjunta como archivo, por si pierdes este correo.',
+    lost: '¿La pierdes? Pídela otra vez con el correo con el que pagaste:',
+    recover: 'Recuperar mi clave',
+    save: 'Guardar la clave',
     dl: 'Descargar',
     steps: 'Cómo instalarlo',
     s1: 'Descomprime el archivo en una carpeta que no vayas a borrar. El navegador lee la extensión de ahí cada vez.',
@@ -45,6 +57,12 @@ const TEXTOS = {
     subject: (p) => 'Sua chave do ' + p,
     hi: 'Obrigado por comprar',
     keep: 'Esta é a sua chave de licença. Guarde este e-mail: é com ela que você ativa a extensão, e ela não expira.',
+    tagline: 'quem te vê, quem te larga',
+    label: 'Sua chave de licença',
+    attach: 'Vai também anexada como arquivo, caso você perca este e-mail.',
+    lost: 'Perdeu? Peça de novo com o e-mail que usou na compra:',
+    recover: 'Recuperar minha chave',
+    save: 'Salvar a chave',
     dl: 'Baixar',
     steps: 'Como instalar',
     s1: 'Descompacte o arquivo numa pasta que você não vá apagar. O navegador lê a extensão dali toda vez.',
@@ -58,6 +76,12 @@ const TEXTOS = {
     subject: (p) => 'Votre clé ' + p,
     hi: 'Merci pour votre achat de',
     keep: "Voici votre clé de licence. Gardez cet e-mail : c'est avec elle que vous activez l'extension, et elle n'expire pas.",
+    tagline: 'qui te regarde, qui te lâche',
+    label: 'Votre clé de licence',
+    attach: 'Elle est aussi jointe en fichier, au cas où vous perdriez cet e-mail.',
+    lost: 'Perdue ? Redemandez-la avec l\'e-mail utilisé pour payer :',
+    recover: 'Récupérer ma clé',
+    save: 'Enregistrer la clé',
     dl: 'Télécharger',
     steps: 'Installation',
     s1: "Décompressez le fichier dans un dossier que vous ne supprimerez pas. Le navigateur y lit l'extension à chaque fois.",
@@ -71,6 +95,12 @@ const TEXTOS = {
     subject: (p) => 'Dein ' + p + '-Schlüssel',
     hi: 'Danke für deinen Kauf von',
     keep: 'Das ist dein Lizenzschlüssel. Bewahre diese E-Mail auf — damit aktivierst du die Erweiterung, und er läuft nicht ab.',
+    tagline: 'wer schaut, wer geht',
+    label: 'Dein Lizenzschlüssel',
+    attach: 'Liegt auch als Datei bei, falls diese E-Mail verloren geht.',
+    lost: 'Verloren? Fordere ihn erneut an, mit der E-Mail deines Kaufs:',
+    recover: 'Schlüssel wiederherstellen',
+    save: 'Schlüssel sichern',
     dl: 'Herunterladen',
     steps: 'Installation',
     s1: 'Entpacke die Datei in einen Ordner, den du nicht löschst. Der Browser liest die Erweiterung jedes Mal von dort.',
@@ -84,6 +114,12 @@ const TEXTOS = {
     subject: (p) => 'La tua chiave ' + p,
     hi: 'Grazie per aver acquistato',
     keep: 'Questa è la tua chiave di licenza. Conserva questa e-mail: è con lei che attivi l\'estensione, e non scade.',
+    tagline: 'chi ti guarda, chi ti lascia',
+    label: 'La tua chiave di licenza',
+    attach: 'È allegata anche come file, se dovessi perdere questa e-mail.',
+    lost: 'Persa? Richiedila con l\'e-mail con cui hai pagato:',
+    recover: 'Recupera la mia chiave',
+    save: 'Salva la chiave',
     dl: 'Scarica',
     steps: 'Come installarla',
     s1: 'Estrai il file in una cartella che non cancellerai. Il browser legge l\'estensione da lì ogni volta.',
@@ -97,6 +133,12 @@ const TEXTOS = {
     subject: (p) => p + ' anahtarın',
     hi: 'Satın aldığın için teşekkürler:',
     keep: 'Bu senin lisans anahtarın. Bu e-postayı sakla: uzantıyı bununla etkinleştiriyorsun ve süresi hiç dolmuyor.',
+    tagline: 'kim izliyor, kim gidiyor',
+    label: 'Lisans anahtarın',
+    attach: 'Bu e-postayı kaybedersen diye dosya olarak da ekli.',
+    lost: 'Kaybettin mi? Ödeme yaptığın e-postayla yeniden iste:',
+    recover: 'Anahtarımı kurtar',
+    save: 'Anahtarı kaydet',
     dl: 'İndir',
     steps: 'Nasıl kurulur',
     s1: 'Dosyayı silmeyeceğin bir klasöre çıkar. Tarayıcı uzantıyı her seferinde oradan okur.',
@@ -110,6 +152,12 @@ const TEXTOS = {
     subject: (p) => 'Kunci ' + p + ' kamu',
     hi: 'Terima kasih sudah membeli',
     keep: 'Ini kunci lisensimu. Simpan email ini: dengan inilah kamu mengaktifkan ekstensi, dan kunci ini tidak kedaluwarsa.',
+    tagline: 'siapa nonton, siapa kabur',
+    label: 'Kunci lisensimu',
+    attach: 'Dilampirkan juga sebagai file, kalau email ini hilang.',
+    lost: 'Hilang? Minta lagi dengan email yang kamu pakai membayar:',
+    recover: 'Pulihkan kunciku',
+    save: 'Simpan kunci',
     dl: 'Unduh',
     steps: 'Cara memasang',
     s1: 'Ekstrak file ke folder yang tidak akan kamu hapus. Browser membaca ekstensi dari sana setiap kali.',
@@ -123,6 +171,12 @@ const TEXTOS = {
     subject: (p) => 'Ваш ключ ' + p,
     hi: 'Спасибо за покупку',
     keep: 'Это ваш лицензионный ключ. Сохраните это письмо: именно им активируется расширение, и он не истекает.',
+    tagline: 'кто смотрит, кто уходит',
+    label: 'Ваш лицензионный ключ',
+    attach: 'Он также вложен файлом — на случай, если письмо потеряется.',
+    lost: 'Потеряли? Запросите снова по адресу, с которого оплатили:',
+    recover: 'Восстановить ключ',
+    save: 'Сохранить ключ',
     dl: 'Скачать',
     steps: 'Как установить',
     s1: 'Распакуйте файл в папку, которую не будете удалять. Браузер каждый раз читает расширение оттуда.',
@@ -136,6 +190,12 @@ const TEXTOS = {
     subject: (p) => 'आपकी ' + p + ' कुंजी',
     hi: 'खरीदने के लिए धन्यवाद:',
     keep: 'यह आपकी लाइसेंस कुंजी है। यह ईमेल सँभालकर रखें: इसी से एक्सटेंशन चालू होता है, और यह कभी खत्म नहीं होती।',
+    tagline: 'कौन देखता है, कौन छोड़ता है',
+    label: 'आपकी लाइसेंस कुंजी',
+    attach: 'यह फ़ाइल के रूप में भी संलग्न है, अगर यह ईमेल खो जाए।',
+    lost: 'खो गई? जिस ईमेल से भुगतान किया था, उसी से दोबारा माँगें:',
+    recover: 'मेरी कुंजी वापस पाएँ',
+    save: 'कुंजी सहेजें',
     dl: 'डाउनलोड करें',
     steps: 'कैसे इंस्टॉल करें',
     s1: 'फ़ाइल को ऐसे फ़ोल्डर में खोलें जिसे आप मिटाएँगे नहीं। ब्राउज़र हर बार एक्सटेंशन वहीं से पढ़ता है।',
@@ -149,6 +209,12 @@ const TEXTOS = {
     subject: (p) => 'مفتاح ' + p + ' الخاص بك',
     hi: 'شكرًا لشرائك',
     keep: 'هذا هو مفتاح الترخيص الخاص بك. احتفظ بهذه الرسالة: بها تفعّل الإضافة، وهي لا تنتهي.',
+    tagline: 'مَن يشاهدك، ومَن يتركك',
+    label: 'مفتاح الترخيص الخاص بك',
+    attach: 'مرفق أيضًا كملف، تحسّبًا لضياع هذه الرسالة.',
+    lost: 'أضعته؟ اطلبه مرة أخرى بالبريد الذي دفعت به:',
+    recover: 'استعادة مفتاحي',
+    save: 'حفظ المفتاح',
     dl: 'تنزيل',
     steps: 'طريقة التثبيت',
     s1: 'فُك ضغط الملف في مجلد لن تحذفه. يقرأ المتصفح الإضافة من هناك في كل مرة.',
@@ -162,6 +228,12 @@ const TEXTOS = {
     subject: (p) => p + ' のライセンスキー',
     hi: 'ご購入ありがとうございます:',
     keep: 'これがあなたのライセンスキーです。このメールは保管してください。拡張機能はこのキーで有効化でき、期限はありません。',
+    tagline: '見てる人、去った人',
+    label: 'あなたのライセンスキー',
+    attach: 'メールを失くしたときのために、ファイルとしても添付しています。',
+    lost: '失くしたら、支払いに使ったメールアドレスで再発行できます:',
+    recover: 'キーを再発行する',
+    save: 'キーを保存',
     dl: 'ダウンロード',
     steps: 'インストール手順',
     s1: '削除しないフォルダーにファイルを展開してください。ブラウザーは毎回そこから拡張機能を読み込みます。',
@@ -175,6 +247,17 @@ const TEXTOS = {
 
 const RTL = new Set(['ar']);
 
+/* Los colores de la web. Aqui van a pelo y no como variables porque en un
+   correo no hay CSS: cada valor se escribe en el atributo style de su etiqueta. */
+const C = {
+  fondo: '#F1EDE5', papel: '#FFFFFF', tinta: '#141210', suave: '#6B655D',
+  tenue: '#8C857A', linea: '#E4DED3', rosa: '#D6427E', rosaClaro: '#FDF2F7',
+  rosaLinea: '#F3C2D9', crema: '#FBF7EF',
+};
+/* El degradado de Instagram, que es el acento de la marca. Outlook no pinta
+   degradados, asi que la franja lleva ademas un bgcolor solido debajo. */
+const DEGRADADO = 'linear-gradient(90deg,#feda75,#fa7e1e 22%,#d62976 52%,#962fbf 76%,#4f5bd5)';
+
 function textos(lang) {
   return TEXTOS[lang] || TEXTOS.en;
 }
@@ -184,15 +267,27 @@ function esc(v) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-/* Un paso numerado. La bolita va en su propia celda porque un ::before o un
+const SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+const MONO = "'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace";
+
+/* Un paso numerado. La bolita va en su propia celda: un ::before o un
    list-style con numero propio no sobrevive a Outlook. */
-function paso(n, texto, alinea) {
+function paso(n, texto, rtl) {
+  const hueco = rtl ? 'padding:0 0 15px 12px' : 'padding:0 12px 15px 0';
   return '<tr>'
-    + '<td width="30" valign="top" style="padding:0 10px 14px 0;' + (alinea === 'right' ? 'padding:0 0 14px 10px;' : '') + '">'
-    + '<div style="width:24px;height:24px;line-height:24px;border-radius:12px;background:#141210;color:#F7F5F0;'
-    + 'font:700 12px Arial,Helvetica,sans-serif;text-align:center">' + n + '</div></td>'
-    + '<td valign="top" style="padding:0 0 14px;font:400 14px/1.6 Arial,Helvetica,sans-serif;color:#141210">'
+    + '<td width="26" valign="top" style="' + hueco + '">'
+    + '<div style="width:26px;height:26px;line-height:26px;border-radius:13px;background:' + C.tinta + ';'
+    + 'color:' + C.fondo + ';font:700 12px ' + SANS + ';text-align:center">' + n + '</div></td>'
+    + '<td valign="top" style="padding:0 0 15px;font:400 14px/1.65 ' + SANS + ';color:' + C.tinta + '">'
     + esc(texto) + '</td></tr>';
+}
+
+function boton(url, texto) {
+  return '<table role="presentation" cellpadding="0" cellspacing="0" border="0">'
+    + '<tr><td bgcolor="' + C.tinta + '" style="border-radius:13px">'
+    + '<a href="' + esc(url) + '" style="display:inline-block;padding:14px 28px;'
+    + 'font:700 15px ' + SANS + ';color:' + C.fondo + ';text-decoration:none;border-radius:13px">'
+    + esc(texto) + '</a></td></tr></table>';
 }
 
 /* Devuelve {subject, html, text} listo para Resend. */
@@ -200,75 +295,102 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
   const t = textos(lang);
   const rtl = RTL.has(lang);
   const dir = rtl ? 'rtl' : 'ltr';
-  const alinea = rtl ? 'right' : 'left';
+  const al = rtl ? 'right' : 'left';
+  const urlRecuperar = sitio + '/recuperar';
 
   const html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '
     + '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
     + '<html dir="' + dir + '"><head><meta charset="utf-8">'
     + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+    + '<meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only">'
     + '<title>' + esc(t.subject(producto)) + '</title></head>'
-    + '<body style="margin:0;padding:0;background:#F7F5F0" dir="' + dir + '">'
-    // Lo que se ve en la lista de correos antes de abrirlo, oculto dentro.
-    + '<div style="display:none;max-height:0;overflow:hidden;opacity:0">' + esc(key) + '</div>'
-    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
-    + 'style="background:#F7F5F0;padding:28px 12px">'
-    + '<tr><td align="center">'
-    + '<table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" '
-    + 'style="width:560px;max-width:100%;background:#FFFFFF;border-radius:20px;overflow:hidden;'
-    + 'border:1px solid rgba(20,18,16,.12)">'
+    + '<body style="margin:0;padding:0;background:' + C.fondo + '" dir="' + dir + '">'
 
-    // cabecera
-    + '<tr><td style="background:#141210;padding:20px 30px;text-align:' + alinea + '">'
-    + '<span style="font:700 19px Arial,Helvetica,sans-serif;color:#F7F5F0;letter-spacing:-.4px">Ghoosted</span>'
-    + '</td></tr>'
+    // Lo que se lee en la bandeja antes de abrir: la clave, para no tener que
+    // abrirlo si solo se queria comprobar que llego.
+    + '<div style="display:none;max-height:0;overflow:hidden;opacity:0">'
+    + esc(t.label) + ' · ' + esc(key) + '</div>'
+
+    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
+    + 'bgcolor="' + C.fondo + '" style="background:' + C.fondo + ';padding:30px 12px"><tr><td align="center">'
+    + '<table role="presentation" width="580" cellpadding="0" cellspacing="0" border="0" '
+    + 'style="width:580px;max-width:100%;background:' + C.papel + ';border-radius:22px;overflow:hidden;'
+    + 'border:1px solid ' + C.linea + '">'
+
+    // franja de color de la marca
+    + '<tr><td height="5" bgcolor="#d62976" style="height:5px;line-height:5px;font-size:0;'
+    + 'background-image:' + DEGRADADO + '">&nbsp;</td></tr>'
+
+    // cabecera: icono + nombre + la frase de la marca
+    + '<tr><td bgcolor="' + C.tinta + '" style="background:' + C.tinta + ';padding:22px 30px">'
+    + '<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>'
+    + '<td width="40" style="padding:' + (rtl ? '0 0 0 13px' : '0 13px 0 0') + '">'
+    + '<img src="' + esc(sitio) + '/assets/icon.png" width="40" height="40" alt="" '
+    + 'style="display:block;width:40px;height:40px;border-radius:11px"></td>'
+    + '<td style="text-align:' + al + '">'
+    + '<div style="font:700 20px ' + SANS + ';color:' + C.fondo + ';letter-spacing:-.5px">Ghoosted</div>'
+    + '<div style="font:400 12px ' + SANS + ';color:#9A9288;padding-top:2px">' + esc(t.tagline) + '</div>'
+    + '</td></tr></table></td></tr>'
 
     // cuerpo
-    + '<tr><td style="padding:30px;text-align:' + alinea + '">'
-    + '<p style="margin:0 0 6px;font:400 15px/1.6 Arial,Helvetica,sans-serif;color:#6B655D">'
-    + esc(t.hi) + ' <b style="color:#141210">' + esc(producto) + '</b>.</p>'
-    + '<p style="margin:0 0 18px;font:400 15px/1.6 Arial,Helvetica,sans-serif;color:#141210">'
+    + '<tr><td style="padding:30px;text-align:' + al + '">'
+    + '<p style="margin:0 0 6px;font:400 15px/1.6 ' + SANS + ';color:' + C.suave + '">'
+    + esc(t.hi) + ' <b style="color:' + C.tinta + '">' + esc(producto) + '</b>.</p>'
+    + '<p style="margin:0 0 22px;font:400 15px/1.6 ' + SANS + ';color:' + C.tinta + '">'
     + esc(t.keep) + '</p>'
 
-    // la clave
+    // la clave, que es lo unico que de verdad importa de este correo
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-    + '<tr><td align="center" style="border:2px dashed #D6427E;border-radius:14px;background:#FDF2F7;padding:18px 12px">'
-    + '<span style="font:700 19px/1.4 Consolas,Menlo,monospace;color:#141210;letter-spacing:1.5px;'
-    + 'word-break:break-all">' + esc(key) + '</span>'
+    + '<tr><td align="center" bgcolor="' + C.rosaClaro + '" style="background:' + C.rosaClaro + ';'
+    + 'border:2px dashed ' + C.rosaLinea + ';border-radius:16px;padding:20px 14px">'
+    + '<div style="font:700 11px ' + SANS + ';color:' + C.rosa + ';text-transform:uppercase;'
+    + 'letter-spacing:1.2px;padding-bottom:9px">' + esc(t.label) + '</div>'
+    + '<div style="font:700 21px/1.35 ' + MONO + ';color:' + C.tinta + ';letter-spacing:1.5px;'
+    + 'word-break:break-all">' + esc(key) + '</div>'
+    + '<div style="font:400 12px/1.5 ' + SANS + ';color:' + C.tenue + ';padding-top:11px">'
+    + esc(t.attach) + '</div>'
     + '</td></tr></table>'
 
     // descarga
-    + '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:22px 0 4px">'
-    + '<tr><td style="border-radius:12px;background:#141210">'
-    + '<a href="' + esc(urlDescarga) + '" style="display:inline-block;padding:13px 26px;'
-    + 'font:700 15px Arial,Helvetica,sans-serif;color:#F7F5F0;text-decoration:none">'
-    + esc(t.dl) + ' ' + esc(producto) + ' (.zip)</a></td></tr></table>'
+    + '<div style="padding:24px 0 2px">' + boton(urlDescarga, t.dl + ' ' + producto + ' (.zip)') + '</div>'
 
     // pasos
-    + '<p style="margin:26px 0 12px;font:700 13px Arial,Helvetica,sans-serif;color:#141210;'
-    + 'text-transform:uppercase;letter-spacing:.6px">' + esc(t.steps) + '</p>'
+    + '<p style="margin:26px 0 13px;font:700 12px ' + SANS + ';color:' + C.tinta + ';'
+    + 'text-transform:uppercase;letter-spacing:1px">' + esc(t.steps) + '</p>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-    + paso(1, t.s1, alinea) + paso(2, t.s2, alinea) + paso(3, t.s3, alinea)
+    + paso(1, t.s1, rtl) + paso(2, t.s2, rtl) + paso(3, t.s3, rtl)
     + '</table>'
 
-    + '<p style="margin:16px 0 0;font:400 14px/1.6 Arial,Helvetica,sans-serif;color:#6B655D">'
-    + esc(t.help) + ' <a href="' + esc(sitio) + '/instalar" style="color:#D6427E">' + esc(t.guide) + '</a>.</p>'
+    // si se pierde el correo
+    + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
+    + 'style="margin-top:12px"><tr><td bgcolor="' + C.crema + '" style="background:' + C.crema + ';'
+    + 'border-' + (rtl ? 'right' : 'left') + ':3px solid ' + C.rosa + ';border-radius:'
+    + (rtl ? '12px 4px 4px 12px' : '4px 12px 12px 4px') + ';padding:14px 16px">'
+    + '<div style="font:400 13.5px/1.6 ' + SANS + ';color:' + C.suave + '">' + esc(t.lost) + ' '
+    + '<a href="' + esc(urlRecuperar) + '" style="color:' + C.rosa + ';font-weight:700">'
+    + esc(t.recover) + '</a></div></td></tr></table>'
+
+    + '<p style="margin:18px 0 0;font:400 14px/1.6 ' + SANS + ';color:' + C.suave + '">'
+    + esc(t.help) + ' <a href="' + esc(sitio) + '/instalar" style="color:' + C.rosa + '">'
+    + esc(t.guide) + '</a>.</p>'
     + '</td></tr>'
 
     // pie
-    + '<tr><td style="padding:18px 30px 24px;border-top:1px solid rgba(20,18,16,.12);text-align:' + alinea + '">'
-    + '<p style="margin:0;font:400 11px/1.6 Arial,Helvetica,sans-serif;color:#8C857A">' + esc(t.legal) + '</p>'
-    + '<p style="margin:10px 0 0;font:400 11px Arial,Helvetica,sans-serif;color:#8C857A">'
-    + '<a href="' + esc(sitio) + '" style="color:#8C857A">ghoosted.net</a></p>'
+    + '<tr><td bgcolor="' + C.crema + '" style="background:' + C.crema + ';padding:20px 30px 24px;'
+    + 'border-top:1px solid ' + C.linea + ';text-align:' + al + '">'
+    + '<p style="margin:0;font:400 11px/1.65 ' + SANS + ';color:' + C.tenue + '">' + esc(t.legal) + '</p>'
+    + '<p style="margin:11px 0 0;font:400 11px ' + SANS + ';color:' + C.tenue + '">'
+    + '<a href="' + esc(sitio) + '" style="color:' + C.tenue + '">ghoosted.net</a></p>'
     + '</td></tr>'
 
     + '</table></td></tr></table></body></html>';
 
-  /* Sin esto los filtros puntuan peor, y hay quien lee el correo en texto. */
   const text = [
     t.hi + ' ' + producto + '.',
     '',
     t.keep,
     '',
+    t.label.toUpperCase(),
     '    ' + key,
     '',
     t.dl + ': ' + urlDescarga,
@@ -278,13 +400,30 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
     '2. ' + t.s2,
     '3. ' + t.s3,
     '',
+    t.lost + ' ' + urlRecuperar,
     t.help + ' ' + sitio + '/instalar',
     '',
     t.legal,
     sitio,
   ].join('\n');
 
-  return { subject: t.subject(producto), html, text };
+  /* El fichero que se adjunta. Un .txt se abre en cualquier sitio, se guarda
+     en el movil y sobrevive a que se borre el correo. */
+  function ficheroClave() {
+    return [
+      'Ghoosted — ' + t.label,
+      '',
+      key,
+      '',
+      producto,
+      t.dl + ': ' + urlDescarga,
+      t.lost + ' ' + urlRecuperar,
+      '',
+      sitio,
+    ].join('\r\n');
+  }
+
+  return { subject: t.subject(producto), html, text, adjunto: ficheroClave(), nombreAdjunto: 'ghoosted-clave.txt' };
 }
 
 module.exports = { correoLicencia, TEXTOS };

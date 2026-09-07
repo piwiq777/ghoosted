@@ -62,5 +62,19 @@ module.exports = () => {
      cualquier otro correo. */
   s.ok('el asunto nombra el producto', es.subject.indexOf('Ghoosted Pro') !== -1);
 
+  /* La clave tambien como fichero: copiar al portapapeles se pierde en cuanto
+     se copia otra cosa, y un corte de luz no perdona. */
+  s.ok('lleva la clave adjunta como fichero', es.adjunto.indexOf('GHST-A1B2') !== -1);
+  s.eq('el adjunto se llama igual siempre', es.nombreAdjunto, 'ghoosted-clave.txt');
+
+  /* Si se pierde el correo, tiene que decir por si mismo como recuperarla. */
+  s.ok('dice donde recuperarla', es.html.indexOf('/recuperar') !== -1);
+  s.ok('y tambien en la version de texto', es.text.indexOf('/recuperar') !== -1);
+
+  /* Con las imagenes bloqueadas —que es lo normal— el correo tiene que
+     seguir entendiendose: el nombre va como texto, no dentro del logo. */
+  s.ok('el nombre de la marca es texto, no imagen', es.html.indexOf('>Ghoosted<') !== -1);
+  s.ok('la imagen del logo no lleva texto imprescindible', /alt=""/.test(es.html));
+
   return s;
 };

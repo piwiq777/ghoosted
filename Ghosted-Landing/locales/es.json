@@ -137,7 +137,7 @@
   "plus_excl": "Sin modo fantasma ni descargas",
   "price_foot": "Pago único · sin cuenta · el análisis se ejecuta en tu dispositivo",
   "after_key_t": "Tu clave es tuya",
-  "after_key": "Cada compra genera su propia clave, única y solo tuya. Aparece en pantalla nada más pagar y te la mandamos también al correo — y al móvil por SMS, si dejas tu número. No caduca nunca.",
+  "after_key": "Cada compra genera su propia clave, única y solo tuya. Aparece en pantalla nada más pagar y te la mandamos también al correo — y al móvil por SMS, si dejas tu número. No caduca nunca. Se ata a tu cuenta de Instagram la primera vez que la activas: una clave, una cuenta.",
   "after_store_t": "Próximamente en la Chrome Web Store",
   "after_store": "Mientras tanto se instala desde el archivo que descargas, en unos cinco minutos. Cuando esté en la tienda, la misma clave te vale allí: no pagas dos veces.",
   "after_upd_t": "Actualizaciones incluidas",
@@ -208,5 +208,17 @@
   "sx_save": "Guárdala: es la única forma de activar la extensión.",
   "sx_sent_mail": "También te la hemos enviado a tu correo.",
   "sx_sent_sms": "Y por SMS a tu móvil.",
-  "sx_sent_none": "No hemos podido enviarla a ningún sitio, así que cópiala antes de cerrar esta página."
+  "sx_sent_none": "No hemos podido enviarla a ningún sitio, así que cópiala antes de cerrar esta página.",
+  "rc_h1": "Recupera tu clave",
+  "rc_sub": "Escribe el correo con el que pagaste. Te mandamos ahí tu clave de licencia otra vez.",
+  "rc_send": "Enviarme mi clave",
+  "rc_sending": "Enviando…",
+  "rc_done": "Si ese correo tiene una compra de Ghoosted, la clave va de camino. Mira la bandeja de entrada — y también el spam.",
+  "rc_bad": "Ese correo no parece correcto.",
+  "rc_slow": "Demasiados intentos. Espera unos minutos y vuelve a probar.",
+  "rc_fail": "Ahora mismo no se ha podido. Prueba dentro de un momento.",
+  "rc_note": "Nunca enseñamos la clave en esta página: solo va al correo que pagó.",
+  "rc_back": "Volver a Ghoosted",
+  "sx_savefile": "Guardar la clave (.txt)",
+  "sx_lost": "¿La pierdes más adelante? Pídela otra vez en"
 }

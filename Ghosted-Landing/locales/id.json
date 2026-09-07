@@ -137,7 +137,7 @@
   "plus_excl": "Nggak ada mode hantu atau unduhan",
   "price_foot": "Sekali bayar · tanpa akun · analisis berjalan di perangkatmu",
   "after_key_t": "Kuncimu milikmu",
-  "after_key": "Setiap pembelian menghasilkan kuncinya sendiri, unik dan hanya milikmu. Kunci muncul di layar begitu kamu membayar, dan kami kirim juga lewat email — serta lewat SMS kalau kamu meninggalkan nomor. Tidak pernah kedaluwarsa.",
+  "after_key": "Setiap pembelian menghasilkan kuncinya sendiri, unik dan hanya milikmu. Kunci muncul di layar begitu kamu membayar, dan kami kirim juga lewat email — serta lewat SMS kalau kamu meninggalkan nomor. Tidak pernah kedaluwarsa. Kunci terikat ke akun Instagram-mu saat pertama diaktifkan: satu kunci, satu akun.",
   "after_store_t": "Segera di Chrome Web Store",
   "after_store": "Sementara itu dipasang dari file yang kamu unduh, sekitar lima menit. Begitu ada di toko, kunci yang sama berlaku di sana: kamu tidak membayar dua kali.",
   "after_upd_t": "Pembaruan termasuk",
@@ -208,5 +208,17 @@
   "sx_save": "Simpan kunci ini: hanya dengan ini ekstensi bisa diaktifkan.",
   "sx_sent_mail": "Kami juga mengirimkannya ke emailmu.",
   "sx_sent_sms": "Dan lewat SMS ke ponselmu.",
-  "sx_sent_none": "Kami tidak bisa mengirimkannya ke mana pun, jadi salin sebelum menutup halaman ini."
+  "sx_sent_none": "Kami tidak bisa mengirimkannya ke mana pun, jadi salin sebelum menutup halaman ini.",
+  "rc_h1": "Pulihkan kuncimu",
+  "rc_sub": "Tulis email yang kamu pakai membayar. Kami kirim ulang kunci lisensimu ke sana.",
+  "rc_send": "Kirim kunciku",
+  "rc_sending": "Mengirim…",
+  "rc_done": "Kalau email itu punya pembelian Ghoosted, kuncinya sedang dikirim. Cek kotak masuk — dan folder spam juga.",
+  "rc_bad": "Email itu sepertinya tidak benar.",
+  "rc_slow": "Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.",
+  "rc_fail": "Sekarang belum berhasil. Coba sebentar lagi.",
+  "rc_note": "Kami tidak pernah menampilkan kunci di halaman ini: kunci hanya dikirim ke email yang membayar.",
+  "rc_back": "Kembali ke Ghoosted",
+  "sx_savefile": "Simpan kunci (.txt)",
+  "sx_lost": "Hilang nanti? Minta lagi di"
 }

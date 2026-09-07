@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F5F0">
+  <title>Ghoosted — Recover your key</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .rec{min-height:100vh;display:grid;place-items:center;padding:28px 16px}
+    .rec-card{width:min(100%,460px);padding:38px 32px;text-align:center;border:1px solid var(--glass-line);
+      border-radius:28px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);box-shadow:var(--shadow)}
+    .rec-card h1{margin:0 0 10px;font-family:var(--display);font-size:clamp(24px,4.6vw,32px);letter-spacing:-1.1px}
+    .rec-card p{color:var(--ink-2);line-height:1.65;margin:0 0 20px}
+    .rec-card input{width:100%;box-sizing:border-box;border:1px solid var(--line-2);border-radius:13px;
+      padding:14px 15px;font:400 15px var(--font);background:var(--paper);color:var(--ink)}
+    .rec-card input:focus{outline:2px solid var(--accent);outline-offset:1px}
+    .rec-card button{width:100%;margin-top:11px;border:0;border-radius:13px;background:var(--ink);color:#F7F5F0;
+      padding:14px 18px;font:700 15px var(--font);cursor:pointer}
+    .rec-card button:hover{opacity:.9}
+    .rec-card button[disabled]{opacity:.5;cursor:default}
+    .rec-msg{margin:18px 0 0;font-size:14px;line-height:1.6;color:var(--ink)}
+    .rec-foot{margin:22px 0 0;font-size:12.5px;color:var(--ink-3)}
+    .rec-foot a{color:var(--ink-3)}
+  </style>
+</head>
+<body>
+  <main class="rec">
+    <section class="rec-card">
+      <h1 data-i18n="rc_h1">Recover your key</h1>
+      <p data-i18n="rc_sub">Enter the email you paid with. We will send your licence key there again.</p>
+      <form id="form" novalidate>
+        <input id="email" type="email" autocomplete="email" required
+               placeholder="you@example.com" aria-label="Email">
+        <button id="send" type="submit" data-i18n="rc_send">Send me my key</button>
+      </form>
+      <p id="msg" class="rec-msg" hidden></p>
+      <p class="rec-foot">
+        <span data-i18n="rc_note">We never show the key on this page — it only goes to the email that paid.</span>
+        <br><a href="/" data-i18n="rc_back">Back to Ghoosted</a>
+      </p>
+    </section>
+  </main>
+  <script>
+    (function () {
+      // Mismo patron que success.html: diccionario ingles dentro y el resto
+      // desde /locales, porque el texto de respuesta se genera al vuelo y no
+      // hay nodo del DOM del que sacar el original.
+      var EN = {
+        rc_h1: 'Recover your key',
+        rc_sub: 'Enter the email you paid with. We will send your licence key there again.',
+        rc_send: 'Send me my key',
+        rc_sending: 'Sending…',
+        rc_done: 'If that email has a Ghoosted purchase, the key is on its way. Check your inbox — and the spam folder.',
+        rc_bad: 'That email address does not look right.',
+        rc_slow: 'Too many attempts. Wait a few minutes and try again.',
+        rc_fail: 'Could not do it right now. Try again in a moment.',
+        rc_note: 'We never show the key on this page — it only goes to the email that paid.',
+        rc_back: 'Back to Ghoosted',
+      };
+      var lang = 'en';
+      try { lang = localStorage.getItem('ghosted_lang') || 'en'; } catch (e) {}
+      var dict = null;
+      function t(k) { return (dict && dict[k] != null) ? dict[k] : EN[k]; }
+      function pintar() {
+        document.documentElement.lang = lang;
+        if (lang === 'ar') document.documentElement.dir = 'rtl';
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var v = t(el.getAttribute('data-i18n')); if (v != null) el.textContent = v;
+        });
+      }
+      function arrancar(cb) {
+        if (lang === 'en') { pintar(); cb(); return; }
+        fetch('locales/' + lang + '.json?v=11')
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) { dict = d; pintar(); cb(); })
+          .catch(function () { pintar(); cb(); });
+      }
+      arrancar(function () {
+        var form = document.getElementById('form'), campo = document.getElementById('email');
+        var boton = document.getElementById('send'), msg = document.getElementById('msg');
+        function decir(texto) { msg.textContent = texto; msg.hidden = false; }
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var email = campo.value.trim();
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { decir(t('rc_bad')); return; }
+          boton.disabled = true; decir(t('rc_sending'));
+          fetch('/api/license/recover', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email }),
+          }).then(function (r) {
+            // La respuesta es la misma haya compra o no: si distinguiera,
+            // esto serviria para averiguar quien es cliente.
+            if (r.status === 429) { decir(t('rc_slow')); return; }
+            if (!r.ok) { decir(t('rc_fail')); return; }
+            decir(t('rc_done'));
+            form.hidden = true;
+          }).catch(function () { decir(t('rc_fail')); })
+            .then(function () { boton.disabled = false; });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

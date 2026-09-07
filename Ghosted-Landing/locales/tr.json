@@ -137,7 +137,7 @@
   "plus_excl": "Hayalet mod veya indirme yok",
   "price_foot": "Tek ödeme · hesap gerekmez · analiz cihazında çalışır",
   "after_key_t": "Anahtarın senindir",
-  "after_key": "Her satın alma kendi anahtarını üretir; benzersiz ve yalnızca senin. Ödeme biter bitmez ekranda çıkar, ayrıca e-postayla — numara bırakırsan SMS'le de — gönderilir. Hiç sona ermez.",
+  "after_key": "Her satın alma kendi anahtarını üretir; benzersiz ve yalnızca senin. Ödeme biter bitmez ekranda çıkar, ayrıca e-postayla — numara bırakırsan SMS'le de — gönderilir. Hiç sona ermez. İlk etkinleştirmede Instagram hesabına bağlanır: bir anahtar, bir hesap.",
   "after_store_t": "Yakında Chrome Web Mağazası'nda",
   "after_store": "O zamana kadar indirdiğin dosyadan, yaklaşık beş dakikada kuruluyor. Mağazaya girdiğinde aynı anahtar orada da geçerli: iki kez ödemezsin.",
   "after_upd_t": "Güncellemeler dahil",
@@ -208,5 +208,17 @@
   "sx_save": "Bu anahtarı sakla: uzantıyı etkinleştirmenin tek yolu bu.",
   "sx_sent_mail": "Ayrıca e-postana da gönderdik.",
   "sx_sent_sms": "Ve cep telefonuna SMS ile.",
-  "sx_sent_none": "Hiçbir yere gönderemedik; bu sayfayı kapatmadan önce kopyala."
+  "sx_sent_none": "Hiçbir yere gönderemedik; bu sayfayı kapatmadan önce kopyala.",
+  "rc_h1": "Anahtarını kurtar",
+  "rc_sub": "Ödeme yaptığın e-postayı yaz. Lisans anahtarını oraya yeniden gönderiyoruz.",
+  "rc_send": "Anahtarımı gönder",
+  "rc_sending": "Gönderiliyor…",
+  "rc_done": "O e-postaya ait bir Ghoosted satın alması varsa anahtar yolda. Gelen kutusuna bak — spam klasörüne de.",
+  "rc_bad": "Bu e-posta doğru görünmüyor.",
+  "rc_slow": "Çok fazla deneme. Birkaç dakika bekleyip tekrar dene.",
+  "rc_fail": "Şu an olmadı. Birazdan tekrar dene.",
+  "rc_note": "Anahtarı bu sayfada asla göstermiyoruz: yalnızca ödeme yapan e-postaya gider.",
+  "rc_back": "Ghoosted'e dön",
+  "sx_savefile": "Anahtarı kaydet (.txt)",
+  "sx_lost": "Sonra kaybedersen yeniden iste:"
 }

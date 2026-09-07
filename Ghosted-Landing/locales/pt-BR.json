@@ -137,7 +137,7 @@
   "plus_excl": "Sem modo fantasma nem downloads",
   "price_foot": "Pagamento único · sem conta · a análise roda no seu dispositivo",
   "after_key_t": "Sua chave é sua",
-  "after_key": "Cada compra gera a própria chave, única e só sua. Ela aparece na tela assim que você paga e também enviamos por e-mail — e por SMS, se você deixar um número. Nunca expira.",
+  "after_key": "Cada compra gera a própria chave, única e só sua. Ela aparece na tela assim que você paga e também enviamos por e-mail — e por SMS, se você deixar um número. Nunca expira. Ela se vincula à sua conta do Instagram na primeira ativação: uma chave, uma conta.",
   "after_store_t": "Em breve na Chrome Web Store",
   "after_store": "Enquanto isso, instala pelo arquivo que você baixa, em uns cinco minutos. Quando estiver na loja, a mesma chave vale lá: você não paga duas vezes.",
   "after_upd_t": "Atualizações incluídas",
@@ -208,5 +208,17 @@
   "sx_save": "Guarde esta chave: é a única forma de ativar a extensão.",
   "sx_sent_mail": "Também enviamos para o seu e-mail.",
   "sx_sent_sms": "E por SMS para o seu celular.",
-  "sx_sent_none": "Não conseguimos enviar para nenhum lugar, então copie antes de fechar esta página."
+  "sx_sent_none": "Não conseguimos enviar para nenhum lugar, então copie antes de fechar esta página.",
+  "rc_h1": "Recupere sua chave",
+  "rc_sub": "Digite o e-mail que você usou na compra. Enviaremos sua chave de licença para lá de novo.",
+  "rc_send": "Enviar minha chave",
+  "rc_sending": "Enviando…",
+  "rc_done": "Se esse e-mail tiver uma compra do Ghoosted, a chave está a caminho. Confira a caixa de entrada — e também o spam.",
+  "rc_bad": "Esse e-mail não parece certo.",
+  "rc_slow": "Tentativas demais. Espere alguns minutos e tente de novo.",
+  "rc_fail": "Não deu certo agora. Tente daqui a pouco.",
+  "rc_note": "Nunca mostramos a chave nesta página: ela só vai para o e-mail que pagou.",
+  "rc_back": "Voltar ao Ghoosted",
+  "sx_savefile": "Salvar a chave (.txt)",
+  "sx_lost": "Perdeu depois? Peça de novo em"
 }

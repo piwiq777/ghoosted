@@ -19,6 +19,14 @@ function newKey() {
 }
 
 function licenseKey(key) { return 'ghosted:license:' + key; }
+/* El indice para recuperar la clave va por HASH del correo, no por el correo
+   en claro: asi quien mirara el almacen por encima no se lleva la lista de
+   compradores. Es un indice, no un secreto — la ficha guarda el correo igual,
+   porque hace falta para volver a escribirle. */
+function emailKey(email) {
+  const limpio = String(email || '').trim().toLowerCase();
+  return 'ghosted:email:' + crypto.createHash('sha256').update(limpio).digest('hex').slice(0, 32);
+}
 function bindingKey(key) { return 'ghosted:binding:' + key; }
 
 // Una clave libre, y de verdad libre. Son 80 bits al azar, asi que dos
@@ -65,6 +73,15 @@ async function issueLicense(session) {
     };
     await setJson(licenseKey(key), record);
     if (record.paymentIntent) await command(['SET', 'ghosted:stripe:payment:' + record.paymentIntent, key]);
+    /* Una persona puede comprar Plus y luego Pro, asi que el indice guarda
+       lista, no una sola clave. Si falla, la licencia ya esta emitida: como
+       mucho se pierde la recuperacion por correo, no la compra. */
+    if (record.customerEmail) {
+      try {
+        const idx = (await getJson(emailKey(record.customerEmail))) || [];
+        if (idx.indexOf(key) === -1) { idx.push(key); await setJson(emailKey(record.customerEmail), idx); }
+      } catch (e) { console.error('indice_email_fallo', e && e.message); }
+    }
   }
   return key;
 }
@@ -77,6 +94,34 @@ async function markDelivered(key, sent) {
   record.sent = Object.assign({}, record.sent, sent, { at: new Date().toISOString() });
   await setJson(licenseKey(key), record);
   return record;
+}
+
+/* Todas las licencias compradas con ese correo. Devuelve [] si no hay
+   ninguna — quien llama NO debe distinguir "no existe" de "no te lo digo". */
+async function porEmail(email) {
+  const claves = (await getJson(emailKey(email))) || [];
+  const fichas = [];
+  for (const k of claves) {
+    const r = await getJson(licenseKey(k));
+    if (r && r.status === 'active') fichas.push(r);
+  }
+  return fichas;
+}
+
+/* Deja constancia de que alguien intento activar esta clave con OTRA cuenta de
+   Instagram. Es lo que pasa cuando un comprador la reparte: la clave no se
+   abre —el enganche es a una sola cuenta— pero conviene poder verlo. */
+async function apuntarIntento(key, accountId) {
+  const record = await getJson(licenseKey(key));
+  if (!record) return null;
+  const abuso = record.abuse || { veces: 0, cuentas: [] };
+  abuso.veces += 1;
+  abuso.ultimo = new Date().toISOString();
+  const id = String(accountId);
+  if (abuso.cuentas.indexOf(id) === -1) abuso.cuentas = abuso.cuentas.concat(id).slice(-10);
+  record.abuse = abuso;
+  await setJson(licenseKey(key), record);
+  return abuso;
 }
 
 async function resolve(key) {
@@ -119,12 +164,18 @@ async function activate(key, accountId, product) {
   if (found.record.status !== 'active') return { valid: false, error: 'revoked', revoked: true };
   if (wrongProduct(found.record, product)) return { valid: false, error: 'wrong_product' };
   const bound = await command(['GET', bindingKey(found.key)]);
-  if (bound && bound !== account) return { valid: false, error: 'bound' };
+  if (bound && bound !== account) {
+    try { await apuntarIntento(found.key, account); } catch (e) { /* no bloquea */ }
+    return { valid: false, error: 'bound' };
+  }
   if (!bound) {
     const set = await command(['SET', bindingKey(found.key), account, 'NX']);
     if (!set) {
       const current = await command(['GET', bindingKey(found.key)]);
-      if (current !== account) return { valid: false, error: 'bound' };
+      if (current !== account) {
+        try { await apuntarIntento(found.key, account); } catch (e) { /* no bloquea */ }
+        return { valid: false, error: 'bound' };
+      }
     }
   }
   const record = await ensureActivationClock(found.key);
@@ -159,4 +210,4 @@ async function revokePayment(paymentIntent) {
   await setJson(licenseKey(key), record);
 }
 
-module.exports = { activate, issueLicense, markDelivered, normalizeKey, resolve, revokePayment, verify };
+module.exports = { activate, apuntarIntento, issueLicense, markDelivered, normalizeKey, porEmail, resolve, revokePayment, verify };

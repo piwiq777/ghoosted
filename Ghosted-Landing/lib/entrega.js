@@ -55,6 +55,12 @@ async function porCorreo(record) {
         subject: carta.subject,
         html: carta.html,
         text: carta.text,
+        // La clave tambien como fichero. Un .txt se abre en cualquier sitio,
+        // se guarda en el movil y sobrevive a que se borre el correo.
+        attachments: [{
+          filename: carta.nombreAdjunto,
+          content: Buffer.from(carta.adjunto, 'utf8').toString('base64'),
+        }],
       }),
     });
     if (!r.ok) { console.error('resend_failed', r.status, await r.text().catch(() => '')); return false; }
@@ -96,8 +102,13 @@ async function porSms(record) {
    emite la licencia por su cuenta (webhook perdido). `record.sent` evita
    repetir: un correo duplicado no rompe nada, pero un SMS duplicado se cobra
    dos veces. */
-async function entregar(record) {
-  if (!record || !record.key || (record.sent && record.sent.at)) return record && record.sent;
+async function entregar(record, opciones) {
+  const forzar = !!(opciones && opciones.forzar);
+  if (!record || !record.key) return record && record.sent;
+  /* Ya entregado no se repite: un correo duplicado no rompe nada, pero un SMS
+     duplicado se cobra dos veces. `forzar` es para /api/license/recover, donde
+     el comprador esta pidiendo su clave otra vez a proposito. */
+  if (!forzar && record.sent && record.sent.at) return record.sent;
   const [email, sms] = await Promise.all([porCorreo(record), porSms(record)]);
   /* Dejar constancia toca el almacen, y el almacen tambien puede fallar. Que
      no se apunte no puede tumbar el webhook: la clave ya esta emitida y ya se

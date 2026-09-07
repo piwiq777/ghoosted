@@ -137,7 +137,7 @@
   "plus_excl": "Kein Geistermodus, keine Downloads",
   "price_foot": "Einmalzahlung · kein Konto nötig · die Analyse läuft auf deinem Gerät",
   "after_key_t": "Dein Schlüssel gehört dir",
-  "after_key": "Jeder Kauf erzeugt einen eigenen Schlüssel, einmalig und nur deiner. Er erscheint direkt nach der Zahlung auf dem Bildschirm, kommt zusätzlich per E-Mail — und per SMS, wenn du eine Nummer hinterlässt. Er läuft nie ab.",
+  "after_key": "Jeder Kauf erzeugt einen eigenen Schlüssel, einmalig und nur deiner. Er erscheint direkt nach der Zahlung auf dem Bildschirm, kommt zusätzlich per E-Mail — und per SMS, wenn du eine Nummer hinterlässt. Er läuft nie ab. Beim ersten Aktivieren wird er an dein Instagram-Konto gebunden: ein Schlüssel, ein Konto.",
   "after_store_t": "Bald im Chrome Web Store",
   "after_store": "Bis dahin wird sie aus der heruntergeladenen Datei installiert, in etwa fünf Minuten. Sobald sie im Store ist, gilt derselbe Schlüssel auch dort — du zahlst nicht zweimal.",
   "after_upd_t": "Updates inklusive",
@@ -208,5 +208,17 @@
   "sx_save": "Bewahre diesen Schlüssel auf: nur damit lässt sich die Erweiterung aktivieren.",
   "sx_sent_mail": "Wir haben ihn dir auch per E-Mail geschickt.",
   "sx_sent_sms": "Und per SMS auf dein Handy.",
-  "sx_sent_none": "Wir konnten ihn nirgends hinschicken — kopiere ihn, bevor du diese Seite schließt."
+  "sx_sent_none": "Wir konnten ihn nirgends hinschicken — kopiere ihn, bevor du diese Seite schließt.",
+  "rc_h1": "Schlüssel wiederherstellen",
+  "rc_sub": "Gib die E-Mail an, mit der du bezahlt hast. Wir schicken deinen Lizenzschlüssel erneut dorthin.",
+  "rc_send": "Schlüssel schicken",
+  "rc_sending": "Wird gesendet…",
+  "rc_done": "Wenn zu dieser E-Mail ein Ghoosted-Kauf gehört, ist der Schlüssel unterwegs. Schau in den Posteingang — und in den Spam.",
+  "rc_bad": "Diese E-Mail sieht nicht richtig aus.",
+  "rc_slow": "Zu viele Versuche. Warte ein paar Minuten und probier es erneut.",
+  "rc_fail": "Gerade nicht möglich. Versuch es gleich noch einmal.",
+  "rc_note": "Wir zeigen den Schlüssel hier nie an — er geht nur an die E-Mail, die bezahlt hat.",
+  "rc_back": "Zurück zu Ghoosted",
+  "sx_savefile": "Schlüssel sichern (.txt)",
+  "sx_lost": "Später verloren? Fordere ihn erneut an unter"
 }

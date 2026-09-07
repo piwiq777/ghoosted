@@ -16,7 +16,8 @@
     .success-card h1{margin:0 0 10px;font-family:var(--display);font-size:clamp(28px,5vw,40px);letter-spacing:-1.4px}
     .success-card p{color:var(--ink-2);line-height:1.65}
     .license-key{display:block;margin:22px 0 12px;border:1px dashed var(--accent);border-radius:13px;padding:14px;background:rgba(224,69,154,.10);color:var(--ink);font:800 16px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.7px;word-break:break-all}
-    .copy{border:0;border-radius:11px;background:var(--ink);color:#F7F5F0;padding:11px 16px;font-weight:700;cursor:pointer}
+    .copy{border:0;border-radius:11px;background:var(--ink);color:#F7F5F0;padding:11px 16px;font-weight:700;cursor:pointer;margin:0 3px}
+    .copy-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
     .copy:hover{opacity:.9}
     .hint{font-size:13px;color:var(--ink-3)}
     .fail{color:var(--alert)}
@@ -40,6 +41,9 @@
       <p id="status"><span class="spinner"></span> <span data-i18n="sx_generating">Generating your unique key…</span></p>
       <code id="license" class="license-key" hidden></code>
       <button id="copy" class="copy" hidden data-i18n="sx_copy">Copy key</button>
+      <!-- Guardar la clave como fichero. Copiar al portapapeles se pierde en
+           cuanto se copia otra cosa, y si se va la luz no queda nada. -->
+      <button id="saveKey" class="copy copy-ghost" hidden data-i18n="sx_savefile">Save the key (.txt)</button>
       <!-- Que se ha hecho con la clave. El texto lo pone el script segun lo que
            el servidor diga que salio de verdad: prometer un correo que no se
            envio es justo como se pierde una clave. -->
@@ -90,6 +94,8 @@
         sx_sent_mail: 'We have also emailed it to you.',
         sx_sent_sms: 'And sent it to your phone by SMS.',
         sx_sent_none: 'We could not send it anywhere, so copy it now before you close this page.',
+        sx_savefile: 'Save the key (.txt)',
+        sx_lost: 'Lost it later? Ask for it again at',
       };
       var lang = 'en';
       try { lang = localStorage.getItem('ghosted_lang') || 'en'; } catch (e) {}
@@ -135,13 +141,18 @@
               if (r.ok && r.data.key) {
                 status.textContent = t('sx_ready');
                 license.textContent = r.data.key; license.hidden = false; copy.hidden = false;
+                document.getElementById('saveKey').hidden = false;
                 var enviado = r.data.sent || {};
                 var partes = [t('sx_save')];
                 if (enviado.email) partes.push(t('sx_sent_mail'));
                 if (enviado.sms) partes.push(t('sx_sent_sms'));
                 if (!enviado.email && !enviado.sms) partes.push(t('sx_sent_none'));
                 var aviso = document.getElementById('delivery');
-                aviso.textContent = partes.join(' ');
+                aviso.textContent = partes.join(' ') + ' ';
+                var enlace = document.createElement('a');
+                enlace.href = '/recuperar'; enlace.textContent = 'ghoosted.net/recuperar';
+                aviso.appendChild(document.createTextNode(t('sx_lost') + ' '));
+                aviso.appendChild(enlace);
                 aviso.hidden = false;
                 showDownload(r.data.downloadUrl, r.data.downloadName || 'Ghoosted', r.data.downloadFile);
                 return;
@@ -156,6 +167,17 @@
               if (tries < 60) return setTimeout(poll, tries < 12 ? 2000 : 5000);
             });
         }
+        document.getElementById('saveKey').addEventListener('click', function () {
+          // Un .txt se guarda en el movil, se abre en cualquier sitio y
+          // sobrevive a que se cierre el navegador.
+          var cuerpo = 'Ghoosted\r\n\r\n' + license.textContent + '\r\n\r\n'
+            + location.origin + '/recuperar\r\n';
+          var url = URL.createObjectURL(new Blob([cuerpo], { type: 'text/plain;charset=utf-8' }));
+          var a = document.createElement('a');
+          a.href = url; a.download = 'ghoosted-clave.txt';
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+        });
         copy.addEventListener('click', function () {
           navigator.clipboard.writeText(license.textContent)
             .then(function () { copy.textContent = t('sx_copied'); })

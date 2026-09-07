@@ -37,6 +37,19 @@ module.exports = async (req, res) => {
     // licence — otherwise a refund still leaves the buyer with the product.
     if (record.status !== 'active') return json(res, 403, { error: 'revoked' });
 
+    /* Tope de descargas por clave. La clave se ata a UNA cuenta de Instagram,
+       asi que repartirla no da acceso a nadie — pero el enlace de descarga si
+       sirve para cualquiera que lo tenga, y sin tope una sola clave puede
+       acabar de espejo publico del ZIP de pago. Quince al dia es de sobra
+       para reinstalar en varios ordenadores y corto para repartir.
+       Falla ABIERTO, como el resto de frenos. */
+    try {
+      const cubo = 'ghosted:freno:descargas:' + record.key;
+      const n = Number(await command(['INCR', cubo])) || 1;
+      if (n === 1) await command(['EXPIRE', cubo, '86400']);
+      if (n > 15) return json(res, 429, { error: 'demasiadas_descargas' });
+    } catch (e) { /* si el almacen no responde, se deja descargar */ }
+
     const plan = record.plan || 'pro';
     const dl = downloadFor(plan);
     const file = filePath(plan);

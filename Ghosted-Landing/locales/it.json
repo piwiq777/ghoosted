@@ -137,7 +137,7 @@
   "plus_excl": "Niente modalità fantasma né download",
   "price_foot": "Pagamento unico · nessun account · l'analisi gira sul tuo dispositivo",
   "after_key_t": "La tua chiave è tua",
-  "after_key": "Ogni acquisto genera la sua chiave, unica e solo tua. Compare sullo schermo appena paghi e te la inviamo anche via e-mail — e via SMS, se lasci un numero. Non scade mai.",
+  "after_key": "Ogni acquisto genera la sua chiave, unica e solo tua. Compare sullo schermo appena paghi e te la inviamo anche via e-mail — e via SMS, se lasci un numero. Non scade mai. Si lega al tuo account Instagram alla prima attivazione: una chiave, un account.",
   "after_store_t": "Presto sul Chrome Web Store",
   "after_store": "Nel frattempo si installa dal file che scarichi, in circa cinque minuti. Quando sarà nello store, la stessa chiave funziona anche lì: non paghi due volte.",
   "after_upd_t": "Aggiornamenti inclusi",
@@ -208,5 +208,17 @@
   "sx_save": "Conserva questa chiave: è l'unico modo per attivare l'estensione.",
   "sx_sent_mail": "Te l'abbiamo inviata anche via e-mail.",
   "sx_sent_sms": "E via SMS sul tuo cellulare.",
-  "sx_sent_none": "Non siamo riusciti a inviarla da nessuna parte: copiala prima di chiudere questa pagina."
+  "sx_sent_none": "Non siamo riusciti a inviarla da nessuna parte: copiala prima di chiudere questa pagina.",
+  "rc_h1": "Recupera la tua chiave",
+  "rc_sub": "Scrivi l'e-mail con cui hai pagato. Ti rimandiamo lì la tua chiave di licenza.",
+  "rc_send": "Inviami la chiave",
+  "rc_sending": "Invio…",
+  "rc_done": "Se quell'e-mail ha un acquisto Ghoosted, la chiave è in arrivo. Controlla la posta in arrivo — e anche lo spam.",
+  "rc_bad": "Quell'e-mail non sembra corretta.",
+  "rc_slow": "Troppi tentativi. Aspetta qualche minuto e riprova.",
+  "rc_fail": "Adesso non è stato possibile. Riprova tra poco.",
+  "rc_note": "Non mostriamo mai la chiave in questa pagina: va solo all'e-mail che ha pagato.",
+  "rc_back": "Torna a Ghoosted",
+  "sx_savefile": "Salva la chiave (.txt)",
+  "sx_lost": "La perdi più avanti? Richiedila su"
 }
