@@ -17,6 +17,32 @@ const IDIOMAS = ['en', 'es', 'pt-BR', 'fr', 'de', 'it', 'tr', 'id', 'ru', 'hi', 
 const STRIPE_LOCALE = { en: 'en', es: 'es', 'pt-BR': 'pt-BR', fr: 'fr', de: 'de',
   it: 'it', tr: 'tr', id: 'id', ru: 'ru', ja: 'ja' };
 
+/* El texto que el comprador marca antes de pagar. Va en su idioma a proposito:
+   una renuncia a un derecho que no se entiende no vale para nada. Dice tres
+   cosas y ninguna de mas — entrega ya, se pierde el desistimiento, y no hay
+   devolucion por arrepentirse. Lo que NO dice, porque seria nulo y ademas
+   contraproducente, es "no hay reembolsos nunca": la garantia legal de
+   conformidad no se puede renunciar, y meter una clausula nula delante de un
+   consumidor tumba tambien las que si son validas. */
+const CONSENT = {
+  en: (s) => 'I ask for my licence key to be delivered immediately and I agree it starts right away. I understand that once the key is delivered I lose my 14-day right of withdrawal and there is NO refund if I change my mind (Art. 16(m) Directive 2011/83/EU). This does not affect my legal guarantee if the product does not work. I accept the [Terms](' + s + '/terms) and the [Refund Policy](' + s + '/refund).',
+  es: (s) => 'Pido que mi clave se entregue de inmediato y acepto que se ejecute ya. Entiendo que, entregada la clave, pierdo el derecho de desistimiento de 14 días y NO hay devolución si cambio de opinión (art. 103.m TRLGDCU). Esto no afecta a mi garantía legal si el producto no funciona. Acepto los [Términos](' + s + '/terms) y la [Política de Reembolso](' + s + '/refund).',
+  'pt-BR': (s) => 'Peço a entrega imediata da minha chave e concordo que comece já. Entendo que, entregue a chave, perco o direito de arrependimento de 14 dias e NÃO há reembolso se eu mudar de ideia (art. 16(m) Diretiva 2011/83/UE). Isso não afeta minha garantia legal se o produto não funcionar. Aceito os [Termos](' + s + '/terms) e a [Política de Reembolso](' + s + '/refund).',
+  fr: (s) => 'Je demande la livraison immédiate de ma clé et j\'accepte l\'exécution immédiate. Je comprends qu\'une fois la clé livrée je perds mon droit de rétractation de 14 jours et qu\'il n\'y a AUCUN remboursement si je change d\'avis (art. 16(m) directive 2011/83/UE). Cela n\'affecte pas ma garantie légale si le produit ne fonctionne pas. J\'accepte les [Conditions](' + s + '/terms) et la [Politique de remboursement](' + s + '/refund).',
+  de: (s) => 'Ich verlange die sofortige Lieferung meines Lizenzschlüssels und stimme der sofortigen Ausführung zu. Mir ist klar, dass ich mit der Lieferung mein 14-tägiges Widerrufsrecht verliere und es KEINE Erstattung gibt, wenn ich es mir anders überlege (Art. 16(m) Richtlinie 2011/83/EU). Meine gesetzliche Gewährleistung bleibt davon unberührt, falls das Produkt nicht funktioniert. Ich akzeptiere die [AGB](' + s + '/terms) und die [Erstattungsrichtlinie](' + s + '/refund).',
+  it: (s) => 'Chiedo la consegna immediata della mia chiave e accetto l\'esecuzione immediata. Capisco che, consegnata la chiave, perdo il diritto di recesso di 14 giorni e NON c\'è rimborso se cambio idea (art. 16(m) direttiva 2011/83/UE). Questo non intacca la mia garanzia legale se il prodotto non funziona. Accetto i [Termini](' + s + '/terms) e la [Politica di rimborso](' + s + '/refund).',
+  tr: (s) => 'Anahtarımın hemen teslim edilmesini istiyorum ve ifanın derhal başlamasını kabul ediyorum. Anahtar teslim edildikten sonra 14 günlük cayma hakkımı kaybettiğimi ve fikrimi değiştirirsem geri ödeme OLMADIĞINI anlıyorum (2011/83/AB md. 16(m)). Ürün çalışmazsa yasal garantim bundan etkilenmez. [Şartlar](' + s + '/terms) ve [İade Politikası](' + s + '/refund) kabul ediyorum.',
+  id: (s) => 'Saya meminta kunci lisensi saya dikirim segera dan setuju pelaksanaannya dimulai sekarang. Saya paham bahwa setelah kunci dikirim, saya kehilangan hak pembatalan 14 hari dan TIDAK ada pengembalian dana jika saya berubah pikiran (ps. 16(m) Direktif 2011/83/UE). Ini tidak memengaruhi garansi hukum saya jika produk tidak bekerja. Saya menerima [Ketentuan](' + s + '/terms) dan [Kebijakan Pengembalian Dana](' + s + '/refund).',
+  ru: (s) => 'Я прошу выдать ключ немедленно и согласен на немедленное исполнение. Я понимаю, что после выдачи ключа теряю 14-дневное право на отказ и возврата средств при передумывании НЕ будет (ст. 16(m) Директивы 2011/83/ЕС). Это не затрагивает мою законную гарантию, если продукт не работает. Принимаю [Условия](' + s + '/terms) и [Политику возврата](' + s + '/refund).',
+  hi: (s) => 'मैं अपनी लाइसेंस कुंजी तुरंत देने का अनुरोध करता/करती हूँ और तत्काल निष्पादन से सहमत हूँ। मैं समझता/समझती हूँ कि कुंजी मिलने के बाद मेरा 14 दिन का निरस्तीकरण अधिकार समाप्त हो जाता है और मन बदलने पर कोई रिफ़ंड नहीं मिलेगा (निर्देश 2011/83/EU अनु. 16(m))। उत्पाद काम न करे तो मेरी कानूनी गारंटी पर असर नहीं पड़ता। मैं [शर्तें](' + s + '/terms) और [रिफ़ंड नीति](' + s + '/refund) स्वीकार करता/करती हूँ।',
+  ar: (s) => 'أطلب تسليم مفتاح الترخيص فورًا وأوافق على التنفيذ الفوري. أفهم أنني بمجرد تسلّم المفتاح أفقد حق الانسحاب خلال 14 يومًا وأنه لا يوجد أي استرداد إذا غيّرت رأيي (المادة 16(m) من التوجيه 2011/83/EU). ولا يؤثر ذلك على ضماني القانوني إذا لم يعمل المنتج. أوافق على [الشروط](' + s + '/terms) و[سياسة الاسترداد](' + s + '/refund).',
+  ja: (s) => 'ライセンスキーの即時提供を希望し、直ちに履行が始まることに同意します。キーが提供された時点で 14 日間の解約権を失い、気が変わっても返金はないことを理解しています（指令 2011/83/EU 第16条(m)）。製品が動作しない場合の法定保証には影響しません。[利用規約](' + s + '/terms) と [返金ポリシー](' + s + '/refund) に同意します。',
+};
+
+function consentimiento(lang, site) {
+  return (CONSENT[lang] || CONSENT.en)(site);
+}
+
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
@@ -94,11 +120,10 @@ module.exports = async (req, res) => {
     // Terms of Service URL to be set in Stripe Dashboard → Business details,
     // or session creation 400s (see error log below).
     'consent_collection[terms_of_service]': 'required',
-    'custom_text[terms_of_service_acceptance][message]':
-      'I request immediate delivery of my licence key and expressly consent to immediate performance. '
-      + 'I acknowledge that once the key is delivered I lose my 14-day right of withdrawal '
-      + '(Art. 16(m) Directive 2011/83/EU / Art. 103.m TRLGDCU). '
-      + 'I accept the [Terms](' + site + '/terms) and [Refund Policy](' + site + '/refund).',
+    // La casilla obligatoria de Stripe, en el idioma del comprador. Es la
+    // unica forma de que la perdida del desistimiento sea oponible: tiene que
+    // ser expresa, previa al pago y marcada por el.
+    'custom_text[terms_of_service_acceptance][message]': consentimiento(lang, site),
   });
   const stripe = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',

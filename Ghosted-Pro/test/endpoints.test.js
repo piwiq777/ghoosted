@@ -90,5 +90,25 @@ module.exports = async () => {
     process.env = limpio;
   }
 
+  /* La casilla que el comprador marca antes de pagar. Sin ella —o en un idioma
+     que no entiende— la renuncia al desistimiento no es oponible, y entonces
+     cualquiera puede pedir la devolucion los 14 dias siguientes. */
+  const checkout = fs.readFileSync(path.join(API, 'checkout.js'), 'utf8');
+  s.ok('la casilla de consentimiento es obligatoria',
+    /consent_collection\[terms_of_service\]': 'required'/.test(checkout));
+  s.ok('el texto va en el idioma del comprador', /consentimiento\(lang, site\)/.test(checkout));
+  const idiomas = ['en', 'es', 'pt-BR', 'fr', 'de', 'it', 'tr', 'id', 'ru', 'hi', 'ar', 'ja'];
+  const bloque = checkout.slice(checkout.indexOf('const CONSENT'), checkout.indexOf('function consentimiento'));
+  s.eq('el consentimiento esta en los 12 idiomas',
+    idiomas.filter((l) => bloque.indexOf(l === 'pt-BR' ? "'pt-BR':" : l + ':') === -1), []);
+  /* Prometer que no hay reembolso NUNCA es nulo: la garantia legal de
+     conformidad no se puede renunciar, y una clausula nula delante de un
+     consumidor arrastra a las que si valen. */
+  /* Sobre el bloque de textos, no sobre el fichero: el comentario de al lado
+     nombra esa frase justo para explicar por que no se usa. */
+  s.ok('no promete que no haya reembolso nunca',
+    !/no refunds ever|sin reembolsos nunca|no hay reembolsos nunca/i.test(bloque));
+  s.ok('deja a salvo la garantia legal', /legal guarantee|garant/i.test(bloque));
+
   return s;
 };
