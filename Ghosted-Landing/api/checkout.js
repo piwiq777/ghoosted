@@ -10,6 +10,13 @@ const { isConfigured } = require('../lib/kv');
 // extension, since both would just be "a valid key" with no product on it.
 const PRICE_ENV = { pro: 'STRIPE_PRICE_ID', plus: 'STRIPE_PRICE_ID_PLUS' };
 
+// Los idiomas de la web. Nada fuera de aqui llega a la metadata de Stripe.
+const IDIOMAS = ['en', 'es', 'pt-BR', 'fr', 'de', 'it', 'tr', 'id', 'ru', 'hi', 'ar', 'ja'];
+// Checkout de Stripe no admite arabe ni hindi; esos se quedan en 'auto' y los
+// resuelve el navegador del comprador.
+const STRIPE_LOCALE = { en: 'en', es: 'es', 'pt-BR': 'pt-BR', fr: 'fr', de: 'de',
+  it: 'it', tr: 'tr', id: 'id', ru: 'ru', ja: 'ja' };
+
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
