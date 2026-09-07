@@ -359,8 +359,17 @@ img,svg{display:block;max-width:100%}
    de antes era mezclar tarjetas con captura y tarjetas sin ella.
    Franja 3:1: alta lo justo para reconocer la funcion, no tanto como para
    convertir esta fila en la protagonista de la pagina. */
-.fb-tile-strip{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:16px}
-.fb-tile-strip .fb-shot{aspect-ratio:1100/366;border:1px solid var(--line);background:var(--paper)}
+.fb-tile-strip{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:16px;
+  background:var(--ink)}
+/* En oscuro, los mismos tonos que la franja ancha de "No te siguen": blanco
+   puro para el titulo y blanco al 66% para el texto, que a plena opacidad
+   sobre negro deslumbra y cansa de leer. */
+.fb-tile-strip h3{color:#fff}
+.fb-tile-strip p{color:rgba(255,255,255,.66)}
+/* Las capturas son claras: sobre negro necesitan un filo tenue, no la linea
+   oscura que sirve sobre el fondo crema. */
+.fb-tile-strip .fb-shot{aspect-ratio:1100/366;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06)}
 .fb-tile-strip .fb-shot img{object-position:left center}
 @media (max-width:900px){.fb-tile-strip .fb-shot{aspect-ratio:1100/300}}
 
