@@ -33,10 +33,24 @@ async function readJson(req) {
   return JSON.parse(raw.toString('utf8'));
 }
 
+/* NUNCA construyas una URL de vuelta con la cabecera Host: la manda el
+   cliente. Quien haga POST a /api/checkout con "X-Forwarded-Host: malo.com"
+   consigue una sesion de pago de Stripe cuyo success_url apunta a malo.com —
+   el comprador paga de verdad y aterriza en la web del atacante CON el
+   session_id en la URL, que es lo unico que hace falta para pedir su clave a
+   /api/license/order. Y de paso los enlaces de la casilla de consentimiento
+   (terminos, reembolso) apuntarian tambien ahi.
+
+   El dominio es nuestro y es fijo: se escribe, no se pregunta. Solo se acepta
+   una cabecera si coincide con la lista, para que los despliegues de vista
+   previa de Vercel sigan funcionando en pruebas. */
+const SITIO = 'https://www.ghoosted.net';
+const PERMITIDOS = /^(www\.)?ghoosted\.net$/;
+
 function origin(req) {
-  const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  return proto + '://' + host;
+  const host = String((req.headers && (req.headers['x-forwarded-host'] || req.headers.host)) || '');
+  if (PERMITIDOS.test(host)) return 'https://' + host;
+  return process.env.SITE_URL || SITIO;
 }
 
 module.exports = { json, options, rawBody, readJson, origin };

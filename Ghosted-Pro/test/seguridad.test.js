@@ -59,5 +59,20 @@ module.exports = () => {
   s.ok('el puente comprueba el origen del mensaje', /event\.source !== window/.test(puente));
   s.ok('y solo deja pasar lo de la lista', /GET_ALLOWED\.test\(url\) : POST_ALLOWED\.test\(url\)/.test(puente));
 
+  /* La cabecera Host la manda el cliente. Si se usa para construir el
+     success_url de Stripe, un atacante manda al comprador —despues de pagar de
+     verdad— a su propia web CON el session_id en la URL, que es lo unico que
+     hace falta para pedir esa clave a /api/license/order. */
+  const http = leer('lib/http.js');
+  s.ok('el dominio de vuelta no sale de la cabecera Host',
+    /PERMITIDOS\.test\(host\)/.test(http));
+  const { origin } = require(path.join(WEB, 'lib', 'http.js'));
+  const dominio = (h) => origin({ headers: h });
+  s.eq('un host inyectado no cuela', dominio({ 'x-forwarded-host': 'malo.com' }), 'https://www.ghoosted.net');
+  s.eq('ni un sufijo que se le parezca', dominio({ host: 'ghoosted.net.malo.com' }), 'https://www.ghoosted.net');
+  s.eq('ni un host con puerto', dominio({ host: 'www.ghoosted.net:8080' }), 'https://www.ghoosted.net');
+  s.eq('el dominio bueno si pasa', dominio({ host: 'www.ghoosted.net' }), 'https://www.ghoosted.net');
+  s.eq('y el apex tambien', dominio({ host: 'ghoosted.net' }), 'https://ghoosted.net');
+
   return s;
 };
