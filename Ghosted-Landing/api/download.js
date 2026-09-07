@@ -3,6 +3,7 @@ const { json, options } = require('../lib/http');
 const { ConfigError, command, getJson } = require('../lib/kv');
 const { downloadFor, filePath } = require('../lib/downloads');
 const { normalizeKey } = require('../lib/licenses');
+const { marcar } = require('../lib/marcar');
 
 // The only way to get the extension zip. Proof of purchase is either:
 //   ?session_id=cs_...   — straight off the Stripe success page
@@ -66,12 +67,23 @@ module.exports = async (req, res) => {
       return json(res, 500, { error: 'file_unavailable' });
     }
 
+    /* Cada descarga sale marcada con la clave de quien la pide: si el ZIP
+       aparece por ahi, se sabe de que compra salio y esa clave se revoca. No
+       impide copiarlo — impide copiarlo en anonimo. Si el marcado fallara,
+       devuelve el original: antes entregar sin marca que no entregar. */
+    const zip = marcar(buf, {
+      key: record.key,
+      plan,
+      producto: dl.name,
+      comprada: record.createdAt || null,
+    });
+
     res.setHeader('Content-Type', 'application/zip');
     res.setHeader('Content-Disposition', 'attachment; filename="' + dl.file + '"');
-    res.setHeader('Content-Length', String(buf.length));
+    res.setHeader('Content-Length', String(zip.length));
     res.setHeader('Cache-Control', 'private, no-store');
     res.setHeader('X-Robots-Tag', 'noindex, nofollow');
-    return res.status(200).end(buf);
+    return res.status(200).end(zip);
   } catch (error) {
     return json(
       res,
