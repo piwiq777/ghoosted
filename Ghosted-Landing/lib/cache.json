@@ -1,0 +1,26 @@
+{
+  "styles.css": {
+    "v": 92,
+    "hash": "4083233b9cfc731f"
+  },
+  "legal.css": {
+    "v": 92,
+    "hash": "4b0232227d06f3df"
+  },
+  "i18n.js": {
+    "v": 35,
+    "hash": "33922739581724d9"
+  },
+  "app.js": {
+    "v": 42,
+    "hash": "50828759f1b69630"
+  },
+  "legal-i18n.js": {
+    "v": 2,
+    "hash": "0313907bdfdea283"
+  },
+  "locales": {
+    "v": 34,
+    "hash": "316af88fcd6b9554"
+  }
+}

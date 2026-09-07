@@ -452,6 +452,10 @@ img,svg{display:block;max-width:100%}
 /* ---------- transparency / compatibility (states the limits BEFORE pricing) ---------- */
 .compat{max-width:1080px;margin:0 auto;padding:var(--sec) 24px var(--sec-end)}
 .compat-head{text-align:center;margin-bottom:44px}
+/* .section-title lleva max-width:18ch para que no se estire. Sin margenes
+   automaticos esa caja se queda a la izquierda y el texto sale centrado
+   DENTRO de ella, o sea torcido respecto a las columnas de abajo. */
+.compat-head .section-title{margin-inline:auto}
 .compat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;text-align:left}
 .compat-col{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 24px}
 .compat-col h3{font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink);margin-bottom:14px}
