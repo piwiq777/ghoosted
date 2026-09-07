@@ -39,6 +39,12 @@ module.exports = async (req, res) => {
       version: String(estado.latest || ''),
       pro: !!filePath('pro'),
       plus: !!filePath('plus'),
+      /* Si las vias de entrega estan enchufadas. Solo si o no, nunca el valor:
+         hasta que esto dice correo:true, la clave solo existe en la pantalla
+         de gracias, y el comprador que cierre la pestaña se queda sin nada.
+         Antes solo se sabia comprando. */
+      correo: !!(process.env.RESEND_API_KEY && process.env.MAIL_FROM),
+      sms: !!(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM),
     });
   }
 
