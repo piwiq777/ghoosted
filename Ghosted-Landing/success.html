@@ -31,6 +31,9 @@
     .dl-btn{display:inline-flex;align-items:center;gap:8px;margin:18px 0 6px;border:0;border-radius:12px;background:var(--ig);color:#fff;padding:13px 22px;font-weight:800;font-size:14.5px;text-decoration:none}
     .dl-btn:hover{opacity:.92}
     .dl-note{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+    .salidas{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:12px}
+    .salidas .dl-btn{margin:0}
+    .salida-2{font-size:13.5px;color:var(--ink-2);text-decoration:underline}
   </style>
 </head>
 <body>
@@ -70,6 +73,15 @@
       </div>
 
       <p class="hint" id="genericHint" data-i18n="sx_hint_generic">Go back to Instagram, open Ghoosted and enter this key. It will stay linked to that account.</p>
+
+      <!-- Sin compra que enseñar, esta pantalla era un callejon: titulo
+           "Pago recibido" —que es mentira—, un "vuelve a la pagina" sin
+           enlace, y una pista sobre una clave que no existe. Le pasa a
+           cualquiera que la guarde en favoritos o pierda el session_id. -->
+      <div id="salidas" class="salidas" hidden>
+        <a class="dl-btn" href="/recuperar" data-i18n="sx_out_recover">Recover my key</a>
+        <a class="salida-2" href="/#pricing" data-i18n="sx_out_buy">See the plans</a>
+      </div>
     </section>
   </main>
   <script>
@@ -103,6 +115,10 @@
         sx_savefile: 'Save the key (.txt)',
         sx_lost: 'Lost it later? Ask for it again at',
         sx_guide: 'Step-by-step guide, with screenshots',
+        sx_h1_lost: 'Nothing to show here',
+        sx_notfound2: 'This page only shows a key right after paying. If you already bought Ghoosted, ask for your key again with the email you paid with.',
+        sx_out_recover: 'Recover my key',
+        sx_out_buy: 'See the plans',
       };
       var lang = 'en';
       try { lang = localStorage.getItem('ghosted_lang') || 'en'; } catch (e) {}
@@ -120,7 +136,7 @@
       }
       function boot(cb) {
         if (lang === 'en') { applyStatic(); cb(); return; }
-        fetch('locales/' + lang + '.json?v=37')
+        fetch('locales/' + lang + '.json?v=38')
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (d) { dict = d; applyStatic(); cb(); })
           .catch(function () { applyStatic(); cb(); });
@@ -131,7 +147,14 @@
         var status = document.getElementById('status'), license = document.getElementById('license'), copy = document.getElementById('copy');
         var dlBlock = document.getElementById('dlBlock'), dlBtn = document.getElementById('dlBtn'), dlBtnText = document.getElementById('dlBtnText');
         var genericHint = document.getElementById('genericHint');
-        if (!sessionId) { status.textContent = t('sx_notfound'); status.className = 'fail'; return; }
+        function sinCompra(mensaje) {
+          document.querySelector('h1').textContent = t('sx_h1_lost');
+          status.textContent = mensaje;
+          status.className = '';
+          genericHint.hidden = true;
+          document.getElementById('salidas').hidden = false;
+        }
+        if (!sessionId) { sinCompra(t('sx_notfound2')); return; }
         var tries = 0;
         function showDownload(url, name, file) {
           // The URL is now a gated endpoint (api/download?session_id=...), so the
@@ -172,6 +195,9 @@
               // server-side self-heal, the key eventually appears on its own
               if (tries === 12) status.textContent = t('sx_pending');
               if (tries < 60) return setTimeout(poll, tries < 12 ? 2000 : 5000);
+              /* Cuatro minutos sondeando sin exito: en vez de dejar el
+                 mensaje colgado para siempre, se le dan las dos salidas. */
+              document.getElementById('salidas').hidden = false;
             });
         }
         document.getElementById('saveKey').addEventListener('click', function () {
@@ -198,5 +224,8 @@
       });
     })();
   </script>
+  <!-- Vercel Web Analytics: recuento de visitas sin cookies, sin
+       identificadores persistentes y sin datos personales. -->
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

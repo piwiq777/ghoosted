@@ -222,5 +222,9 @@
   "rc_back": "Retour à Ghoosted",
   "sx_savefile": "Enregistrer la clé (.txt)",
   "sx_lost": "Perdue plus tard ? Redemandez-la sur",
-  "sx_guide": "Guide pas à pas, avec captures"
+  "sx_guide": "Guide pas à pas, avec captures",
+  "sx_h1_lost": "Rien à afficher ici",
+  "sx_notfound2": "Cette page n'affiche une clé qu'juste après le paiement. Si vous avez déjà acheté Ghoosted, redemandez-la avec l'e-mail utilisé pour payer.",
+  "sx_out_recover": "Récupérer ma clé",
+  "sx_out_buy": "Voir les offres"
 }

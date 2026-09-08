@@ -222,5 +222,9 @@
   "rc_back": "Kembali ke Ghoosted",
   "sx_savefile": "Simpan kunci (.txt)",
   "sx_lost": "Hilang nanti? Minta lagi di",
-  "sx_guide": "Panduan langkah demi langkah, dengan tangkapan layar"
+  "sx_guide": "Panduan langkah demi langkah, dengan tangkapan layar",
+  "sx_h1_lost": "Tidak ada yang bisa ditampilkan di sini",
+  "sx_notfound2": "Halaman ini hanya menampilkan kunci tepat setelah pembayaran. Kalau kamu sudah membeli Ghoosted, minta lagi dengan email yang kamu pakai membayar.",
+  "sx_out_recover": "Pulihkan kunciku",
+  "sx_out_buy": "Lihat paketnya"
 }

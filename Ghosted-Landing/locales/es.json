@@ -222,5 +222,9 @@
   "rc_back": "Volver a Ghoosted",
   "sx_savefile": "Guardar la clave (.txt)",
   "sx_lost": "¿La pierdes más adelante? Pídela otra vez en",
-  "sx_guide": "Guía paso a paso, con capturas"
+  "sx_guide": "Guía paso a paso, con capturas",
+  "sx_h1_lost": "Aquí no hay nada que enseñar",
+  "sx_notfound2": "Esta página solo enseña una clave justo después de pagar. Si ya compraste Ghoosted, pídela otra vez con el correo con el que pagaste.",
+  "sx_out_recover": "Recuperar mi clave",
+  "sx_out_buy": "Ver los planes"
 }

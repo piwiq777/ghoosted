@@ -73,7 +73,7 @@
       }
       function arrancar(cb) {
         if (lang === 'en') { pintar(); cb(); return; }
-        fetch('locales/' + lang + '.json?v=37')
+        fetch('locales/' + lang + '.json?v=38')
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (d) { dict = d; pintar(); cb(); })
           .catch(function () { pintar(); cb(); });
@@ -103,5 +103,8 @@
       });
     })();
   </script>
+  <!-- Vercel Web Analytics: recuento de visitas sin cookies, sin
+       identificadores persistentes y sin datos personales. -->
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

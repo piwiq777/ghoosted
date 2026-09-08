@@ -55,5 +55,21 @@ module.exports = () => {
   s.eq('la guia esta en 12 idiomas', (guia.match(/<article class="legal lang-/g) || []).length, 12);
   s.eq('y con capturas en los cinco pasos', (guia.match(/assets\/guia\/paso\d\.jpg/g) || []).length, 60);
 
+  /* Quien llega a /success sin compra —favoritos, un enlace viejo, el
+     session_id perdido— se encontraba "Pago recibido" de titulo, que es
+     mentira, un "vuelve a la pagina" sin enlace y una pista sobre una clave
+     que no existe. Sin una sola salida. */
+  s.ok('sin compra, el titulo deja de decir que se pago', /sx_h1_lost/.test(gracias));
+  s.ok('y explica por que no hay nada', /sx_notfound2/.test(gracias));
+  s.ok('con salida a recuperar la clave', /href="\/recuperar"/.test(gracias));
+  s.ok('y a los precios', /href="\/#pricing"/.test(gracias));
+  s.ok('la pista de la clave se esconde si no hay clave', /genericHint\.hidden = true/.test(gracias));
+  /* Y si el sondeo se rinde tras cuatro minutos, tampoco se deja colgado. */
+  /* Dos sitios abren las salidas: el que llega sin session_id, y el sondeo
+     cuando se rinde a los cuatro minutos. Contarlas es mas robusto que medir
+     cuanto codigo hay entre medias. */
+  s.eq('las salidas se abren en los dos callejones',
+    (gracias.match(/salidas'\)\.hidden = false/g) || []).length, 2);
+
   return s;
 };
