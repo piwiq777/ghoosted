@@ -106,11 +106,27 @@ async function activar() {
   aviso(t('popup_activating'), 'work');
   try {
     /* La clave se ata a UNA cuenta de Instagram, asi que hace falta tener
-       Instagram abierto para saber a cual. */
-    const pestanas = await chrome.tabs.query({ active: true, currentWindow: true, url: 'https://www.instagram.com/*' });
+       Instagram abierto para saber a cual.
+
+       Los DOS dominios: Instagram sirve en www.instagram.com y en
+       instagram.com a secas. Buscando solo el primero, quien entraba por el
+       segundo veia "abre Instagram" con Instagram delante, y no habia forma
+       de activar la clave que acababa de pagar.
+
+       Y si la pestaña activa no es Instagram, se busca en las demas antes de
+       rendirse: nadie tiene por que dejar Instagram en primer plano para
+       pegar una clave en el popup. */
+    const DOMINIOS = ['https://www.instagram.com/*', 'https://instagram.com/*'];
+    let pestanas = await chrome.tabs.query({ active: true, currentWindow: true, url: DOMINIOS });
+    if (!pestanas[0]) pestanas = await chrome.tabs.query({ url: DOMINIOS });
     if (!pestanas[0]) { aviso(t('popup_need_ig'), 'err'); return; }
+
     const quien = await chrome.tabs.sendMessage(pestanas[0].id, { type: 'getAccountId' }).catch(() => null);
-    if (!quien || !quien.accountId) { aviso(t('popup_need_ig'), 'err'); return; }
+    /* Hay pestaña pero no contesta o no sabe quien eres: eso NO es "abre
+       Instagram", es que esa pestaña se cargo antes que la extension o que la
+       sesion no estaba lista. Decirlo bien ahorra el "no hace nada". */
+    if (!quien) { aviso(t('popup_need_reload'), 'err'); return; }
+    if (!quien.accountId) { aviso(t('popup_need_login'), 'err'); return; }
 
     const r = await chrome.runtime.sendMessage({ type: 'verifyLicense', key: clave, accountId: quien.accountId });
     if (r && r.valid) {

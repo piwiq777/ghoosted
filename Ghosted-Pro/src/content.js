@@ -5117,7 +5117,11 @@
       if (gX && gX.type === "runCheck") Yh();
       if (gX && gX.type === "openPanel") Ye();
       if (gX && gX.type === "getAccountId") return Promise.resolve({
-        accountId: O
+        // Se relee la cookie AHORA. O se calcula una sola vez al cargar el
+        // content script, y si en ese instante la sesion aun no estaba puesta
+        // se quedaba vacio para siempre: el popup decia "abre Instagram" con
+        // Instagram delante, y recargar no arreglaba nada.
+        accountId: k.getUserId() || O
       });
     });
     if (!v()) {

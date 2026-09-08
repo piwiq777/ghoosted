@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Buka Instagram di jendela ini buat aktifkan kuncimu."
   },
+  "popup_need_reload": {
+    "message": "Muat ulang tab Instagram (Ctrl+Shift+R) lalu coba lagi."
+  },
+  "popup_need_login": {
+    "message": "Masuk ke Instagram di tab itu, lalu coba lagi."
+  },
   "popup_bound": {
     "message": "Kunci ini udah terhubung ke akun Instagram lain."
   },

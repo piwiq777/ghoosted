@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "افتح Instagram في هذه النافذة لتفعيل مفتاحك."
   },
+  "popup_need_reload": {
+    "message": "أعد تحميل تبويب Instagram (Ctrl+Shift+R) ثم حاول مرة أخرى."
+  },
+  "popup_need_login": {
+    "message": "سجّل الدخول إلى Instagram في ذلك التبويب ثم حاول مرة أخرى."
+  },
   "popup_bound": {
     "message": "هذا المفتاح مرتبط بالفعل بحساب Instagram آخر."
   },

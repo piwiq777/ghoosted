@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Öffne Instagram in diesem Fenster, um deinen Key zu aktivieren."
   },
+  "popup_need_reload": {
+    "message": "Lade den Instagram-Tab neu (Strg+Umschalt+R) und versuch es erneut."
+  },
+  "popup_need_login": {
+    "message": "Melde dich in dem Tab bei Instagram an und versuch es erneut."
+  },
   "popup_bound": {
     "message": "Dieser Key ist schon mit einem anderen Instagram-Konto verknüpft."
   },

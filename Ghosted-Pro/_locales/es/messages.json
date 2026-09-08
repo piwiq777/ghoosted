@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Abre Instagram en esta ventana para activar la clave."
   },
+  "popup_need_reload": {
+    "message": "Recarga la pestaña de Instagram (Ctrl+Shift+R) y vuelve a intentarlo."
+  },
+  "popup_need_login": {
+    "message": "Inicia sesión en Instagram en esa pestaña y vuelve a intentarlo."
+  },
   "popup_bound": {
     "message": "La clave ya está vinculada a otra cuenta de Instagram."
   },

@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Anahtarını etkinleştirmek için bu pencerede Instagram'ı aç."
   },
+  "popup_need_reload": {
+    "message": "Instagram sekmesini yenile (Ctrl+Shift+R) ve tekrar dene."
+  },
+  "popup_need_login": {
+    "message": "O sekmede Instagram'a giriş yap ve tekrar dene."
+  },
   "popup_bound": {
     "message": "Bu anahtar zaten başka bir Instagram hesabına bağlı."
   },

@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Ouvre Instagram dans cette fenêtre pour activer ta clé."
   },
+  "popup_need_reload": {
+    "message": "Rechargez l'onglet Instagram (Ctrl+Maj+R) et réessayez."
+  },
+  "popup_need_login": {
+    "message": "Connectez-vous à Instagram dans cet onglet, puis réessayez."
+  },
   "popup_bound": {
     "message": "Cette clé est déjà liée à un autre compte Instagram."
   },

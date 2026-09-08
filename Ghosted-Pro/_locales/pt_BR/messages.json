@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Abra o Instagram nesta janela para ativar sua chave."
   },
+  "popup_need_reload": {
+    "message": "Recarregue a aba do Instagram (Ctrl+Shift+R) e tente de novo."
+  },
+  "popup_need_login": {
+    "message": "Faça login no Instagram nessa aba e tente de novo."
+  },
   "popup_bound": {
     "message": "Esta chave já está vinculada a outra conta do Instagram."
   },

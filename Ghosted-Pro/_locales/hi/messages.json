@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "अपनी key एक्टिवेट करने के लिए इस विंडो में Instagram खोलो।"
   },
+  "popup_need_reload": {
+    "message": "Instagram टैब रीलोड करें (Ctrl+Shift+R) और फिर से कोशिश करें।"
+  },
+  "popup_need_login": {
+    "message": "उस टैब में Instagram में लॉग इन करें और फिर कोशिश करें।"
+  },
   "popup_bound": {
     "message": "यह key पहले से किसी और Instagram अकाउंट से जुड़ी है।"
   },

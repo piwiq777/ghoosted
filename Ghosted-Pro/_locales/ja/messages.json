@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "キーを有効化するには、このウィンドウで Instagram を開いてください。"
   },
+  "popup_need_reload": {
+    "message": "Instagram のタブを再読み込み（Ctrl+Shift+R）してから、もう一度お試しください。"
+  },
+  "popup_need_login": {
+    "message": "そのタブで Instagram にログインしてから、もう一度お試しください。"
+  },
   "popup_bound": {
     "message": "このキーはすでに別の Instagram アカウントに紐づいています。"
   },

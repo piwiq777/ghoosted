@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Открой Instagram в этом окне, чтобы активировать ключ."
   },
+  "popup_need_reload": {
+    "message": "Обновите вкладку Instagram (Ctrl+Shift+R) и попробуйте снова."
+  },
+  "popup_need_login": {
+    "message": "Войдите в Instagram в этой вкладке и попробуйте снова."
+  },
   "popup_bound": {
     "message": "Этот ключ уже привязан к другому аккаунту Instagram."
   },

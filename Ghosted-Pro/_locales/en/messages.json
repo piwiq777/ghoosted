@@ -791,6 +791,12 @@
   "popup_need_ig": {
     "message": "Open Instagram in this window to activate your key."
   },
+  "popup_need_reload": {
+    "message": "Reload the Instagram tab (Ctrl+Shift+R) and try again."
+  },
+  "popup_need_login": {
+    "message": "Log in to Instagram in that tab, then try again."
+  },
   "popup_bound": {
     "message": "This key is already linked to another Instagram account."
   },
