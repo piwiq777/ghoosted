@@ -368,6 +368,9 @@ img,svg{display:block;max-width:100%}
 .bt-ghost,.bt-dossier{flex-direction:row;align-items:center;gap:30px}
 .bt-ghost .bt-copy,.bt-dossier .bt-copy{flex:1 1 42%;min-width:0}
 .bt-ghost .fb-shot,.bt-dossier .fb-shot{flex:1 1 58%;aspect-ratio:16/9}
+/* Su captura ya viene recortada a esa proporcion, asi que aqui no se
+   recorta otra vez y se ven las dos filas de anillos enteras. */
+.bt-ghost .fb-shot{aspect-ratio:917/516}
 .bt-dossier .fb-shot{aspect-ratio:16/10}
 
 /* La alta ocupa dos filas: la captura se estira hasta abajo en vez de dejar
