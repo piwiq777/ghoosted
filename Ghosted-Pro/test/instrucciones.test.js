@@ -22,6 +22,14 @@ module.exports = () => {
     s.ok('la pantalla de gracias trae ' + k, gracias.indexOf(k) !== -1);
   }
   s.ok('y enlaza a la guia con capturas', /href="\/instalar"/.test(gracias));
+  /* Como boton, no como nota al pie de 12px: quien nunca ha cargado una
+     extension descomprimida necesita el tutorial, no un enlace enterrado. */
+  s.ok('la guia es un boton, no una nota', /id="guiaLink" class="dl-btn/.test(gracias));
+  /* Y se abre sola al descargar, que es el momento en que acaba de bajarse un
+     .zip y no sabe que hacer con el. Dentro del gesto del clic, o el navegador
+     lo bloquea. */
+  s.ok('la guia se abre al pulsar descargar',
+    /dlBtn\.addEventListener\('click'[\s\S]{0,200}window\.open\('\/instalar'/.test(gracias));
 
   /* 2 · El correo: pasos y enlace. */
   const correo = leer('lib/correo.js');
