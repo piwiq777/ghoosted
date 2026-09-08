@@ -76,8 +76,24 @@ if (!CLARO) {
   recorrer(tmp, tmp, (abs, rel) => {
     if (rel.endsWith('.js') && !SIN_TOCAR.has(rel)) objetivo.push(abs);
   });
+  /* UN PREFIJO DISTINTO POR FICHERO. No es cosmetica: es lo que mantiene vivo
+     el paquete.
+     El ofuscador se llama una vez por fichero, cada llamada sin saber nada de
+     las demas, y con --string-array emite DOS funciones globales (la tabla de
+     cadenas y su descodificador). Con nombres deterministas salen IGUALES en
+     todos: a0a y a0b. Pero los ocho content scripts de una extension comparten
+     UN SOLO ambito, asi que el ultimo en cargarse machacaba a los anteriores:
+     la tabla de mobile.js pisaba la de storage.js y la de ig-api.js, y la de
+     content.js pisaba la de i18n.js. Resultado: ig-api.js leia cadenas de
+     otro fichero y getUserId() dejaba de encontrar la cookie de sesion. Sin
+     sesion no se montaba nada — ni fantasma, ni panel, ni forma de activar.
+     El paquete de Pro llevaba muerto desde que se ofusca, y no se veia porque
+     Plus no se ofusca y el fuente tampoco: solo estaba roto lo que se vendia.
+     `node --check` no lo puede ver: cada fichero por separado es correcto. */
+  let ghSufijo = 0;
   for (const f of objetivo) {
-    execFileSync('npx', ['--yes', 'javascript-obfuscator', f, '--output', f,
+    execFileSync('npx', ['--yes', 'javascript-obfuscator@5.7.0', f, '--output', f,
+      '--identifiers-prefix', 'gh' + (ghSufijo++) + '_',
       // Conservador a proposito. Las opciones agresivas (control flow
       // flattening, dead code) multiplican el tamano y han roto extensiones
       // reales; lo que interesa aqui es que no se lea de un vistazo.
@@ -104,6 +120,26 @@ recorrer(tmp, tmp, (abs, rel) => {
 if (malos.length) {
   console.error('\n\x1b[31mLa ofuscacion ha roto ' + malos.length + ' fichero(s):\x1b[0m');
   malos.forEach((m) => console.error('  ' + m));
+  process.exit(1);
+}
+
+/* Y que el paquete ARRANQUE. `node --check` de ahi arriba solo mira sintaxis,
+   fichero a fichero: los ocho ficheros del paquete que dejo a los clientes sin
+   nada durante semanas pasaban esa comprobacion. Esto los carga en un solo
+   ambito, como Chrome, y comprueba que leen la cookie de sesion. */
+let prueba = { ok: false, motivos: ['no se ha podido ejecutar la prueba de humo'] };
+try {
+  /* En un proceso aparte a proposito: un paquete roto lanza de forma
+     asincrona y con temporizadores vivos, y eso contaminaria al empaquetador. */
+  execFileSync(process.execPath, [path.join(__dirname, 'humo.js'), tmp], { stdio: 'pipe' });
+  prueba = { ok: true, motivos: [] };
+} catch (e) {
+  try { prueba = JSON.parse(String(e.stdout || '')) || prueba; } catch (x) { /* se queda el generico */ }
+}
+if (!prueba.ok) {
+  console.error('\n\x1b[31mEl paquete no arranca:\x1b[0m');
+  prueba.motivos.forEach((m) => console.error('  ' + m));
+  console.error('\n  No se empaqueta. Un zip que no arranca es peor que no tener zip.\n');
   process.exit(1);
 }
 

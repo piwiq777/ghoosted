@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "Kamu bisa kembali ke Manual kapan saja.\n\nAktifkan dengan menerima risikonya?"
+  },
+  "boot_ready": {
+    "message": "Ghoosted sedang mulai…"
+  },
+  "boot_lost": {
+    "message": "Kunci hilang?"
+  },
+  "boot_done": {
+    "message": "Aktif. Memuat ulang…"
+  },
+  "popup_no_answer": {
+    "message": "Ghoosted ada di tab itu tapi tidak menjawab. Buka Instagram, klik hantu di kanan bawah, dan tempel kuncimu di sana."
   }
 }

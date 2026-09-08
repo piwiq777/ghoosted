@@ -41,7 +41,15 @@ module.exports = async () => {
          recargando se arreglaba. */
   const content = leer('src/content.js');
   s.ok('el id de la cuenta se relee al preguntarlo, sin cachearlo',
-    /if \(gm && gm\.type === "getAccountId"\) return Promise\.resolve\(\{\s*accountId: k\.getUserId\(\)/.test(content));
+    /gresp\(\{\s*accountId: k\.getUserId\(\) \|\| null\s*\}\)/.test(content));
+  /* Chrome IGNORA la promesa que devuelva un listener de onMessage: cierra el
+     puerto y sendMessage se rompe. La unica forma que funciona en Chrome —que
+     es donde se vende— es sendResponse y devolver true. Con la promesa, el
+     popup recibia null y contestaba "recarga la pestaña" para siempre. */
+  s.ok('contesta con sendResponse, no devolviendo una promesa',
+    /addListener\(\(gm, gs, gresp\)/.test(content) && !/type === "getAccountId"\) return Promise\.resolve/.test(content));
+  s.ok('y mantiene el puerto abierto devolviendo true',
+    /gresp\(\{[\s\S]{0,80}\}\);\s*return true;/.test(content));
   /* Y el listener va antes del corte por sesion, que es lo que lo mataba. */
   s.ok('el listener se registra antes de comprobar la sesion',
     content.indexOf('getAccountId') < content.indexOf('let O = k.getUserId();'));
@@ -56,8 +64,16 @@ module.exports = async () => {
   for (const k of ['popup_need_ig', 'popup_need_reload', 'popup_need_login']) {
     s.ok('existe el mensaje ' + k, !!en[k]);
   }
-  s.ok('se distingue "no contesta" de "no hay pestaña"',
-    /if \(!quien\) \{ aviso\(t\('popup_need_reload'\)/.test(popup));
+  /* Tres fallos distintos que antes caian en el mismo mensaje: no hay content
+     script (recargar sirve), lo hay pero no contesta (recargar no sirve), y no
+     hay pestaña. Decir "recarga" cuando recargar no arregla nada es lo que
+     convierte un fallo en una devolucion. */
+  s.ok('se distingue "no hay content script" de "esta pero no contesta"',
+    /Receiving end does not exist\|context invalidated/.test(popup)
+    && /aviso\(t\('popup_need_reload'\), 'err'\); return;/.test(popup)
+    && /if \(fallo \|\| !quien\) \{ aviso\(t\('popup_no_answer'\)/.test(popup));
+  s.ok('y el fallo real queda escrito en la consola del popup',
+    /console\.error\('\[Ghoosted\] la pestaña de Instagram no contesta:'/.test(popup));
   s.ok('y "no has iniciado sesion" de las otras dos',
     /if \(!quien\.accountId\) \{ aviso\(t\('popup_need_login'\)/.test(popup));
 
@@ -95,7 +111,7 @@ module.exports = async () => {
     GhostedStore: { get: (k, d) => d, set() {}, del() {}, syncCache() {}, hydrate: async () => {} },
     GhostedIG: { getUserId: () => cookie || null },
     GhostedLicense: { isPro: () => false, feature: () => false, getLicense: () => null, LICENSE_KEY: 'l', INSTALL_KEY: 'i' },
-    GhostedConfig: { freeMode: false, product: 'pro', buyUrl: '' },
+    GhostedConfig: { freeMode: false, product: 'pro', buyUrl: '', appUrl: 'https://ghoosted.net' },
     console: { info() {}, error() {}, warn() {}, log() {} },
     /* Los temporizadores del arranque se apuntan para poder matarlos al
        terminar: si siguen vivos, el stub incompleto revienta mas tarde y
@@ -119,13 +135,18 @@ module.exports = async () => {
 
   s.ok('arranca sin sesion y aun asi escucha al popup', typeof escucha === 'function');
   if (typeof escucha === 'function') {
-    const sinSesion = await escucha({ type: 'getAccountId' });
-    s.eq('sin sesion contesta, no se queda mudo', sinSesion && 'accountId' in sinSesion, true);
-    s.eq('y dice que no hay cuenta, en vez de nada', sinSesion.accountId, null);
+    /* Se llama como lo llama Chrome: (mensaje, emisor, sendResponse). La
+       respuesta llega por sendResponse, no por el valor devuelto. */
+    let dicho = null;
+    const abierto = escucha({ type: 'getAccountId' }, {}, (r) => { dicho = r; });
+    s.eq('sin sesion contesta, no se queda mudo', dicho && 'accountId' in dicho, true);
+    s.eq('y dice que no hay cuenta, en vez de nada', dicho.accountId, null);
+    s.eq('deja el puerto abierto devolviendo true', abierto, true);
     /* Y en cuanto el usuario inicia sesion, sin recargar la pestaña. */
     cookie = '17841400912730044';
-    const conSesion = await escucha({ type: 'getAccountId' });
-    s.eq('cuando llega la sesion, la ve sin recargar', conSesion.accountId, '17841400912730044');
+    dicho = null;
+    escucha({ type: 'getAccountId' }, {}, (r) => { dicho = r; });
+    s.eq('cuando llega la sesion, la ve sin recargar', dicho.accountId, '17841400912730044');
   }
   /* Se paran los relojes ANTES de soltar los recogedores, o el arranque a
      medias seguiria disparando en mitad de las pruebas siguientes. */

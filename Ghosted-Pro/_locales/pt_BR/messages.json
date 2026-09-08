@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "Você pode voltar ao Manual quando quiser.\n\nAtivar assumindo o risco?"
+  },
+  "boot_ready": {
+    "message": "O Ghoosted está iniciando…"
+  },
+  "boot_lost": {
+    "message": "Perdeu sua chave?"
+  },
+  "boot_done": {
+    "message": "Ativada. Recarregando…"
+  },
+  "popup_no_answer": {
+    "message": "O Ghoosted está nessa aba mas não responde. Abra o Instagram, clique no fantasma no canto inferior direito e cole sua chave ali."
   }
 }

@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "いつでも手動に戻せます。\n\nリスクを承知のうえで有効にしますか？"
+  },
+  "boot_ready": {
+    "message": "Ghoosted を起動しています…"
+  },
+  "boot_lost": {
+    "message": "キーをなくしましたか？"
+  },
+  "boot_done": {
+    "message": "有効になりました。再読み込みします…"
+  },
+  "popup_no_answer": {
+    "message": "そのタブに Ghoosted はありますが応答しません。Instagram を開き、右下のおばけを押してそこにキーを貼り付けてください。"
   }
 }

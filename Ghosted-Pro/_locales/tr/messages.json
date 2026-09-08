@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "İstediğin zaman Manuel'e dönebilirsin.\n\nRiski kabul ederek açılsın mı?"
+  },
+  "boot_ready": {
+    "message": "Ghoosted başlıyor…"
+  },
+  "boot_lost": {
+    "message": "Anahtarını mı kaybettin?"
+  },
+  "boot_done": {
+    "message": "Etkinleşti. Yeniden yükleniyor…"
+  },
+  "popup_no_answer": {
+    "message": "Ghoosted o sekmede var ama yanıt vermiyor. Instagram’ı aç, sağ alttaki hayalete bas ve anahtarını oraya yapıştır."
   }
 }

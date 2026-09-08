@@ -106,7 +106,14 @@ module.exports = () => {
       const f = path.join(dirLoc, loc, 'messages.json');
       if (!fs2.existsSync(f)) continue;
       const dic = JSON.parse(fs2.readFileSync(f, 'utf8'));
+      /* "fantasma" a secas ya no basta como señal: el boton flotante de las
+         DOS versiones se llama asi, y es como el comprador lo identifica. Lo
+         que no puede aparecer en Plus es el modo fantasma de historias y la
+         vigilancia de cuentas ajenas. Estas claves hablan del boton, no de
+         esas funciones. */
+      const DEL_BOTON = new Set(['popup_no_answer']);
       for (const k of Object.keys(dic)) {
+        if (DEL_BOTON.has(k)) continue;
         if (/vigil|watch any|fantasma|ghost mode|spy\b/i.test(dic[k].message || '')) sospechosos++;
       }
     }

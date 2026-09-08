@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "Du kannst jederzeit auf Manuell zurück.\n\nAktivieren und das Risiko akzeptieren?"
+  },
+  "boot_ready": {
+    "message": "Ghoosted startet…"
+  },
+  "boot_lost": {
+    "message": "Schlüssel verloren?"
+  },
+  "boot_done": {
+    "message": "Aktiviert. Wird neu geladen…"
+  },
+  "popup_no_answer": {
+    "message": "Ghoosted ist in diesem Tab, antwortet aber nicht. Öffne Instagram, klicke unten rechts auf das Gespenst und füge dort deinen Schlüssel ein."
   }
 }

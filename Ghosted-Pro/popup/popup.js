@@ -121,11 +121,28 @@ async function activar() {
     if (!pestanas[0]) pestanas = await chrome.tabs.query({ url: DOMINIOS });
     if (!pestanas[0]) { aviso(t('popup_need_ig'), 'err'); return; }
 
-    const quien = await chrome.tabs.sendMessage(pestanas[0].id, { type: 'getAccountId' }).catch(() => null);
-    /* Hay pestaña pero no contesta o no sabe quien eres: eso NO es "abre
-       Instagram", es que esa pestaña se cargo antes que la extension o que la
-       sesion no estaba lista. Decirlo bien ahorra el "no hace nada". */
-    if (!quien) { aviso(t('popup_need_reload'), 'err'); return; }
+    /* El .catch(() => null) de antes aplanaba tres fallos distintos en uno
+       solo, y los tres acababan diciendo "recarga la pestaña" — que para dos
+       de ellos es un consejo inutil. Ahora se distinguen:
+         · "Receiving end does not exist"  -> ahi no hay content script: la
+           pestaña es anterior a la extension, o la extension no tiene acceso
+           al sitio. Recargar SI sirve.
+         · "message port closed"           -> el content script esta, pero no
+           contesta. Recargar no arregla nada; es un fallo nuestro.
+         · cualquier otro                  -> se dice tal cual.
+       Y siempre queda escrito en la consola del popup, que es lo unico que
+       tenemos cuando alguien escribe diciendo que "no hace nada". */
+    let quien = null, fallo = null;
+    try {
+      quien = await chrome.tabs.sendMessage(pestanas[0].id, { type: 'getAccountId' });
+    } catch (e) {
+      fallo = String((e && e.message) || e || '');
+      console.error('[Ghoosted] la pestaña de Instagram no contesta:', fallo);
+    }
+    if (fallo && /Receiving end does not exist|context invalidated|Could not establish connection/i.test(fallo)) {
+      aviso(t('popup_need_reload'), 'err'); return;
+    }
+    if (fallo || !quien) { aviso(t('popup_no_answer'), 'err'); return; }
     if (!quien.accountId) { aviso(t('popup_need_login'), 'err'); return; }
 
     const r = await chrome.runtime.sendMessage({ type: 'verifyLicense', key: clave, accountId: quien.accountId });

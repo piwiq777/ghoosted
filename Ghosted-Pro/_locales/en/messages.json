@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "You can switch back to Manual whenever you want.\n\nTurn it on, accepting the risk?"
+  },
+  "boot_ready": {
+    "message": "Ghoosted is starting…"
+  },
+  "boot_lost": {
+    "message": "Lost your key?"
+  },
+  "boot_done": {
+    "message": "Activated. Reloading…"
+  },
+  "popup_no_answer": {
+    "message": "Ghoosted is on that tab but is not answering. Open Instagram, click the ghost at the bottom right and paste your key there."
   }
 }

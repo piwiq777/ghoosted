@@ -2,6 +2,11 @@
   "use strict";
   if (window.__ghostedLoaded) return;
   window.__ghostedLoaded = true;
+  /* Una linea, siempre. Sin esto, "no me sale nada en Instagram" no se puede
+     distinguir de "el content script ni siquiera se inyecta" sin adivinar. */
+  try {
+    console.info("[Ghoosted] content script activo v" + chrome.runtime.getManifest().version);
+  } catch (gv) {}
   const Y = GhostedI18n.t, g = GhostedStore, k = GhostedIG, q = GhostedLicense, x = GhostedConfig, z = {
     intervalMin: 30,
     notify: true,
@@ -16,12 +21,183 @@
      popup no recibia respuesta y contestaba "abre Instagram" — con Instagram
      delante. Es lo que impedia activar una clave recien pagada. */
   try {
-    chrome.runtime.onMessage.addListener(gm => {
-      if (gm && gm.type === "getAccountId") return Promise.resolve({
-        accountId: k.getUserId()
-      });
+    chrome.runtime.onMessage.addListener((gm, gs, gresp) => {
+      if (gm && gm.type === "getAccountId") {
+        /* sendResponse + return true, NO una promesa: Chrome ignora el valor
+           devuelto por el listener y cierra el puerto, asi que sendMessage
+           del popup se rompia con "message port closed" y el popup lo leia
+           como "no hay content script" -> "recarga la pestaña". Recargar no
+           arreglaba nada porque el fallo no era ese. Firefox si acepta la
+           promesa; Chrome, que es donde se vende, no. */
+        gresp({
+          accountId: k.getUserId() || null
+        });
+        return true;
+      }
     });
-  } catch (gm) {}
+  } catch (gm) {
+    console.error("[Ghoosted] no se pudo registrar el listener del popup", gm);
+  }
+
+
+  /* =====================================================================
+     FANTASMA DE ARRANQUE
+     ---------------------------------------------------------------------
+     Se monta LO PRIMERO, pase lo que pase: sin sesion, sin licencia y sin
+     el almacen hidratado. Hasta ahora Instagram se quedaba pelado hasta que
+     aparecia la cookie de sesion Y terminaba de cargar el almacen: quien
+     acababa de pagar abria Instagram, no veia absolutamente nada, y daba
+     por hecho que le habian estafado. Encima la unica via de meter la clave
+     era la ventana del icono, que a su vez necesita que el content script
+     conteste — el pez mordiendose la cola.
+     Ahora el fantasma esta SIEMPRE y pulsarlo abre la activacion. El panel
+     de verdad lo sustituye en cuanto esta listo (YM lo retira).
+     ===================================================================== */
+  let ghdBootFab = null, ghdBootHoja = null, ghdBootVigia = null;
+
+  function ghdBootFuera() {
+    if (ghdBootVigia) clearInterval(ghdBootVigia), ghdBootVigia = null;
+    if (ghdBootHoja) ghdBootHoja.remove(), ghdBootHoja = null;
+    if (ghdBootFab) ghdBootFab.remove(), ghdBootFab = null;
+  }
+
+  function ghdBootMonta() {
+    /* El panel de verdad manda: si ya esta, este sobra. */
+    if (document.getElementById("ghd-fab")) return ghdBootFuera();
+    if (!document.body || document.getElementById("ghd-boot-fab")) return;
+    const gb = document.createElement("button");
+    gb.id = "ghd-boot-fab", gb.type = "button", gb.title = "Ghoosted",
+    gb.setAttribute("aria-label", "Ghoosted"), gb.innerHTML = Yr(),
+    gb.addEventListener("click", ghdBootAbre), document.body.appendChild(gb),
+    ghdBootFab = gb;
+  }
+
+  function ghdBootDi(gt, gmal) {
+    if (!ghdBootHoja) return;
+    const gn = ghdBootHoja.querySelector("#ghd-boot-msg");
+    if (gn) gn.textContent = gt, gn.className = gmal ? "ghd-boot-msg mal" : "ghd-boot-msg";
+  }
+
+  async function ghdBootActiva() {
+    const gi = ghdBootHoja && ghdBootHoja.querySelector("#ghd-boot-key");
+    const gb = ghdBootHoja && ghdBootHoja.querySelector("#ghd-boot-go");
+    if (!gi || !gb) return;
+    const gc = String(gi.value || "").trim().toUpperCase();
+    if (!gc) return ghdBootDi(Y("unlock_enter_key"), true);
+    /* La cuenta se lee AQUI, en el momento de activar, no al arrancar: quien
+       abre Instagram y luego inicia sesion tiene cookie para cuando pulsa. */
+    const gu = k.getUserId();
+    if (!gu) return ghdBootDi(Y("popup_need_login"), true);
+    gb.disabled = true, ghdBootDi(Y("unlock_checking"), false);
+    try {
+      const gr = await chrome.runtime.sendMessage({
+        type: "verifyLicense",
+        key: gc,
+        accountId: gu
+      });
+      if (gr && gr.valid) {
+        ghdBootDi(Y("boot_done"), false);
+        /* Recargar es lo mas limpio: el panel entero se monta desde cero con
+           la licencia ya guardada, sin medio arrancar a mano. */
+        setTimeout(() => {
+          try {
+            location.reload();
+          } catch (ge) {}
+        }, 900);
+        return;
+      }
+      ghdBootDi(ghdMotivo(gr), true);
+    } catch (ge) {
+      ghdBootDi(Y("unlock_network"), true);
+    } finally {
+      gb.disabled = false;
+    }
+  }
+
+  /* Si el fantasma definitivo desaparece del DOM, se vuelve a poner. Antes,
+     un repintado de Instagram que se lo llevara por delante lo dejaba fuera
+     hasta recargar la pagina, con el mismo aspecto que "no funciona". */
+  let ghdVigiaFab = null;
+  function ghdVigilaFab() {
+    if (ghdVigiaFab) return;
+    ghdVigiaFab = setInterval(() => {
+      if (!V || !m) return;
+      if (!document.getElementById("ghd-fab") && document.body) document.body.appendChild(V);
+      if (!document.getElementById("ghd-panel") && document.body) document.body.appendChild(m);
+    }, 4e3);
+  }
+  function ghdBootAbre() {
+    if (ghdBootHoja) return ghdBootFuera(), ghdBootMonta();
+    const gh = document.createElement("div");
+    gh.id = "ghd-boot-sheet", gh.className = "ghd-boot-sheet";
+    /* Sin innerHTML con nada de fuera: todo texto va por textContent. */
+    const gcab = document.createElement("div");
+    gcab.className = "ghd-boot-head";
+    const glogo = document.createElement("span");
+    glogo.className = "ghd-boot-logo", glogo.innerHTML = Yr();
+    const gtit = document.createElement("div");
+    gtit.className = "ghd-boot-tit", gtit.textContent = "Ghoosted";
+    const gx = document.createElement("button");
+    gx.type = "button", gx.className = "ghd-boot-x", gx.textContent = "×",
+    gx.title = Y("close"), gx.addEventListener("click", () => {
+      ghdBootHoja && (ghdBootHoja.remove(), ghdBootHoja = null);
+    });
+    gcab.appendChild(glogo), gcab.appendChild(gtit), gcab.appendChild(gx);
+
+    const gsub = document.createElement("p");
+    gsub.className = "ghd-boot-sub", gsub.textContent = Y("unlock_status");
+    const glab = document.createElement("label");
+    glab.className = "ghd-boot-lab", glab.textContent = Y("unlock_label"),
+    glab.setAttribute("for", "ghd-boot-key");
+    const gin = document.createElement("input");
+    gin.id = "ghd-boot-key", gin.type = "text", gin.autocomplete = "off",
+    gin.spellcheck = false, gin.placeholder = "GHST-XXXX-XXXX-XXXX-XXXX-XXXX",
+    gin.addEventListener("keydown", ge => {
+      if (ge.key === "Enter") ge.preventDefault(), ghdBootActiva();
+    });
+    const ggo = document.createElement("button");
+    ggo.id = "ghd-boot-go", ggo.type = "button", ggo.className = "ghd-boot-go",
+    ggo.textContent = Y("unlock_activate"), ggo.addEventListener("click", ghdBootActiva);
+    const gmsg = document.createElement("p");
+    gmsg.id = "ghd-boot-msg", gmsg.className = "ghd-boot-msg";
+    const gpie = document.createElement("a");
+    gpie.className = "ghd-boot-pie", gpie.href = x.appUrl + "/recuperar",
+    gpie.target = "_blank", gpie.rel = "noopener", gpie.textContent = Y("boot_lost");
+
+    gh.appendChild(gcab), gh.appendChild(gsub), gh.appendChild(glab),
+    gh.appendChild(gin), gh.appendChild(ggo), gh.appendChild(gmsg), gh.appendChild(gpie);
+    document.body.appendChild(gh), ghdBootHoja = gh;
+    try {
+      gin.focus();
+    } catch (ge) {}
+
+    /* Si ya hay clave guardada, se dice: asi nadie la pega dos veces ni cree
+       que no se guardo. Y si falta la sesion, se avisa antes de escribir. */
+    try {
+      chrome.storage.local.get(q.LICENSE_KEY, gs => {
+        const gl = gs && gs[q.LICENSE_KEY];
+        if (gl && gl.valid && !gl.revoked) {
+          gsub.textContent = Y("unlock_active"), gin.value = gl.key || "";
+          ghdBootDi(Y("boot_ready"), false);
+        } else if (!k.getUserId()) ghdBootDi(Y("popup_need_login"), true);
+      });
+    } catch (ge) {}
+  }
+
+  /* Instagram repinta con React y a veces se lleva por delante nodos ajenos;
+     el vigia lo vuelve a poner. Se apaga solo cuando manda el panel de
+     verdad, para no pelearse con el. */
+  function ghdBootArranca() {
+    if (!document.body) return void window.addEventListener("DOMContentLoaded", ghdBootArranca, {
+      once: true
+    });
+    ghdBootMonta();
+    ghdBootVigia = setInterval(() => {
+      if (document.getElementById("ghd-fab")) return ghdBootFuera();
+      if (!document.getElementById("ghd-boot-fab")) ghdBootFab = null, ghdBootMonta();
+    }, 3e3);
+  }
+  ghdBootArranca();
 
   let O = k.getUserId();
   if (!O) {
@@ -1013,6 +1189,21 @@
   function Yi(gq) {
     gq.style.animation = "none", void gq.offsetWidth, gq.style.animation = "";
   }
+  /* Por que no ha entrado la clave, dicho de una vez y en un solo sitio.
+     Antes solo se distinguian "bound" y "expired": quien compraba Plus y lo
+     ponia en un build Pro leia que su clave "no es valida o todavia no esta
+     emitida" — o sea, que le habian vendido humo. Es el mismo callejon de
+     siempre: el cliente paga y la extension le dice que no. */
+  function ghdMotivo(gr) {
+    const ge = gr && gr.error;
+    if (ge === "bound") return Y("unlock_bound");
+    if (ge === "expired") return Y("unlock_expired");
+    if (ge === "wrong_product") return Y("popup_wrong_product");
+    if (ge === "network") return Y("unlock_network");
+    if (ge === "account") return Y("popup_need_login");
+    if (gr && gr.refunded) return Y("popup_refunded");
+    return Y("unlock_invalid");
+  }
   async function Yf(gq, gx, gz) {
     const gL = String(gq || "").trim();
     if (!gL) {
@@ -1027,7 +1218,7 @@
         accountId: O
       });
       gO && gO.valid ? (m.classList.remove("ghd-locked"), G(Y("unlock_active"), "ok"), 
-      gt(), YL(true)) : gz.textContent = gO && gO.error === "bound" ? Y("unlock_bound") : gO && gO.error === "expired" ? Y("unlock_expired") : Y("unlock_invalid");
+      gt(), YL(true)) : gz.textContent = ghdMotivo(gO);
     } catch (gX) {
       gz.textContent = Y("unlock_network");
     } finally {
@@ -1045,7 +1236,10 @@
     gz.textContent = Y("unlock_copy");
     const gL = document.createElement("a");
     gL.className = "ghd-unlock-buy", gL.href = x.buyUrl, gL.target = "_blank", gL.rel = "noopener", 
-    gL.textContent = Y("unlock_buy");
+    /* El precio depende del producto. unlock_buy estaba fijo en "5 EUR", asi
+       que un build Pro ofrecia 7 EUR en la ventana del icono y 5 EUR en el
+       panel, en la misma instalacion y a la vez. */
+    gL.textContent = Y(x.product === "plus" ? "popup_buy_plus" : "popup_buy_pro");
     const gO = document.createElement("label");
     gO.className = "ghd-unlock-label", gO.textContent = Y("unlock_label");
     const gX = document.createElement("div");
@@ -1075,6 +1269,7 @@
     }
   }
   function YM() {
+    ghdBootFuera(), ghdVigilaFab();
     n = document.createElement("div"), n.id = "ghd-backdrop", n.addEventListener("click", () => {
       if (m.classList.contains("ghd-big")) Yo();
     }), document.body.appendChild(n), V = document.createElement("button"), V.id = "ghd-fab", 
@@ -5128,7 +5323,16 @@
     gz.click(), setTimeout(() => URL.revokeObjectURL(gz.href), 4e3);
   }
   async function gk() {
-    await GhostedI18n.ready, await g.hydrate(), F = Object.assign({}, z, g.get(J.settings, {})), 
+    await GhostedI18n.ready;
+    /* Un fallo de chrome.storage aqui tumbaba gk() entera —panel, fantasma,
+       listeners— sin dejar rastro: la promesa se rechazaba y nadie la
+       recogia. Mas vale arrancar con el almacen vacio que no arrancar. */
+    try {
+      await g.hydrate();
+    } catch (ghe) {
+      console.error("[Ghoosted] no se pudo cargar el almacen; se sigue sin el", ghe);
+    }
+    F = Object.assign({}, z, g.get(J.settings, {})), 
     g.del(X + "cooldownUntil");
     !g.get(X + "photoFixV2", false) && (g.set(J.activity, g.get(J.activity, []).filter(gO => gO.type !== "photo")), 
     g.del(J.profileSnapshots), g.del(J.profileCursor), g.set(X + "photoFixV2", true));
@@ -5196,5 +5400,16 @@
     }, 3e5);
 //#plus-on
   }
-  if (document.body) gk(); else window.addEventListener("DOMContentLoaded", gk);
+  /* readyState, no document.body: con run_at document_idle el body siempre
+     esta, asi que la rama del else era inalcanzable — y si algun dia se
+     adelanta el arranque, seria peor que inutil, porque el IIFE puede
+     reanudarse minutos despues del await de la sesion, cuando DOMContentLoaded
+     ya paso hace rato y ese listener no dispararia nunca.
+     Y el .catch importa: sin el, cualquier fallo dentro de gk() se convertia
+     en una promesa rechazada que nadie recoge, o sea en una pagina pelada sin
+     una linea en consola que dijera por que. */
+  const ghdVamos = () => gk().catch(gv => console.error("[Ghoosted] el arranque se ha roto", gv));
+  if (document.readyState === "loading") window.addEventListener("DOMContentLoaded", ghdVamos, {
+    once: true
+  }); else ghdVamos();
 })();

@@ -1322,5 +1322,17 @@
   },
   "req_auto_warn_end": {
     "message": "Puedes volver a Manual cuando quieras.\n\n¿Activarlo asumiendo el riesgo?"
+  },
+  "boot_ready": {
+    "message": "Ghoosted está arrancando…"
+  },
+  "boot_lost": {
+    "message": "¿Has perdido la clave?"
+  },
+  "boot_done": {
+    "message": "Activada. Recargando…"
+  },
+  "popup_no_answer": {
+    "message": "Ghoosted está en esa pestaña pero no contesta. Abre Instagram, pulsa el fantasma de abajo a la derecha y pega ahí tu clave."
   }
 }

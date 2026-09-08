@@ -5,7 +5,18 @@
   const g = {
     async hydrate() {
       if (t) return;
-      const q = await chrome.storage.local.get(null);
+      /* Si chrome.storage no contesta —contexto de extension invalidado tras
+         recargarla con la pestaña abierta, que es justo lo que hace cualquiera
+         que acaba de instalarla— esto rechazaba, gk() se caia entera y la
+         pagina se quedaba pelada y en silencio. Mas vale arrancar con la
+         cache vacia que no arrancar. */
+      let q = null;
+      try {
+        q = await chrome.storage.local.get(null);
+      } catch (x) {
+        console.error("[Ghoosted] no se pudo leer el almacen; se sigue vacio", x);
+        return;
+      }
       for (const x in q) Y.set(x, q[x]);
       t = true;
     },

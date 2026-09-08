@@ -77,5 +77,18 @@ module.exports = () => {
      (man.background || {}).service_worker].filter(Boolean)
       .filter((f) => !fs.existsSync(path.join(RAIZ, f))), []);
   s.eq('los iconos existen', Object.values(man.icons || {}).filter((f) => !fs.existsSync(path.join(RAIZ, f))), []);
+  /* Los tres sitios donde se declara el dominio tienen que decir lo mismo. Si
+     web_accessible_resources se queda solo con www, quien entre por
+     instagram.com a secas no puede cargar relations.html ni el icono: el
+     navegador los bloquea sin decir por que. */
+  const manDom = JSON.parse(fs.readFileSync(path.join(RAIZ, 'manifest.json'), 'utf8'));
+  const DOMINIOS = ['https://www.instagram.com/*', 'https://instagram.com/*'];
+  const cubre = (lista) => DOMINIOS.every((d) => (lista || []).indexOf(d) !== -1);
+  s.ok('los content scripts cubren los dos dominios de Instagram',
+    manDom.content_scripts.every((c) => cubre(c.matches)));
+  s.ok('los permisos de host, tambien', cubre(manDom.host_permissions));
+  s.ok('y los recursos accesibles desde la pagina',
+    (manDom.web_accessible_resources || []).every((w) => cubre(w.matches)));
+
   return s;
 };

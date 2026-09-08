@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extName__",
   "short_name": "Ghosted",
-  "version": "1.63.1",
+  "version": "1.63.2",
   "default_locale": "en",
   "description": "__MSG_extDesc__",
   "icons": {
@@ -83,7 +83,8 @@
         "relations.js"
       ],
       "matches": [
-        "https://www.instagram.com/*"
+        "https://www.instagram.com/*",
+        "https://instagram.com/*"
       ]
     }
   ]

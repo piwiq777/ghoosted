@@ -1,7 +1,7 @@
 /* Ghosted — injected panel styles. Scoped under #ghd-* so it never leaks into
  * Instagram's own UI. Native-feeling: Instagram's magenta→indigo gradient. */
 
-#ghd-panel, #ghd-fab, #ghd-backdrop{
+#ghd-panel, #ghd-fab, #ghd-backdrop, #ghd-boot-fab, .ghd-boot-sheet{
   --accent:#8a3ab9;          /* Instagram purple — solid accents/text */
   --accent-2:#bd83e8;        /* lighter purple for hovers/tags — 4.5:1 sobre --panel */
   --accent-grad:linear-gradient(45deg,#d62976,#4f5bd5);                     /* buttons / logo */
@@ -801,7 +801,7 @@
 .ghd-top-sec .ghd-empty{padding:10px 8px;font-size:11px;color:var(--ink-3);text-align:center}
 
 @media (prefers-reduced-motion: reduce){
-  #ghd-panel,#ghd-fab,#ghd-backdrop,.ghd-row,.ghd-list,.ghd-chip,.ghd-tab,.ghd-logo{animation:none!important;transition:none!important}
+  #ghd-panel,#ghd-fab,#ghd-backdrop,#ghd-boot-fab,.ghd-boot-sheet,.ghd-row,.ghd-list,.ghd-chip,.ghd-tab,.ghd-logo{animation:none!important;transition:none!important}
 }
 
 /* ---- mobile companion: connect button + QR overlay ---- */
@@ -1624,3 +1624,52 @@
 .ghd-upd-x{flex:none;width:22px;height:22px;border:0;border-radius:7px;background:none;
   color:var(--ink-3);font:400 15px/1 var(--font);cursor:pointer}
 .ghd-upd-x:hover{background:var(--surface-2);color:var(--ink)}
+
+/* ---------------------------------------------------------------------------
+   Fantasma de arranque. Es lo unico que hay en Instagram antes de que el panel
+   de verdad este listo — y lo unico que hay, punto, para quien todavia no ha
+   activado la clave. Se ve igual que el boton definitivo a proposito: el que
+   compra busca un fantasma, y encuentra un fantasma.
+   --------------------------------------------------------------------------- */
+#ghd-boot-fab{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;
+  background:var(--fab-grad);box-shadow:0 10px 30px rgba(0,0,0,.48);
+  cursor:pointer;z-index:2147483000;display:flex;align-items:center;justify-content:center;border:none;
+  animation:ghdFabIn .5s cubic-bezier(.22,1,.36,1);transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s ease}
+#ghd-boot-fab:hover{transform:scale(1.08) translateY(-1px);box-shadow:0 16px 40px rgba(0,0,0,.58)}
+#ghd-boot-fab:active{transform:scale(.94)}
+#ghd-boot-fab:focus-visible{outline:2px solid #fff;outline-offset:3px}
+#ghd-boot-fab svg{width:28px;height:28px;fill:#fff}
+
+.ghd-boot-sheet{position:fixed;right:22px;bottom:88px;width:330px;max-width:calc(100vw - 44px);
+  z-index:2147483001;box-sizing:border-box;padding:18px 18px 16px;border-radius:20px;
+  background:var(--panel);border:1px solid var(--line);box-shadow:0 24px 70px rgba(0,0,0,.62);
+  font:400 14px/1.5 var(--font);color:var(--ink);animation:ghdPop .26s cubic-bezier(.22,1,.36,1)}
+.ghd-boot-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ghd-boot-logo{width:30px;height:30px;border-radius:9px;background:var(--accent-grad);
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.ghd-boot-logo svg{width:18px;height:18px;fill:#fff}
+.ghd-boot-tit{flex:1 1 auto;min-width:0;font:700 15px var(--font);letter-spacing:-.2px}
+.ghd-boot-x{flex:0 0 auto;width:26px;height:26px;border:0;border-radius:8px;background:var(--surface);
+  color:var(--ink-2);font:400 17px/1 var(--font);cursor:pointer}
+.ghd-boot-x:hover{background:var(--surface-2);color:var(--ink)}
+.ghd-boot-sub{margin:0 0 14px;font-size:13px;line-height:1.55;color:var(--ink-2)}
+.ghd-boot-lab{display:block;margin:0 0 6px;font:600 11.5px var(--font);text-transform:uppercase;
+  letter-spacing:.09em;color:var(--ink-3)}
+.ghd-boot-sheet input{width:100%;box-sizing:border-box;border:1px solid var(--line-2);border-radius:11px;
+  padding:11px 12px;background:rgba(0,0,0,.28);color:var(--ink);
+  font:600 13px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.4px;text-transform:uppercase}
+.ghd-boot-sheet input::placeholder{color:var(--ink-3);letter-spacing:.3px}
+.ghd-boot-sheet input:focus{outline:2px solid var(--accent-2);outline-offset:1px}
+.ghd-boot-go{width:100%;margin-top:9px;border:0;border-radius:11px;background:var(--accent-grad);
+  color:var(--on-accent);padding:11px 14px;font:700 14px var(--font);cursor:pointer}
+.ghd-boot-go:hover{filter:brightness(1.08)}
+.ghd-boot-go[disabled]{opacity:.55;cursor:default}
+.ghd-boot-msg{margin:10px 0 0;font-size:12.5px;line-height:1.5;color:var(--ink-2);min-height:1px}
+.ghd-boot-msg.mal{color:var(--danger)}
+.ghd-boot-msg:empty{margin:0}
+.ghd-boot-pie{display:inline-block;margin-top:12px;font-size:12px;color:var(--ink-3);text-decoration:none}
+.ghd-boot-pie:hover{color:var(--ink-2);text-decoration:underline}
+@media (max-width:480px){
+  .ghd-boot-sheet{right:12px;left:12px;width:auto;bottom:82px}
+  #ghd-boot-fab{right:14px;bottom:14px}
+}
