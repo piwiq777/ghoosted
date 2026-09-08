@@ -81,6 +81,40 @@ module.exports = () => {
   for (const k of CLAVES) s.ok('el ingles de ' + k + ' esta en el HTML o en app.js',
     html.indexOf(k) !== -1 || js.indexOf(k) !== -1);
 
+  /* 6 bis · La vitrina. Antes esto eran doce tarjetas con parrafo y seis
+     capturas del tamaño de un sello dentro de un bento: mucha letra y ninguna
+     imagen legible, que es al reves de como se vende algo que se entiende
+     mirandolo. */
+  s.ok('ya no queda el bento ni las tarjetas de texto',
+    !/fb-bento|fb-grid|features-head/.test(html));
+  s.eq('la vitrina tiene seis capturas', (html.match(/class="show-slide/g) || []).length, 6);
+  s.eq('con su pestaña cada una', (html.match(/class="show-tab[ "]/g) || []).length, 6);
+  s.ok('la imagen se ve ENTERA, no recortada', /\.show-slide img\{[^}]*object-fit:contain/.test(css));
+  s.ok('y grande: el escenario es alto de verdad', /\.show-stage\{[^}]*height:min\(64vh,600px\)/.test(css));
+  /* En tableta se le ponia un max-width de 420px y la captura salia mas
+     pequeña que en el movil. */
+  s.ok('apilada tampoco se encoge', /\.show-stage\{width:100%;max-width:820px/.test(css));
+  s.eq('lo que no tiene captura queda como una linea de nombres',
+    (html.match(/class="show-mas"/g) || []).length, 1);
+  /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
+  s.ok('el apartado del movil dice de que va', /data-i18n="pair_title"/.test(html));
+  s.ok('y su titulo esta traducido en los once idiomas',
+    idiomas.every((f) => !!JSON.parse(leer(path.join('locales', f))).pair_title));
+  /* Texto muerto: lo que se quedo sin sitio al quitar el bento. */
+  const MUERTAS = ['feat_kicker', 'more_title', 'feat_intro', 'show_lede_0', 'show_tab_0',
+    'fx_download_d', 'fx_tiktok_d', 'm7_d'];
+  s.ok('no quedan traducciones de lo que ya no existe',
+    idiomas.every((f) => {
+      const d = JSON.parse(leer(path.join('locales', f)));
+      return !MUERTAS.some((k) => k in d);
+    }));
+  /* Y lo contrario: que no falte ninguna de las que la portada sigue pidiendo. */
+  const pedidas = [...new Set([...html.matchAll(/data-i18n(?:-html)?="([a-z0-9_]+)"/g)].map((m) => m[1]))];
+  for (const f of idiomas) {
+    const d = JSON.parse(leer(path.join('locales', f)));
+    s.eq(f + ': no falta ningun texto de la portada', pedidas.filter((k) => !d[k]), []);
+  }
+
   /* 7 bis · La transparencia se fue a los Terminos, pero el enlace se queda
      DELANTE del precio. En la UE lo que se dice antes de cobrar obliga (art.
      61 TRLGDCU): esconder los limites detras del boton de pagar es justo lo
