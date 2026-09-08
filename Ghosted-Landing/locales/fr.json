@@ -226,5 +226,20 @@
   "sx_h1_lost": "Rien à afficher ici",
   "sx_notfound2": "Cette page n'affiche une clé qu'juste après le paiement. Si vous avez déjà acheté Ghoosted, redemandez-la avec l'e-mail utilisé pour payer.",
   "sx_out_recover": "Récupérer ma clé",
-  "sx_out_buy": "Voir les offres"
+  "sx_out_buy": "Voir les offres",
+  "up_h1": "Mettre à jour Ghoosted",
+  "up_sub": "Ta clé n'expire pas et les mises à jour sont incluses. Colle-la ici pour obtenir la dernière version.",
+  "up_go": "Télécharger la dernière version",
+  "up_note": "Décompresse-la par-dessus l'ancien dossier et clique sur recharger dans l'extension, sur chrome://extensions. Ta clé reste activée.",
+  "up_guide": "Comment l'installer",
+  "up_lost": "J'ai perdu ma clé",
+  "up_bad": "Cette clé ne semble pas correcte. Elle commence par GHST- et compte cinq groupes de quatre.",
+  "up_going": "Téléchargement en cours…",
+  "up_e404": "Nous ne reconnaissons pas cette clé. Vérifie-la ou demande qu'on te la renvoie.",
+  "up_e403": "Cette clé n'est plus active. Si c'est une erreur, écris à hello@ghoosted.net.",
+  "up_e429": "Trop de téléchargements aujourd'hui avec cette clé. Réessaie demain.",
+  "up_efail": "Impossible pour le moment. Réessaie dans un instant.",
+  "foot_customers": "Déjà acheté",
+  "foot_update": "Mettre à jour",
+  "foot_recover": "Récupérer ma clé"
 }

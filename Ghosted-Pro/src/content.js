@@ -146,7 +146,16 @@
     gF.appendChild(gl);
     if (gL || gO) {
       const gS = document.createElement("a");
-      gS.className = "ghd-upd-go", gS.textContent = Y("upd_get"), gS.href = x.buyUrl, 
+      /* Quien ya ha pagado NO puede acabar en la pagina de precios. El aviso
+         le decia "hay version nueva -> Descargar" y le mandaba a comprar otra
+         vez. Con licencia se va a /actualizar con la clave ya puesta, que
+         sirve siempre la ultima version; sin licencia, a comprar. */
+      let gA = x.buyUrl;
+      try {
+        const gK = q.getLicense(g);
+        if (gK && gK.key) gA = x.appUrl + "/actualizar?key=" + encodeURIComponent(gK.key);
+      } catch (gE) {}
+      gS.className = "ghd-upd-go", gS.textContent = Y("upd_get"), gS.href = gA, 
       gS.target = "_blank", gS.rel = "noopener", gF.appendChild(gS);
     }
     if (!gL) {

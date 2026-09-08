@@ -57,6 +57,10 @@ module.exports = () => {
   s.ok('y como recuperarla si se pierde', /\/recuperar/.test(leeme));
   s.ok('manda a soporte, no al desarrollador', /hello@ghoosted\.net/.test(leeme));
   s.ok('con el nombre bien escrito', /GHOOSTED/.test(leeme) && !/^GHOSTED /m.test(leeme));
+  /* Chrome no actualiza una extension cargada descomprimida. Si el LEEME no
+     dice como se actualiza, el comprador se queda en la version que compro. */
+  s.ok('explica como actualizar', /ghoosted\.net\/actualizar/.test(leeme));
+  s.ok('y deja claro que no se paga otra vez', /incluidas/.test(leeme));
 
   /* 5 · La guia web, en los 12 idiomas y con sus capturas. */
   const guia = leer('instalar.html');

@@ -226,5 +226,20 @@
   "sx_h1_lost": "Aquí no hay nada que enseñar",
   "sx_notfound2": "Esta página solo enseña una clave justo después de pagar. Si ya compraste Ghoosted, pídela otra vez con el correo con el que pagaste.",
   "sx_out_recover": "Recuperar mi clave",
-  "sx_out_buy": "Ver los planes"
+  "sx_out_buy": "Ver los planes",
+  "up_h1": "Actualiza Ghoosted",
+  "up_sub": "Tu clave no caduca y las actualizaciones están incluidas. Pégala aquí y te llevas la última versión.",
+  "up_go": "Descargar la última versión",
+  "up_note": "Descomprímelo encima de la carpeta antigua y pulsa recargar en la extensión, en chrome://extensions. Tu clave sigue activada.",
+  "up_guide": "Cómo instalarlo",
+  "up_lost": "He perdido mi clave",
+  "up_bad": "Esa clave no tiene buena pinta. Empieza por GHST- y son cinco grupos de cuatro.",
+  "up_going": "Empezando la descarga…",
+  "up_e404": "No reconocemos esa clave. Compruébala o pide que te la reenviemos.",
+  "up_e403": "Esa clave ya no está activa. Si es un error, escribe a hello@ghoosted.net.",
+  "up_e429": "Demasiadas descargas hoy con esta clave. Inténtalo mañana.",
+  "up_efail": "Ahora mismo no se ha podido. Inténtalo dentro de un momento.",
+  "foot_customers": "Ya lo tienes",
+  "foot_update": "Actualizar",
+  "foot_recover": "Recuperar mi clave"
 }

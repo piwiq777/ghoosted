@@ -13,12 +13,31 @@ const { marcar } = require('../lib/marcar');
 const KEY_PATTERN = /^GHST-(?:[A-Z0-9]{4}-){4}[A-Z0-9]{4}$/;
 const SESSION_PATTERN = /^cs_[A-Za-z0-9_]+$/;
 
+/* Cuando esto se abre pulsando un enlace (no desde codigo), un fallo NO puede
+   contestar con un JSON: el comprador ve `{"error":"not_found"}` a pantalla
+   completa y da por hecho que le han estafado. Se le devuelve a /actualizar,
+   que ya sabe traducir cada codigo a una frase en su idioma. */
+function esNavegador(req) {
+  const a = String((req.headers && req.headers.accept) || '');
+  return a.indexOf('text/html') !== -1;
+}
+
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'GET') return json(res, 405, { error: 'method_not_allowed' });
 
   const key = normalizeKey((req.query && req.query.key) || '');
   const sessionId = String((req.query && req.query.session_id) || '');
+
+  const enPagina = esNavegador(req);
+  const fallo = (code, cuerpo) => {
+    if (enPagina) {
+      res.setHeader('Location', code === 400 ? '/actualizar' : '/actualizar?e=' + code);
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(302).end();
+    }
+    return json(res, code, cuerpo);
+  };
 
   try {
     let record = null;
@@ -28,15 +47,15 @@ module.exports = async (req, res) => {
       const issued = await command(['GET', 'ghosted:stripe:session:' + sessionId]);
       record = issued && (await getJson('ghosted:license:' + issued));
     } else {
-      return json(res, 400, { error: 'missing_proof' });
+      return fallo(400, { error: 'missing_proof' });
     }
 
     // Same 404 for "never existed" and "wrong key" so this can't be used to
     // probe which keys are real.
-    if (!record) return json(res, 404, { error: 'not_found' });
+    if (!record) return fallo(404, { error: 'not_found' });
     // A refunded/charged-back key stops being a download link too, not just a
     // licence — otherwise a refund still leaves the buyer with the product.
-    if (record.status !== 'active') return json(res, 403, { error: 'revoked' });
+    if (record.status !== 'active') return fallo(403, { error: 'revoked' });
 
     /* Tope de descargas por clave. La clave se ata a UNA cuenta de Instagram,
        asi que repartirla no da acceso a nadie — pero el enlace de descarga si
@@ -48,7 +67,7 @@ module.exports = async (req, res) => {
       const cubo = 'ghosted:freno:descargas:' + record.key;
       const n = Number(await command(['INCR', cubo])) || 1;
       if (n === 1) await command(['EXPIRE', cubo, '86400']);
-      if (n > 15) return json(res, 429, { error: 'demasiadas_descargas' });
+      if (n > 15) return fallo(429, { error: 'demasiadas_descargas' });
     } catch (e) { /* si el almacen no responde, se deja descargar */ }
 
     const plan = record.plan || 'pro';
@@ -56,7 +75,7 @@ module.exports = async (req, res) => {
     const file = filePath(plan);
     if (!file) {
       console.error('download_file_missing', plan, dl.file);
-      return json(res, 500, { error: 'file_unavailable' });
+      return fallo(500, { error: 'file_unavailable' });
     }
 
     let buf;
@@ -64,7 +83,7 @@ module.exports = async (req, res) => {
       buf = await fs.promises.readFile(file);
     } catch (e) {
       console.error('download_read_failed', file, e && e.message);
-      return json(res, 500, { error: 'file_unavailable' });
+      return fallo(500, { error: 'file_unavailable' });
     }
 
     /* Cada descarga sale marcada con la clave de quien la pide: si el ZIP
@@ -85,8 +104,7 @@ module.exports = async (req, res) => {
     res.setHeader('X-Robots-Tag', 'noindex, nofollow');
     return res.status(200).end(zip);
   } catch (error) {
-    return json(
-      res,
+    return fallo(
       error instanceof ConfigError ? 503 : 500,
       { error: error instanceof ConfigError ? 'license_service_not_configured' : 'download_error' }
     );

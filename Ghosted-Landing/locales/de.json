@@ -226,5 +226,20 @@
   "sx_h1_lost": "Hier gibt es nichts zu zeigen",
   "sx_notfound2": "Diese Seite zeigt einen Schlüssel nur direkt nach der Zahlung. Wenn du Ghoosted schon gekauft hast, fordere ihn mit der E-Mail deines Kaufs erneut an.",
   "sx_out_recover": "Schlüssel wiederherstellen",
-  "sx_out_buy": "Die Pläne ansehen"
+  "sx_out_buy": "Die Pläne ansehen",
+  "up_h1": "Ghoosted aktualisieren",
+  "up_sub": "Dein Schlüssel läuft nicht ab, Updates sind inklusive. Füge ihn hier ein und du bekommst die neueste Version.",
+  "up_go": "Neueste Version herunterladen",
+  "up_note": "Entpacke sie über den alten Ordner und klicke bei der Erweiterung unter chrome://extensions auf Neu laden. Dein Schlüssel bleibt aktiviert.",
+  "up_guide": "So wird es installiert",
+  "up_lost": "Ich habe meinen Schlüssel verloren",
+  "up_bad": "Dieser Schlüssel sieht nicht richtig aus. Er beginnt mit GHST- und hat fünf Vierergruppen.",
+  "up_going": "Download wird gestartet…",
+  "up_e404": "Diesen Schlüssel kennen wir nicht. Prüfe ihn oder lass ihn dir erneut zusenden.",
+  "up_e403": "Dieser Schlüssel ist nicht mehr aktiv. Wenn das ein Fehler ist, schreib an hello@ghoosted.net.",
+  "up_e429": "Heute schon zu viele Downloads mit diesem Schlüssel. Versuch es morgen wieder.",
+  "up_efail": "Das hat gerade nicht geklappt. Versuch es gleich noch einmal.",
+  "foot_customers": "Schon gekauft",
+  "foot_update": "Aktualisieren",
+  "foot_recover": "Schlüssel wiederherstellen"
 }

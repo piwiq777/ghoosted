@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F5F0">
+  <title>Ghoosted — Update</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .up{min-height:100vh;display:grid;place-items:center;padding:28px 16px}
+    .up-card{width:min(100%,470px);padding:38px 32px;text-align:center;border:1px solid var(--glass-line);
+      border-radius:28px;background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);box-shadow:var(--shadow)}
+    .up-card h1{margin:0 0 10px;font-family:var(--display);font-size:clamp(24px,4.6vw,32px);letter-spacing:-1.1px}
+    .up-card p{color:var(--ink-2);line-height:1.65;margin:0 0 20px}
+    .up-card input{width:100%;box-sizing:border-box;border:1px solid var(--line-2);border-radius:13px;
+      padding:14px 15px;font:600 15px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.4px;
+      background:var(--paper);color:var(--ink);text-transform:uppercase}
+    .up-card input:focus{outline:2px solid var(--accent);outline-offset:1px}
+    .up-card button{width:100%;margin-top:11px;border:0;border-radius:13px;background:var(--ink);color:#F7F5F0;
+      padding:14px 18px;font:700 15px var(--font);cursor:pointer}
+    .up-card button:hover{opacity:.9}
+    .up-msg{margin:18px 0 0;font-size:14px;line-height:1.6;color:var(--ink)}
+    .up-foot{margin:22px 0 0;font-size:12.5px;color:var(--ink-3);line-height:1.8}
+    .up-foot a{color:var(--ink-3)}
+    .up-ver{display:inline-block;margin-bottom:14px;padding:4px 11px;border-radius:100px;
+      background:var(--surface-2);font:700 12px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink-2)}
+    .up-ver[hidden]{display:none}
+  </style>
+</head>
+<body>
+  <main class="up">
+    <section class="up-card">
+      <span class="up-ver" id="ver" hidden>—</span>
+      <h1 data-i18n="up_h1">Update Ghoosted</h1>
+      <p data-i18n="up_sub">Your key does not expire and updates are included. Paste it here and you get the latest version.</p>
+      <form id="form" novalidate>
+        <input id="key" type="text" autocomplete="off" spellcheck="false"
+               placeholder="GHST-XXXX-XXXX-XXXX-XXXX-XXXX" aria-label="Key">
+        <button id="go" type="submit" data-i18n="up_go">Download the latest version</button>
+      </form>
+      <p id="msg" class="up-msg" hidden></p>
+      <p class="up-foot">
+        <span data-i18n="up_note">Unzip it over the old folder and press reload on the extension at chrome://extensions. Your key stays activated.</span>
+        <br><a href="/instalar" data-i18n="up_guide">How to install it</a> ·
+        <a href="/recuperar" data-i18n="up_lost">I lost my key</a>
+      </p>
+    </section>
+  </main>
+  <script>
+  (function () {
+    /* Mismo patron que recuperar.html: diccionario ingles aqui dentro y el
+       resto desde /locales, porque hay textos que se generan al vuelo y no
+       tienen nodo del que sacar el original. */
+    var EN = {
+      up_h1: 'Update Ghoosted',
+      up_sub: 'Your key does not expire and updates are included. Paste it here and you get the latest version.',
+      up_go: 'Download the latest version',
+      up_note: 'Unzip it over the old folder and press reload on the extension at chrome://extensions. Your key stays activated.',
+      up_guide: 'How to install it',
+      up_lost: 'I lost my key',
+      up_bad: 'That key does not look right. It starts with GHST- and has five groups of four.',
+      up_going: 'Starting the download…',
+      up_e404: 'We do not recognise that key. Check it, or have it sent to you again.',
+      up_e403: 'That key is no longer active. If that is a mistake, write to hello@ghoosted.net.',
+      up_e429: 'Too many downloads with this key today. Try again tomorrow.',
+      up_efail: 'Could not do it right now. Try again in a moment.'
+    };
+    var lang = 'en';
+    try { lang = localStorage.getItem('ghosted_lang') || 'en'; } catch (e) {}
+    var dict = null;
+    function t(k) { return (dict && dict[k] != null) ? dict[k] : EN[k]; }
+    function pintar() {
+      document.documentElement.lang = lang;
+      if (lang === 'ar') document.documentElement.dir = 'rtl';
+      document.querySelectorAll('[data-i18n]').forEach(function (el) {
+        var v = t(el.getAttribute('data-i18n')); if (v != null) el.textContent = v;
+      });
+    }
+    function arrancar(cb) {
+      if (lang === 'en') { pintar(); cb(); return; }
+      fetch('locales/' + lang + '.json?v=41')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { dict = d; pintar(); cb(); })
+        .catch(function () { pintar(); cb(); });
+    }
+    arrancar(function () {
+      var campo = document.getElementById('key');
+      var msg = document.getElementById('msg');
+      var params = new URLSearchParams(location.search);
+      function decir(texto) { msg.textContent = texto; msg.hidden = false; }
+
+      /* Que version se va a llevar, dicha ANTES de descargar: asi se ve de un
+         vistazo si ya se tiene la ultima y no hace falta bajar nada. */
+      fetch('/api/status').then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (!d || !d.latest) return;
+          var v = document.getElementById('ver');
+          v.textContent = 'v' + d.latest; v.hidden = false;
+        }).catch(function () { /* sin version no pasa nada, se descarga igual */ });
+
+      /* Si api/download rechaza la clave, devuelve aqui con ?e=CODIGO en vez
+         de soltarle al comprador un JSON en la cara. */
+      var e = params.get('e');
+      if (e === '404') decir(t('up_e404'));
+      else if (e === '403') decir(t('up_e403'));
+      else if (e === '429') decir(t('up_e429'));
+      else if (e) decir(t('up_efail'));
+
+      /* El aviso de version nueva de la extension trae ya la clave puesta:
+         quien lo pulsa solo tiene que darle a descargar. */
+      var enUrl = params.get('key');
+      if (enUrl) campo.value = enUrl.trim().toUpperCase();
+
+      document.getElementById('form').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var k = campo.value.trim().toUpperCase();
+        if (!/^GHST-(?:[A-Z0-9]{4}-){4}[A-Z0-9]{4}$/.test(k)) { decir(t('up_bad')); return; }
+        decir(t('up_going'));
+        /* Aqui no se valida la licencia: quien decide es el servidor, que ya
+           mira estado, plan y tope de descargas, y marca el zip con la clave. */
+        location.href = '/api/download?key=' + encodeURIComponent(k);
+      });
+    });
+  })();
+  </script>
+  <!-- Vercel Web Analytics: recuento de visitas sin cookies, sin
+       identificadores persistentes y sin datos personales. -->
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

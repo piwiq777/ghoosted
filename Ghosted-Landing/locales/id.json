@@ -226,5 +226,20 @@
   "sx_h1_lost": "Tidak ada yang bisa ditampilkan di sini",
   "sx_notfound2": "Halaman ini hanya menampilkan kunci tepat setelah pembayaran. Kalau kamu sudah membeli Ghoosted, minta lagi dengan email yang kamu pakai membayar.",
   "sx_out_recover": "Pulihkan kunciku",
-  "sx_out_buy": "Lihat paketnya"
+  "sx_out_buy": "Lihat paketnya",
+  "up_h1": "Perbarui Ghoosted",
+  "up_sub": "Kuncimu tidak kedaluwarsa dan pembaruan sudah termasuk. Tempel di sini untuk mendapat versi terbaru.",
+  "up_go": "Unduh versi terbaru",
+  "up_note": "Ekstrak menimpa folder lama, lalu tekan muat ulang pada ekstensi di chrome://extensions. Kuncimu tetap aktif.",
+  "up_guide": "Cara memasangnya",
+  "up_lost": "Kunciku hilang",
+  "up_bad": "Kunci itu sepertinya salah. Diawali GHST- dan terdiri dari lima kelompok berisi empat karakter.",
+  "up_going": "Memulai unduhan…",
+  "up_e404": "Kami tidak mengenali kunci itu. Periksa lagi atau minta dikirim ulang.",
+  "up_e403": "Kunci itu sudah tidak aktif. Kalau ini keliru, tulis ke hello@ghoosted.net.",
+  "up_e429": "Terlalu banyak unduhan hari ini dengan kunci ini. Coba lagi besok.",
+  "up_efail": "Sekarang belum berhasil. Coba lagi sebentar.",
+  "foot_customers": "Sudah beli",
+  "foot_update": "Perbarui",
+  "foot_recover": "Pulihkan kunciku"
 }

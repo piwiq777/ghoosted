@@ -62,6 +62,17 @@ SI LA CLAVE NO TE LA ACEPTA:
 - ¿La has perdido? Pídela otra vez en https://ghoosted.net/recuperar con el
   correo con el que pagaste.
 
+CUANDO SALGA UNA VERSIÓN NUEVA:
+Chrome no actualiza solas las extensiones cargadas así, y esta va así. Cuando
+haya una versión nueva, Ghoosted te avisa dentro de Instagram. Para instalarla:
+
+- Ve a https://ghoosted.net/actualizar y pega TU MISMA CLAVE. Te descargas la
+  última versión: las actualizaciones están incluidas y no se pagan aparte.
+- Descomprímela encima de la carpeta de siempre, sustituyendo lo que había.
+- En chrome://extensions, pulsa el botón de recargar de la tarjeta de Ghoosted.
+
+Tu clave sigue activada y no pierdes nada de lo que tenías guardado.
+
 ¿SIGUES ATASCADO?
 Escríbenos a hello@ghoosted.net y cuéntanos qué ves: si aparece la tarjeta en
 chrome://extensions o no aparece nada, si sale algún aviso rojo, y qué versión

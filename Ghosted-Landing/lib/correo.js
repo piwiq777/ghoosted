@@ -24,6 +24,8 @@ const TEXTOS = {
     attach: 'Also attached as a file, in case you lose this email.',
     lost: 'Lost it? Ask for it again with the email you paid with:',
     recover: 'Recover my key',
+    upd: "Updates are included forever. Paste this same key here whenever a new version comes out:",
+    updLink: "Update Ghoosted",
     save: 'Save the key',
     dl: 'Download',
     steps: 'Installing',
@@ -43,6 +45,8 @@ const TEXTOS = {
     attach: 'Va también adjunta como archivo, por si pierdes este correo.',
     lost: '¿La pierdes? Pídela otra vez con el correo con el que pagaste:',
     recover: 'Recuperar mi clave',
+    upd: "Las actualizaciones están incluidas para siempre. Pega esta misma clave aquí cuando salga una versión nueva:",
+    updLink: "Actualizar Ghoosted",
     save: 'Guardar la clave',
     dl: 'Descargar',
     steps: 'Cómo instalarlo',
@@ -62,6 +66,8 @@ const TEXTOS = {
     attach: 'Vai também anexada como arquivo, caso você perca este e-mail.',
     lost: 'Perdeu? Peça de novo com o e-mail que usou na compra:',
     recover: 'Recuperar minha chave',
+    upd: "As atualizações estão incluídas para sempre. Cole esta mesma chave aqui quando sair uma versão nova:",
+    updLink: "Atualizar o Ghoosted",
     save: 'Salvar a chave',
     dl: 'Baixar',
     steps: 'Como instalar',
@@ -81,6 +87,8 @@ const TEXTOS = {
     attach: 'Elle est aussi jointe en fichier, au cas où vous perdriez cet e-mail.',
     lost: 'Perdue ? Redemandez-la avec l\'e-mail utilisé pour payer :',
     recover: 'Récupérer ma clé',
+    upd: "Les mises à jour sont incluses pour toujours. Colle cette même clé ici quand une nouvelle version sort :",
+    updLink: "Mettre à jour Ghoosted",
     save: 'Enregistrer la clé',
     dl: 'Télécharger',
     steps: 'Installation',
@@ -100,6 +108,8 @@ const TEXTOS = {
     attach: 'Liegt auch als Datei bei, falls diese E-Mail verloren geht.',
     lost: 'Verloren? Fordere ihn erneut an, mit der E-Mail deines Kaufs:',
     recover: 'Schlüssel wiederherstellen',
+    upd: "Updates sind für immer inklusive. Füge denselben Schlüssel hier ein, sobald eine neue Version erscheint:",
+    updLink: "Ghoosted aktualisieren",
     save: 'Schlüssel sichern',
     dl: 'Herunterladen',
     steps: 'Installation',
@@ -119,6 +129,8 @@ const TEXTOS = {
     attach: 'È allegata anche come file, se dovessi perdere questa e-mail.',
     lost: 'Persa? Richiedila con l\'e-mail con cui hai pagato:',
     recover: 'Recupera la mia chiave',
+    upd: "Gli aggiornamenti sono inclusi per sempre. Incolla questa stessa chiave qui quando esce una versione nuova:",
+    updLink: "Aggiorna Ghoosted",
     save: 'Salva la chiave',
     dl: 'Scarica',
     steps: 'Come installarla',
@@ -138,6 +150,8 @@ const TEXTOS = {
     attach: 'Bu e-postayı kaybedersen diye dosya olarak da ekli.',
     lost: 'Kaybettin mi? Ödeme yaptığın e-postayla yeniden iste:',
     recover: 'Anahtarımı kurtar',
+    upd: "Güncellemeler sonsuza dek dahildir. Yeni bir sürüm çıktığında aynı anahtarı buraya yapıştır:",
+    updLink: "Ghoosted'ı güncelle",
     save: 'Anahtarı kaydet',
     dl: 'İndir',
     steps: 'Nasıl kurulur',
@@ -157,6 +171,8 @@ const TEXTOS = {
     attach: 'Dilampirkan juga sebagai file, kalau email ini hilang.',
     lost: 'Hilang? Minta lagi dengan email yang kamu pakai membayar:',
     recover: 'Pulihkan kunciku',
+    upd: "Pembaruan termasuk selamanya. Tempel kunci yang sama di sini setiap kali ada versi baru:",
+    updLink: "Perbarui Ghoosted",
     save: 'Simpan kunci',
     dl: 'Unduh',
     steps: 'Cara memasang',
@@ -176,6 +192,8 @@ const TEXTOS = {
     attach: 'Он также вложен файлом — на случай, если письмо потеряется.',
     lost: 'Потеряли? Запросите снова по адресу, с которого оплатили:',
     recover: 'Восстановить ключ',
+    upd: "Обновления входят в покупку навсегда. Вставляйте этот же ключ здесь, когда выходит новая версия:",
+    updLink: "Обновить Ghoosted",
     save: 'Сохранить ключ',
     dl: 'Скачать',
     steps: 'Как установить',
@@ -195,6 +213,8 @@ const TEXTOS = {
     attach: 'यह फ़ाइल के रूप में भी संलग्न है, अगर यह ईमेल खो जाए।',
     lost: 'खो गई? जिस ईमेल से भुगतान किया था, उसी से दोबारा माँगें:',
     recover: 'मेरी कुंजी वापस पाएँ',
+    upd: "अपडेट हमेशा के लिए शामिल हैं। नया संस्करण आने पर यही कुंजी यहाँ चिपकाएँ:",
+    updLink: "Ghoosted अपडेट करें",
     save: 'कुंजी सहेजें',
     dl: 'डाउनलोड करें',
     steps: 'कैसे इंस्टॉल करें',
@@ -214,6 +234,8 @@ const TEXTOS = {
     attach: 'مرفق أيضًا كملف، تحسّبًا لضياع هذه الرسالة.',
     lost: 'أضعته؟ اطلبه مرة أخرى بالبريد الذي دفعت به:',
     recover: 'استعادة مفتاحي',
+    upd: "التحديثات مشمولة إلى الأبد. الصق المفتاح نفسه هنا كلما صدر إصدار جديد:",
+    updLink: "حدِّث Ghoosted",
     save: 'حفظ المفتاح',
     dl: 'تنزيل',
     steps: 'طريقة التثبيت',
@@ -233,6 +255,8 @@ const TEXTOS = {
     attach: 'メールを失くしたときのために、ファイルとしても添付しています。',
     lost: '失くしたら、支払いに使ったメールアドレスで再発行できます:',
     recover: 'キーを再発行する',
+    upd: "アップデートはずっと無料です。新しいバージョンが出たら、同じキーをここに貼り付けてください:",
+    updLink: "Ghoosted を更新",
     save: 'キーを保存',
     dl: 'ダウンロード',
     steps: 'インストール手順',
@@ -297,6 +321,10 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
   const dir = rtl ? 'rtl' : 'ltr';
   const al = rtl ? 'right' : 'left';
   const urlRecuperar = sitio + '/recuperar';
+  /* Las actualizaciones no se descargan solas: la extension va sin empaquetar
+     y Chrome nunca la actualiza. El comprador tiene que volver con su clave, y
+     si el correo no se lo dice, no lo sabe. */
+  const urlActualizar = sitio + '/actualizar';
 
   const html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '
     + '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
@@ -370,6 +398,11 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
     + '<a href="' + esc(urlRecuperar) + '" style="color:' + C.rosa + ';font-weight:700">'
     + esc(t.recover) + '</a></div></td></tr></table>'
 
+    // actualizaciones: mismo sitio, misma clave, siempre la ultima version
+    + '<p style="margin:18px 0 0;font:400 13.5px/1.6 ' + SANS + ';color:' + C.suave + '">'
+    + esc(t.upd) + ' <a href="' + esc(urlActualizar) + '" style="color:' + C.rosa + ';font-weight:700">'
+    + esc(t.updLink) + '</a></p>'
+
     + '<p style="margin:18px 0 0;font:400 14px/1.6 ' + SANS + ';color:' + C.suave + '">'
     + esc(t.help) + ' <a href="' + esc(sitio) + '/instalar" style="color:' + C.rosa + '">'
     + esc(t.guide) + '</a>.</p>'
@@ -394,6 +427,9 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
     '    ' + key,
     '',
     t.dl + ': ' + urlDescarga,
+    '',
+    t.upd,
+    '    ' + urlActualizar,
     '',
     t.steps,
     '1. ' + t.s1,

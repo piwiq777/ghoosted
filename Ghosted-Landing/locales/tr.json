@@ -226,5 +226,20 @@
   "sx_h1_lost": "Burada gösterilecek bir şey yok",
   "sx_notfound2": "Bu sayfa yalnızca ödemeden hemen sonra bir anahtar gösterir. Ghoosted'i zaten aldıysan, ödeme yaptığın e-postayla yeniden iste.",
   "sx_out_recover": "Anahtarımı kurtar",
-  "sx_out_buy": "Planlara bak"
+  "sx_out_buy": "Planlara bak",
+  "up_h1": "Ghoosted'ı güncelle",
+  "up_sub": "Anahtarının süresi dolmaz, güncellemeler dahildir. Buraya yapıştır, en son sürümü al.",
+  "up_go": "En son sürümü indir",
+  "up_note": "Eski klasörün üzerine çıkar ve chrome://extensions sayfasında uzantıdaki yeniden yükle düğmesine bas. Anahtarın etkin kalır.",
+  "up_guide": "Nasıl kurulur",
+  "up_lost": "Anahtarımı kaybettim",
+  "up_bad": "Bu anahtar doğru görünmüyor. GHST- ile başlar ve dörderli beş gruptan oluşur.",
+  "up_going": "İndirme başlıyor…",
+  "up_e404": "Bu anahtarı tanımıyoruz. Kontrol et ya da tekrar gönderilmesini iste.",
+  "up_e403": "Bu anahtar artık etkin değil. Bu bir hataysa hello@ghoosted.net adresine yaz.",
+  "up_e429": "Bugün bu anahtarla çok fazla indirme yapıldı. Yarın tekrar dene.",
+  "up_efail": "Şu anda olmadı. Birazdan tekrar dene.",
+  "foot_customers": "Zaten aldın",
+  "foot_update": "Güncelle",
+  "foot_recover": "Anahtarımı kurtar"
 }
