@@ -241,5 +241,11 @@
   "up_efail": "Das hat gerade nicht geklappt. Versuch es gleich noch einmal.",
   "foot_customers": "Schon gekauft",
   "foot_update": "Aktualisieren",
-  "foot_recover": "Schlüssel wiederherstellen"
+  "foot_recover": "Schlüssel wiederherstellen",
+  "mob_h": "Ghoosted läuft am Computer",
+  "mob_p": "Es ist eine Chrome-Erweiterung: Sie wird am Computer installiert, nicht am Handy. Schick dir den Link und öffne ihn dort.",
+  "mob_send": "Link schicken",
+  "mob_copy": "Link kopieren",
+  "mob_copied": "Link kopiert",
+  "mob_share": "Ghoosted — was Instagram dir nicht zeigt. Am Computer öffnen:"
 }

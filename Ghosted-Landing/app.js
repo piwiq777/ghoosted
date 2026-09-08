@@ -350,5 +350,98 @@
         setTimeout(function () { hint.textContent = TERMS[ti]; hint.style.opacity = '1'; }, 300);
       }, 3200);
     }
+
+    /* ---- AVISO EN EL MOVIL -----------------------------------------------
+       Ghoosted se instala en un ordenador. Quien llega desde un telefono no
+       puede comprarlo aunque quiera: leia, se iba, y la visita se perdia
+       entera. Lo unico util que puede hacer ahora mismo es mandarse el enlace
+       para abrirlo luego donde si funciona, y eso es lo que se le ofrece. */
+    const aviso = document.getElementById('movil');
+    if (aviso) {
+      /* Se mira si el APARATO no puede, no si la ventana es estrecha. Un
+         portatil con la ventana a media pantalla sigue pudiendo instalar la
+         extension; decirle ahi "esto es para ordenador" es ruido y resta
+         ventas. La señal buena es puntero grueso y sin hover: eso es un dedo.
+         Se pide ademas pantalla de movil, para no saltar en una tableta
+         grande apaisada donde la pagina se lee bien igual. */
+      const dedo = window.matchMedia('(pointer: coarse) and (hover: none)').matches;
+      const chica = window.matchMedia('(max-width: 900px)').matches;
+      if (dedo && chica) {
+        aviso.hidden = false;
+
+        /* El enlace canonico, no location.href: si alguien llega con #pricing
+           o con parametros de una campaña, lo que se manda tiene que seguir
+           siendo la portada limpia. */
+        const canon = document.querySelector('link[rel="canonical"]');
+        const ENLACE = (canon && canon.href) || (location.origin + '/');
+        const T = function (k, d) { return window.GhostedI18n ? window.GhostedI18n.t(k, d) : d; };
+
+        const ok = document.getElementById('movilOk');
+        let borrar = null;
+        const decir = function (txt) {
+          if (!ok) return;
+          ok.textContent = txt;
+          if (borrar) clearTimeout(borrar);
+          borrar = setTimeout(function () { ok.textContent = ''; }, 5000);
+        };
+
+        /* Sin menu de compartir (navegadores viejos, contextos no seguros)
+           queda el correo, que esta en todos los telefonos. */
+        const abrirCorreo = function (texto) {
+          try {
+            location.href = 'mailto:?subject=' + encodeURIComponent('Ghoosted')
+              + '&body=' + encodeURIComponent(texto + '\n\n' + ENLACE);
+          } catch (e) { decir(ENLACE); }
+        };
+
+        const enviar = document.getElementById('movilEnviar');
+        if (enviar) {
+          enviar.addEventListener('click', function () {
+            const texto = T('mob_share', 'Ghoosted — Instagram insights. Open this on a computer:');
+            if (navigator.share) {
+              navigator.share({ title: 'Ghoosted', text: texto, url: ENLACE })
+                /* Cancelar el menu de compartir NO es un fallo: tratarlo como
+                   tal dejaria un mensaje de error por cerrarlo. */
+                .catch(function (e) { if (!e || e.name !== 'AbortError') abrirCorreo(texto); });
+              return;
+            }
+            abrirCorreo(texto);
+          });
+        }
+
+        const copiar = document.getElementById('movilCopiar');
+        if (copiar) {
+          const copiado = function () { decir(T('mob_copied', 'Link copied')); };
+          /* Respaldo clasico: un campo temporal + execCommand. Feo, pero no
+             pide permiso de portapapeles y funciona donde el moderno falla
+             (contextos no seguros, navegadores de dentro de apps, WebViews). */
+          const aLaVieja = function () {
+            let ok2 = false;
+            try {
+              const c = document.createElement('input');
+              c.setAttribute('readonly', '');
+              c.value = ENLACE;
+              c.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+              document.body.appendChild(c);
+              c.select();
+              c.setSelectionRange(0, ENLACE.length);
+              ok2 = document.execCommand && document.execCommand('copy');
+              c.remove();
+            } catch (e) { ok2 = false; }
+            /* Y si ni eso: se enseña el enlace para copiarlo a mano. Peor que
+               un boton, pero mejor que un boton que no hace nada y deja
+               pensando que la web esta rota. */
+            if (ok2) copiado(); else decir(ENLACE);
+          };
+          copiar.addEventListener('click', function () {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(ENLACE).then(copiado, aLaVieja);
+              return;
+            }
+            aLaVieja();
+          });
+        }
+      }
+    }
   });
 })();

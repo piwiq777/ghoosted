@@ -241,5 +241,11 @@
   "up_efail": "Agora não deu. Tente daqui a pouco.",
   "foot_customers": "Já comprou",
   "foot_update": "Atualizar",
-  "foot_recover": "Recuperar minha chave"
+  "foot_recover": "Recuperar minha chave",
+  "mob_h": "O Ghoosted é para o computador",
+  "mob_p": "É uma extensão do Chrome: instala no computador, não no celular. Mande o link para você e abra por lá.",
+  "mob_send": "Mandar para mim",
+  "mob_copy": "Copiar link",
+  "mob_copied": "Link copiado",
+  "mob_share": "Ghoosted — o que o Instagram não te mostra. Abra no computador:"
 }

@@ -241,5 +241,11 @@
   "up_efail": "Adesso non è stato possibile. Riprova tra un momento.",
   "foot_customers": "Già acquistato",
   "foot_update": "Aggiorna",
-  "foot_recover": "Recupera la mia chiave"
+  "foot_recover": "Recupera la mia chiave",
+  "mob_h": "Ghoosted funziona sul computer",
+  "mob_p": "È un'estensione di Chrome: si installa sul computer, non sul telefono. Mandati il link e aprilo lì.",
+  "mob_send": "Mandamelo",
+  "mob_copy": "Copia il link",
+  "mob_copied": "Link copiato",
+  "mob_share": "Ghoosted — quello che Instagram non ti mostra. Aprilo sul computer:"
 }

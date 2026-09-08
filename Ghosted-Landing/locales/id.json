@@ -241,5 +241,11 @@
   "up_efail": "Sekarang belum berhasil. Coba lagi sebentar.",
   "foot_customers": "Sudah beli",
   "foot_update": "Perbarui",
-  "foot_recover": "Pulihkan kunciku"
+  "foot_recover": "Pulihkan kunciku",
+  "mob_h": "Ghoosted untuk komputer",
+  "mob_p": "Ini ekstensi Chrome: dipasang di komputer, bukan di ponsel. Kirim tautannya ke dirimu dan buka di sana.",
+  "mob_send": "Kirim ke saya",
+  "mob_copy": "Salin tautan",
+  "mob_copied": "Tautan disalin",
+  "mob_share": "Ghoosted — yang tidak Instagram tunjukkan. Buka di komputer:"
 }

@@ -241,5 +241,11 @@
   "up_efail": "Ahora mismo no se ha podido. Inténtalo dentro de un momento.",
   "foot_customers": "Ya lo tienes",
   "foot_update": "Actualizar",
-  "foot_recover": "Recuperar mi clave"
+  "foot_recover": "Recuperar mi clave",
+  "mob_h": "Ghoosted es para el ordenador",
+  "mob_p": "Es una extensión de Chrome: se instala en un ordenador, no en el móvil. Mándate el enlace y ábrelo cuando estés en uno.",
+  "mob_send": "Enviármelo",
+  "mob_copy": "Copiar enlace",
+  "mob_copied": "Enlace copiado",
+  "mob_share": "Ghoosted — lo que Instagram no te enseña. Ábrelo en el ordenador:"
 }

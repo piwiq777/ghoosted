@@ -241,5 +241,11 @@
   "up_efail": "Şu anda olmadı. Birazdan tekrar dene.",
   "foot_customers": "Zaten aldın",
   "foot_update": "Güncelle",
-  "foot_recover": "Anahtarımı kurtar"
+  "foot_recover": "Anahtarımı kurtar",
+  "mob_h": "Ghoosted bilgisayar içindir",
+  "mob_p": "Bu bir Chrome eklentisi: telefona değil, bilgisayara kurulur. Bağlantıyı kendine gönder ve orada aç.",
+  "mob_send": "Bana gönder",
+  "mob_copy": "Bağlantıyı kopyala",
+  "mob_copied": "Bağlantı kopyalandı",
+  "mob_share": "Ghoosted — Instagram’ın sana göstermedikleri. Bilgisayarda aç:"
 }

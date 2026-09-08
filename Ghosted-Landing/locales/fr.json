@@ -241,5 +241,11 @@
   "up_efail": "Impossible pour le moment. Réessaie dans un instant.",
   "foot_customers": "Déjà acheté",
   "foot_update": "Mettre à jour",
-  "foot_recover": "Récupérer ma clé"
+  "foot_recover": "Récupérer ma clé",
+  "mob_h": "Ghoosted s'utilise sur ordinateur",
+  "mob_p": "C'est une extension Chrome : elle s'installe sur un ordinateur, pas sur un téléphone. Envoie-toi le lien et ouvre-le là-bas.",
+  "mob_send": "Me l'envoyer",
+  "mob_copy": "Copier le lien",
+  "mob_copied": "Lien copié",
+  "mob_share": "Ghoosted — ce qu'Instagram ne te montre pas. À ouvrir sur un ordinateur :"
 }

@@ -241,5 +241,11 @@
   "up_efail": "いまはうまくいきませんでした。少し待ってからお試しください。",
   "foot_customers": "購入済みの方",
   "foot_update": "更新",
-  "foot_recover": "キーを再発行する"
+  "foot_recover": "キーを再発行する",
+  "mob_h": "Ghoosted はパソコン用です",
+  "mob_p": "Chrome の拡張機能なので、スマホではなくパソコンにインストールします。リンクを自分に送って、パソコンで開いてください。",
+  "mob_send": "自分に送る",
+  "mob_copy": "リンクをコピー",
+  "mob_copied": "コピーしました",
+  "mob_share": "Ghoosted — Instagram が見せてくれないもの。パソコンで開いてください:"
 }
