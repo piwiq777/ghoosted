@@ -90,6 +90,36 @@ module.exports = () => {
   s.eq('la vitrina tiene seis capturas', (html.match(/class="show-slide/g) || []).length, 6);
   s.eq('con su pestaña cada una', (html.match(/class="show-tab[ "]/g) || []).length, 6);
   s.ok('la imagen se ve ENTERA, no recortada', /\.show-slide img\{[^}]*object-fit:contain/.test(css));
+  /* El expediente es el panel entero: 500x1783, casi cuatro veces mas alto que
+     ancho. Con contain en un escenario apaisado saldria de 200px y seria
+     ilegible; recortarlo deja fuera publicaciones, engagement e historial, que
+     es justo lo que se enseña. Se muestra a su ancho y recorre de arriba
+     abajo, asi que se ve entero y nitido. */
+  s.ok('la captura larga se enseña a su ancho, no encogida',
+    /<figure class="show-slide larga"/.test(html)
+    && /\.show-slide\.larga img\{width:min\(100%,520px\)/.test(css));
+  s.ok('y recorre de arriba abajo para que se vea entera',
+    /animation:ghdRecorre/.test(css) && /@keyframes ghdRecorre/.test(css));
+  s.ok('quieta para quien pide menos movimiento',
+    /prefers-reduced-motion:reduce\)\{\s*\.show-slide\.larga img\{animation:none\}/.test(css));
+  /* Las capturas declaran su tamaño real, o el navegador reserva un hueco de
+     otra forma y la pagina pega un salto al cargarlas. */
+  const imgs = [...html.matchAll(/<img src="assets\/shots\/([^"?]+)[^>]*width="(\d+)" height="(\d+)"/g)];
+  s.eq('las seis capturas declaran su tamaño', imgs.length, 6);
+  const fs2 = require('fs');
+  const malas = imgs.filter(([, f, w, h]) => {
+    const d = fs2.readFileSync(path.join(WEB, 'assets', 'shots', f));
+    let i = 2, real = null;
+    while (i < d.length && !real) {
+      if (d[i] !== 0xFF) { i++; continue; }
+      const m = d[i + 1];
+      if (m === 0xC0 || m === 0xC1 || m === 0xC2) { real = [d.readUInt16BE(i + 7), d.readUInt16BE(i + 5)]; break; }
+      if (m === 0xD8 || m === 0xD9 || (m >= 0xD0 && m <= 0xD7)) { i += 2; continue; }
+      i += 2 + d.readUInt16BE(i + 2);
+    }
+    return !real || real[0] !== Number(w) || real[1] !== Number(h);
+  }).map(([, f]) => f);
+  s.eq('y el tamaño declarado es el de verdad', malas, []);
   s.ok('y grande: el escenario ocupa casi toda la altura', /height:min\(74vh,700px\)/.test(css));
   /* Las imagenes pasan DE LADO. Antes aparecian y desaparecian en el sitio, y
      la navegacion era una lista vertical de seis nombres a la derecha que se
