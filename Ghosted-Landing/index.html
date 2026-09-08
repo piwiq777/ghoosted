@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=104">
+  <link rel="stylesheet" href="styles.css?v=105">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -86,22 +86,26 @@
   <!-- NAV -->
   <div class="nav-wrap">
     <header class="nav" id="nav">
-      <a class="brand" href="#top" aria-label="Ghoosted">
-        <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.4" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/><ellipse cx="14.6" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/></svg></span>
-        Ghoosted
-      </a>
-      <button type="button" class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
-        <span></span><span></span>
-      </button>
-      <nav class="nav-links" id="navLinks">
-        <a href="#features" data-i18n="nav_features">Features</a>
-        <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
-        <a href="#pair" data-i18n="nav_pair">Pair phone</a>
-        <!-- La guia de instalacion tambien arriba: en el movil el pie queda
-             a una pagina entera de scroll, y es lo que busca quien acaba de
-             comprar. -->
-        <a href="instalar.html" data-i18n="foot_install">Install guide</a>
-      </nav>
+      <!-- Marca, boton y menu en un solo hueco de la rejilla: son la
+           columna izquierda, y el buscador ocupa la del medio. -->
+      <div class="nav-left">
+        <a class="brand" href="#top" aria-label="Ghoosted">
+          <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.4" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/><ellipse cx="14.6" cy="11.2" rx="1.25" ry="1.6" fill="#2b1740"/></svg></span>
+          Ghoosted
+        </a>
+        <button type="button" class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+          <span></span><span></span>
+        </button>
+        <nav class="nav-links" id="navLinks">
+          <a href="#features" data-i18n="nav_features">Features</a>
+          <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="#pair" data-i18n="nav_pair">Pair phone</a>
+          <!-- La guia de instalacion tambien arriba: en el movil el pie queda
+               a una pagina entera de scroll, y es lo que busca quien acaba de
+               comprar. -->
+          <a href="instalar.html" data-i18n="foot_install">Install guide</a>
+        </nav>
+      </div>
       <a class="nav-search" href="#worlds" aria-label="See example profiles">
         <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
         <span id="navSearchHint" aria-hidden="true">@emilysunshine</span>

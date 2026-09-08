@@ -100,26 +100,39 @@ img,svg{display:block;max-width:100%}
 
 /* ---------- nav (cosmos-style: brand · links · centered search · actions) ---------- */
 .nav-wrap{position:sticky;top:0;z-index:100;display:flex;flex-direction:column;align-items:center;pointer-events:none}
-.nav{position:relative;pointer-events:auto;display:flex;align-items:center;gap:18px;width:100%;
+/* Tres columnas —marca+menu · buscador · idioma+CTA— en vez de un flex con el
+   buscador flotando encima. Flotando no ocupaba sitio, asi que nadie sabia que
+   estaba ahi y el menu se le metia debajo: en frances el menu son 55
+   caracteres y se solapaba incluso en pantalla ancha. Con la rejilla, la
+   columna del medio se encoge cuando el menu crece, pero nunca se pisan. */
+.nav{position:relative;pointer-events:auto;display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;width:100%;
   padding:14px clamp(20px,3.4vw,44px);transition:background .3s var(--ease),border-color .3s,box-shadow .3s;
   border-bottom:1px solid transparent}
+/* La columna izquierda: boton, marca y menu, en ese orden visual.
+   position:static a proposito — el menu desplegado se ancla a .nav, que es
+   quien tiene el ancho de la barra entera. */
+.nav-left{grid-column:1;position:static;display:flex;align-items:center;gap:18px;min-width:0}
 .nav.scrolled{background:var(--glass-strong);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
   border-bottom-color:var(--line)}
 /* centered liquid-glass search pill — truly centered on the bar itself
    (position:absolute + translate), not on the leftover flex gap, which was
    never symmetric because the brand+links group and the lang+CTA group on
    the right don't weigh the same */
-.nav-search{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+.nav-search{grid-column:2;justify-self:center;
   display:flex;align-items:center;gap:10px;width:100%;max-width:clamp(200px,26vw,380px);
   height:46px;padding:0 20px;border-radius:100px;cursor:pointer;
   background:rgba(255,255,255,.55);border:1px solid var(--line);
   backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 8px 24px -14px rgba(20,18,16,.25);
   transition:background .3s,border-color .3s,box-shadow .35s var(--ease),transform .35s var(--ease)}
-.nav-search:hover{background:rgba(255,255,255,.85);border-color:var(--line-2);transform:translate(-50%,calc(-50% - 1px))}
+.nav-search:hover{background:rgba(255,255,255,.85);border-color:var(--line-2);transform:translateY(-1px)}
 .nav-search svg{width:16px;height:16px;stroke:var(--ink-3);fill:none;flex:none}
 .nav-search span{font-size:14px;color:var(--ink-3);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (max-width:1040px){.nav-search{display:none}}
+/* Por debajo de esto la celda central se queda tan estrecha que el
+   buscador es un boton con puntos suspensivos. Mejor sin el. */
+@media (max-width:1100px){.nav-search{display:none}
+  .nav{grid-template-columns:auto 1fr auto}}
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-.03em;flex:none;color:var(--ink)}
 .brand-mark{width:26px;height:26px;border-radius:50%;background:var(--ig);display:grid;place-items:center;flex:none;box-shadow:0 4px 12px -3px rgba(214,41,118,.5)}
 .brand-mark svg{width:16px;height:16px;fill:#fff}
@@ -137,7 +150,7 @@ img,svg{display:block;max-width:100%}
   transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a:focus-visible::after{transform:scaleX(1);transform-origin:left}
-.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nav-right{grid-column:3;display:flex;align-items:center;gap:8px}
 .lang-wrap{position:relative}
 .lang-btn{display:flex;align-items:center;gap:6px;background:transparent;color:var(--ink-2);border:none;border-radius:100px;
   padding:10px 12px;min-height:44px;font:inherit;font-size:13px;cursor:pointer;transition:background .2s,color .2s}
