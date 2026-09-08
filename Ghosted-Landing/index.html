@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=110">
+  <link rel="stylesheet" href="styles.css?v=111">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -196,39 +196,17 @@
          mirandolo. Ahora manda la imagen — una sola, grande y ENTERA (contain,
          no cover: recortada no se entiende que estas viendo) — y el texto se
          queda en un titulo y una linea. -->
+    <!-- LO QUE VES
+         El titulo de arriba CAMBIA con la captura y dice que hace cada cosa;
+         debajo de la imagen no queda nada de texto, solo los puntos. Antes el
+         nombre y la explicacion iban debajo, con una fila de seis nombres y
+         otra de seis mas: cuatro lineas de letra pequeña bajo una foto que ya
+         lo contaba todo sola.
+         Los seis bloques comparten celda de rejilla y se cruzan por opacidad,
+         no por display: asi la altura es la del mas largo y el titulo no da un
+         salto cada vez que pasa una captura. -->
     <section class="show" id="features" aria-labelledby="showTitle">
-      <h2 class="show-title" id="showTitle" data-i18n="show_title">See it in action.</h2>
-
-      <div class="show-carro">
-        <button type="button" class="show-nav" id="showPrev" aria-label="Anterior">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="show-stage" id="showStage" role="button" tabindex="0" aria-label="Next">
-          <div class="show-pista" id="showPista">
-        <figure class="show-slide is-on" data-slide="0">
-          <img src="assets/shots/unfollow.jpg?v=2" alt="Panel de Ghoosted en la pestaña de quien no te sigue de vuelta" width="760" height="927" decoding="async">
-        </figure>
-        <figure class="show-slide" data-slide="1">
-          <img src="assets/shots/ghost-stories.jpg?v=1" alt="Rejilla de historias abiertas en modo fantasma" width="917" height="516" loading="lazy" decoding="async">
-        </figure>
-        <figure class="show-slide" data-slide="2">
-          <img src="assets/shots/requests.jpg?v=4" alt="Solicitudes de seguimiento dentro del panel" width="855" height="603" loading="lazy" decoding="async">
-        </figure>
-        <figure class="show-slide" data-slide="3">
-          <img src="assets/shots/actividad.jpg?v=4" alt="Registro de cambios de perfil, cambio a cambio" width="820" height="580" loading="lazy" decoding="async">
-        </figure>
-        <figure class="show-slide" data-slide="4">
-          <img src="assets/shots/profile-dossier.jpg?v=2" alt="Expediente completo de un perfil" width="1448" height="1086" loading="lazy" decoding="async">
-        </figure>
-        <figure class="show-slide" data-slide="5">
-          <img src="assets/shots/mis-historias.jpg?v=2" alt="Tus historias archivadas con quien las vio" width="1100" height="380" loading="lazy" decoding="async">
-        </figure>
-          </div>
-        </div>
-        <button type="button" class="show-nav" id="showNext" aria-label="Siguiente">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
+      <h2 class="show-oculto" id="showTitle" data-i18n="show_title">See it in action.</h2>
 
       <div class="show-copy">
           <div class="show-lede is-on" data-lede="0">
@@ -255,44 +233,53 @@
             <h3 data-i18n="fx_history_t">Your own stories, kept</h3>
             <p data-i18n="fx_history_d">Your stories stay archived with who watched them, long after Instagram forgets.</p>
           </div>
-        <div class="show-tabs">
-            <button type="button" class="show-tab is-on" data-tab="0">
-              <span class="show-bar"><i></i></span>
-              <span data-i18n="fx_unfollow_t">Not following back</span>
-            </button>
-            <button type="button" class="show-tab" data-tab="1">
-              <span class="show-bar"><i></i></span>
-              <span data-i18n="fx_ghost_t">Ghost mode</span>
-            </button>
-            <button type="button" class="show-tab" data-tab="2">
-              <span class="show-bar"><i></i></span>
-              <span data-i18n="fx_requests_t">Follow requests, handled</span>
-            </button>
-            <button type="button" class="show-tab" data-tab="3">
-              <span class="show-bar"><i></i></span>
-              <span data-i18n="fx_changes_t">Every change, logged</span>
-            </button>
-            <button type="button" class="show-tab" data-tab="4">
-              <span class="show-bar"><i></i></span>
-              <span data-i18n="fx_dossier_t">The full dossier</span>
-            </button>
-            <button type="button" class="show-tab" data-tab="5">
-              <span class="show-bar"><i></i></span>
-              <span data-i18n="fx_history_t">Your own stories, kept</span>
-            </button>
-        </div>
       </div>
 
-      <!-- Y lo que no tiene captura propia: solo el nombre. Borrarlas del todo
-           habria quitado del escaparate media funcionalidad que si se vende. -->
-      <ul class="show-mas" aria-label="Also included">
-        <li data-i18n="fx_watchlist_t">Watchlist</li>
-        <li data-i18n="fx_download_t">Download it all</li>
-        <li data-i18n="fx_tiktok_t">Find them on TikTok</li>
-        <li data-i18n="fx_engagement_t">Real engagement</li>
-        <li data-i18n="fx_mutual_t">Do they follow each other?</li>
-        <li data-i18n="m7_t">Top fans</li>
-      </ul>
+      <div class="show-carro">
+        <button type="button" class="show-nav" id="showPrev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="show-stage" id="showStage" role="button" tabindex="0" aria-label="Next">
+          <div class="show-pista" id="showPista">
+            <figure class="show-slide is-on" data-slide="0">
+                      <img src="assets/shots/unfollow.jpg?v=2" alt="Panel de Ghoosted en la pestaña de quien no te sigue de vuelta" width="760" height="927" decoding="async">
+                    </figure>
+            <figure class="show-slide" data-slide="1">
+                      <img src="assets/shots/ghost-stories.jpg?v=1" alt="Rejilla de historias abiertas en modo fantasma" width="917" height="516" loading="lazy" decoding="async">
+                    </figure>
+            <figure class="show-slide" data-slide="2">
+                      <img src="assets/shots/requests.jpg?v=4" alt="Solicitudes de seguimiento dentro del panel" width="855" height="603" loading="lazy" decoding="async">
+                    </figure>
+            <figure class="show-slide" data-slide="3">
+                      <img src="assets/shots/actividad.jpg?v=4" alt="Registro de cambios de perfil, cambio a cambio" width="820" height="580" loading="lazy" decoding="async">
+                    </figure>
+            <figure class="show-slide" data-slide="4">
+                      <img src="assets/shots/profile-dossier.jpg?v=2" alt="Expediente completo de un perfil" width="1448" height="1086" loading="lazy" decoding="async">
+                    </figure>
+            <figure class="show-slide" data-slide="5">
+                      <img src="assets/shots/mis-historias.jpg?v=2" alt="Tus historias archivadas con quien las vio" width="1100" height="380" loading="lazy" decoding="async">
+                    </figure>
+          </div>
+        </div>
+        <button type="button" class="show-nav" id="showNext" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="show-tabs">
+          <button type="button" class="show-tab is-on" data-tab="0"
+                  data-i18n-attr="aria-label|fx_unfollow_t" aria-label="Not following back"><span class="show-bar"><i></i></span></button>
+          <button type="button" class="show-tab" data-tab="1"
+                  data-i18n-attr="aria-label|fx_ghost_t" aria-label="Ghost mode"><span class="show-bar"><i></i></span></button>
+          <button type="button" class="show-tab" data-tab="2"
+                  data-i18n-attr="aria-label|fx_requests_t" aria-label="Follow requests, handled"><span class="show-bar"><i></i></span></button>
+          <button type="button" class="show-tab" data-tab="3"
+                  data-i18n-attr="aria-label|fx_changes_t" aria-label="Every change, logged"><span class="show-bar"><i></i></span></button>
+          <button type="button" class="show-tab" data-tab="4"
+                  data-i18n-attr="aria-label|fx_dossier_t" aria-label="The full dossier"><span class="show-bar"><i></i></span></button>
+          <button type="button" class="show-tab" data-tab="5"
+                  data-i18n-attr="aria-label|fx_history_t" aria-label="Your own stories, kept"><span class="show-bar"><i></i></span></button>
+      </div>
     </section>
 
     <!-- PAIR PHONE — desktop-to-phone handoff (design 4b) -->

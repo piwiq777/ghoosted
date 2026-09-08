@@ -108,8 +108,30 @@ module.exports = () => {
      como diapositiva de la vitrina. */
   s.ok('la imagen duplicada ya no tiene seccion propia',
     !/class="film"/.test(html) && !/\.film-card\{/.test(css));
-  s.eq('lo que no tiene captura queda como una linea de nombres',
-    (html.match(/class="show-mas"/g) || []).length, 1);
+  /* El nombre y la explicacion van ARRIBA y cambian con la captura. Debajo de
+     la imagen no queda ni una letra: solo los puntos. */
+  s.ok('el texto va antes de la imagen, no debajo',
+    html.indexOf('class="show-copy"') < html.indexOf('class="show-carro"'));
+  s.ok('y debajo de la imagen solo quedan los puntos',
+    html.indexOf('class="show-tabs"') > html.indexOf('class="show-carro"')
+    && !/class="show-mas"/.test(html));
+  s.eq('los puntos no llevan texto', (html.match(/class="show-tab[^"]*"[^>]*>\s*<span class="show-bar">/g) || []).length, 6);
+  /* Pero el nombre sigue estando para quien navega a ciegas. */
+  s.eq('cada punto dice su nombre en aria-label',
+    (html.match(/data-i18n-attr="aria-label\|fx_/g) || []).length, 6);
+  /* Los seis bloques comparten celda y se cruzan por opacidad: si fuera
+     display:none, el titulo pegaria un salto en cada cambio. */
+  s.ok('el titulo no salta al cambiar de captura',
+    /\.show-copy\{display:grid/.test(css) && /\.show-lede\{grid-area:1\/1;opacity:0;visibility:hidden/.test(css));
+  /* Lo que quitamos de la portada sigue enumerado donde importa: en el precio,
+     antes de pagar. Si no, se estarian vendiendo funciones que no se nombran. */
+  const precios = html.slice(html.indexOf('class="price-grid"'));
+  s.ok('las funciones sin captura siguen listadas en el precio',
+    ['price_f10', 'price_f11', 'price_f5', 'price_f6'].every((k) => precios.indexOf(k) !== -1));
+  /* El titulo de la seccion se queda para el esquema del documento, invisible. */
+  s.ok('la seccion conserva su encabezado para lectores de pantalla',
+    /class="show-oculto" id="showTitle" data-i18n="show_title"/.test(html)
+    && /\.show-oculto\{position:absolute/.test(css));
   /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
   s.ok('el apartado del movil dice de que va', /data-i18n="pair_title"/.test(html));
   s.ok('y su titulo esta traducido en los once idiomas',

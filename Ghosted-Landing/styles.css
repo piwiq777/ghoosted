@@ -342,32 +342,41 @@ img,svg{display:block;max-width:100%}
 .show-slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
   border-radius:12px;box-shadow:0 18px 50px rgba(20,18,16,.16)}
 
-.show-copy{display:flex;flex-direction:column;align-items:center;gap:22px;margin-top:30px}
-.show-lede{display:none;max-width:56ch}
-.show-lede.is-on{display:block}
-.show-lede h3{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);font-weight:420;
-  letter-spacing:-.035em;line-height:1.08;color:var(--ink);margin:0 0 8px;text-wrap:balance}
-.show-lede p{font-size:15.5px;line-height:1.55;color:var(--ink-2);margin:0;text-wrap:pretty}
+/* El titulo va ARRIBA y cambia con la captura. Los seis bloques comparten
+   celda de rejilla y se cruzan por opacidad —no por display— para que la
+   altura sea la del mas largo y el titulo no pegue un salto cada vez que pasa
+   una imagen. visibility, no solo opacity: asi los cinco ocultos tampoco los
+   lee un lector de pantalla. */
+.show-copy{display:grid;margin:26px auto 0;max-width:58ch}
+.show-lede{grid-area:1/1;opacity:0;visibility:hidden;
+  transition:opacity .45s ease,visibility .45s}
+.show-lede.is-on{opacity:1;visibility:visible}
+.show-lede h3{font-family:var(--display);font-size:clamp(28px,3.4vw,42px);font-weight:400;
+  letter-spacing:-.04em;line-height:1.06;color:var(--ink);margin:0 0 10px;text-wrap:balance}
+.show-lede p{font-size:16px;line-height:1.55;color:var(--ink-2);margin:0;text-wrap:pretty}
 
-.show-mas{list-style:none;margin:36px 0 0;padding:20px 0 0;border-top:1px solid var(--line);
-  display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center}
-.show-mas li{position:relative;padding-left:15px;font-size:14px;color:var(--ink-2)}
-.show-mas li::before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;
-  border-radius:50%;background:var(--accent);transform:translateY(-50%)}
-.show-tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px}
-.show-tab{display:flex;align-items:center;gap:12px;cursor:pointer;
-  background:none;border:0;padding:0;font:inherit;font-size:13.5px;text-align:left;
-  color:rgba(20,18,16,.42);transition:color .5s ease}
-.show-tab.is-on{color:var(--ink)}
-.show-tab:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:4px}
-.show-bar{width:44px;height:2px;flex:none;background:rgba(20,18,16,.14);border-radius:2px;overflow:hidden}
-/* width is driven per-frame from app.js; .12s smooths the 100ms tick */
+/* El titulo de la seccion se queda para el esquema del documento y para quien
+   navegue a ciegas, pero no a la vista: lo que se lee ahora es el nombre de la
+   captura que esta puesta. */
+.show-oculto{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.show-tabs{display:flex;justify-content:center;align-items:center;gap:9px;margin-top:26px}
+.show-tab{display:flex;align-items:center;justify-content:center;cursor:pointer;
+  background:none;border:0;padding:6px 2px;font:inherit;
+  -webkit-tap-highlight-color:transparent}
+.show-tab:focus-visible{outline:2px solid var(--ink);outline-offset:2px;border-radius:6px}
+/* Punto cuando esta apagado, barrita cuando esta puesto: el ancho dice cual es
+   y el relleno cuanto le queda. */
+.show-bar{display:block;width:8px;height:8px;border-radius:99px;overflow:hidden;
+  background:rgba(20,18,16,.16);transition:width .45s cubic-bezier(.34,1.3,.64,1),background .3s ease}
+.show-tab:hover .show-bar{background:rgba(20,18,16,.3)}
+.show-tab.is-on .show-bar{width:38px;background:rgba(20,18,16,.14)}
+/* width lo pone app.js cada 100ms; .12s suaviza el tic */
 .show-bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .12s linear}
 
 @media (max-width:1120px){
   .show{padding:104px 24px 104px}
   .show-stage{height:min(58vh,540px)}
-  .show-bar{width:26px}
 }
 @media (max-width:700px){
   /* Las flechas dejan de robar ancho y se ponen ENCIMA de la foto, en sus dos
@@ -384,9 +393,8 @@ img,svg{display:block;max-width:100%}
   .show-nav svg{width:19px;height:19px}
   .show-stage{height:min(54vh,460px);border-radius:18px}
   .show-slide{padding:14px}
-  .show-copy{margin-top:24px;gap:18px}
-  .show-mas{margin-top:28px;gap:8px 18px}
-  .show-mas li{font-size:13px}
+  .show-copy{margin-top:20px}
+  .show-tabs{margin-top:20px}
 }
 @media (prefers-reduced-motion:reduce){
   .show-slide.is-on{transform:none}
