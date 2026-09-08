@@ -1,11 +1,11 @@
 {
   "styles.css": {
-    "v": 106,
-    "hash": "63f0245778a9f990"
+    "v": 107,
+    "hash": "163c948b3bc1a79e"
   },
   "legal.css": {
-    "v": 93,
-    "hash": "d4a7992eb375459b"
+    "v": 96,
+    "hash": "83141ca1ed611e04"
   },
   "i18n.js": {
     "v": 36,
@@ -16,11 +16,11 @@
     "hash": "b11f522c3d8a0bbd"
   },
   "legal-i18n.js": {
-    "v": 2,
-    "hash": "0313907bdfdea283"
+    "v": 3,
+    "hash": "474e79a56509028f"
   },
   "locales": {
-    "v": 42,
-    "hash": "887d1c7cbefd880b"
+    "v": 43,
+    "hash": "544a25f0597a7318"
   }
 }

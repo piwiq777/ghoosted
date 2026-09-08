@@ -91,8 +91,26 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
   }
 
+  /* El ancla no puede ser un id: el mismo apartado existe doce veces, una por
+     idioma, y un id repetido es invalido — el navegador saltaba al articulo
+     ingles, que esta oculto para quien lee en otro idioma, asi que el enlace
+     desde la portada no llevaba a ninguna parte visible. Se busca dentro del
+     articulo que SI se ve, y se salta despues de elegir idioma. */
+  function irAlAncla() {
+    if (location.hash !== '#transparencia') return;
+    var arts = document.querySelectorAll('article.legal');
+    for (var i = 0; i < arts.length; i++) {
+      if (arts[i].style.display === 'none') continue;
+      var h = arts[i].querySelector('.tp-anchor');
+      if (h) { h.scrollIntoView({ block: 'start' }); return; }
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initSwitcher();
     show(pick());
+    irAlAncla();
   });
+  /* Y si se cambia de idioma con el ancla puesta, se vuelve a colocar. */
+  window.addEventListener('hashchange', irAlAncla);
 })();

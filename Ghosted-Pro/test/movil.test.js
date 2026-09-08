@@ -81,6 +81,31 @@ module.exports = () => {
   for (const k of CLAVES) s.ok('el ingles de ' + k + ' esta en el HTML o en app.js',
     html.indexOf(k) !== -1 || js.indexOf(k) !== -1);
 
+  /* 7 bis · La transparencia se fue a los Terminos, pero el enlace se queda
+     DELANTE del precio. En la UE lo que se dice antes de cobrar obliga (art.
+     61 TRLGDCU): esconder los limites detras del boton de pagar es justo lo
+     que tumba una exclusion de reembolso cuando alguien reclama. */
+  const terms = leer('terms.html');
+  s.ok('la portada ya no lleva la seccion de transparencia', html.indexOf('class="compat"') === -1);
+  s.ok('pero enlaza a ella antes del precio',
+    /href="\/terms#transparencia"/.test(html)
+    && html.indexOf('price-tp') < html.indexOf('price-grid'));
+  s.eq('el bloque esta en los doce idiomas de los Terminos',
+    (terms.match(/<h3 class="tp-anchor">/g) || []).length, 12);
+  s.eq('con sus tres columnas cada uno',
+    (terms.match(/<div class="tp-c">/g) || []).length, 36);
+  /* Un id repetido doce veces no es valido, y el ancla saltaba al articulo
+     ingles — oculto para quien lee en otro idioma. */
+  s.eq('sin ids repetidos', (terms.match(/id="transparencia"/g) || []).length, 0);
+  s.ok('y el salto busca el articulo que se ve',
+    /irAlAncla/.test(leer('legal-i18n.js')) && /style\.display === 'none'/.test(leer('legal-i18n.js')));
+  s.ok('el texto del enlace esta traducido en los once idiomas',
+    idiomas.every((f) => !!JSON.parse(leer(path.join('locales', f))).price_tp));
+  /* Y que no quede texto muerto: los compat_* ya no los usa nadie, porque
+     terms.html es HTML fijo por idioma, no traducido al vuelo. */
+  s.ok('no quedan traducciones huerfanas de la seccion movida',
+    idiomas.every((f) => !Object.keys(JSON.parse(leer(path.join('locales', f)))).some((k) => /^compat_/.test(k))));
+
   /* 8 · Y la prueba que no se puede hacer de otra forma: el portapapeles exige
         que el toque venga del usuario, y un click por codigo no cuenta. Esto
         arranca Chrome, emula un movil y da toques de verdad. */
