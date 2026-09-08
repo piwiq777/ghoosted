@@ -1,4 +1,4 @@
-(function() {
+(async function() {
   "use strict";
   if (window.__ghostedLoaded) return;
   window.__ghostedLoaded = true;
@@ -7,9 +7,54 @@
     notify: true,
     followingEveryHours: 24,
     storyEveryMin: 30
-  }, L = true, O = k.getUserId();
+  }, L = true;
+
+  /* El popup pregunta AQUI a que cuenta de Instagram atar la clave. Se
+     registra lo primero y pase lo que pase, antes de comprobar la sesion.
+     Estaba 5000 lineas mas abajo, detras del corte de "sin sesion", asi que
+     quien abria Instagram sin la cookie lista se quedaba sin listener: el
+     popup no recibia respuesta y contestaba "abre Instagram" — con Instagram
+     delante. Es lo que impedia activar una clave recien pagada. */
+  try {
+    chrome.runtime.onMessage.addListener(gm => {
+      if (gm && gm.type === "getAccountId") return Promise.resolve({
+        accountId: k.getUserId()
+      });
+    });
+  } catch (gm) {}
+
+  let O = k.getUserId();
   if (!O) {
-    console.info("[Ghoosted] No Instagram session — panel not shown.");
+    /* Antes aqui habia un return y se acababa todo: ni panel, ni fantasma, ni
+       forma de activar, y recargar no servia porque volvia a mirar igual de
+       pronto. Ahora se espera. La cookie puede tardar —sesion cargando,
+       navegacion interna de Instagram— o el usuario puede iniciar sesion
+       despues sin recargar la pestaña. */
+    O = await new Promise(gr => {
+      let gi = 0, gt2 = null;
+      const gLimpia = () => {
+        clearInterval(gt2);
+        document.removeEventListener("visibilitychange", gVuelve);
+        window.removeEventListener("focus", gVuelve);
+      };
+      const gMira = () => {
+        const gId = k.getUserId();
+        if (gId) return gLimpia(), gr(gId), true;
+        return false;
+      };
+      function gVuelve() {
+        if (!document.hidden) gMira();
+      }
+      gt2 = setInterval(() => {
+        if (gMira()) return;
+        if (++gi > 150) gLimpia(), gr(null);
+      }, 2000);
+      document.addEventListener("visibilitychange", gVuelve);
+      window.addEventListener("focus", gVuelve);
+    });
+  }
+  if (!O) {
+    console.info("[Ghoosted] Sin sesion de Instagram tras cinco minutos — el panel no se monta.");
     return;
   }
   const X = "ghosted_" + O + "_", J = {
@@ -5116,13 +5161,8 @@
     }), chrome.runtime.onMessage.addListener(gX => {
       if (gX && gX.type === "runCheck") Yh();
       if (gX && gX.type === "openPanel") Ye();
-      if (gX && gX.type === "getAccountId") return Promise.resolve({
-        // Se relee la cookie AHORA. O se calcula una sola vez al cargar el
-        // content script, y si en ese instante la sesion aun no estaba puesta
-        // se quedaba vacio para siempre: el popup decia "abre Instagram" con
-        // Instagram delante, y recargar no arreglaba nada.
-        accountId: k.getUserId() || O
-      });
+      // getAccountId se responde al principio del fichero, antes de cualquier
+      // corte: aqui llegaria demasiado tarde para quien no tiene sesion aun.
     });
     if (!v()) {
       G(Y("unlock_status"), "alert");

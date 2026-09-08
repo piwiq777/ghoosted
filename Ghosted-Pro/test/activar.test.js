@@ -13,7 +13,7 @@ const { suite } = require('./lib/probar');
 const PRO = path.resolve(__dirname, '..');
 const leer = (rel) => fs.readFileSync(path.join(PRO, rel), 'utf8');
 
-module.exports = () => {
+module.exports = async () => {
   const s = suite('activar la clave');
 
   /* 1 · Instagram sirve en los DOS dominios. Con solo www, quien entraba por
@@ -40,10 +40,15 @@ module.exports = () => {
          estaba lista en ese instante, se quedaba vacio para siempre y ni
          recargando se arreglaba. */
   const content = leer('src/content.js');
-  s.ok('el id de la cuenta se relee al preguntarlo',
-    /accountId: k\.getUserId\(\) \|\| O/.test(content));
-  s.ok('y el listener se registra antes de la puerta de licencia',
-    content.indexOf('getAccountId') < content.indexOf('if (!v()) {\n      G(Y("unlock_status")'));
+  s.ok('el id de la cuenta se relee al preguntarlo, sin cachearlo',
+    /if \(gm && gm\.type === "getAccountId"\) return Promise\.resolve\(\{\s*accountId: k\.getUserId\(\)/.test(content));
+  /* Y el listener va antes del corte por sesion, que es lo que lo mataba. */
+  s.ok('el listener se registra antes de comprobar la sesion',
+    content.indexOf('getAccountId') < content.indexOf('let O = k.getUserId();'));
+  /* Sin sesion ya no se aborta: se espera a que llegue. */
+  s.ok('sin sesion espera en vez de abandonar',
+    !/if \(!O\) \{\n    console\.info\("\[Ghoosted\] No Instagram session/.test(content)
+    && /O = await new Promise/.test(content));
 
   /* 4 · Mensajes que digan lo que pasa de verdad. "Abre Instagram" con
          Instagram abierto es lo que hace pensar que te han estafado. */
@@ -60,6 +65,74 @@ module.exports = () => {
          clave. Si solo saliera con licencia, no habria forma de activarla. */
   s.ok('el panel se monta antes de comprobar la licencia',
     content.indexOf('YM(), gt(), ghdStatusLoad();') < content.indexOf('if (!v()) {\n      G(Y("unlock_status")'));
+
+  /* 6 · Y la prueba que de verdad importa: arrancar el content script SIN
+         cookie de sesion y comprobar que aun asi contesta al popup.
+         Esto es lo que estaba roto. El script hacia return al no encontrar la
+         cookie, asi que no montaba el panel NI registraba el listener; el
+         popup no recibia respuesta y decia "abre Instagram" con Instagram
+         delante. Sin salida: no podias activar una clave ya pagada. */
+  const vm = require('vm');
+  const nodo = () => ({ style: {}, className: '', textContent: '', innerHTML: '', hidden: false,
+    classList: { add() {}, remove() {}, toggle() {}, contains: () => false },
+    addEventListener() {}, removeEventListener() {}, appendChild() {}, append() {},
+    querySelector: () => null, querySelectorAll: () => [], setAttribute() {}, remove() {}, insertBefore() {} });
+
+  let cookie = '';
+  let escucha = null;
+  const relojes = [];
+  const ctx = {
+    addEventListener() {}, removeEventListener() {},
+    document: { cookie: '', hidden: false, addEventListener() {}, removeEventListener() {},
+      createElement: nodo, body: nodo(), head: nodo(), querySelector: () => null, querySelectorAll: () => [] },
+    chrome: {
+      runtime: { onMessage: { addListener: (f) => { escucha = f; } }, sendMessage: async () => ({}),
+        getManifest: () => ({ version: '0' }), getURL: (p) => p },
+      storage: { local: { get: async () => ({}), set: async () => {}, remove: async () => {} }, onChanged: { addListener() {} } },
+      alarms: { create() {}, onAlarm: { addListener() {} } },
+    },
+    GhostedI18n: { t: (k) => k, locale: 'es', ready: Promise.resolve() },
+    GhostedStore: { get: (k, d) => d, set() {}, del() {}, syncCache() {}, hydrate: async () => {} },
+    GhostedIG: { getUserId: () => cookie || null },
+    GhostedLicense: { isPro: () => false, feature: () => false, getLicense: () => null, LICENSE_KEY: 'l', INSTALL_KEY: 'i' },
+    GhostedConfig: { freeMode: false, product: 'pro', buyUrl: '' },
+    console: { info() {}, error() {}, warn() {}, log() {} },
+    /* Los temporizadores del arranque se apuntan para poder matarlos al
+       terminar: si siguen vivos, el stub incompleto revienta mas tarde y
+       tumba las pruebas que vengan detras. */
+    setInterval: (f) => { const t = setInterval(f, 5); relojes.push(t); return t; },
+    setTimeout: (f, ms) => { const t = setTimeout(f, ms); relojes.push(t); return t; },
+    clearInterval, clearTimeout,
+    Promise, Date, Math, JSON, String, Number, Object, Array, Error, RegExp, Map, Set,
+    TextEncoder, encodeURIComponent, decodeURIComponent, isNaN, parseInt, parseFloat, Boolean, Symbol,
+  };
+  ctx.self = ctx; ctx.globalThis = ctx; ctx.window = ctx;
+  vm.createContext(ctx);
+  /* El arranque completo no cabe en un stub y seguira fallando mas adelante,
+     en trozos que a esta prueba no le importan. Lo que se mira aqui es solo el
+     listener, asi que esos fallos se recogen en vez de tumbar las pruebas. */
+  const tragar = () => {};
+  process.on('unhandledRejection', tragar);
+  process.on('uncaughtException', tragar);
+  try { vm.runInContext(content, ctx); } catch (e) { /* idem */ }
+  await new Promise((r) => setTimeout(r, 90));
+
+  s.ok('arranca sin sesion y aun asi escucha al popup', typeof escucha === 'function');
+  if (typeof escucha === 'function') {
+    const sinSesion = await escucha({ type: 'getAccountId' });
+    s.eq('sin sesion contesta, no se queda mudo', sinSesion && 'accountId' in sinSesion, true);
+    s.eq('y dice que no hay cuenta, en vez de nada', sinSesion.accountId, null);
+    /* Y en cuanto el usuario inicia sesion, sin recargar la pestaña. */
+    cookie = '17841400912730044';
+    const conSesion = await escucha({ type: 'getAccountId' });
+    s.eq('cuando llega la sesion, la ve sin recargar', conSesion.accountId, '17841400912730044');
+  }
+  /* Se paran los relojes ANTES de soltar los recogedores, o el arranque a
+     medias seguiria disparando en mitad de las pruebas siguientes. */
+  relojes.forEach((t) => { clearInterval(t); clearTimeout(t); });
+  await new Promise((r) => setTimeout(r, 30));
+  process.removeListener('unhandledRejection', tragar);
+  process.removeListener('uncaughtException', tragar);
 
   return s;
 };
