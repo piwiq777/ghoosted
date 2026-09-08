@@ -1,7 +1,7 @@
 {
   "styles.css": {
-    "v": 108,
-    "hash": "c541a2d0924121e6"
+    "v": 110,
+    "hash": "57b68a358d746ce9"
   },
   "legal.css": {
     "v": 96,
@@ -12,15 +12,15 @@
     "hash": "a2fd41744d4c35e3"
   },
   "app.js": {
-    "v": 44,
-    "hash": "b11f522c3d8a0bbd"
+    "v": 45,
+    "hash": "5b60d96ff20b9442"
   },
   "legal-i18n.js": {
     "v": 3,
     "hash": "474e79a56509028f"
   },
   "locales": {
-    "v": 44,
-    "hash": "c339a8874b133978"
+    "v": 45,
+    "hash": "da11d282d53c1237"
   }
 }

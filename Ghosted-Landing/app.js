@@ -150,6 +150,12 @@
     // the progress-bar fill going instant instead of animated (below).
     const showStage = document.getElementById('showStage');
     if (showStage) {
+      /* La pista lleva las seis capturas en fila y se desplaza un ancho por
+         paso: las imagenes pasan DE LADO, no aparecen y desaparecen en el
+         sitio. Y las flechas van a los dos lados de la foto. */
+      const pista = document.getElementById('showPista');
+      const antes = document.getElementById('showPrev');
+      const despues = document.getElementById('showNext');
       const DUR = 5200, TICK = 100;
       const slides = showStage.querySelectorAll('[data-slide]');
       const ledes = document.querySelectorAll('[data-lede]');
@@ -160,6 +166,7 @@
       let idx = 0, elapsed = 0, cycle = null, onScreen = false;
 
       const paint = () => {
+        if (pista) pista.style.transform = 'translateX(' + (-idx * 100) + '%)';
         slides.forEach((el, n) => el.classList.toggle('is-on', n === idx));
         ledes.forEach((el, n) => el.classList.toggle('is-on', n === idx));
         tabs.forEach((el, n) => el.classList.toggle('is-on', n === idx));
@@ -179,6 +186,8 @@
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(idx + 1); }
       });
       tabs.forEach((el, n) => el.addEventListener('click', () => go(n)));
+      if (antes) antes.addEventListener('click', (e) => { e.stopPropagation(); go(idx - 1); });
+      if (despues) despues.addEventListener('click', (e) => { e.stopPropagation(); go(idx + 1); });
       document.addEventListener('visibilitychange', sync);
 
       if ('IntersectionObserver' in window) {

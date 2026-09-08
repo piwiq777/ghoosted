@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=108">
+  <link rel="stylesheet" href="styles.css?v=110">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -156,14 +156,6 @@
 
     <div class="over">
 
-    <!-- FILM MOMENT — product in context -->
-    <section class="film" aria-label="Ghoosted in context">
-      <p class="film-cap"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 1.2v9.6L10.6 6Z"/></svg> <span data-i18n="showcase_cap">Profile insights in one click, without leaving the page.</span></p>
-      <div class="film-card">
-        <img src="assets/shots/profile-dossier.jpg?v=3" alt="Ghoosted panel open over an Instagram profile" width="1448" height="1086" loading="lazy" decoding="async">
-      </div>
-    </section>
-
     <!-- EVERY PROFILE HIDES A STORY — cycling collage panel -->
     <section class="worlds" id="worlds" aria-label="Every profile hides a story">
       <h2 class="worlds-title" data-i18n="worlds_title">There’s a story behind the profile.</h2>
@@ -207,7 +199,12 @@
     <section class="show" id="features" aria-labelledby="showTitle">
       <h2 class="show-title" id="showTitle" data-i18n="show_title">See it in action.</h2>
 
-      <div class="show-stage" id="showStage" role="button" tabindex="0" aria-label="Next">
+      <div class="show-carro">
+        <button type="button" class="show-nav" id="showPrev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="show-stage" id="showStage" role="button" tabindex="0" aria-label="Next">
+          <div class="show-pista" id="showPista">
         <figure class="show-slide is-on" data-slide="0">
           <img src="assets/shots/unfollow.jpg?v=2" alt="Panel de Ghoosted en la pestaña de quien no te sigue de vuelta" width="760" height="927" decoding="async">
         </figure>
@@ -226,6 +223,11 @@
         <figure class="show-slide" data-slide="5">
           <img src="assets/shots/mis-historias.jpg?v=2" alt="Tus historias archivadas con quien las vio" width="1100" height="380" loading="lazy" decoding="async">
         </figure>
+          </div>
+        </div>
+        <button type="button" class="show-nav" id="showNext" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
 
       <div class="show-copy">
@@ -557,7 +559,7 @@
 
   <script src="qr.js"></script>
   <script src="i18n.js?v=36"></script>
-  <script src="app.js?v=44"></script>
+  <script src="app.js?v=45"></script>
   <script src="hero.js?v=37"></script>
   <!-- Vercel Web Analytics: recuento de visitas sin cookies, sin
        identificadores persistentes y sin datos personales. -->

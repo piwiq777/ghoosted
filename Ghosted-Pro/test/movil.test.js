@@ -90,10 +90,24 @@ module.exports = () => {
   s.eq('la vitrina tiene seis capturas', (html.match(/class="show-slide/g) || []).length, 6);
   s.eq('con su pestaña cada una', (html.match(/class="show-tab[ "]/g) || []).length, 6);
   s.ok('la imagen se ve ENTERA, no recortada', /\.show-slide img\{[^}]*object-fit:contain/.test(css));
-  s.ok('y grande: el escenario es alto de verdad', /\.show-stage\{[^}]*height:min\(64vh,600px\)/.test(css));
-  /* En tableta se le ponia un max-width de 420px y la captura salia mas
-     pequeña que en el movil. */
-  s.ok('apilada tampoco se encoge', /\.show-stage\{width:100%;max-width:820px/.test(css));
+  s.ok('y grande: el escenario ocupa casi toda la altura', /height:min\(74vh,700px\)/.test(css));
+  /* Las imagenes pasan DE LADO. Antes aparecian y desaparecian en el sitio, y
+     la navegacion era una lista vertical de seis nombres a la derecha que se
+     leia como un menu y le robaba a la foto 300px de ancho. */
+  s.ok('las capturas van en una pista que se desplaza', /class="show-pista"/.test(html)
+    && /\.show-pista\{display:flex/.test(css));
+  s.ok('y app.js la mueve un ancho por paso',
+    /pista\.style\.transform = 'translateX\(' \+ \(-idx \* 100\) \+ '%\)'/.test(js));
+  s.eq('con una flecha a cada lado', (html.match(/class="show-nav"/g) || []).length, 2);
+  s.ok('y las dos pasan de verdad', /showPrev.*go\(idx - 1\)/s.test(js) && /showNext.*go\(idx \+ 1\)/s.test(js));
+  /* En un movil, 52px de flecha por lado son 104px menos de imagen: se ponen
+     encima de la foto en vez de al lado. */
+  s.ok('en el movil las flechas no le roban ancho a la imagen',
+    /@media \(max-width:700px\)[\s\S]{0,400}\.show-nav\{position:absolute/.test(css));
+  /* La misma captura estaba dos veces en la portada: en su propia seccion y
+     como diapositiva de la vitrina. */
+  s.ok('la imagen duplicada ya no tiene seccion propia',
+    !/class="film"/.test(html) && !/\.film-card\{/.test(css));
   s.eq('lo que no tiene captura queda como una linea de nombres',
     (html.match(/class="show-mas"/g) || []).length, 1);
   /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
