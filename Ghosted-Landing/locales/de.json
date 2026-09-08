@@ -221,5 +221,6 @@
   "rc_note": "Wir zeigen den Schlüssel hier nie an — er geht nur an die E-Mail, die bezahlt hat.",
   "rc_back": "Zurück zu Ghoosted",
   "sx_savefile": "Schlüssel sichern (.txt)",
-  "sx_lost": "Später verloren? Fordere ihn erneut an unter"
+  "sx_lost": "Später verloren? Fordere ihn erneut an unter",
+  "sx_guide": "Anleitung Schritt für Schritt, mit Screenshots"
 }

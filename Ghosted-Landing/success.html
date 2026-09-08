@@ -60,6 +60,12 @@
             <span id="dlBtnText">Download Ghoosted</span>
           </a>
           <div class="dl-note" data-i18n="sx_dl_note">You don't need the Chrome Web Store — it installs directly from this file.</div>
+          <!-- Los cuatro pasos de arriba son el resumen. Quien se atasque
+               necesita la guia con capturas, y hasta ahora no habia desde
+               aqui ni un enlace a ella. -->
+          <div class="dl-note" style="margin-top:9px">
+            <a href="/instalar" target="_blank" rel="noopener" id="guiaLink" data-i18n="sx_guide">Step-by-step guide, with screenshots</a>
+          </div>
         </div>
       </div>
 
@@ -96,6 +102,7 @@
         sx_sent_none: 'We could not send it anywhere, so copy it now before you close this page.',
         sx_savefile: 'Save the key (.txt)',
         sx_lost: 'Lost it later? Ask for it again at',
+        sx_guide: 'Step-by-step guide, with screenshots',
       };
       var lang = 'en';
       try { lang = localStorage.getItem('ghosted_lang') || 'en'; } catch (e) {}
@@ -113,7 +120,7 @@
       }
       function boot(cb) {
         if (lang === 'en') { applyStatic(); cb(); return; }
-        fetch('locales/' + lang + '.json?v=36')
+        fetch('locales/' + lang + '.json?v=37')
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (d) { dict = d; applyStatic(); cb(); })
           .catch(function () { applyStatic(); cb(); });

@@ -41,7 +41,11 @@ const SECO = process.argv.includes('--dry');
    tools y package.json son de desarrollo y no deben viajar en el zip. */
 const FUERA = new Set([
   'src/qr.js', 'src/mobile.js',
-  'package.json', 'LEEME-instalar.txt',
+  'package.json',
+  /* LEEME-instalar.txt SI viaja: quien compra Plus descomprimia y no
+     encontraba una sola instruccion dentro. Sirve igual para los dos, que lo
+     que explica es como cargar una extension descomprimida y activar la
+     clave. */
 ]);
 const DIRS_FUERA = new Set(['test', 'tools', 'node_modules', '.git']);
 

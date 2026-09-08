@@ -221,5 +221,6 @@
   "rc_note": "Kami tidak pernah menampilkan kunci di halaman ini: kunci hanya dikirim ke email yang membayar.",
   "rc_back": "Kembali ke Ghoosted",
   "sx_savefile": "Simpan kunci (.txt)",
-  "sx_lost": "Hilang nanti? Minta lagi di"
+  "sx_lost": "Hilang nanti? Minta lagi di",
+  "sx_guide": "Panduan langkah demi langkah, dengan tangkapan layar"
 }

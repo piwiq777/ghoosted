@@ -221,5 +221,6 @@
   "rc_note": "Anahtarı bu sayfada asla göstermiyoruz: yalnızca ödeme yapan e-postaya gider.",
   "rc_back": "Ghoosted'e dön",
   "sx_savefile": "Anahtarı kaydet (.txt)",
-  "sx_lost": "Sonra kaybedersen yeniden iste:"
+  "sx_lost": "Sonra kaybedersen yeniden iste:",
+  "sx_guide": "Ekran görüntülü adım adım rehber"
 }

@@ -221,5 +221,6 @@
   "rc_note": "Non mostriamo mai la chiave in questa pagina: va solo all'e-mail che ha pagato.",
   "rc_back": "Torna a Ghoosted",
   "sx_savefile": "Salva la chiave (.txt)",
-  "sx_lost": "La perdi più avanti? Richiedila su"
+  "sx_lost": "La perdi più avanti? Richiedila su",
+  "sx_guide": "Guida passo passo, con schermate"
 }
