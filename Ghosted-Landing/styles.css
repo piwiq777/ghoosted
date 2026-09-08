@@ -883,25 +883,3 @@ img,svg{display:block;max-width:100%}
 .price-tp a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;
   text-decoration-color:var(--line-2);transition:color .2s}
 .price-tp a:hover{color:var(--ink);text-decoration-color:currentColor}
-
-/* ---------------------------------------------------------------------------
-   LA CAPTURA LARGA
-   El expediente es el panel ENTERO: 500x1783, casi cuatro veces mas alto que
-   ancho. Metido con contain en un escenario apaisado saldria de 200px de
-   ancho, o sea ilegible; y recortarlo deja fuera justo lo que se quiere
-   enseñar —publicaciones, engagement, historial—, que es lo que ya pasaba con
-   la version cortada de esta misma captura.
-   Asi que se enseña a su ancho de verdad y recorre despacio de arriba abajo:
-   se ve entero, nitido, y sin encoger. Quien tenga el sistema en "menos
-   movimiento" ve la parte de arriba quieta.
-   --------------------------------------------------------------------------- */
-.show-slide.larga img{width:min(100%,520px);height:100%;max-height:none;
-  object-fit:cover;object-position:center top;
-  animation:ghdRecorre 24s cubic-bezier(.45,0,.55,1) infinite alternate}
-@keyframes ghdRecorre{
-  0%,8%{object-position:center top}
-  92%,100%{object-position:center bottom}
-}
-@media (prefers-reduced-motion:reduce){
-  .show-slide.larga img{animation:none}
-}
