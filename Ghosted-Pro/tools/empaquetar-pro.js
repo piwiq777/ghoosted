@@ -143,6 +143,36 @@ if (!prueba.ok) {
   process.exit(1);
 }
 
+/* Y la ultima puerta: un Chrome de verdad. La prueba de humo de arriba corre
+   en un vm de Node con dobles — caza colisiones de la ofuscacion, pero no
+   inyecta content scripts ni pasa mensajes entre el popup y la pagina, que es
+   la mitad de lo que se rompio. Esto arranca Chrome con la extension cargada y
+   mira si el fantasma sale en Instagram y si el popup recibe respuesta.
+   Sin Chrome no se bloquea el empaquetado, pero se dice bien alto: un paquete
+   que no ha visto un navegador es un paquete sin comprobar. */
+const fs2 = require('fs');
+const CHROMES = [
+  path.join(os.homedir(), '.cache/puppeteer/chrome/linux-151.0.7922.77/chrome-linux64/chrome'),
+  path.join(os.homedir(), '.cache/ms-playwright/chromium-1208/chrome-linux64/chrome'),
+  '/opt/google/chrome/chrome', '/usr/bin/google-chrome', '/usr/bin/chromium',
+];
+if (CHROMES.some((c) => fs2.existsSync(c))) {
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, 'probar-en-chrome.js'), tmp],
+      { stdio: 'pipe', timeout: 240000 });
+    console.log('  probado en Chrome: el fantasma sale y el popup contesta');
+  } catch (e) {
+    const salida = String((e.stdout || '') + (e.stderr || '')).replace(/\x1b\[\d+m/g, '');
+    console.error('\n\x1b[31mEl paquete no funciona en Chrome:\x1b[0m');
+    salida.split('\n').filter((l) => /^\s*NO /.test(l)).forEach((l) => console.error('  ' + l.trim()));
+    console.error('\n  No se empaqueta.\n');
+    process.exit(1);
+  }
+} else {
+  console.warn('\n\x1b[33m  AVISO: sin Chrome en esta maquina, el paquete NO se ha probado en un navegador.');
+  console.warn('  Instalalo con: npx @puppeteer/browsers install chrome@stable\x1b[0m');
+}
+
 /* Y que el manifiesto siga apuntando a todo lo que dice. */
 const man = JSON.parse(fs.readFileSync(path.join(tmp, 'manifest.json'), 'utf8'));
 const declarados = [

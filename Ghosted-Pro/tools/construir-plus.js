@@ -275,7 +275,39 @@ if (!SECO) {
     huerfanos.forEach((h) => console.log('  ' + h));
     process.exit(1);
   }
-  console.log('\n\x1b[32mPlus construido: sintaxis correcta y sin llamadas huerfanas\x1b[0m');
+  /* Y las dos puertas que faltaban: que el arbol construido ARRANQUE, y que
+     funcione en un Chrome de verdad. Sin esto, "sintaxis correcta" es lo que
+     dijo el proyecto entero mientras el paquete de Pro estaba muerto. */
+  try {
+    execFileSync(process.execPath, [path.join(__dirname, 'humo.js'), PLUS], { stdio: 'pipe' });
+  } catch (e) {
+    let motivos = [];
+    try { motivos = (JSON.parse(String(e.stdout || '')) || {}).motivos || []; } catch (x) { /* generico */ }
+    console.log('\n\x1b[31mPlus no arranca:\x1b[0m');
+    (motivos.length ? motivos : ['la prueba de humo ha fallado']).forEach((m) => console.log('  ' + m));
+    process.exit(1);
+  }
+  const os2 = require('os');
+  const CHROMES = [
+    path.join(os2.homedir(), '.cache/puppeteer/chrome/linux-151.0.7922.77/chrome-linux64/chrome'),
+    path.join(os2.homedir(), '.cache/ms-playwright/chromium-1208/chrome-linux64/chrome'),
+    '/opt/google/chrome/chrome', '/usr/bin/google-chrome', '/usr/bin/chromium',
+  ];
+  if (CHROMES.some((c) => fs.existsSync(c))) {
+    try {
+      execFileSync(process.execPath, [path.join(__dirname, 'probar-en-chrome.js'), PLUS], { stdio: 'pipe', timeout: 240000 });
+      console.log('  probado en Chrome: el fantasma sale y el popup contesta');
+    } catch (e) {
+      const salida = String((e.stdout || '') + (e.stderr || '')).replace(/\x1b\[\d+m/g, '');
+      console.log('\n\x1b[31mPlus no funciona en Chrome:\x1b[0m');
+      salida.split('\n').filter((l) => /^\s*NO /.test(l)).forEach((l) => console.log('  ' + l.trim()));
+      process.exit(1);
+    }
+  } else {
+    console.log('\n\x1b[33m  AVISO: sin Chrome, Plus NO se ha probado en un navegador.\x1b[0m');
+  }
+
+  console.log('\n\x1b[32mPlus construido: arranca, pasa por Chrome y no llama a nada que no exista\x1b[0m');
 
   /* El zip va al mismo sitio que el de Pro, que es de donde lo sirve la web.
      Plus no se ofusca nunca: la tienda rechaza el codigo ilegible. */
