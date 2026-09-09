@@ -13,20 +13,25 @@ async function precios() {
   const salida = { web: PRECIOS, stripe: {}, coinciden: null };
   if (!clave) return Object.assign(salida, { error: 'sin_clave_de_stripe' });
   for (const [plan, id] of Object.entries(ids)) {
-    if (!id) { salida.stripe[plan] = null; continue; }
+    if (!id) { salida.stripe[plan] = { error: 'falta_la_variable_de_entorno' }; continue; }
     try {
       const r = await fetch('https://api.stripe.com/v1/prices/' + encodeURIComponent(id), {
         headers: { Authorization: 'Bearer ' + clave },
       });
       const d = await r.json();
-      salida.stripe[plan] = r.ok && typeof d.unit_amount === 'number'
-        ? { centimos: d.unit_amount, divisa: d.currency, activo: d.active !== false }
-        : null;
-    } catch (e) { salida.stripe[plan] = null; }
+      if (r.ok && typeof d.unit_amount === 'number') {
+        salida.stripe[plan] = { centimos: d.unit_amount, divisa: d.currency, activo: d.active !== false };
+      } else {
+        /* El motivo, tal cual lo dice Stripe. Sin esto, un "null" no
+           distingue "la clave no puede leer precios" de "ese identificador no
+           existe", y son dos arreglos completamente distintos. */
+        salida.stripe[plan] = { error: (d && d.error && (d.error.message || d.error.type)) || ('http_' + r.status) };
+      }
+    } catch (e) { salida.stripe[plan] = { error: 'sin_red' }; }
   }
   const mira = Object.keys(PRECIOS).map((p) => {
     const s = salida.stripe[p];
-    return s ? s.centimos === PRECIOS[p] : null;
+    return s && typeof s.centimos === 'number' ? s.centimos === PRECIOS[p] : null;
   });
   salida.coinciden = mira.some((v) => v === null) ? null : mira.every(Boolean);
   return salida;
