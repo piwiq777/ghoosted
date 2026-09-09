@@ -92,9 +92,12 @@ module.exports = () => {
   s.ok('la linea de confianza se pinta', /class="hero-trust" data-i18n="hero_trust"/.test(html));
   s.ok('y va debajo de los botones, que es lo ultimo que se lee',
     html.indexOf('hero-cta') < html.indexOf('hero-trust'));
+  /* Raices, no palabras enteras: el ruso declina —"Без пароля" no contiene
+     "пароль"— y una comprobacion que falla por gramatica no vigila nada, solo
+     molesta hasta que alguien la borra. */
   const sinClave = idiomas.filter((f) => {
     const d = JSON.parse(fs.readFileSync(path.join(locales, f), 'utf8'));
-    return !d.hero_trust || !/contrase|passwor|Passwort|mot de passe|password|senha|пароль|パスワード|şifre|पासवर्ड|kata sandi|كلمة مرور/i.test(d.hero_trust);
+    return !d.hero_trust || !/contrase|passwor|mot de passe|senha|парол|パスワード|şifre|पासवर्ड|kata sandi|كلمة مرور/i.test(d.hero_trust);
   });
   s.eq('y en los once idiomas dice lo de la contraseña', sinClave, []);
 
