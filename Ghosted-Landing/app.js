@@ -275,6 +275,10 @@
           body: JSON.stringify({
             plan: button.dataset.plan || 'pro',
             lang: document.documentElement.lang || 'en',
+            /* El creador que trajo esta visita, si lo hubo. Viaja con la
+               compra y acaba en la metadata de Stripe: la comision se calcula
+               sobre lo que se cobro de verdad, no sobre un contador aparte. */
+            ref: window.ghdRef || '',
           }),
         });
         const payload = await response.json().catch(() => ({}));
@@ -452,5 +456,36 @@
         }
       }
     }
+
+    /* ---- EL CODIGO DEL CREADOR ------------------------------------------
+       Quien llega desde el video de alguien trae ?ref=SUCODIGO. Se guarda
+       para toda la sesion —nadie compra en el primer minuto— y se manda con
+       la compra. Sin esto, el programa de creadores seria un folleto: no
+       habria forma de saber de quien fue cada venta. */
+    (function () {
+      var GUARDA = 'ghosted_ref';
+      var limpia = function (v) {
+        return String(v || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12);
+      };
+      var enUrl = limpia(new URLSearchParams(location.search).get('ref'));
+      if (enUrl && /^[A-Z0-9]{4,12}$/.test(enUrl)) {
+        try { localStorage.setItem(GUARDA, enUrl); } catch (e) {}
+        window.ghdRef = enUrl;
+        /* La visita se apunta una vez por navegador y codigo: recargar la
+           pagina veinte veces no puede inflarle los numeros a nadie. */
+        var yaContada = 'ghosted_ref_visto_' + enUrl;
+        var contar = true;
+        try { contar = !localStorage.getItem(yaContada); } catch (e) {}
+        if (contar) {
+          try { localStorage.setItem(yaContada, '1'); } catch (e) {}
+          fetch('/api/creador?accion=clic', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ref: enUrl }), keepalive: true,
+          }).catch(function () { /* un contador perdido no rompe nada */ });
+        }
+      } else {
+        try { window.ghdRef = limpia(localStorage.getItem(GUARDA)); } catch (e) { window.ghdRef = ''; }
+      }
+    })();
   });
 })();

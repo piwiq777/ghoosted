@@ -12,15 +12,15 @@
     "hash": "a2fd41744d4c35e3"
   },
   "app.js": {
-    "v": 45,
-    "hash": "5b60d96ff20b9442"
+    "v": 46,
+    "hash": "c0915c1b91583d48"
   },
   "legal-i18n.js": {
     "v": 3,
     "hash": "474e79a56509028f"
   },
   "locales": {
-    "v": 50,
-    "hash": "52fa735270ee1886"
+    "v": 52,
+    "hash": "27283b8f03df609d"
   }
 }

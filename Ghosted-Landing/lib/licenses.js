@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { command, getJson, setJson } = require('./kv');
+const creadores = require('./creadores');
 
 const KEY_PATTERN = /^GHST-(?:[A-Z0-9]{4}-){4}[A-Z0-9]{4}$/;
 // One key, one Instagram account (enforced below via the atomic SET...NX
@@ -63,6 +64,10 @@ async function issueLicense(session) {
       plan: (session.metadata && session.metadata.plan) || 'pro',
       // Idioma en el que se hizo la compra: en ese llega el correo.
       lang: (session.metadata && session.metadata.lang) || 'en',
+      // Codigo del creador que trajo la venta, si lo hubo. Se guarda en la
+      // licencia y no solo en el contador: si algun dia hay que rehacer las
+      // cuentas de un mes, las ventas siguen sabiendo de quien eran.
+      ref: (session.metadata && session.metadata.ref) || null,
       createdAt: new Date().toISOString(),
       checkoutSessionId: session.id,
       paymentIntent: session.payment_intent || null,
@@ -73,6 +78,12 @@ async function issueLicense(session) {
     };
     await setJson(licenseKey(key), record);
     if (record.paymentIntent) await command(['SET', 'ghosted:stripe:payment:' + record.paymentIntent, key]);
+    /* La comision se apunta sobre lo que Stripe dice que se cobro de verdad
+       —con su cupon y su divisa—, no sobre el precio de catalogo. Si falla, la
+       licencia ya esta emitida: se pierde un contador, no una compra. */
+    if (record.ref) {
+      try { await creadores.venta(record.ref, session.amount_total); } catch (e) { /* nunca tumba la compra */ }
+    }
     /* Una persona puede comprar Plus y luego Pro, asi que el indice guarda
        lista, no una sola clave. Si falla, la licencia ya esta emitida: como
        mucho se pierde la recuperacion por correo, no la compra. */

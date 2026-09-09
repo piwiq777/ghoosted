@@ -1,4 +1,5 @@
 const { json, options, origin, readJson } = require('../lib/http');
+const { normalizar: normalizarRef, valido: refValido } = require('../lib/creadores');
 const { frenar } = require('../lib/freno');
 const { isConfigured } = require('../lib/kv');
 
@@ -60,6 +61,13 @@ module.exports = async (req, res) => {
   }
 
   const site = origin(req);
+  /* El codigo del creador que trajo esta visita. Va como metadata de la sesion
+     —la misma tuberia por la que ya viajan el plan y el idioma— para que la
+     comision se calcule sobre lo que Stripe dice que se cobro, y no sobre un
+     contador aparte que habria que creerse. Si viene basura, se ignora: una
+     compra jamas puede fallar por esto. */
+  const refBruto = normalizarRef(body.ref);
+  const ref = refValido(refBruto) ? refBruto : '';
   const params = new URLSearchParams({
     mode: 'payment',
     // Card only: any delayed/async method (SEPA, bank redirects, ...) would
@@ -73,6 +81,7 @@ module.exports = async (req, res) => {
     // Para el correo con la clave (lib/correo.js). Se valida contra la lista
     // de la web: cualquier otra cosa se queda en ingles.
     'metadata[lang]': lang,
+    ...(ref ? { 'metadata[ref]': ref } : {}),
     // Y la pantalla de pago de Stripe, en el mismo idioma. Stripe no tiene
     // arabe ni hindi en Checkout, asi que esos van en 'auto' y los resuelve el
     // navegador del comprador.

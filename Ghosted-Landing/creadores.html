@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F5F0">
+  <title>Ghoosted — Creator Program</title>
+  <meta name="description" content="Make videos about Ghoosted and keep a cut of every sale you bring in.">
+  <link rel="canonical" href="https://ghoosted.net/creadores">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
+  <style>
+    /* Una pagina, dos caras: entrar al programa, y ver tus numeros. Nada mas.
+       Sin barra de navegacion ni pie: quien llega aqui viene de un enlace
+       directo y lo unico que tiene que hacer es rellenar cuatro campos. */
+    .cr{min-height:100vh;display:grid;place-items:center;padding:56px 20px}
+    .cr-caja{width:min(100%,560px)}
+    .cr-marca{display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:34px}
+    .cr-marca img{width:30px;height:30px;border-radius:9px}
+    .cr-marca span{font:700 17px var(--font);letter-spacing:-.02em}
+    .cr h1{margin:0;text-align:center;font-family:var(--display);font-weight:380;
+      font-size:clamp(30px,6vw,46px);line-height:1.05;letter-spacing:-.04em;text-wrap:balance}
+    .cr-sub{margin:14px auto 0;max-width:40ch;text-align:center;font-size:16px;line-height:1.55;
+      color:var(--ink-2);text-wrap:pretty}
+    .cr-lista{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:11px}
+    .cr-lista li{position:relative;padding-left:26px;font-size:15px;line-height:1.5;color:var(--ink)}
+    .cr-lista li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;
+      border-radius:50%;background:var(--ig-2,linear-gradient(115deg,#d62976,#7a3ff2))}
+    form{margin:32px 0 0;display:grid;gap:9px}
+    .cr-par{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+    input{width:100%;box-sizing:border-box;border:1px solid var(--line-2);border-radius:13px;
+      padding:13px 14px;font:400 15px var(--font);background:var(--paper);color:var(--ink)}
+    input:focus{outline:2px solid var(--accent);outline-offset:1px}
+    #codigo{text-transform:uppercase;font:700 15px ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.6px}
+    button{border:0;border-radius:13px;background:var(--ink);color:#F7F5F0;padding:14px 18px;
+      font:700 15px var(--font);cursor:pointer}
+    button:hover{opacity:.9}
+    button[disabled]{opacity:.5;cursor:default}
+    .cr-msg{margin:14px 0 0;font-size:14px;line-height:1.55;color:var(--ink);text-align:center;min-height:1px}
+    .cr-msg:empty{margin:0}
+    .cr-hr{margin:38px 0 0;border-top:1px solid var(--line);padding-top:26px;text-align:center}
+    .cr-hr h2{margin:0 0 12px;font:600 14px var(--font);color:var(--ink-2)}
+    .cr-ver{display:grid;grid-template-columns:1fr auto;gap:9px;max-width:400px;margin:0 auto}
+    .cr-num{margin:22px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .cr-num div{border:1px solid var(--line);border-radius:14px;padding:16px 10px;background:var(--paper)}
+    .cr-num b{display:block;font-family:var(--display);font-size:28px;font-weight:400;letter-spacing:-.03em}
+    .cr-num span{display:block;margin-top:3px;font-size:12px;color:var(--ink-2)}
+    .cr-pie{margin:26px 0 0;text-align:center;font-size:12.5px;line-height:1.7;color:var(--ink-3)}
+    .cr-pie a{color:var(--ink-3)}
+    @media (max-width:520px){ .cr-par{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <main class="cr">
+    <div class="cr-caja">
+      <a class="cr-marca" href="/">
+        <img src="assets/icon.png" alt="" width="30" height="30">
+        <span>Ghoosted</span>
+      </a>
+
+      <h1 data-i18n="cr_h1">Become a Ghoosted Detective 🕵️</h1>
+      <p class="cr-sub" data-i18n="cr_sub">Make videos. Keep 30% of every sale you bring in — 40% once you pass 25.</p>
+
+      <ul class="cr-lista">
+        <li data-i18n="cr_g1">Your own link and discount code.</li>
+        <li data-i18n="cr_g2">A panel with your numbers, updated as they happen.</li>
+        <li data-i18n="cr_g3">Clips, screenshots and hooks ready to post.</li>
+        <li data-i18n="cr_g4">Paid every month, from €20 onwards.</li>
+      </ul>
+
+      <form id="alta" novalidate>
+        <div class="cr-par">
+          <input id="nombre" type="text" autocomplete="name" data-i18n-attr="placeholder|cr_ph_name" placeholder="Your name" aria-label="Name">
+          <input id="email" type="email" autocomplete="email" data-i18n-attr="placeholder|cr_ph_email" placeholder="you@example.com" aria-label="Email">
+        </div>
+        <div class="cr-par">
+          <input id="canal" type="text" data-i18n-attr="placeholder|cr_ph_channel" placeholder="@you · TikTok, IG, YouTube" aria-label="Channel">
+          <input id="seguidores" type="text" data-i18n-attr="placeholder|cr_ph_followers" placeholder="How many followers" aria-label="Followers">
+        </div>
+        <input id="codigo" type="text" autocomplete="off" spellcheck="false" maxlength="12"
+               data-i18n-attr="placeholder|cr_ph_code" placeholder="THE CODE YOU WANT" aria-label="Code">
+        <button id="enviar" type="submit" data-i18n="cr_join">Join the program</button>
+      </form>
+      <p class="cr-msg" id="msg" role="status" aria-live="polite"></p>
+
+      <div class="cr-hr">
+        <h2 data-i18n="cr_have">Already have a code?</h2>
+        <form class="cr-ver" id="ver" novalidate>
+          <input id="micodigo" type="text" autocomplete="off" spellcheck="false" maxlength="12"
+                 style="text-transform:uppercase" data-i18n-attr="placeholder|cr_ph_code2" placeholder="YOUR CODE" aria-label="Your code">
+          <button type="submit" data-i18n="cr_see">See</button>
+        </form>
+        <div class="cr-num" id="numeros" hidden>
+          <div><b id="nVisitas">0</b><span data-i18n="cr_visits">visits</span></div>
+          <div><b id="nVentas">0</b><span data-i18n="cr_sales">sales</span></div>
+          <div><b id="nEuros">€0</b><span data-i18n="cr_owed">yours</span></div>
+        </div>
+        <p class="cr-msg" id="msg2" role="status" aria-live="polite"></p>
+      </div>
+
+      <p class="cr-pie">
+        <span data-i18n="cr_foot">We review every application by hand. Codes are not automatic.</span>
+        <br><a href="/" data-i18n="cr_back">Back to Ghoosted</a>
+      </p>
+    </div>
+  </main>
+
+  <script src="i18n.js?v=36"></script>
+  <script>
+  (function () {
+    'use strict';
+    if (window.GhostedI18n) { try { GhostedI18n.init(); } catch (e) {} }
+    var T = function (k, d) { return window.GhostedI18n ? GhostedI18n.t(k, d) : d; };
+    var $ = function (id) { return document.getElementById(id); };
+
+    function decir(nodo, texto) { nodo.textContent = texto; }
+
+    /* --- entrar al programa ------------------------------------------- */
+    $('alta').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msg = $('msg'), boton = $('enviar');
+      var codigo = $('codigo').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+      var email = $('email').value.trim();
+      if (!/^[A-Z0-9]{4,12}$/.test(codigo)) return decir(msg, T('cr_bad_code', 'The code is 4 to 12 letters or numbers, no spaces.'));
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return decir(msg, T('cr_bad_email', 'That email does not look right.'));
+      boton.disabled = true;
+      decir(msg, T('cr_sending', 'Sending…'));
+      fetch('/api/creador?accion=alta', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: $('nombre').value, email: email, canal: $('canal').value,
+          seguidores: $('seguidores').value, codigo: codigo,
+        }),
+      }).then(function (r) { return r.json().then(function (d) { return { r: r, d: d }; }); })
+        .then(function (x) {
+          if (x.r.status === 429) return decir(msg, T('cr_slow', 'Too many tries. Come back in a while.'));
+          if (x.d && x.d.error === 'ocupado') return decir(msg, T('cr_taken', 'That code is taken. Try another one.'));
+          if (!x.r.ok) return decir(msg, T('cr_fail', 'Could not do it right now. Try again in a moment.'));
+          decir(msg, T('cr_ok', 'Got it. We look at every application by hand and reply by email.'));
+          $('alta').hidden = true;
+        })
+        .catch(function () { decir(msg, T('cr_fail', 'Could not do it right now. Try again in a moment.')); })
+        .then(function () { boton.disabled = false; });
+    });
+
+    /* --- ver mis numeros ----------------------------------------------- */
+    $('ver').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msg = $('msg2'), caja = $('numeros');
+      var c = $('micodigo').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (!/^[A-Z0-9]{4,12}$/.test(c)) { caja.hidden = true; return decir(msg, T('cr_bad_code', 'The code is 4 to 12 letters or numbers, no spaces.')); }
+      decir(msg, '');
+      fetch('/api/creador?codigo=' + encodeURIComponent(c))
+        .then(function (r) { return r.json().then(function (d) { return { r: r, d: d }; }); })
+        .then(function (x) {
+          if (!x.r.ok) { caja.hidden = true; return decir(msg, T('cr_none', 'We do not know that code.')); }
+          var d = x.d;
+          $('nVisitas').textContent = d.visitas;
+          $('nVentas').textContent = d.ventas;
+          /* En centimos hasta aqui: 30% de 7,00 en coma flotante no da 2,10
+             exacto, y al sumar un mes las cuentas dejan de cuadrar. */
+          $('nEuros').textContent = '€' + (d.comisionCentimos / 100).toFixed(2);
+          caja.hidden = false;
+          decir(msg, d.estado === 'pendiente'
+            ? T('cr_pending', 'Your code is still waiting to be approved.')
+            : T('cr_rate', 'You are on $1%.').replace('$1', d.porcentaje));
+        })
+        .catch(function () { caja.hidden = true; decir(msg, T('cr_fail', 'Could not do it right now. Try again in a moment.')); });
+    });
+  })();
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
