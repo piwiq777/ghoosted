@@ -4,6 +4,19 @@ const { json, options } = require('../lib/http');
 const { filePath } = require('../lib/downloads');
 const { PRECIOS } = require('../lib/precios');
 
+/* Por que no se ha podido leer el precio, en una palabra. Sin el texto de
+   Stripe: ese mensaje lleva el id de la cuenta y el final de la clave, y esto
+   lo puede pedir cualquiera. Un codigo corto dice lo mismo para decidir que
+   tocar, y no regala nada. */
+function motivo(d, estado) {
+  const e = (d && d.error) || {};
+  const t = String(e.message || '');
+  if (/does not have the required permissions|plan_read/i.test(t)) return 'la_clave_no_puede_leer_precios';
+  if (/No such price|resource_missing/i.test(t) || e.code === 'resource_missing') return 'ese_precio_no_existe';
+  if (estado === 401) return 'clave_no_valida';
+  return e.type ? String(e.type).slice(0, 40) : 'http_' + estado;
+}
+
 /* Lo que Stripe cobra de verdad por cada plan. Si no hay claves, o Stripe no
    contesta, se dice que no se ha podido mirar — nunca se inventa un "coincide"
    que nadie ha comprobado. */
@@ -22,10 +35,11 @@ async function precios() {
       if (r.ok && typeof d.unit_amount === 'number') {
         salida.stripe[plan] = { centimos: d.unit_amount, divisa: d.currency, activo: d.active !== false };
       } else {
-        /* El motivo, tal cual lo dice Stripe. Sin esto, un "null" no
-           distingue "la clave no puede leer precios" de "ese identificador no
-           existe", y son dos arreglos completamente distintos. */
-        salida.stripe[plan] = { error: (d && d.error && (d.error.message || d.error.type)) || ('http_' + r.status) };
+        /* El motivo, pero NUNCA el texto que manda Stripe: ese mensaje trae
+           el identificador de la cuenta y el final de la clave, y esto es un
+           endpoint publico. Se traduce a un codigo corto, que es lo unico que
+           hace falta para saber que arreglar. */
+        salida.stripe[plan] = { error: motivo(d, r.status) };
       }
     } catch (e) { salida.stripe[plan] = { error: 'sin_red' }; }
   }

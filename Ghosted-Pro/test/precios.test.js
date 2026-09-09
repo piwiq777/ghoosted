@@ -78,6 +78,12 @@ module.exports = () => {
      mirarlo, porque da una tranquilidad que nadie ha comprobado. */
   s.ok('sin respuesta de Stripe no se inventa un "coincide"',
     /mira\.some\(\(v\) => v === null\) \? null/.test(status));
+  /* El mensaje de error de Stripe trae el id de la cuenta y el final de la
+     clave. Esto lo puede pedir cualquiera: sale un codigo corto, no el texto. */
+  s.ok('el motivo no repite lo que dice Stripe',
+    /error: motivo\(d, r\.status\)/.test(status) && !/d\.error\.message/.test(status));
+  s.ok('y hay un codigo para cada arreglo distinto',
+    /la_clave_no_puede_leer_precios/.test(status) && /ese_precio_no_existe/.test(status));
 
   return s;
 };
