@@ -37,8 +37,7 @@ module.exports = () => {
      a Stripe cuando no encuentra la licencia. */
   for (const [rel, cubo] of [['api/checkout.js', 'pagar'], ['api/license/activate.js', 'activar'],
     ['api/license/verify.js', 'verificar'], ['api/license/recover.js', 'recuperar'],
-    ['api/license/order.js', 'pedido'], ['api/admin/licencias.js', 'admin'],
-    ['api/admin/accion.js', 'admin']]) {
+    ['api/license/order.js', 'pedido'], ['api/admin.js', 'admin']]) {
     s.ok(rel + ': tiene freno', new RegExp("frenar\\(req, '" + cubo + "'").test(leer(rel)));
   }
   /* La descarga se frena por CLAVE, no por IP: el tope es del producto. */

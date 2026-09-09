@@ -16,8 +16,12 @@ module.exports = () => {
   const s = suite('panel de ventas');
 
   const admin = leer('lib/admin.js');
-  const lista = leer('api/admin/licencias.js');
-  const accion = leer('api/admin/accion.js');
+  /* Los dos endpoints del panel se juntaron en uno: Vercel crea una funcion
+     por fichero bajo api/ y el plan gratuito corta en doce. Al añadir el
+     programa de creadores pasamos a trece y el despliegue dejo de subir, sin
+     error visible. Este era el par que menos dolia juntar. */
+  const lista = leer('api/admin.js');
+  const accion = lista;
   const pagina = leer('admin.html');
 
   /* Sin token puesto, el panel no existe. Es mejor que quede inaccesible por

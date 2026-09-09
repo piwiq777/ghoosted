@@ -97,7 +97,7 @@
 
     function cargar() {
       $('msg').textContent = 'Cargando…';
-      return pedir('/api/admin/licencias').then(function (r) {
+      return pedir('/api/admin').then(function (r) {
         if (r.status === 401) { salir('Token incorrecto.'); return; }
         if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
         datos = r.d; $('msg').textContent = '';
@@ -178,7 +178,7 @@
       var accion = b.dataset.a, key = b.dataset.k;
       if (!confirm(TEXTO[accion] + '\n\n' + key)) return;
       b.disabled = true;
-      pedir('/api/admin/accion', {
+      pedir('/api/admin', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accion: accion, key: key }),
       }).then(function (r) {

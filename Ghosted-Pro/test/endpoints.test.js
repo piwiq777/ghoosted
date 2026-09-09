@@ -51,6 +51,17 @@ function endpoints(dir, prefijo = '') {
 module.exports = async () => {
   const s = suite('endpoints · que arranquen');
 
+  /* EL TOPE DE VERCEL.
+     Vercel crea UNA funcion sin servidor por cada fichero .js bajo api/, y el
+     plan gratuito corta en doce. Al pasar de doce el despliegue no falla con
+     un error a la vista: simplemente la version nueva no llega nunca, y la web
+     se queda servida en la anterior mientras uno se pregunta por que.
+     Paso de verdad al añadir el programa de creadores. Si vuelve a hacer
+     falta un endpoint, hay que juntar dos — no añadir el trece. */
+  const TOPE = 12;
+  const cuantos = endpoints(API).length;
+  s.ok('no se pasa del tope de funciones de Vercel (' + cuantos + '/' + TOPE + ')', cuantos <= TOPE);
+
   const limpio = { ...process.env };
   /* Sin claves de nada: es el peor caso y el que mas caminos raros toca. */
   for (const k of Object.keys(process.env)) {
