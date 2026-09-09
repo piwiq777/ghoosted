@@ -363,7 +363,7 @@
     "message": "Watch their stories without them seeing you did"
   },
   "dos_ghost_note": {
-    "message": "Ghost mode · leaves no trace in “seen by”"
+    "message": "Ghost mode · designed to stay out of “seen by”"
   },
   "dos_ghost_none": {
     "message": "No active stories right now."
@@ -979,10 +979,10 @@
     "message": "Live stories (ghost mode)"
   },
   "gh_note": {
-    "message": "These people have a story up right now. Open it here and Instagram is never told — you will not show up in their viewer list."
+    "message": "These people have a story up right now. Open it from here: designed not to register the view or put you in their viewer list. Depends on how Instagram works."
   },
   "gh_watch_note": {
-    "message": "Ghost mode — Instagram is not told you watched this."
+    "message": "Ghost mode — designed not to register as seen. Depends on Instagram."
   },
   "gh_refresh": {
     "message": "Refresh"

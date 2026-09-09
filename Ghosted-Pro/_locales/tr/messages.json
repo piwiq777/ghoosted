@@ -363,7 +363,7 @@
     "message": "Gördüğünü belli etmeden story'lerini izle"
   },
   "dos_ghost_note": {
-    "message": "Hayalet modu · “görüntüleyenler”de iz bırakmaz"
+    "message": "Hayalet modu · “görüntüleyenler” listesinde çıkmamak için tasarlandı"
   },
   "dos_ghost_none": {
     "message": "Şu an aktif story yok."
@@ -979,10 +979,10 @@
     "message": "Aktif hikâyeler (hayalet modu)"
   },
   "gh_note": {
-    "message": "Bu kişilerin şu anda hikâyesi var. Buradan aç: Instagram’a bilgi gitmez, izleyen listesinde görünmezsin."
+    "message": "Bu kişilerin şu anda hikâyesi var. Buradan aç: görüntülenmeyi kaydetmemek ve seni izleyen listesine koymamak için tasarlandı. Instagram’ın çalışma şekline bağlı."
   },
   "gh_watch_note": {
-    "message": "Hayalet modu — Instagram bunu izlediğini bilmiyor."
+    "message": "Hayalet modu — görüntülendi olarak işlenmemek için tasarlandı. Instagram’a bağlı."
   },
   "gh_refresh": {
     "message": "Yenile"

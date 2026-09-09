@@ -363,7 +363,7 @@
     "message": "Guarda le sue story senza che sappia che le hai viste"
   },
   "dos_ghost_note": {
-    "message": "Modalità fantasma · non lascia traccia in “visto da”"
+    "message": "Modalità fantasma · pensata per non comparire in “visto da”"
   },
   "dos_ghost_none": {
     "message": "Nessuna story attiva al momento."
@@ -979,10 +979,10 @@
     "message": "Storie attive (modalità fantasma)"
   },
   "gh_note": {
-    "message": "Queste persone hanno una storia adesso. Aprila qui: a Instagram non arriva nulla, non comparirai tra chi l’ha vista."
+    "message": "Queste persone hanno una storia adesso. Aprila da qui: pensato per non registrare la visualizzazione né metterti tra chi l’ha vista. Dipende da come funziona Instagram."
   },
   "gh_watch_note": {
-    "message": "Modalità fantasma — Instagram non sa che l’hai vista."
+    "message": "Modalità fantasma — pensata per non risultare come vista. Dipende da Instagram."
   },
   "gh_refresh": {
     "message": "Aggiorna"

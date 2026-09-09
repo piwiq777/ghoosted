@@ -854,3 +854,10 @@ img,svg{display:block;max-width:100%}
   .movil-b{max-width:none}
 }
 
+
+/* La linea de confianza, debajo de los botones. Es lo ultimo que se lee antes
+   de decidir, y "sin contraseña" es exactamente lo que frena a quien desconfia
+   de una herramienta de Instagram — que son casi todos. Llevaba traducida a
+   doce idiomas desde el principio sin pintarse en ningun sitio. */
+.hero-trust{margin:18px auto 0;max-width:44ch;font-size:13.5px;line-height:1.6;
+  color:var(--ink-3);text-wrap:pretty}

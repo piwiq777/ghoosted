@@ -363,7 +363,7 @@
     "message": "Regarde ses stories sans qu'il voie que tu les as vues"
   },
   "dos_ghost_note": {
-    "message": "Mode fantôme · aucune trace dans « vu par »"
+    "message": "Mode fantôme · conçu pour ne pas apparaître dans « vu par »"
   },
   "dos_ghost_none": {
     "message": "Aucune story active pour le moment."
@@ -979,10 +979,10 @@
     "message": "Stories en cours (mode fantôme)"
   },
   "gh_note": {
-    "message": "Ces personnes ont une story en ce moment. Ouvrez-la ici : Instagram n'en saura rien, vous n'apparaîtrez pas dans la liste des vues."
+    "message": "Ces personnes ont une story en ce moment. Ouvrez-la ici : conçu pour ne pas enregistrer la vue ni vous placer dans leur liste de vues. Dépend du fonctionnement d'Instagram."
   },
   "gh_watch_note": {
-    "message": "Mode fantôme — Instagram ne sait pas que vous l'avez vue."
+    "message": "Mode fantôme — conçu pour ne pas être compté comme vu. Dépend d’Instagram."
   },
   "gh_refresh": {
     "message": "Actualiser"

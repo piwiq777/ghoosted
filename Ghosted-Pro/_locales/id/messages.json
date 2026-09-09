@@ -363,7 +363,7 @@
     "message": "Nonton story mereka tanpa ketahuan"
   },
   "dos_ghost_note": {
-    "message": "Mode hantu · nggak ninggalin jejak di “dilihat oleh”"
+    "message": "Mode hantu · dibuat agar tidak muncul di “dilihat oleh”"
   },
   "dos_ghost_none": {
     "message": "Nggak ada story aktif sekarang."
@@ -979,10 +979,10 @@
     "message": "Story aktif (mode hantu)"
   },
   "gh_note": {
-    "message": "Orang-orang ini sedang punya story. Buka di sini — Instagram tidak diberi tahu, kamu tidak muncul di daftar penonton."
+    "message": "Orang-orang ini sedang punya story. Buka dari sini: dibuat agar tidak mencatat tampilan dan tidak memasukkanmu ke daftar penonton. Tergantung cara kerja Instagram."
   },
   "gh_watch_note": {
-    "message": "Mode hantu — Instagram tidak tahu kamu melihatnya."
+    "message": "Mode hantu — dibuat agar tidak tercatat sebagai dilihat. Tergantung Instagram."
   },
   "gh_refresh": {
     "message": "Muat ulang"

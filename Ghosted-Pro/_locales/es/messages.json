@@ -363,7 +363,7 @@
     "message": "Ver sus historias sin que le salga que las viste"
   },
   "dos_ghost_note": {
-    "message": "Modo fantasma · no deja rastro en “visto por”"
+    "message": "Modo fantasma · diseñado para no salir en “visto por”"
   },
   "dos_ghost_none": {
     "message": "No tiene historias activas ahora mismo."
@@ -979,10 +979,10 @@
     "message": "Historias activas (modo fantasma)"
   },
   "gh_note": {
-    "message": "Estas personas tienen historia ahora mismo. Ábrela aquí y a Instagram no le llega nada — no saldrás en su lista de espectadores."
+    "message": "Estas personas tienen historia ahora mismo. Ábrela desde aquí: está diseñado para no registrar la visualización ni ponerte en su lista de espectadores. Depende de cómo funcione Instagram."
   },
   "gh_watch_note": {
-    "message": "Modo fantasma — Instagram no sabe que has visto esto."
+    "message": "Modo fantasma — diseñado para no constar como visto. Depende de Instagram."
   },
   "gh_refresh": {
     "message": "Actualizar"

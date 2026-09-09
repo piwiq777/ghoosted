@@ -363,7 +363,7 @@
     "message": "Sieh ihre Stories, ohne dass sie es merken"
   },
   "dos_ghost_note": {
-    "message": "Ghost-Modus · hinterlässt keine Spur bei „gesehen von“"
+    "message": "Ghost-Modus · dafür gemacht, nicht in „Gesehen von“ zu erscheinen"
   },
   "dos_ghost_none": {
     "message": "Gerade keine aktiven Stories."
@@ -979,10 +979,10 @@
     "message": "Aktive Storys (Geistmodus)"
   },
   "gh_note": {
-    "message": "Diese Leute haben gerade eine Story. Öffne sie hier — Instagram erfährt nichts, du tauchst nicht in ihrer Zuschauerliste auf."
+    "message": "Diese Leute haben gerade eine Story. Öffne sie hier: dafür gemacht, die Ansicht nicht zu registrieren und dich nicht in ihre Zuschauerliste zu setzen. Hängt davon ab, wie Instagram funktioniert."
   },
   "gh_watch_note": {
-    "message": "Geistmodus — Instagram weiß nicht, dass du das gesehen hast."
+    "message": "Ghost-Modus — dafür gemacht, nicht als gesehen zu zählen. Hängt von Instagram ab."
   },
   "gh_refresh": {
     "message": "Aktualisieren"

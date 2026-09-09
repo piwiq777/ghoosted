@@ -9,8 +9,8 @@ const DOWNLOADS = {
   // api/_private/ o la descarga falla despues de haber cobrado.
   // Pro sale ofuscado (tools/empaquetar-pro.js); Plus no, porque va tal cual
   // a la Chrome Web Store cuando se pueda enviar.
-  pro: { file: 'Ghoosted-Pro-v1.63.3.zip', name: 'Ghoosted Pro' },
-  plus: { file: 'Ghoosted-Plus-v1.63.3.zip', name: 'Ghoosted Plus' },
+  pro: { file: 'Ghoosted-Pro-v1.63.4.zip', name: 'Ghoosted Pro' },
+  plus: { file: 'Ghoosted-Plus-v1.63.4.zip', name: 'Ghoosted Plus' },
 };
 
 // The zips live under api/ ON PURPOSE: Vercel serves the repo root statically
