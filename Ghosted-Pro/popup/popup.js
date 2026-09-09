@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      script, y sin respaldo se quedaria en blanco o con el nombre de la clave. */
   const esPlus = BUILD.PRODUCT === 'plus';
   $('buy').textContent = t(esPlus ? 'popup_buy_plus' : 'popup_buy_pro',
-    esPlus ? 'Get Ghoosted Plus · €5' : 'Get Ghoosted Pro · €7');
+    esPlus ? 'Get Ghoosted Plus · €3.50' : 'Get Ghoosted Pro · €5');
   $('buy').href = BUY_URL;
   $('privacy').href = PRIVACY_URL;
   $('help').href = HELP_URL;

@@ -47,13 +47,23 @@ module.exports = () => {
   s.ok('el respaldo no es el nombre de la clave', !/getMessage\(clave\) \|\| clave/.test(js));
   s.ok('t() acepta un texto de respaldo', /const t = \(clave, respaldo\)/.test(js));
   s.ok('los data-i18n caen en el texto del HTML', /t\(el\.getAttribute\('data-i18n'\), el\.textContent\)/.test(js));
-  s.ok('el boton de comprar lleva su propio respaldo', /'Get Ghoosted Pro · €7'/.test(js));
+  /* El respaldo se escribe aqui porque este boton no tiene texto en el HTML:
+     lo pone el script, y sin respaldo se quedaria en blanco. El precio va en
+     lib/precios.js, y precios.test.js vigila que nada lo contradiga. */
+  s.ok('el boton de comprar lleva su propio respaldo', /'Get Ghoosted Pro · €5'/.test(js));
 
   /* El precio no es el mismo en las dos versiones. */
   s.ok('el boton de comprar distingue Pro de Plus',
     /popup_buy_plus/.test(js) && /popup_buy_pro/.test(js));
-  s.ok('Pro son 7 €', /7/.test(en.popup_buy_pro.message));
-  s.ok('Plus son 5 €', /5/.test(en.popup_buy_plus.message));
+  /* Los importes no se escriben aqui: salen de lib/precios.js, que es la
+     unica fuente, y precios.test.js comprueba que ningun fichero la
+     contradiga. Aqui solo importa que sean DISTINTOS y que ninguno vaya
+     vacio: si los dos dijeran lo mismo, media tienda estaria mal y nadie se
+     enteraria. */
+  const { PRECIOS, digitos } = require(path.resolve(RAIZ, '..', 'Ghosted-Landing', 'lib', 'precios.js'));
+  s.ok('el boton de Pro lleva el precio de Pro', en.popup_buy_pro.message.indexOf(digitos(PRECIOS.pro)) !== -1);
+  s.ok('el de Plus, el de Plus', en.popup_buy_plus.message.indexOf(digitos(PRECIOS.plus)) !== -1);
+  s.ok('y no son el mismo', en.popup_buy_pro.message !== en.popup_buy_plus.message);
 
   return s;
 };

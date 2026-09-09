@@ -2,6 +2,35 @@ const fs = require('fs');
 const path = require('path');
 const { json, options } = require('../lib/http');
 const { filePath } = require('../lib/downloads');
+const { PRECIOS } = require('../lib/precios');
+
+/* Lo que Stripe cobra de verdad por cada plan. Si no hay claves, o Stripe no
+   contesta, se dice que no se ha podido mirar — nunca se inventa un "coincide"
+   que nadie ha comprobado. */
+async function precios() {
+  const clave = process.env.STRIPE_SECRET_KEY;
+  const ids = { pro: process.env.STRIPE_PRICE_ID, plus: process.env.STRIPE_PRICE_ID_PLUS };
+  const salida = { web: PRECIOS, stripe: {}, coinciden: null };
+  if (!clave) return Object.assign(salida, { error: 'sin_clave_de_stripe' });
+  for (const [plan, id] of Object.entries(ids)) {
+    if (!id) { salida.stripe[plan] = null; continue; }
+    try {
+      const r = await fetch('https://api.stripe.com/v1/prices/' + encodeURIComponent(id), {
+        headers: { Authorization: 'Bearer ' + clave },
+      });
+      const d = await r.json();
+      salida.stripe[plan] = r.ok && typeof d.unit_amount === 'number'
+        ? { centimos: d.unit_amount, divisa: d.currency, activo: d.active !== false }
+        : null;
+    } catch (e) { salida.stripe[plan] = null; }
+  }
+  const mira = Object.keys(PRECIOS).map((p) => {
+    const s = salida.stripe[p];
+    return s ? s.centimos === PRECIOS[p] : null;
+  });
+  salida.coinciden = mira.some((v) => v === null) ? null : mira.every(Boolean);
+  return salida;
+}
 
 /* Canal de avisos hacia las extensiones ya instaladas.
  *
@@ -45,6 +74,14 @@ module.exports = async (req, res) => {
          Antes solo se sabia comprando. */
       correo: !!(process.env.RESEND_API_KEY && process.env.MAIL_FROM),
       sms: !!(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM),
+      /* LO QUE LA WEB DICE CONTRA LO QUE STRIPE COBRA.
+         Son dos verdades distintas: el precio esta escrito a mano en los
+         textos, y el cargo sale de un identificador de precio de Stripe que
+         vive en una variable de entorno. Cambiar una y olvidar la otra da el
+         peor fallo de una tienda —anunciar un precio y cobrar otro—, y eso es
+         una reclamacion al banco por compra. Aqui se comparan de un vistazo,
+         sin tener que gastarse una compra para averiguarlo. */
+      precios: await precios(),
     });
   }
 
