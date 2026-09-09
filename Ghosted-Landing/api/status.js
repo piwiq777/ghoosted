@@ -25,6 +25,14 @@ async function precios() {
   const ids = { pro: process.env.STRIPE_PRICE_ID, plus: process.env.STRIPE_PRICE_ID_PLUS };
   const salida = { web: PRECIOS, stripe: {}, coinciden: null };
   if (!clave) return Object.assign(salida, { error: 'sin_clave_de_stripe' });
+  /* QUE precio esta usando la web, para poder cotejarlo con el panel de
+     Stripe sin adivinar. Solo el final del identificador: basta para
+     reconocerlo en la lista y no es ningun secreto —un price_ viaja en la
+     propia URL de pago— pero tampoco hace falta enseñarlo entero. */
+  salida.usando = {};
+  for (const [plan, id] of Object.entries(ids)) {
+    salida.usando[plan] = id ? '…' + String(id).slice(-8) : null;
+  }
   for (const [plan, id] of Object.entries(ids)) {
     if (!id) { salida.stripe[plan] = { error: 'falta_la_variable_de_entorno' }; continue; }
     try {
