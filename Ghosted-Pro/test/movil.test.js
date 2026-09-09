@@ -132,6 +132,20 @@ module.exports = () => {
   s.ok('la seccion conserva su encabezado para lectores de pantalla',
     /class="show-oculto" id="showTitle" data-i18n="show_title"/.test(html)
     && /\.show-oculto\{position:absolute/.test(css));
+  /* Del apartado del movil se quita la letra: la fila de garantias y los tres
+     pasos numerados. Se queda el titulo, la linea que dice que es, y el
+     dibujo — que es el que explica de un vistazo lo que hacian los pasos. */
+  s.ok('sin la fila de garantias ni los tres pasos',
+    !/pair-trust|pair-steps/.test(html) && !/\.pair-trust|\.pair-step/.test(css));
+  s.ok('sin traducciones huerfanas de esos textos',
+    idiomas.every((f) => {
+      const d = JSON.parse(leer(path.join('locales', f)));
+      return !['pair_trust_1', 'pair_trust_2', 'pair_trust_3', 'pair_step_1', 'pair_step_2', 'pair_step_3']
+        .some((k) => k in d);
+    }));
+  /* Pero el dibujo se queda entero: sin el no queda nada que explique nada. */
+  s.ok('el dibujo del emparejado sigue', /class="pair-qr-card"/.test(html) && /class="pair-phone"/.test(html));
+
   /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
   s.ok('el apartado del movil dice de que va', /data-i18n="pair_title"/.test(html));
   s.ok('y su titulo esta traducido en los once idiomas',
