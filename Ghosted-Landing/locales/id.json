@@ -117,13 +117,7 @@
   "pro_tier": "Lengkap",
   "plus_tier": "Yang penting aja",
   "plus_excl": "Nggak ada mode hantu atau unduhan",
-  "price_foot": "Sekali bayar · tanpa akun · analisis berjalan di perangkatmu",
-  "after_key_t": "Kuncimu milikmu",
-  "after_key": "Setiap pembelian menghasilkan kuncinya sendiri, unik dan hanya milikmu. Kunci muncul di layar begitu kamu membayar dan juga dikirim lewat email. Tidak kedaluwarsa, dan terikat ke akun Instagram-mu: satu kunci, satu akun.",
-  "after_store_t": "Segera di Chrome Web Store",
-  "after_store": "Sementara itu dipasang dari file yang kamu unduh, sekitar lima menit. Begitu ada di toko, kunci yang sama berlaku di sana: kamu tidak membayar dua kali.",
-  "after_upd_t": "Pembaruan termasuk",
-  "after_upd": "Instagram terus berubah, dan Ghoosted mengikutinya. Sekarang ekstensi memberitahumu dari dalam saat ada versi baru; lewat toko, pembaruan terpasang sendiri.",
+  "price_foot": "Bayar sekali · tanpa akun · analisis berjalan di perangkatmu · satu kunci, satu akun Instagram",
   "price_f6": "Dosir lengkap per orang + riwayat",
   "nav_pair": "Sambungkan HP",
   "pair_meta_title": "Sambungkan HP kamu — Ghoosted",
@@ -208,6 +202,5 @@
   "mob_send": "Kirim ke saya",
   "mob_copy": "Salin tautan",
   "mob_copied": "Tautan disalin",
-  "mob_share": "Ghoosted — yang tidak Instagram tunjukkan. Buka di komputer:",
-  "price_tp": "Apa yang Ghoosted lakukan — dan tidak →"
+  "mob_share": "Ghoosted — yang tidak Instagram tunjukkan. Buka di komputer:"
 }

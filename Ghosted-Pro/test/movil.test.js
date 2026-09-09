@@ -157,9 +157,22 @@ module.exports = () => {
      que tumba una exclusion de reembolso cuando alguien reclama. */
   const terms = leer('terms.html');
   s.ok('la portada ya no lleva la seccion de transparencia', html.indexOf('class="compat"') === -1);
-  s.ok('pero enlaza a ella antes del precio',
-    /href="\/terms#transparencia"/.test(html)
-    && html.indexOf('price-tp') < html.indexOf('price-grid'));
+  /* El enlace que la anunciaba desde el precio tambien se retiro. La
+     informacion sigue entera en los Terminos, enlazados desde el pie. */
+  s.ok('la portada ya no lo enlaza desde el precio', !/price-tp/.test(html));
+  s.ok('pero los Terminos siguen a un clic desde el pie', /href="terms\.html"/.test(html));
+  /* Lo que NO puede desaparecer: que la clave se ata a una cuenta. Enterarse
+     de eso despues de pagar es una devolucion. */
+  s.ok('y antes de pagar se sigue avisando de una clave por cuenta',
+    idiomas.every((f) => /una clave|one key|ein Schl|une cl|uma chave|una chiave|один ключ|bir anahtar|satu kunci|एक कुंजी|مفتاح واحد|キー1つ/i
+      .test(JSON.parse(leer(path.join('locales', f))).price_foot || '')));
+  /* Y las tres columnas de despues del precio, fuera. */
+  s.ok('sin el bloque de tres columnas bajo el precio',
+    !/after-buy/.test(html) && !/\.after-buy\{/.test(css));
+  /* Mas aire arriba y abajo de la vitrina que en el resto de secciones: es una
+     foto grande sola, y pegada a lo de al lado parece un trozo de otra cosa. */
+  s.ok('la vitrina respira mas que el resto',
+    /\.show\{max-width:1280px[^}]*padding:calc\(var\(--sec\) \+ 48px\) 24px calc\(var\(--sec\) \+ 24px\)/.test(css));
   s.eq('el bloque esta en los doce idiomas de los Terminos',
     (terms.match(/<h3 class="tp-anchor">/g) || []).length, 12);
   s.eq('con sus tres columnas cada uno',
@@ -169,8 +182,11 @@ module.exports = () => {
   s.eq('sin ids repetidos', (terms.match(/id="transparencia"/g) || []).length, 0);
   s.ok('y el salto busca el articulo que se ve',
     /irAlAncla/.test(leer('legal-i18n.js')) && /style\.display === 'none'/.test(leer('legal-i18n.js')));
-  s.ok('el texto del enlace esta traducido en los once idiomas',
-    idiomas.every((f) => !!JSON.parse(leer(path.join('locales', f))).price_tp));
+  s.ok('sin traducciones huerfanas de lo retirado',
+    idiomas.every((f) => {
+      const d = JSON.parse(leer(path.join('locales', f)));
+      return !['price_tp', 'after_key', 'after_store', 'after_upd'].some((k) => k in d);
+    }));
   /* Y que no quede texto muerto: los compat_* ya no los usa nadie, porque
      terms.html es HTML fijo por idioma, no traducido al vuelo. */
   s.ok('no quedan traducciones huerfanas de la seccion movida',

@@ -117,13 +117,7 @@
   "pro_tier": "Completo",
   "plus_tier": "L'essenziale",
   "plus_excl": "Niente modalità fantasma né download",
-  "price_foot": "Pagamento unico · nessun account · l'analisi gira sul tuo dispositivo",
-  "after_key_t": "La tua chiave è tua",
-  "after_key": "Ogni acquisto genera la sua chiave, unica e solo tua. Compare sullo schermo appena paghi e ti arriva anche via e-mail. Non scade e si lega al tuo account Instagram: una chiave, un account.",
-  "after_store_t": "Presto sul Chrome Web Store",
-  "after_store": "Nel frattempo si installa dal file che scarichi, in circa cinque minuti. Quando sarà nello store, la stessa chiave funziona anche lì: non paghi due volte.",
-  "after_upd_t": "Aggiornamenti inclusi",
-  "after_upd": "Instagram cambia e Ghoosted lo segue. Oggi l'estensione ti avvisa al suo interno quando c'è una versione nuova; dallo store si installeranno da sole.",
+  "price_foot": "Pagamento unico · senza account · l'analisi gira sul tuo dispositivo · una chiave, un account Instagram",
   "price_f6": "Dossier completo per persona + cronologia",
   "nav_pair": "Abbina il telefono",
   "pair_meta_title": "Abbina il tuo telefono — Ghoosted",
@@ -208,6 +202,5 @@
   "mob_send": "Mandamelo",
   "mob_copy": "Copia il link",
   "mob_copied": "Link copiato",
-  "mob_share": "Ghoosted — quello che Instagram non ti mostra. Aprilo sul computer:",
-  "price_tp": "Cosa fa Ghoosted — e cosa no →"
+  "mob_share": "Ghoosted — quello che Instagram non ti mostra. Aprilo sul computer:"
 }

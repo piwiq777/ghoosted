@@ -117,13 +117,7 @@
   "pro_tier": "Complet",
   "plus_tier": "L'essentiel",
   "plus_excl": "Pas de mode fantôme ni de téléchargements",
-  "price_foot": "Paiement unique · sans compte · l'analyse s'exécute sur ton appareil",
-  "after_key_t": "Votre clé est à vous",
-  "after_key": "Chaque achat génère sa propre clé, unique et rien qu'à vous. Elle s'affiche dès le paiement et vous arrive aussi par e-mail. Elle n'expire pas et se lie à votre compte Instagram : une clé, un compte.",
-  "after_store_t": "Bientôt sur le Chrome Web Store",
-  "after_store": "En attendant, elle s'installe depuis le fichier que vous téléchargez, en cinq minutes environ. Une fois dans la boutique, la même clé y fonctionne : vous ne payez pas deux fois.",
-  "after_upd_t": "Mises à jour incluses",
-  "after_upd": "Instagram change, et Ghoosted suit. Aujourd'hui l'extension vous prévient de l'intérieur quand une nouvelle version sort ; depuis la boutique, elles s'installeront toutes seules.",
+  "price_foot": "Paiement unique · sans compte · l'analyse tourne sur ton appareil · une clé, un compte Instagram",
   "price_f6": "Dossier complet par personne + historique",
   "nav_pair": "Jumeler le téléphone",
   "pair_meta_title": "Jumelle ton téléphone — Ghoosted",
@@ -208,6 +202,5 @@
   "mob_send": "Me l'envoyer",
   "mob_copy": "Copier le lien",
   "mob_copied": "Lien copié",
-  "mob_share": "Ghoosted — ce qu'Instagram ne te montre pas. À ouvrir sur un ordinateur :",
-  "price_tp": "Ce que fait Ghoosted — et ce qu'il ne fait pas →"
+  "mob_share": "Ghoosted — ce qu'Instagram ne te montre pas. À ouvrir sur un ordinateur :"
 }

@@ -117,13 +117,7 @@
   "pro_tier": "Komplett",
   "plus_tier": "Das Wichtigste",
   "plus_excl": "Kein Geistermodus, keine Downloads",
-  "price_foot": "Einmalzahlung · kein Konto nötig · die Analyse läuft auf deinem Gerät",
-  "after_key_t": "Dein Schlüssel gehört dir",
-  "after_key": "Jeder Kauf erzeugt einen eigenen Schlüssel, einmalig und nur deiner. Er erscheint direkt nach der Zahlung auf dem Bildschirm und kommt zusätzlich per E-Mail. Er läuft nicht ab und wird an dein Instagram-Konto gebunden: ein Schlüssel, ein Konto.",
-  "after_store_t": "Bald im Chrome Web Store",
-  "after_store": "Bis dahin wird sie aus der heruntergeladenen Datei installiert, in etwa fünf Minuten. Sobald sie im Store ist, gilt derselbe Schlüssel auch dort — du zahlst nicht zweimal.",
-  "after_upd_t": "Updates inklusive",
-  "after_upd": "Instagram verändert sich, und Ghoosted zieht mit. Heute meldet dir die Erweiterung selbst, wenn eine neue Version da ist; aus dem Store installieren sie sich von allein.",
+  "price_foot": "Einmalzahlung · kein Konto nötig · Analyse läuft auf deinem Gerät · ein Schlüssel, ein Instagram-Konto",
   "price_f6": "Vollständiges Dossier pro Person + Verlauf",
   "nav_pair": "Handy koppeln",
   "pair_meta_title": "Koppel dein Handy — Ghoosted",
@@ -208,6 +202,5 @@
   "mob_send": "Link schicken",
   "mob_copy": "Link kopieren",
   "mob_copied": "Link kopiert",
-  "mob_share": "Ghoosted — was Instagram dir nicht zeigt. Am Computer öffnen:",
-  "price_tp": "Was Ghoosted tut — und was nicht →"
+  "mob_share": "Ghoosted — was Instagram dir nicht zeigt. Am Computer öffnen:"
 }

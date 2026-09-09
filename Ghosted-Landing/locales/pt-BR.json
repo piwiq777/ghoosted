@@ -117,13 +117,7 @@
   "pro_tier": "Completo",
   "plus_tier": "O essencial",
   "plus_excl": "Sem modo fantasma nem downloads",
-  "price_foot": "Pagamento único · sem conta · a análise roda no seu dispositivo",
-  "after_key_t": "Sua chave é sua",
-  "after_key": "Cada compra gera a própria chave, única e só sua. Ela aparece na tela assim que você paga e também vai por e-mail. Não expira, e se vincula à sua conta do Instagram: uma chave, uma conta.",
-  "after_store_t": "Em breve na Chrome Web Store",
-  "after_store": "Enquanto isso, instala pelo arquivo que você baixa, em uns cinco minutos. Quando estiver na loja, a mesma chave vale lá: você não paga duas vezes.",
-  "after_upd_t": "Atualizações incluídas",
-  "after_upd": "O Instagram muda e o Ghoosted acompanha. Hoje a extensão avisa por dentro quando há versão nova; pela loja elas se instalam sozinhas.",
+  "price_foot": "Pagamento único · sem cadastro · a análise roda no seu dispositivo · uma chave, uma conta do Instagram",
   "price_f6": "Dossiê completo por pessoa + histórico",
   "nav_pair": "Parear celular",
   "pair_meta_title": "Pareie seu celular — Ghoosted",
@@ -208,6 +202,5 @@
   "mob_send": "Mandar para mim",
   "mob_copy": "Copiar link",
   "mob_copied": "Link copiado",
-  "mob_share": "Ghoosted — o que o Instagram não te mostra. Abra no computador:",
-  "price_tp": "O que o Ghoosted faz — e o que não faz →"
+  "mob_share": "Ghoosted — o que o Instagram não te mostra. Abra no computador:"
 }

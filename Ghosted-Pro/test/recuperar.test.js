@@ -60,7 +60,10 @@ module.exports = () => {
 
   /* Y antes de pagar hay que saber que la clave se ata a una cuenta. */
   const es = JSON.parse(leer('locales/es.json'));
-  s.ok('la web lo avisa antes de comprar', /una clave, una cuenta/i.test(es.after_key));
+  /* Vivia en el bloque de tres columnas de despues del precio, que se quito.
+     Ahora es una clausula del pie que va debajo de los botones de compra —
+     mejor sitio, en realidad: es donde se decide. */
+  s.ok('la web lo avisa antes de comprar', /una clave, una cuenta/i.test(es.price_foot));
 
   return s;
 };

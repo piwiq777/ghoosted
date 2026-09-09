@@ -315,7 +315,10 @@ img,svg{display:block;max-width:100%}
    nombres se lee como un menu y le roba a la imagen 300px de ancho, que es
    justo lo que hay que vender.
    --------------------------------------------------------------------------- */
-.show{max-width:1280px;margin:0 auto;padding:var(--sec) 24px var(--sec-end);text-align:center}
+/* Mas aire que en el resto de secciones, arriba y abajo. Esto es una foto
+   grande sola en la pagina: pegada al bloque de antes y al de despues parece
+   un trozo de otra cosa, no una pieza con su propio sitio. */
+.show{max-width:1280px;margin:0 auto;padding:calc(var(--sec) + 48px) 24px calc(var(--sec) + 24px);text-align:center}
 .show-title{font-family:var(--display);font-size:clamp(32px,4.4vw,54px);font-weight:380;
   letter-spacing:-.04em;line-height:1.02;color:var(--ink);margin:0;text-wrap:balance}
 
@@ -375,14 +378,14 @@ img,svg{display:block;max-width:100%}
 .show-bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .12s linear}
 
 @media (max-width:1120px){
-  .show{padding:104px 24px 104px}
+  .show{padding:136px 24px 132px}
   .show-stage{height:min(58vh,540px)}
 }
 @media (max-width:700px){
   /* Las flechas dejan de robar ancho y se ponen ENCIMA de la foto, en sus dos
      bordes. En un movil, 52px por lado son 104px menos de imagen — el ancho
      entero del que vive esto. */
-  .show{padding:64px 16px 68px}
+  .show{padding:92px 16px 88px}
   .show-carro{gap:0;position:relative}
   .show-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;
     width:40px;height:40px;background:rgba(255,255,255,.86);backdrop-filter:blur(6px);
@@ -523,11 +526,6 @@ img,svg{display:block;max-width:100%}
 
 /* Lo que pasa despues de pagar. Tres columnas que colapsan a una en el movil;
    el borde de arriba las separa del bloque de precios sin meter otra caja. */
-.after-buy{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:900px;
-  margin:34px auto 0;padding-top:28px;border-top:1px solid var(--line);text-align:left}
-.after-item h4{font-size:14px;font-weight:600;letter-spacing:-.01em;color:var(--ink);margin:0 0 7px}
-.after-item p{font-size:13.5px;line-height:1.6;color:var(--ink-2);margin:0}
-@media (max-width:720px){.after-buy{grid-template-columns:1fr;gap:20px;max-width:420px;text-align:center}}
 @media (max-width:720px){.price-grid{grid-template-columns:1fr;max-width:420px;margin-inline:auto}}
 
 /* ---------- faq ---------- */
@@ -874,12 +872,3 @@ img,svg{display:block;max-width:100%}
   .movil-b{max-width:none}
 }
 
-/* El enlace a "que hace y que no", delante del precio. La seccion entera se
-   fue a los Terminos —ocupaba media pantalla justo antes de pagar y hablaba
-   sobre todo de lo que el producto NO hace— pero el enlace se queda: lo que se
-   dice antes de cobrar obliga, y esconderlo detras del boton de pagar es lo
-   que tumba una exclusion de reembolso cuando alguien reclama. */
-.price-tp{margin:10px 0 0;text-align:center;font-size:13.5px}
-.price-tp a{color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;
-  text-decoration-color:var(--line-2);transition:color .2s}
-.price-tp a:hover{color:var(--ink);text-decoration-color:currentColor}

@@ -117,13 +117,7 @@
   "pro_tier": "Tam",
   "plus_tier": "Temel özellikler",
   "plus_excl": "Hayalet mod veya indirme yok",
-  "price_foot": "Tek ödeme · hesap gerekmez · analiz cihazında çalışır",
-  "after_key_t": "Anahtarın senindir",
-  "after_key": "Her satın alma kendi anahtarını üretir; benzersiz ve yalnızca senin. Ödeme biter bitmez ekranda çıkar, ayrıca e-postana gelir. Süresi dolmaz ve Instagram hesabına bağlanır: bir anahtar, bir hesap.",
-  "after_store_t": "Yakında Chrome Web Mağazası'nda",
-  "after_store": "O zamana kadar indirdiğin dosyadan, yaklaşık beş dakikada kuruluyor. Mağazaya girdiğinde aynı anahtar orada da geçerli: iki kez ödemezsin.",
-  "after_upd_t": "Güncellemeler dahil",
-  "after_upd": "Instagram değişiyor, Ghoosted de ona ayak uyduruyor. Bugün yeni sürüm çıktığında uzantı sana kendi içinden haber veriyor; mağazadan ise kendiliğinden kurulacak.",
+  "price_foot": "Tek seferlik ödeme · hesap yok · analiz cihazında çalışır · bir anahtar, bir Instagram hesabı",
   "price_f6": "Kişi başına tam dosya + geçmiş",
   "nav_pair": "Telefonu eşleştir",
   "pair_meta_title": "Telefonunu eşleştir — Ghoosted",
@@ -208,6 +202,5 @@
   "mob_send": "Bana gönder",
   "mob_copy": "Bağlantıyı kopyala",
   "mob_copied": "Bağlantı kopyalandı",
-  "mob_share": "Ghoosted — Instagram’ın sana göstermedikleri. Bilgisayarda aç:",
-  "price_tp": "Ghoosted ne yapar — ne yapmaz →"
+  "mob_share": "Ghoosted — Instagram’ın sana göstermedikleri. Bilgisayarda aç:"
 }
