@@ -44,6 +44,21 @@ function consentimiento(lang, site) {
   return (CONSENT[lang] || CONSENT.en)(site);
 }
 
+/* Traduce el rechazo de Stripe a un codigo corto. Cada uno se arregla en un
+   sitio distinto del panel de Stripe, y confundirlos cuesta horas. */
+function porQueNo(d, estado) {
+  const e = (d && d.error) || {};
+  const t = String(e.message || '');
+  if (/does not have the required permissions|permission/i.test(t)) return 'la_clave_no_tiene_permiso';
+  if (/No such price|resource_missing/i.test(t) || e.code === 'resource_missing') return 'ese_precio_no_existe';
+  if (/inactive|archiv/i.test(t)) return 'el_precio_esta_archivado';
+  if (/terms.of.service|tos_acceptance|consent_collection/i.test(t)) return 'falta_la_url_de_condiciones_en_stripe';
+  if (/statement_descriptor/i.test(t)) return 'el_texto_del_extracto_no_le_gusta_a_stripe';
+  if (/currency/i.test(t)) return 'divisa_incompatible';
+  if (estado === 401) return 'clave_no_valida';
+  return e.type ? String(e.type).slice(0, 40) : 'http_' + estado;
+}
+
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { error: 'method_not_allowed' });
@@ -144,10 +159,14 @@ module.exports = async (req, res) => {
   });
   const data = await stripe.json().catch(() => ({}));
   if (!stripe.ok || !data.url) {
-    // Most common cause: no Terms of Service URL configured in the Stripe
-    // Dashboard (required by consent_collection). Surface it in the logs.
     console.error('checkout_session_failed', stripe.status, data && data.error && data.error.message);
-    return json(res, 502, { error: 'checkout_unavailable' });
+    /* El motivo, en una palabra. NUNCA el texto de Stripe: ese mensaje trae el
+       identificador de la cuenta y el final de la clave, y esto lo puede pedir
+       cualquiera. Sin esto, "no se puede pagar" y "no se puede pagar por esta
+       razon concreta" se ven igual desde fuera, y el unico sitio donde estaba
+       el motivo era un registro del servidor que nadie mira mientras la tienda
+       esta cerrada. */
+    return json(res, 502, { error: 'checkout_unavailable', motivo: porQueNo(data, stripe.status) });
   }
   return json(res, 200, { url: data.url });
 };
