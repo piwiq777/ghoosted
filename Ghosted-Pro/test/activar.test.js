@@ -79,8 +79,10 @@ module.exports = async () => {
 
   /* 5 · El fantasma tiene que salir SIN licencia: es desde donde se pega la
          clave. Si solo saliera con licencia, no habria forma de activarla. */
-  s.ok('el panel se monta antes de comprobar la licencia',
-    content.indexOf('YM(), gt(), ghdStatusLoad();') < content.indexOf('if (!v()) {\n      G(Y("unlock_status")'));
+  /* Ya no hay ninguna puerta que sustituya el panel por la pantalla de la
+     clave: sin licencia se monta el panel entero, se analiza, y la lista se
+     corta en tres. Lo comprueba a fondo gratis.test.js. */
+  s.ok('el panel se monta y funciona sin licencia', !/if \(!v\(\)\) \{/.test(content));
 
   /* 6 · Y la prueba que de verdad importa: arrancar el content script SIN
          cookie de sesion y comprobar que aun asi contesta al popup.

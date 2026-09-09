@@ -226,7 +226,13 @@ async function main() {
   nota(caja.display !== 'none' && caja.visibility !== 'hidden' && Number(caja.opacity) > 0.5, 'y es visible');
   nota(caja.derecha >= 0 && caja.derecha < 60 && caja.abajo >= 0 && caja.abajo < 60, 'abajo a la derecha, donde el usuario lo busca');
 
-  /* --- 2 · pulsarlo abre donde se pega la clave -------------------------- */
+  /* --- 2 · desde el fantasma hasta el campo de la clave ------------------
+     Ya no basta con que salga a la primera: con el escalon gratis, quien no
+     tiene clave ve el panel con sus listas, y la clave se pega desde la barra
+     de "tengo una clave". Lo que hay que comprobar es que el camino EXISTE y
+     es corto — y sobre todo que existe SIN DATOS, que es como llega quien
+     acaba de instalar y de pagar: el candado solo aparece cuando sobran
+     filas, y al principio no sobra ninguna. */
   await evalua("(document.getElementById('ghd-boot-fab') || document.getElementById('ghd-fab')).click()");
   await esperar(600);
   const hoja = await evalua(`(() => {
@@ -235,10 +241,27 @@ async function main() {
     const p = document.getElementById('ghd-panel');
     if (!p) return 'no se ha abierto nada';
     if (getComputedStyle(p).display === 'none') return 'el panel sigue oculto';
-    return 'panel:' + !!p.querySelector('.ghd-unlock-input');
+    if (p.querySelector('.ghd-unlock-input')) return 'panel:true';
+    /* Un clic mas: la barra de la version gratuita. */
+    const b = p.querySelector('.ghd-gratis-btn');
+    if (!b) return 'sin barra de version gratuita ni campo de clave';
+    b.click();
+    return 'barra:' + !!p.querySelector('.ghd-unlock-input');
   })()`);
   console.log('       (al pulsar: ' + hoja + ')');
-  nota(/:true$/.test(String(hoja)), 'AL PULSARLO SALE EL CAMPO DE LA CLAVE');
+  nota(/:true$/.test(String(hoja)), 'SE LLEGA AL CAMPO DE LA CLAVE, CON DATOS O SIN ELLOS');
+
+  /* Y que se pueda volver: antes la pantalla de la clave era el estado por
+     defecto y no habia salida — se entraba y ahi te quedabas. */
+  const vuelta = await evalua(`(() => {
+    const p = document.getElementById('ghd-panel');
+    const atras = p && p.querySelector('.ghd-unlock-back');
+    if (!atras) return 'sin salida';
+    atras.click();
+    return !p.querySelector('.ghd-unlock-input') ? 'vuelve' : 'no vuelve';
+  })()`);
+  console.log('       (salida de la clave: ' + vuelta + ')');
+  nota(vuelta === 'vuelve', 'y se puede volver a la lista');
 
   /* --- 3 · el panel entero, que es lo que se compra ---------------------- */
   nota(await evalua("!!document.getElementById('ghd-panel')"), 'el panel se monta');

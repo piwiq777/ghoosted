@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted is on that tab but is not answering. Open Instagram, click the ghost at the bottom right and paste your key there."
+  },
+  "free_more": {
+    "message": "$1 more, locked"
+  },
+  "free_more_d": {
+    "message": "You are seeing the first three. Unlock the rest — one payment, forever."
+  },
+  "free_back": {
+    "message": "Back to the list"
+  },
+  "free_bar": {
+    "message": "Free version · first $1 of each list"
+  },
+  "free_have_key": {
+    "message": "I have a key"
   }
 }

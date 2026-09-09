@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted ada di tab itu tapi tidak menjawab. Buka Instagram, klik hantu di kanan bawah, dan tempel kuncimu di sana."
+  },
+  "free_more": {
+    "message": "$1 lagi, terkunci"
+  },
+  "free_more_d": {
+    "message": "Kamu melihat tiga yang pertama. Buka sisanya — bayar sekali, selamanya."
+  },
+  "free_back": {
+    "message": "Kembali ke daftar"
+  },
+  "free_bar": {
+    "message": "Versi gratis · $1 pertama dari tiap daftar"
+  },
+  "free_have_key": {
+    "message": "Saya punya kunci"
   }
 }

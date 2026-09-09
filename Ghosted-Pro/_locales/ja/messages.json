@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "そのタブに Ghoosted はありますが応答しません。Instagram を開き、右下のおばけを押してそこにキーを貼り付けてください。"
+  },
+  "free_more": {
+    "message": "あと $1 件、ロック中"
+  },
+  "free_more_d": {
+    "message": "最初の3件だけ表示しています。残りは買い切りで解除できます。"
+  },
+  "free_back": {
+    "message": "一覧に戻る"
+  },
+  "free_bar": {
+    "message": "無料版 · 各リストの最初の $1 件"
+  },
+  "free_have_key": {
+    "message": "キーを持っています"
   }
 }

@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted o sekmede var ama yanıt vermiyor. Instagram’ı aç, sağ alttaki hayalete bas ve anahtarını oraya yapıştır."
+  },
+  "free_more": {
+    "message": "$1 tane daha, kilitli"
+  },
+  "free_more_d": {
+    "message": "İlk üçünü görüyorsun. Kalanını aç — tek ödeme, sonsuza kadar."
+  },
+  "free_back": {
+    "message": "Listeye dön"
+  },
+  "free_bar": {
+    "message": "Ücretsiz sürüm · her listenin ilk $1 tanesi"
+  },
+  "free_have_key": {
+    "message": "Anahtarım var"
   }
 }

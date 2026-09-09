@@ -1673,3 +1673,50 @@
   .ghd-boot-sheet{right:12px;left:12px;width:auto;bottom:82px}
   #ghd-boot-fab{right:14px;bottom:14px}
 }
+
+/* ---------------------------------------------------------------------------
+   EL CANDADO
+   Cierra la lista despues de las tres primeras. Lo que engancha no es la frase
+   sino el numero: "+34" con tres nombres de verdad encima es su propio dato,
+   tapado. Por eso el numero va grande y a la izquierda, donde estaria la cara
+   de la siguiente persona.
+   --------------------------------------------------------------------------- */
+.ghd-candado{display:flex;align-items:center;gap:14px;margin:10px 0 4px;padding:16px 16px;
+  border-radius:16px;border:1px dashed var(--line-2);background:var(--surface)}
+.ghd-candado-n{flex:0 0 auto;min-width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;padding:0 8px;
+  background:var(--accent-soft);color:var(--accent-2);
+  font:700 19px var(--font);letter-spacing:-.02em}
+.ghd-candado-tx{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:3px}
+.ghd-candado-tx b{font:600 14.5px var(--font);color:var(--ink);letter-spacing:-.01em}
+.ghd-candado-tx span{font-size:12.5px;line-height:1.45;color:var(--ink-2)}
+.ghd-candado-btn{flex:0 0 auto;border:0;border-radius:11px;cursor:pointer;
+  background:var(--accent-grad);color:var(--on-accent);
+  padding:10px 14px;font:700 13px var(--font);white-space:nowrap}
+.ghd-candado-btn:hover{filter:brightness(1.08)}
+.ghd-candado-btn:active{transform:scale(.96)}
+.ghd-candado-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* La salida de la pantalla de la clave. Sin esto se entra y no se vuelve. */
+.ghd-unlock-back{display:block;margin:16px auto 0;border:0;background:none;cursor:pointer;
+  font:500 13px var(--font);color:var(--ink-3);text-decoration:underline;
+  text-underline-offset:3px}
+.ghd-unlock-back:hover{color:var(--ink-2)}
+.ghd-unlock-back:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+
+@media (max-width:420px){
+  .ghd-candado{flex-wrap:wrap}
+  .ghd-candado-btn{width:100%}
+}
+
+/* La barra de la version gratuita. Va siempre que no hay clave, con datos o
+   sin ellos: el candado solo sale cuando sobran filas, y quien acaba de
+   instalar no tiene ninguna — se quedaba sin ningun sitio donde pegar la
+   clave que acababa de pagar. */
+.ghd-gratis{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:9px 12px;
+  border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.ghd-gratis span{flex:1 1 auto;min-width:0;font-size:12.5px;line-height:1.4;color:var(--ink-2)}
+.ghd-gratis-btn{flex:0 0 auto;border:1px solid var(--line-2);border-radius:9px;cursor:pointer;
+  background:none;color:var(--ink);padding:7px 11px;font:600 12px var(--font);white-space:nowrap}
+.ghd-gratis-btn:hover{background:var(--surface-2)}
+.ghd-gratis-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}

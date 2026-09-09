@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted è in quella scheda ma non risponde. Apri Instagram, tocca il fantasma in basso a destra e incolla lì la tua chiave."
+  },
+  "free_more": {
+    "message": "Altre $1, bloccate"
+  },
+  "free_more_d": {
+    "message": "Stai vedendo le prime tre. Sblocca il resto — un pagamento, per sempre."
+  },
+  "free_back": {
+    "message": "Torna alla lista"
+  },
+  "free_bar": {
+    "message": "Versione gratuita · le prime $1 di ogni elenco"
+  },
+  "free_have_key": {
+    "message": "Ho una chiave"
   }
 }

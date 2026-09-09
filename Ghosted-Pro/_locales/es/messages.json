@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted está en esa pestaña pero no contesta. Abre Instagram, pulsa el fantasma de abajo a la derecha y pega ahí tu clave."
+  },
+  "free_more": {
+    "message": "$1 más, bloqueadas"
+  },
+  "free_more_d": {
+    "message": "Estás viendo las tres primeras. Desbloquea el resto — un pago, para siempre."
+  },
+  "free_back": {
+    "message": "Volver a la lista"
+  },
+  "free_bar": {
+    "message": "Versión gratuita · las $1 primeras de cada lista"
+  },
+  "free_have_key": {
+    "message": "Tengo una clave"
   }
 }

@@ -371,6 +371,85 @@
   function v() {
     return q.isPro(g);
   }
+
+  /* ===================== EL ESCALON GRATIS =============================
+     Antes de esto, sin clave no habia NADA: el panel se montaba, pintaba la
+     pantalla de "activa tu clave" y no analizaba una sola cuenta. O sea que
+     se pedia dinero antes de que nadie hubiera visto un solo nombre — la
+     forma mas cara de vender algo que se entiende en cuanto lo ves.
+
+     Ahora se instala, se analiza, y se ven las TRES primeras de cada lista.
+     El resto queda detras de la llave, con el numero de las que faltan
+     delante: el gancho no es una promesa, es su propio dato tapado.
+
+     Lo que sigue siendo de pago: modo fantasma, espectadores, historial,
+     descargas, y dejar de seguir en lote — que es la accion que toca su
+     cuenta y la que de verdad se compra. */
+  const GHD_GRATIS = 3;
+  function ghdLibre() {
+    return !v();
+  }
+  /* Corta la lista y devuelve cuantas se quedan fuera. */
+  function ghdCorta(gq) {
+    if (!ghdLibre() || gq.length <= GHD_GRATIS) return {
+      lista: gq,
+      faltan: 0
+    };
+    return {
+      lista: gq.slice(0, GHD_GRATIS),
+      faltan: gq.length - GHD_GRATIS
+    };
+  }
+  /* La fila con el candado. Lleva el numero, que es lo que engancha: "y 34
+     mas" con la lista delante vende mas que cualquier frase. */
+  function ghdCandado(gq) {
+    const gx = document.createElement("div");
+    gx.className = "ghd-candado";
+    const gz = document.createElement("div");
+    gz.className = "ghd-candado-n", gz.textContent = "+" + gq;
+    const gL = document.createElement("div");
+    gL.className = "ghd-candado-tx";
+    const gO = document.createElement("b");
+    gO.textContent = Y("free_more", String(gq));
+    const gX = document.createElement("span");
+    gX.textContent = Y("free_more_d");
+    gL.appendChild(gO), gL.appendChild(gX);
+    const gJ = document.createElement("button");
+    gJ.type = "button", gJ.className = "ghd-candado-btn",
+    gJ.textContent = Y(x.product === "plus" ? "popup_buy_plus" : "popup_buy_pro"),
+    gJ.addEventListener("click", ghdAbreLlave);
+    gx.appendChild(gz), gx.appendChild(gL), gx.appendChild(gJ);
+    return gx;
+  }
+  /* La pantalla de la clave se abre A PROPOSITO y se puede cerrar. Antes era
+     el estado por defecto y no habia vuelta: se entraba y ahi te quedabas. */
+  function ghdAbreLlave() {
+    Ys();
+  }
+  /* La barra de la version gratuita. Va SIEMPRE que no hay clave, tenga datos
+     o no. Sin ella, quien acaba de instalar y aun no ha analizado nada se
+     encuentra una lista vacia y ni un sitio donde pegar la clave que acaba de
+     pagar — el candado solo aparece cuando sobran filas, y al principio no
+     sobra ninguna. */
+  function ghdBarraGratis() {
+    if (!p) return;
+    const gv = m.querySelector(".ghd-gratis");
+    if (!ghdLibre()) return void (gv && gv.remove());
+    if (gv) return;
+    const gq = document.createElement("div");
+    gq.className = "ghd-gratis";
+    const gx = document.createElement("span");
+    gx.textContent = Y("free_bar", String(GHD_GRATIS));
+    const gz = document.createElement("button");
+    gz.type = "button", gz.className = "ghd-gratis-btn",
+    gz.textContent = Y("free_have_key"),
+    gz.addEventListener("click", ghdAbreLlave);
+    gq.appendChild(gx), gq.appendChild(gz);
+    p.parentNode.insertBefore(gq, p);
+  }
+  function ghdCierraLlave() {
+    m.classList.remove("ghd-locked"), ghdBarraGratis(), g5();
+  }
   function T(gq) {
     const gx = new Date(gq);
     return gx.getFullYear() + "-" + (gx.getMonth() + 1) + "-" + gx.getDate();
@@ -786,10 +865,8 @@
     if (ghdLoadEl) ghdLoadEl.classList.remove("show");
   }
   async function YL(gq) {
-    if (!v()) {
-      Ys();
-      return;
-    }
+    /* Sin clave TAMBIEN se analiza: es lo que hace que haya algo que ver.
+       El corte va al pintar la lista, no al recogerla. */
     if (l) return;
     // Las dos comprobaciones comparten la pantalla de carga, y la primera en
     // terminar se la quitaba a la otra: salia y desaparecia al instante. Ya
@@ -948,10 +1025,10 @@
   }
 //#plus-off espectadores de historias: carga de la lista de quien te vio
   async function Yl(gq, gx) {
-    if (!v()) {
-      if (!gx) Ys();
-      return;
-    }
+    /* Los espectadores siguen siendo de pago, pero el corte lo hace
+       N("storyViewers") tres lineas mas abajo — que dice por que no se puede
+       en vez de sustituir el panel por la pantalla de la llave y dejar al
+       usuario sin salida. */
     if (c) return;
     if (!N("storyViewers")) {
       if (!gx) G(Y("status_pro_needed"), "alert");
@@ -1254,7 +1331,15 @@
     const gc = () => Yf(gJ.value, gF, gl);
     gF.addEventListener("click", gc), gJ.addEventListener("keydown", gS => {
       gS.key === "Enter" && (gS.preventDefault(), gc());
-    }), gX.appendChild(gJ), gX.appendChild(gF), gq.append(gx, gz, gL, gO, gX, gl), p.appendChild(gq);
+    }), gX.appendChild(gJ), gX.appendChild(gF);
+    /* Salida. Antes esta pantalla era el estado por defecto de quien no tenia
+       clave y no habia forma de volver: se entraba y ahi te quedabas. Ahora se
+       abre a proposito desde el candado, asi que tiene que poder cerrarse. */
+    const gAtras = document.createElement("button");
+    gAtras.type = "button", gAtras.className = "ghd-unlock-back",
+    gAtras.textContent = Y("free_back"),
+    gAtras.addEventListener("click", ghdCierraLlave);
+    gq.append(gx, gz, gL, gO, gX, gl, gAtras), p.appendChild(gq);
     if (A) A.textContent = Y("unlock_activate");
   }
   function ghdTheme() {
@@ -1595,10 +1680,11 @@
   }
 //#plus-on
   function YE() {
-    if (!v()) {
+    /* El boton de comprobar comprueba, con clave o sin ella. Antes, sin clave,
+       lo unico que hacia era poner el cursor en el campo de la clave. */
+    if (m.classList.contains("ghd-locked")) {
       const gq = m.querySelector(".ghd-unlock-input");
-      if (gq) gq.focus();
-      return;
+      if (gq) return void gq.focus();
     }
 //#plus-off espectadores de historias
     if (j === "history") Yl(true); else
@@ -1607,7 +1693,10 @@
   }
   function Yp() {
     if (!A) return;
-    if (!v()) {
+    /* Solo dice "activar" cuando de verdad se esta en la pantalla de la clave.
+       Antes lo decia siempre que no hubiera licencia, asi que el boton
+       principal del panel no servia para comprobar nada. */
+    if (m.classList.contains("ghd-locked")) {
       A.textContent = Y("unlock_activate");
       return;
     }
@@ -4424,6 +4513,9 @@
 
   async function g2(gq) {
     if (r || !gq.length) return;
+    /* Ver quien no te sigue es gratis; quitarlos de un tiron, no. Es la unica
+       accion que modifica la cuenta y es la que se paga. */
+    if (ghdLibre()) return void ghdAbreLlave();
     if (!confirm(Y("nb_confirm", String(gq.length)))) return;
     // Segundo aviso solo para lotes grandes: el primero se acepta sin leer.
     if (gq.length > GHD_LOTE_GRANDE && !confirm(Y("nb_confirm_big", [String(gq.length), String(GHD_LOTE_GRANDE)]))) return;
@@ -4945,25 +5037,29 @@
       const gx = g.get(J.events, []);
       if (j === "unfollow") {
         if (!g.get(J.followers, null)) return void p.appendChild(YG(Y("empty_unfollow_load")));
-        const gz = gx.filter(gL => gL.type === "unfollow");
+        const gzT = gx.filter(gL => gL.type === "unfollow");
         let gVac = Y("empty_unfollow_own");
 //#plus-off punto de mira: el texto largo habla de "vigilar"
         gVac = Y("empty_unfollow");
 //#plus-on
-        if (!gz.length) return void p.appendChild(YG(gVac));
+        if (!gzT.length) return void p.appendChild(YG(gVac));
+        const gzC = ghdCorta(gzT), gz = gzC.lista;
         gz.forEach((gL, gO) => p.appendChild(YB(gL, {
           time: gL.ts,
           tag: Y("tag_unfollow"),
           tagClass: "red"
         }, gO)));
+        if (gzC.faltan) p.appendChild(ghdCandado(gzC.faltan));
       } else if (j === "new") {
-        const gL = gx.filter(gO => gO.type === "new");
-        if (!gL.length) return void p.appendChild(YG(Y("empty_new")));
+        const gLT = gx.filter(gO => gO.type === "new");
+        if (!gLT.length) return void p.appendChild(YG(Y("empty_new")));
+        const gLC = ghdCorta(gLT), gL = gLC.lista;
         gL.forEach((gO, gX) => p.appendChild(YB(gO, {
           time: gO.ts,
           tag: Y("tag_new"),
           tagClass: "green"
         }, gX)));
+        if (gLC.faltan) p.appendChild(ghdCandado(gLC.faltan));
       } else if (j === "notback") {
         const gO = g.get(J.followers, {
           users: []
@@ -5038,7 +5134,8 @@
             gP.appendChild(YG(Y("nb_no_match")));
             return;
           }
-          gE.forEach((gR, gh) => {
+          const gEC = ghdCorta(gE), gEv = gEC.lista;
+          gEv.forEach((gR, gh) => {
             if (R) {
               const gK = h.has(gR.pk);
               gP.appendChild(YB(gR, {
@@ -5056,6 +5153,7 @@
               tagClass: "gray"
             }, gh));
           });
+          if (gEC.faltan) gP.appendChild(ghdCandado(gEC.faltan));
         };
         gW.addEventListener("input", () => {
           nbQ = gW.value, gT();
@@ -5277,11 +5375,12 @@
     gz > 0 && m.style.display !== "flex" ? (D.style.display = "block", D.textContent = gz > 99 ? "99+" : gz) : D.style.display = "none";
   }
   function gt() {
-    if (!v()) {
-      Ys();
-      return;
-    }
+    /* Sin clave ya no se sustituye el panel entero por la pantalla de la
+       llave: se pinta el panel normal y la lista se corta en tres. La llave
+       se abre desde la fila del candado, y se puede cerrar. */
+    if (m.classList.contains("ghd-locked")) return;
     m.classList.remove("ghd-locked");
+    ghdBarraGratis();
     const gq = g.get(J.followers, {
       users: []
     }).users || [], gx = g.get(J.following, {
@@ -5377,10 +5476,9 @@
       // getAccountId se responde al principio del fichero, antes de cualquier
       // corte: aqui llegaria demasiado tarde para quien no tiene sesion aun.
     });
-    if (!v()) {
-      G(Y("unlock_status"), "alert");
-      return;
-    }
+    /* Y la primera comprobacion se programa igual sin clave: si no, se
+       instala, se abre, y no hay nada — que es justo lo que habia que
+       arreglar. */
     const gx = g.get(J.lastCheck, 0), gz = g.get(J.lastAttempt, gx), gL = Date.now() - gz > Math.max(15, F.intervalMin) * 6e4;
     !g.get(J.followers, null) || gL ? (G(Y("status_first"), "work"), setTimeout(() => YL(false), 3500)) : (G(Y("status_upto", B(gx)), "ok"), 
     YR(), setTimeout(() => {

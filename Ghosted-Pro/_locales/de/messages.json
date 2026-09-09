@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted ist in diesem Tab, antwortet aber nicht. Öffne Instagram, klicke unten rechts auf das Gespenst und füge dort deinen Schlüssel ein."
+  },
+  "free_more": {
+    "message": "$1 weitere, gesperrt"
+  },
+  "free_more_d": {
+    "message": "Du siehst die ersten drei. Schalte den Rest frei — einmal zahlen, für immer."
+  },
+  "free_back": {
+    "message": "Zurück zur Liste"
+  },
+  "free_bar": {
+    "message": "Kostenlose Version · die ersten $1 jeder Liste"
+  },
+  "free_have_key": {
+    "message": "Ich habe einen Schlüssel"
   }
 }

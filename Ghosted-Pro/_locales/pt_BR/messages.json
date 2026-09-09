@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "O Ghoosted está nessa aba mas não responde. Abra o Instagram, clique no fantasma no canto inferior direito e cole sua chave ali."
+  },
+  "free_more": {
+    "message": "Mais $1, bloqueadas"
+  },
+  "free_more_d": {
+    "message": "Você está vendo as três primeiras. Desbloqueie o resto — um pagamento, para sempre."
+  },
+  "free_back": {
+    "message": "Voltar à lista"
+  },
+  "free_bar": {
+    "message": "Versão gratuita · as $1 primeiras de cada lista"
+  },
+  "free_have_key": {
+    "message": "Tenho uma chave"
   }
 }

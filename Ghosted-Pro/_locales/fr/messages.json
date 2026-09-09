@@ -1334,5 +1334,20 @@
   },
   "popup_no_answer": {
     "message": "Ghoosted est sur cet onglet mais ne répond pas. Ouvre Instagram, clique sur le fantôme en bas à droite et colle ta clé là."
+  },
+  "free_more": {
+    "message": "$1 de plus, verrouillées"
+  },
+  "free_more_d": {
+    "message": "Tu vois les trois premières. Débloque le reste — un paiement, pour toujours."
+  },
+  "free_back": {
+    "message": "Retour à la liste"
+  },
+  "free_bar": {
+    "message": "Version gratuite · les $1 premières de chaque liste"
+  },
+  "free_have_key": {
+    "message": "J'ai une clé"
   }
 }
