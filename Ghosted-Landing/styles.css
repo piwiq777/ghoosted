@@ -208,11 +208,20 @@ img,svg{display:block;max-width:100%}
   width:126%;height:150%;pointer-events:none;
   background:radial-gradient(ellipse at center,rgba(247,245,240,.94) 0%,rgba(247,245,240,.74) 40%,rgba(247,245,240,0) 72%)}
 /* minimal, cosmos-style: big title · two pills. Nothing else. */
-.hero-title{font-family:var(--display);font-size:clamp(34px,5.4vw,66px);line-height:1.02;font-weight:360;
-  letter-spacing:-.05em;max-width:14ch;margin:0 auto;text-wrap:balance}
+/* El ancho estaba en 14ch, que es lo que medía "Quién te mira." — el titular
+   de antes. Con una frase entera eso lo estrangulaba a tres lineas
+   estrechas. Y balance empeoraba lo mismo: iguala el largo de las lineas, o
+   sea que parte antes de tiempo aunque quepa.
+   Ahora se deja correr hasta el ancho del bloque y solo se parte donde no
+   cabe; la segunda mitad ya va en su propia linea porque .grad es block. */
+.hero-title{font-family:var(--display);font-size:clamp(34px,5.6vw,70px);line-height:1.04;font-weight:360;
+  letter-spacing:-.05em;max-width:none;margin:0 auto;text-wrap:pretty}
 .hero-title .grad{display:block}
-.hero-sub{max-width:46ch;margin:22px auto 0;font-size:clamp(15px,2.1vw,18px);line-height:1.6;
-  color:var(--ink-2);text-wrap:pretty}
+/* Aqui balance SI es lo que toca: son cuatro frases cortas seguidas y sin el
+   se quedaba "Que ha cambiado." colgando sola en la segunda linea. Con dos
+   lineas parejas se lee como una tirada, que es como esta escrita. */
+.hero-sub{max-width:58ch;margin:22px auto 0;font-size:clamp(15px,2.1vw,18.5px);line-height:1.6;
+  color:var(--ink-2);text-wrap:balance}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px}
 
 /* ---------- a chip ---------- */

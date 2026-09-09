@@ -90,6 +90,18 @@ module.exports = () => {
      una herramienta de Instagram, y estaba escrita y guardada en un cajon. */
   const html = fs.readFileSync(path.join(WEB, 'index.html'), 'utf8');
   s.ok('la linea de confianza se pinta', /class="hero-trust" data-i18n="hero_trust"/.test(html));
+
+  /* El titular estaba limitado a 14ch —lo que medía "Quién te mira.", el de
+     antes— y con balance encima. Con una frase entera eso lo estrangulaba a
+     tres lineas estrechas y apiladas en medio de la pagina. */
+  const css = fs.readFileSync(path.join(WEB, 'styles.css'), 'utf8');
+  s.ok('el titular no lleva un ancho pensado para otra frase',
+    /\.hero-title\{[^}]*max-width:none/.test(css) && !/\.hero-title\{[^}]*max-width:1\dch/.test(css));
+  s.ok('y no se parte antes de tiempo por equilibrar',
+    /\.hero-title\{[^}]*text-wrap:pretty/.test(css));
+  /* En el subtitulo es al reves: son cuatro frases cortas seguidas y sin
+     equilibrar se quedaba "Que ha cambiado." colgando sola. */
+  s.ok('el subtitulo si se equilibra', /\.hero-sub\{[^}]*text-wrap:balance/.test(css));
   s.ok('y va debajo de los botones, que es lo ultimo que se lee',
     html.indexOf('hero-cta') < html.indexOf('hero-trust'));
   /* Raices, no palabras enteras: el ruso declina —"Без пароля" no contiene
