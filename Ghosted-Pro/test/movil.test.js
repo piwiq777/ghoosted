@@ -165,6 +165,47 @@ module.exports = () => {
     s.eq(f + ': no falta ningun texto de la portada', pedidas.filter((k) => !d[k]), []);
   }
 
+  /* 6 ter · LA ESTRUCTURA.
+     El hero es position:sticky y se queda pegado detras de todo lo que viene
+     despues; lo que lo tapa es <div class="over">, que lleva fondo solido y
+     z-index:2. Si algo se sale de ese envoltorio, deja de tener suelo y el
+     hero se le pinta ENCIMA — titular, botones y fotos flotando sobre el
+     precio. Es lo que paso al quitar un bloque y dejarse un </div> suelto:
+     .over cerraba dentro del apartado del movil y el precio, el FAQ y la
+     llamada final se quedaban fuera.
+     Contar llaves no vale: hay que mirar el anidamiento. */
+  const cierraDiv = (txt, desde) => {
+    let prof = 0;
+    const re = /<div\b|<\/div>/g;
+    re.lastIndex = desde;
+    let m;
+    while ((m = re.exec(txt))) {
+      prof += m[0] === '</div>' ? -1 : 1;
+      if (prof === 0) return m.index + m[0].length;
+    }
+    return -1;
+  };
+  const abreOver = html.indexOf('<div class="over">');
+  s.ok('la portada tiene el envoltorio que tapa el hero', abreOver !== -1);
+  const cierraOver = cierraDiv(html, abreOver);
+  s.ok('y ese envoltorio cierra', cierraOver !== -1);
+  for (const [que, marca] of [['el precio', 'class="pricing"'], ['el FAQ', 'id="faq"'], ['la llamada final', 'class="cta-band"']]) {
+    const i = html.indexOf(marca);
+    s.ok(que + ' va dentro del envoltorio, o el hero se le pinta encima',
+      i > abreOver && i < cierraOver);
+  }
+  /* Y que ninguna seccion se quede con un </div> de mas o de menos, que es de
+     donde salio el desaguisado. */
+  const descuadradas = [];
+  for (const m of html.matchAll(/<section\b[^>]*class="([^"]*)"[^>]*>/g)) {
+    const fin = html.indexOf('</section>', m.index);
+    const dentro = html.slice(m.index, fin);
+    const abre = (dentro.match(/<div\b/g) || []).length;
+    const cierra = (dentro.match(/<\/div>/g) || []).length;
+    if (abre !== cierra) descuadradas.push(m[1].split(' ')[0] + ' (' + abre + '/' + cierra + ')');
+  }
+  s.eq('ninguna seccion tiene divs descuadrados', descuadradas, []);
+
   /* 7 bis · La transparencia se fue a los Terminos, pero el enlace se queda
      DELANTE del precio. En la UE lo que se dice antes de cobrar obliga (art.
      61 TRLGDCU): esconder los limites detras del boton de pagar es justo lo
