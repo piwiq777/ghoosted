@@ -57,6 +57,8 @@
       <div class="barra">
         <input id="buscar" type="search" placeholder="Buscar por correo, clave o cuenta…">
         <button id="recargar" class="gris">Recargar</button>
+        <button id="regalar-pro" class="gris">Regalar Pro</button>
+        <button id="regalar-plus" class="gris">Regalar Plus</button>
       </div>
       <div class="envuelve"><table class="tabla" id="tabla"></table></div>
       <p id="msg" class="msg"></p>
@@ -188,6 +190,27 @@
         cargar();
       });
     });
+
+    /* Una clave sin cobrar. Para la del dueño y para las que se regalan.
+       No manda correo: sale en pantalla y se copia a mano, porque quien la
+       pide esta delante. Queda marcada como regalo para que no cuente como
+       venta. */
+    function regalar(plan) {
+      var motivo = prompt('Para quien es esta clave ' + plan.toUpperCase() + '? (queda anotado)');
+      if (motivo === null) return;
+      pedir('/api/admin', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accion: 'regalar', plan: plan, motivo: motivo }),
+      }).then(function (r) {
+        if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
+        $('msg').textContent = 'Clave ' + r.d.plan + ': ' + r.d.key;
+        try { navigator.clipboard.writeText(r.d.key); } catch (e) {}
+        prompt('Copia la clave. No se manda por correo:', r.d.key);
+        cargar();
+      });
+    }
+    $('regalar-pro').addEventListener('click', function () { regalar('pro'); });
+    $('regalar-plus').addEventListener('click', function () { regalar('plus'); });
 
     $('entrar').addEventListener('click', function () {
       TOK = $('tok').value.trim();

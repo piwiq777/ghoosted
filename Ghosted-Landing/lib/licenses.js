@@ -97,6 +97,35 @@ async function issueLicense(session) {
   return key;
 }
 
+/* Una clave que no viene de una compra.
+   Hace falta para dos cosas reales: la del dueño, que no se va a cobrar a si
+   mismo, y las que se regalan —soporte, un creador, un influencer—. Es la
+   misma ficha que emite una compra salvo que no lleva pago detras, y queda
+   marcada con `origen` para que en el panel se distinga de una venta y no
+   ensucie las cuentas.
+
+   Cuelga del panel de admin, que ya exige token. Aqui no hay puerta: quien
+   llame a esto ya ha pasado la suya. */
+async function regalar(plan, motivo) {
+  const key = await claimFreeKey();
+  const record = {
+    key,
+    status: 'active',
+    plan: plan === 'plus' ? 'plus' : 'pro',
+    lang: 'es',
+    ref: null,
+    createdAt: new Date().toISOString(),
+    origen: 'regalo',
+    motivo: String(motivo || '').slice(0, 120) || null,
+    checkoutSessionId: null,
+    paymentIntent: null,
+    customerEmail: null,
+    customerPhone: null,
+  };
+  await setJson(licenseKey(key), record);
+  return record;
+}
+
 // Deja constancia de por donde salio la clave. La pantalla de gracias lo lee
 // para decir la verdad: si el correo no salio, no dice que lo ha mandado.
 async function markDelivered(key, sent) {
@@ -221,4 +250,4 @@ async function revokePayment(paymentIntent) {
   await setJson(licenseKey(key), record);
 }
 
-module.exports = { activate, apuntarIntento, issueLicense, markDelivered, normalizeKey, porEmail, resolve, revokePayment, verify };
+module.exports = { activate, apuntarIntento, issueLicense, markDelivered, normalizeKey, porEmail, regalar, resolve, revokePayment, verify };

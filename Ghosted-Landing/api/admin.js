@@ -2,7 +2,7 @@
 /* El panel de ventas, en un solo endpoint.
  *
  *   GET  /api/admin              la lista de ventas (solo lee)
- *   POST /api/admin              revocar · reactivar · soltar · reenviar
+ *   POST /api/admin              revocar · reactivar · soltar · reenviar · regalar
  *
  * Antes eran dos ficheros, api/admin/licencias.js y api/admin/accion.js. Se
  * juntaron porque Vercel crea UNA funcion por fichero bajo api/ y el plan
@@ -15,9 +15,10 @@ const { json, options, readJson } = require('../lib/http');
 const { frenar } = require('../lib/freno');
 const { ConfigError, command, getJson, setJson } = require('../lib/kv');
 const { autorizado, configurado, licencias, atadaA, resumen } = require('../lib/admin');
+const { regalar } = require('../lib/licenses');
 const { entregar } = require('../lib/entrega');
 
-const ACCIONES = new Set(['revocar', 'reactivar', 'soltar', 'reenviar']);
+const ACCIONES = new Set(['revocar', 'reactivar', 'soltar', 'reenviar', 'regalar']);
 const CLAVE = /^GHST-(?:[A-Z0-9]{4}-){4}[A-Z0-9]{4}$/;
 
 module.exports = async (req, res) => {
@@ -73,6 +74,15 @@ module.exports = async (req, res) => {
     const accion = String(body.accion || '');
     const key = String(body.key || '').trim().toUpperCase();
     if (!ACCIONES.has(accion)) return json(res, 400, { error: 'accion_desconocida' });
+
+    /* regalar es la unica que no parte de una clave que ya existe: la crea.
+       Va aqui arriba porque las validaciones de abajo dan por hecho que la
+       clave viene en la peticion, y esta la devuelve. */
+    if (accion === 'regalar') {
+      const ficha = await regalar(String(body.plan || 'pro'), body.motivo);
+      return json(res, 200, { ok: true, key: ficha.key, plan: ficha.plan });
+    }
+
     if (!CLAVE.test(key)) return json(res, 400, { error: 'clave_mal_formada' });
 
     const ficha = await getJson('ghosted:license:' + key);
