@@ -2435,6 +2435,10 @@
 //#plus-off modo fantasma: ver historias sin dejar rastro
   function tg(gq) {
     if (!gq || !gq.pk) return;
+    /* Modo fantasma: de pago. El corte va aqui y no en el boton porque el
+       boton no es la unica puerta —esta tambien el barrido de "ver todas"—
+       y una puerta que se puede rodear no es una puerta. */
+    if (!N("ghostMode")) return void ghdAbreLlave();
     let gx = document.getElementById("ghd-stories");
     !gx && (gx = document.createElement("div"), gx.id = "ghd-stories", m.appendChild(gx)), 
     gx.classList.add("show"), gx.innerHTML = '<div class="dos-loading">' + Y("dos_loading") + "</div>", 
@@ -3140,6 +3144,8 @@
   }
 //#plus-off descargas: guardar la foto de perfil de otra persona
   async function tf(gq, gx) {
+    // Descargas en HD: de pago, por lo mismo que el fantasma.
+    if (!N("downloads")) return void ghdAbreLlave();
     const gz = tr(gq);
     if (!gz.length) return;
     gx.disabled = true;

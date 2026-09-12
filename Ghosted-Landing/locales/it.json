@@ -228,5 +228,14 @@
   "cr_pending": "Il tuo codice è ancora in attesa di approvazione.",
   "cr_rate": "Sei al $1%.",
   "foot_creators_t": "Creator",
-  "foot_creators": "Programma creator"
+  "foot_creators": "Programma creator",
+  "free_tier": "Provalo",
+  "free_price": "0 €",
+  "free_period": "gratis · senza account, senza carta",
+  "free_f1": "L’analisi completa gira sul tuo dispositivo",
+  "free_f2": "Vedi i primi 3 di ogni lista",
+  "free_f3": "Il resto resta dietro la chiave",
+  "free_f4": "Niente modalità fantasma, niente download, niente unfollow in blocco",
+  "free_cta": "Scarica gratis",
+  "free_note": "La chiave si compra dopo e si incolla nella stessa installazione. Non devi reinstallare nulla."
 }

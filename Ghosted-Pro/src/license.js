@@ -21,7 +21,13 @@
     // Which features are gated behind a licence. A name missing from here is
     // free for everyone, which is what makes the Plus build possible: drop a
     // capability out of this map and it stops being sold as part of it.
-    pro: { access: true, storyViewers: true, instantAlerts: true, history: true },
+    // ghostMode y downloads entraron aqui cuando el ZIP paso a bajarse sin
+    // pagar. Antes daba igual que no estuvieran: sin clave no se llegaba a
+    // ver un solo nombre, asi que el boton nunca aparecia. Ahora el panel se
+    // pinta entero desde el minuto uno y estas dos serian gratis para todo el
+    // mundo — que son justo las dos que mas se nombran al vender Pro.
+    pro: { access: true, storyViewers: true, instantAlerts: true, history: true,
+           ghostMode: true, downloads: true },
   };
 
   var LICENSE_KEY = 'ghosted_license';

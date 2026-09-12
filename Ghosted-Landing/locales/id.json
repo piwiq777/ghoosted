@@ -228,5 +228,14 @@
   "cr_pending": "Kodemu masih menunggu persetujuan.",
   "cr_rate": "Kamu di $1%.",
   "foot_creators_t": "Kreator",
-  "foot_creators": "Program kreator"
+  "foot_creators": "Program kreator",
+  "free_tier": "Coba dulu",
+  "free_price": "€0",
+  "free_period": "gratis · tanpa akun, tanpa kartu",
+  "free_f1": "Seluruh analisis berjalan di perangkatmu",
+  "free_f2": "Kamu lihat 3 teratas dari tiap daftar",
+  "free_f3": "Sisanya tetap di balik kunci",
+  "free_f4": "Tanpa mode hantu, tanpa unduhan, tanpa unfollow massal",
+  "free_cta": "Unduh gratis",
+  "free_note": "Kuncinya dibeli nanti dan ditempel di instalasi yang sama. Tak perlu pasang ulang."
 }

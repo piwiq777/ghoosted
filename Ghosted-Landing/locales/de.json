@@ -228,5 +228,14 @@
   "cr_pending": "Dein Code wartet noch auf Freigabe.",
   "cr_rate": "Du bist bei $1%.",
   "foot_creators_t": "Creator",
-  "foot_creators": "Creator-Programm"
+  "foot_creators": "Creator-Programm",
+  "free_tier": "Ausprobieren",
+  "free_price": "0 €",
+  "free_period": "gratis · ohne Konto, ohne Karte",
+  "free_f1": "Die ganze Analyse läuft auf deinem Gerät",
+  "free_f2": "Du siehst die ersten 3 jeder Liste",
+  "free_f3": "Der Rest bleibt hinter dem Schlüssel",
+  "free_f4": "Kein Ghost-Modus, keine Downloads, kein Entfolgen in Serie",
+  "free_cta": "Gratis herunterladen",
+  "free_note": "Den Schlüssel kaufst du später und fügst ihn in dieselbe Installation ein. Nichts neu installieren."
 }

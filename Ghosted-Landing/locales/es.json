@@ -228,5 +228,14 @@
   "cr_pending": "Tu código todavía está pendiente de aprobar.",
   "cr_rate": "Estás al $1%.",
   "foot_creators_t": "Creadores",
-  "foot_creators": "Programa de creadores"
+  "foot_creators": "Programa de creadores",
+  "free_tier": "Pruébalo",
+  "free_price": "0 €",
+  "free_period": "gratis · sin cuenta, sin tarjeta",
+  "free_f1": "El análisis completo se ejecuta en tu dispositivo",
+  "free_f2": "Ves los 3 primeros de cada lista",
+  "free_f3": "El resto se queda detrás de la llave",
+  "free_f4": "Sin modo fantasma, sin descargas, sin dejar de seguir en lote",
+  "free_cta": "Descargar gratis",
+  "free_note": "La clave se compra después y se pega en lo mismo que ya tienes. No hay que reinstalar nada."
 }

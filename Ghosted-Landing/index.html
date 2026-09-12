@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=118">
+  <link rel="stylesheet" href="styles.css?v=119">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -370,6 +370,31 @@
       </p>
 
       <div class="price-grid">
+        <!-- El escalon de entrada. Va el PRIMERO y a la izquierda porque es
+             por donde se entra: se baja, se ve funcionando con los datos de
+             uno mismo, y solo despues se paga. Pedir 5 € antes de que nadie
+             haya visto un nombre es la forma mas cara de vender esto. -->
+        <div class="pcard pcard-free">
+          <div class="pcard-top">
+            <span class="pcard-name">Ghoosted</span>
+            <span class="pcard-tier" data-i18n="free_tier">Try it</span>
+          </div>
+          <div class="pcard-price">
+            <span class="pcard-amount">
+              <b class="pcard-now" data-i18n="free_price">€0</b>
+            </span>
+            <span class="pcard-period" data-i18n="free_period">free · no account, no card</span>
+          </div>
+          <ul class="pcard-feats">
+            <li data-i18n="free_f1">The full analysis runs on your device</li>
+            <li data-i18n="free_f2">You see the first 3 of every list</li>
+            <li class="is-excluded" data-i18n="free_f3">The rest stays behind the key</li>
+            <li class="is-excluded" data-i18n="free_f4">No ghost mode, no downloads, no bulk unfollow</li>
+          </ul>
+          <a class="pcard-cta pcard-cta-ghost" href="/api/download?gratis=1" data-i18n="free_cta">Download free</a>
+          <p class="pcard-note" data-i18n="free_note">Buy a key later and paste it into the same install. Nothing to reinstall.</p>
+        </div>
+
         <div class="pcard pcard-pro">
           <div class="pcard-top">
             <span class="pcard-name">Ghoosted Pro</span>

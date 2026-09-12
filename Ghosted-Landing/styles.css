@@ -484,10 +484,16 @@ img,svg{display:block;max-width:100%}
   border-radius:14px;padding:14px 18px;font-weight:500;text-align:left;align-items:flex-start}
 .price-req.is-mobile svg{color:var(--alert);margin-top:2px}
 
-.price-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+.price-grid{display:grid;grid-template-columns:.85fr 1.15fr 1fr;gap:20px;align-items:start}
 .pcard{text-align:left;padding:38px 36px 36px;border-radius:var(--r-lg);display:flex;flex-direction:column;gap:30px}
 .pcard-pro{background:var(--ink)}
 .pcard-plus{background:var(--paper);border:1px solid rgba(20,18,16,.1)}
+/* La de gratis se ve que NO es de pago sin tener que leerla: sin relleno de
+   fondo y con el borde de rayas. Lo que la vende es que no cuesta nada, no
+   que sea bonita — la vista tiene que seguir cayendo en la del medio. */
+.pcard-free{background:transparent;border:1px dashed rgba(20,18,16,.22)}
+.pcard-free .pcard-now{-webkit-text-fill-color:var(--ink-2);background:none;color:var(--ink-2)}
+.pcard-note{font-size:12.5px;line-height:1.5;color:var(--ink-3);margin:-16px 0 0}
 .pcard-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .pcard-name{font-size:15px;font-weight:500;letter-spacing:-.02em;color:var(--ink)}
 .pcard-pro .pcard-name{color:#fff}
@@ -538,7 +544,18 @@ img,svg{display:block;max-width:100%}
 
 /* Lo que pasa despues de pagar. Tres columnas que colapsan a una en el movil;
    el borde de arriba las separa del bloque de precios sin meter otra caja. */
-@media (max-width:720px){.price-grid{grid-template-columns:1fr;max-width:420px;margin-inline:auto}}
+/* Tres columnas solo cuando caben de verdad. Por debajo, la de gratis pasa a
+   una banda ancha encima de las dos de pago: sigue siendo lo primero que se
+   lee y no estrangula a las otras dos. */
+@media (max-width:1000px){
+  .price-grid{grid-template-columns:1fr 1fr}
+  .pcard-free{grid-column:1/-1}
+  .pcard-free .pcard-feats{columns:2;column-gap:28px}
+}
+@media (max-width:720px){
+  .price-grid{grid-template-columns:1fr;max-width:420px;margin-inline:auto}
+  .pcard-free .pcard-feats{columns:1}
+}
 
 /* ---------- faq ---------- */
 .faq-list{max-width:760px;margin:36px auto 0;display:flex;flex-direction:column;text-align:left;

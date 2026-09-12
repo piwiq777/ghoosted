@@ -228,5 +228,14 @@
   "cr_pending": "Kodun hâlâ onay bekliyor.",
   "cr_rate": "%$1 seviyesindesin.",
   "foot_creators_t": "İçerik üreticileri",
-  "foot_creators": "Creator programı"
+  "foot_creators": "Creator programı",
+  "free_tier": "Dene",
+  "free_price": "€0",
+  "free_period": "ücretsiz · hesap yok, kart yok",
+  "free_f1": "Analizin tamamı cihazında çalışır",
+  "free_f2": "Her listenin ilk 3’ünü görürsün",
+  "free_f3": "Gerisi anahtarın arkasında kalır",
+  "free_f4": "Hayalet modu yok, indirme yok, toplu takipten çıkma yok",
+  "free_cta": "Ücretsiz indir",
+  "free_note": "Anahtarı sonra alıp aynı kuruluma yapıştırırsın. Yeniden kurmana gerek yok."
 }

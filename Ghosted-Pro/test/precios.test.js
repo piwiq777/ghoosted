@@ -32,7 +32,11 @@ module.exports = () => {
   /* Cualquier importe en euros que aparezca en un texto de cara al usuario
      tiene que ser uno de los dos. Un 7 olvidado en un idioma es una promesa
      que la pasarela no cumple. */
-  const validos = new Set(['5', '3.50', '3,50', '3٫50']);
+  /* El cero es el escalon gratis. Es un precio de verdad —se anuncia en la
+     tarjeta de la portada— pero no pasa por Stripe, asi que no tiene nada con
+     lo que cotejarse. Se admite tal cual; lo que vigila esta lista es que no
+     se anuncie un importe COBRABLE que la pasarela no vaya a cobrar. */
+  const validos = new Set(['5', '3.50', '3,50', '3٫50', '0']);
   const sospechosos = [];
   const mirar = (fichero, texto) => {
     /* Importes con simbolo de euro, en las dos posiciones que usan los doce

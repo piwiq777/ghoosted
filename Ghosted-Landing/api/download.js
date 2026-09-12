@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { json, options } = require('../lib/http');
 const { ConfigError, command, getJson } = require('../lib/kv');
+const { frenar } = require('../lib/freno');
 const { downloadFor, filePath } = require('../lib/downloads');
 const { normalizeKey } = require('../lib/licenses');
 const { marcar } = require('../lib/marcar');
@@ -25,6 +26,33 @@ function esNavegador(req) {
 module.exports = async (req, res) => {
   if (options(req, res)) return;
   if (req.method !== 'GET') return json(res, 405, { error: 'method_not_allowed' });
+
+  /* ---- la prueba gratis --------------------------------------------------
+     Sin clave y sin compra. Se lleva el ZIP de Pro entero: el producto no es
+     el fichero, es la clave, y sin ella la extension se corta sola en las tres
+     primeras de cada lista y no abre ni fantasma ni descargas.
+
+     Va con el de Pro y no con el de Plus a proposito: asi quien pague no tiene
+     que volver a instalar nada. Pega la clave en lo que ya tiene y se le abre
+     entero, sea Pro o Plus.
+
+     No lleva marca de agua —no hay compra a la que atarla— y por eso lleva
+     freno por IP: es el unico fichero que sale de aqui sin dueño. */
+  if (String((req.query && req.query.gratis) || '') === '1') {
+    const freno = await frenar(req, 'descarga-gratis', 30, 3600);
+    if (!freno.permitido) return json(res, 429, { error: 'demasiadas_descargas' });
+    const file = filePath('pro');
+    if (!file) { console.error('download_file_missing', 'gratis'); return json(res, 500, { error: 'file_unavailable' }); }
+    let buf;
+    try { buf = await fs.promises.readFile(file); }
+    catch (e) { console.error('download_read_failed', file, e && e.message); return json(res, 500, { error: 'file_unavailable' }); }
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', 'attachment; filename="' + downloadFor('pro').file + '"');
+    res.setHeader('Content-Length', String(buf.length));
+    res.setHeader('Cache-Control', 'public, max-age=3600');
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    return res.status(200).end(buf);
+  }
 
   const key = normalizeKey((req.query && req.query.key) || '');
   const sessionId = String((req.query && req.query.session_id) || '');
