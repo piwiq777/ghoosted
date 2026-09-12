@@ -30,6 +30,11 @@ const TEXTOS = {
     dl: 'Download',
     steps: 'Installing',
     s1: 'Unzip the file into a folder you will not delete. The browser reads the extension from there every time.',
+    s1t: "Unzip it",
+    s2t: "Load it into the browser",
+    s3t: "Paste your key",
+    shotCap: "Step 2: “Load unpacked”, and Ghoosted already on the list.",
+    guideCta: "See the full guide, with screenshots",
     s2: 'Open chrome://extensions, turn on Developer mode (top right) and click "Load unpacked". Pick that folder.',
     s3: 'Go to Instagram, open Ghoosted, and paste this key to activate it on your account.',
     help: 'Stuck? Just reply to this email.',
@@ -51,6 +56,11 @@ const TEXTOS = {
     dl: 'Descargar',
     steps: 'Cómo instalarlo',
     s1: 'Descomprime el archivo en una carpeta que no vayas a borrar. El navegador lee la extensión de ahí cada vez.',
+    s1t: "Descomprímelo",
+    s2t: "Cárgalo en el navegador",
+    s3t: "Pega tu clave",
+    shotCap: "Paso 2: “Cargar descomprimida”, y Ghoosted ya en la lista.",
+    guideCta: "Ver la guía entera, con capturas",
     s2: 'Abre chrome://extensions, activa el Modo de desarrollador (arriba a la derecha) y pulsa "Cargar descomprimida". Elige esa carpeta.',
     s3: 'Entra en Instagram, abre Ghoosted y pega esta clave para activarla en tu cuenta.',
     help: '¿Algo no va? Responde a este mismo correo.',
@@ -72,6 +82,11 @@ const TEXTOS = {
     dl: 'Baixar',
     steps: 'Como instalar',
     s1: 'Descompacte o arquivo numa pasta que você não vá apagar. O navegador lê a extensão dali toda vez.',
+    s1t: "Descompacte",
+    s2t: "Carregue no navegador",
+    s3t: "Cole sua chave",
+    shotCap: "Passo 2: “Carregar sem compactação”, e o Ghoosted já na lista.",
+    guideCta: "Ver o guia completo, com capturas",
     s2: 'Abra chrome://extensions, ative o Modo do desenvolvedor (canto superior direito) e clique em "Carregar sem compactação". Escolha essa pasta.',
     s3: 'Entre no Instagram, abra o Ghoosted e cole esta chave para ativá-la na sua conta.',
     help: 'Travou em algo? É só responder a este e-mail.',
@@ -93,6 +108,11 @@ const TEXTOS = {
     dl: 'Télécharger',
     steps: 'Installation',
     s1: "Décompressez le fichier dans un dossier que vous ne supprimerez pas. Le navigateur y lit l'extension à chaque fois.",
+    s1t: "Décompresse-le",
+    s2t: "Charge-le dans le navigateur",
+    s3t: "Colle ta clé",
+    shotCap: "Étape 2 : « Charger l’extension non empaquetée », et Ghoosted déjà dans la liste.",
+    guideCta: "Voir le guide complet, avec captures",
     s2: 'Ouvrez chrome://extensions, activez le Mode développeur (en haut à droite) et cliquez sur « Charger l\'extension non empaquetée ». Choisissez ce dossier.',
     s3: 'Allez sur Instagram, ouvrez Ghoosted et collez cette clé pour l\'activer sur votre compte.',
     help: 'Un souci ? Répondez simplement à cet e-mail.',
@@ -114,6 +134,11 @@ const TEXTOS = {
     dl: 'Herunterladen',
     steps: 'Installation',
     s1: 'Entpacke die Datei in einen Ordner, den du nicht löschst. Der Browser liest die Erweiterung jedes Mal von dort.',
+    s1t: "Entpacken",
+    s2t: "In den Browser laden",
+    s3t: "Schlüssel einfügen",
+    shotCap: "Schritt 2: „Entpackte Erweiterung laden“ – und Ghoosted steht schon in der Liste.",
+    guideCta: "Die ganze Anleitung mit Screenshots",
     s2: 'Öffne chrome://extensions, schalte oben rechts den Entwicklermodus ein und klicke auf „Entpackte Erweiterung laden". Wähle diesen Ordner.',
     s3: 'Geh zu Instagram, öffne Ghoosted und füge diesen Schlüssel ein, um ihn für dein Konto zu aktivieren.',
     help: 'Hakt etwas? Antworte einfach auf diese E-Mail.',
@@ -135,6 +160,11 @@ const TEXTOS = {
     dl: 'Scarica',
     steps: 'Come installarla',
     s1: 'Estrai il file in una cartella che non cancellerai. Il browser legge l\'estensione da lì ogni volta.',
+    s1t: "Decomprimilo",
+    s2t: "Caricalo nel browser",
+    s3t: "Incolla la chiave",
+    shotCap: "Passo 2: “Carica estensione non pacchettizzata”, e Ghoosted già nell’elenco.",
+    guideCta: "Vedi la guida completa, con schermate",
     s2: 'Apri chrome://extensions, attiva la Modalità sviluppatore (in alto a destra) e clicca "Carica estensione non pacchettizzata". Scegli quella cartella.',
     s3: 'Vai su Instagram, apri Ghoosted e incolla questa chiave per attivarla sul tuo account.',
     help: 'Qualcosa non va? Rispondi a questa e-mail.',
@@ -156,6 +186,11 @@ const TEXTOS = {
     dl: 'İndir',
     steps: 'Nasıl kurulur',
     s1: 'Dosyayı silmeyeceğin bir klasöre çıkar. Tarayıcı uzantıyı her seferinde oradan okur.',
+    s1t: "Arşivden çıkar",
+    s2t: "Tarayıcıya yükle",
+    s3t: "Anahtarını yapıştır",
+    shotCap: "2. adım: “Paketlenmemiş öğe yükle” ve Ghoosted listede.",
+    guideCta: "Ekran görüntülü tam kılavuzu gör",
     s2: 'chrome://extensions adresini aç, sağ üstten Geliştirici modunu aç ve "Paketlenmemiş öğe yükle"ye tıkla. O klasörü seç.',
     s3: "Instagram'a gir, Ghoosted'i aç ve hesabında etkinleştirmek için bu anahtarı yapıştır.",
     help: 'Takıldığın bir yer mi var? Bu e-postayı yanıtlaman yeterli.',
@@ -177,6 +212,11 @@ const TEXTOS = {
     dl: 'Unduh',
     steps: 'Cara memasang',
     s1: 'Ekstrak file ke folder yang tidak akan kamu hapus. Browser membaca ekstensi dari sana setiap kali.',
+    s1t: "Ekstrak filenya",
+    s2t: "Muat ke browser",
+    s3t: "Tempel kuncimu",
+    shotCap: "Langkah 2: “Load unpacked”, dan Ghoosted sudah ada di daftar.",
+    guideCta: "Lihat panduan lengkap, dengan tangkapan layar",
     s2: 'Buka chrome://extensions, aktifkan Mode pengembang (kanan atas) lalu klik "Muat yang belum dipaketkan". Pilih folder tadi.',
     s3: 'Masuk ke Instagram, buka Ghoosted, dan tempel kunci ini untuk mengaktifkannya di akunmu.',
     help: 'Ada yang tersendat? Balas saja email ini.',
@@ -198,6 +238,11 @@ const TEXTOS = {
     dl: 'Скачать',
     steps: 'Как установить',
     s1: 'Распакуйте файл в папку, которую не будете удалять. Браузер каждый раз читает расширение оттуда.',
+    s1t: "Распакуйте",
+    s2t: "Загрузите в браузер",
+    s3t: "Вставьте ключ",
+    shotCap: "Шаг 2: «Загрузить распакованное» — и Ghoosted уже в списке.",
+    guideCta: "Полное руководство со скриншотами",
     s2: 'Откройте chrome://extensions, включите режим разработчика (справа вверху) и нажмите «Загрузить распакованное расширение». Выберите эту папку.',
     s3: 'Зайдите в Instagram, откройте Ghoosted и вставьте этот ключ, чтобы активировать его для своего аккаунта.',
     help: 'Что-то не получается? Просто ответьте на это письмо.',
@@ -219,6 +264,11 @@ const TEXTOS = {
     dl: 'डाउनलोड करें',
     steps: 'कैसे इंस्टॉल करें',
     s1: 'फ़ाइल को ऐसे फ़ोल्डर में खोलें जिसे आप मिटाएँगे नहीं। ब्राउज़र हर बार एक्सटेंशन वहीं से पढ़ता है।',
+    s1t: "फ़ाइल खोलिए",
+    s2t: "ब्राउज़र में लोड कीजिए",
+    s3t: "अपनी चाबी चिपकाइए",
+    shotCap: "चरण 2: “Load unpacked”, और Ghoosted सूची में आ गया।",
+    guideCta: "स्क्रीनशॉट के साथ पूरी गाइड देखें",
     s2: 'chrome://extensions खोलें, ऊपर दाईं ओर डेवलपर मोड चालू करें और "Load unpacked" दबाएँ। वही फ़ोल्डर चुनें।',
     s3: 'Instagram पर जाएँ, Ghoosted खोलें और अपने अकाउंट पर चालू करने के लिए यह कुंजी चिपकाएँ।',
     help: 'कहीं अटक गए? बस इसी ईमेल का जवाब दे दें।',
@@ -240,6 +290,11 @@ const TEXTOS = {
     dl: 'تنزيل',
     steps: 'طريقة التثبيت',
     s1: 'فُك ضغط الملف في مجلد لن تحذفه. يقرأ المتصفح الإضافة من هناك في كل مرة.',
+    s1t: "فُكّ الضغط",
+    s2t: "حمّله في المتصفح",
+    s3t: "الصق مفتاحك",
+    shotCap: "الخطوة 2: «تحميل غير مُحزَّم»، وGhoosted صار في القائمة.",
+    guideCta: "شاهد الدليل كاملًا بالصور",
     s2: 'افتح chrome://extensions، وفعّل وضع المطوّر أعلى اليمين، ثم اضغط "تحميل غير مضغوط" واختر ذلك المجلد.',
     s3: 'ادخل إلى Instagram، وافتح Ghoosted، والصق هذا المفتاح لتفعيله على حسابك.',
     help: 'تعثّرت في شيء؟ يكفي أن ترد على هذه الرسالة.',
@@ -261,6 +316,11 @@ const TEXTOS = {
     dl: 'ダウンロード',
     steps: 'インストール手順',
     s1: '削除しないフォルダーにファイルを展開してください。ブラウザーは毎回そこから拡張機能を読み込みます。',
+    s1t: "解凍する",
+    s2t: "ブラウザに読み込む",
+    s3t: "キーを貼る",
+    shotCap: "ステップ2：「パッケージ化されていない拡張機能を読み込む」。Ghoosted がもう一覧に出ています。",
+    guideCta: "スクリーンショット付きの完全ガイド",
     s2: 'chrome://extensions を開き、右上のデベロッパーモードをオンにして「パッケージ化されていない拡張機能を読み込む」をクリックし、そのフォルダーを選びます。',
     s3: 'Instagram を開いて Ghoosted を起動し、このキーを貼り付けてアカウントで有効化します。',
     help: '困ったときは、このメールにそのまま返信してください。',
@@ -295,15 +355,41 @@ const SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial
 const MONO = "'SF Mono',SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace";
 
 /* Un paso numerado. La bolita va en su propia celda: un ::before o un
-   list-style con numero propio no sobrevive a Outlook. */
-function paso(n, texto, rtl) {
-  const hueco = rtl ? 'padding:0 0 15px 12px' : 'padding:0 12px 15px 0';
+   list-style con numero propio no sobrevive a Outlook.
+
+   Lleva titulo y cuerpo, no una sola frase larga. Quien instala esto no lee:
+   busca en que paso va. Con un solo parrafo por paso hay que leerlo entero
+   para saberlo; con "Descomprimelo / Cargalo en el navegador / Pega tu clave"
+   se ve de un vistazo, y el detalle esta debajo para cuando haga falta. */
+function paso(n, titulo, texto, rtl) {
+  const hueco = rtl ? 'padding:0 0 20px 14px' : 'padding:0 14px 20px 0';
   return '<tr>'
-    + '<td width="26" valign="top" style="' + hueco + '">'
-    + '<div style="width:26px;height:26px;line-height:26px;border-radius:13px;background:' + C.tinta + ';'
-    + 'color:' + C.fondo + ';font:700 12px ' + SANS + ';text-align:center">' + n + '</div></td>'
-    + '<td valign="top" style="padding:0 0 15px;font:400 14px/1.65 ' + SANS + ';color:' + C.tinta + '">'
-    + esc(texto) + '</td></tr>';
+    + '<td width="30" valign="top" style="' + hueco + '">'
+    + '<div style="width:30px;height:30px;line-height:30px;border-radius:15px;background:' + C.tinta + ';'
+    + 'color:' + C.fondo + ';font:700 14px ' + SANS + ';text-align:center">' + n + '</div></td>'
+    + '<td valign="top" style="padding:0 0 20px">'
+    + '<div style="font:700 15px/1.45 ' + SANS + ';color:' + C.tinta + ';padding:4px 0 4px">'
+    + esc(titulo) + '</div>'
+    + '<div style="font:400 14px/1.65 ' + SANS + ';color:' + C.suave + '">' + esc(texto) + '</div>'
+    + '</td></tr>';
+}
+
+/* La captura del paso que mas gente atasca: el de cargar la carpeta en el
+   navegador. Va DENTRO de la lista, en la fila siguiente a su paso y alineada
+   con el texto, no suelta al final.
+
+   Muchos clientes de correo no cargan imagenes hasta que se les dice. Por eso
+   el alt repite lo que se ve y los pasos se entienden igual sin ella: la
+   captura confirma, no explica. */
+function captura(sitio, pie, rtl) {
+  const hueco = rtl ? 'padding:0 44px 20px 0' : 'padding:0 0 20px 44px';
+  return '<tr><td colspan="2" style="' + hueco + '">'
+    + '<a href="' + esc(sitio) + '/instalar" style="text-decoration:none">'
+    + '<img src="' + esc(sitio) + '/assets/guia/paso4.jpg" width="516" alt="' + esc(pie) + '" '
+    + 'style="display:block;width:100%;max-width:516px;height:auto;border-radius:12px;'
+    + 'border:1px solid ' + C.linea + '"></a>'
+    + '<div style="font:400 12px/1.55 ' + SANS + ';color:' + C.tenue + ';padding-top:8px">'
+    + esc(pie) + '</div></td></tr>';
 }
 
 function boton(url, texto) {
@@ -386,8 +472,19 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
     + '<p style="margin:26px 0 13px;font:700 12px ' + SANS + ';color:' + C.tinta + ';'
     + 'text-transform:uppercase;letter-spacing:1px">' + esc(t.steps) + '</p>'
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
-    + paso(1, t.s1, rtl) + paso(2, t.s2, rtl) + paso(3, t.s3, rtl)
+    + paso(1, t.s1t, t.s1, rtl)
+    + paso(2, t.s2t, t.s2, rtl)
+    + captura(sitio, t.shotCap, rtl)
+    + paso(3, t.s3t, t.s3, rtl)
     + '</table>'
+
+    // La guia entera, como enlace que se ve. Antes iba de pasada al final de
+    // la linea de "responde a este correo", donde no la encontraba nadie.
+    + '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:2px 0 0">'
+    + '<tr><td style="border:1px solid ' + C.linea + ';border-radius:12px">'
+    + '<a href="' + esc(sitio) + '/instalar" style="display:inline-block;padding:12px 20px;'
+    + 'font:600 14px ' + SANS + ';color:' + C.tinta + ';text-decoration:none">'
+    + esc(t.guideCta) + ' &rarr;</a></td></tr></table>'
 
     // si se pierde el correo
     + '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
@@ -404,8 +501,7 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
     + esc(t.updLink) + '</a></p>'
 
     + '<p style="margin:18px 0 0;font:400 14px/1.6 ' + SANS + ';color:' + C.suave + '">'
-    + esc(t.help) + ' <a href="' + esc(sitio) + '/instalar" style="color:' + C.rosa + '">'
-    + esc(t.guide) + '</a>.</p>'
+    + esc(t.help) + '</p>'
     + '</td></tr>'
 
     // pie
@@ -432,12 +528,13 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
     '    ' + urlActualizar,
     '',
     t.steps,
-    '1. ' + t.s1,
-    '2. ' + t.s2,
-    '3. ' + t.s3,
+    '1. ' + t.s1t + ' — ' + t.s1,
+    '2. ' + t.s2t + ' — ' + t.s2,
+    '3. ' + t.s3t + ' — ' + t.s3,
     '',
     t.lost + ' ' + urlRecuperar,
-    t.help + ' ' + sitio + '/instalar',
+    t.guideCta + ': ' + sitio + '/instalar',
+    t.help,
     '',
     t.legal,
     sitio,
