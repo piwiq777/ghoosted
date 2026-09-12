@@ -145,10 +145,15 @@ module.exports = () => {
     .sort();
   s.eq('ningun texto se queda sin traducir', huerfanas, []);
 
-  // Ninguna descarga al disco salvo la exportacion de los datos propios,
-  // que es un derecho de acceso del RGPD y tiene que quedarse.
-  const descargas = [...(cont.matchAll(/\.download\s*=\s*"([^"]*)/g))].map((m) => m[1]);
-  s.eq('solo se descarga la exportacion propia', descargas, ['ghosted-']);
+  /* Ninguna descarga al disco salvo dos, y las dos son del propio usuario:
+       ghosted-   la exportacion de sus datos, derecho de acceso del RGPD
+       ghoosted-  la tarjeta de "compartir mi resultado", que es un PNG
+                  dibujado aqui con un numero que ya tiene en pantalla
+     Lo que esta lista vigila es que no se cuele una descarga de MEDIOS —
+     historias, destacados, publicaciones— que es lo que se vende en Pro y
+     no puede viajar dentro del paquete de Plus. */
+  const descargas = [...(cont.matchAll(/\.download\s*=\s*"([^"]*)/g))].map((m) => m[1]).sort();
+  s.eq('solo se descarga lo que es del usuario', descargas, ['ghoosted-', 'ghosted-']);
 
   // --- huecos vacios en la interfaz ---
   // Al recortar es facil dejar un elemento que SE CREA pero se queda sin

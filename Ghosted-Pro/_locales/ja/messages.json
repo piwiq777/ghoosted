@@ -1349,5 +1349,55 @@
   },
   "free_have_key": {
     "message": "キーを持っています"
+  },
+  "share_bar": {
+    "message": "今週 $1 人が離れました",
+    "description": "Cuantos te han dejado de seguir en los ultimos siete dias. $1 es el numero.",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "7"
+      }
+    }
+  },
+  "share_btn": {
+    "message": "シェア",
+    "description": "Boton de compartir la imagen."
+  },
+  "share_line": {
+    "message": "今週 $1 人にフォローを外されました",
+    "description": "La frase que va en la imagen. $1 es el numero.",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "7"
+      }
+    }
+  },
+  "share_foot": {
+    "message": "わかったのは",
+    "description": "Firma al pie de la imagen, justo encima de ghoosted.net."
+  },
+  "share_saved": {
+    "message": "ダウンロードに保存しました",
+    "description": "Cuando el navegador no sabe compartir ficheros y la imagen se descarga."
+  },
+  "share_failed": {
+    "message": "画像を作成できませんでした",
+    "description": "Cuando no se ha podido crear la imagen."
+  },
+  "share_line_1": {
+    "message": "今週 1 人にフォローを外されました",
+    "description": "La frase de la imagen cuando es una sola persona. Sin $1: el numero es uno."
+  },
+  "share_line_f": {
+    "message": "今週 $1 人にフォローを外されました",
+    "description": "Forma para 2, 3 y 4. Solo el ruso la necesita distinta; en los demas idiomas es la misma frase que share_line y se traduce igual.",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
   }
 }

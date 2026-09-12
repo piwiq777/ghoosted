@@ -447,6 +447,153 @@
     gq.appendChild(gx), gq.appendChild(gz);
     p.parentNode.insertBefore(gq, p);
   }
+  /* ===================== COMPARTIR EL RESULTADO =======================
+     Una imagen con UN numero: cuantos te dejaron de seguir esta semana.
+
+     Va sin clave a proposito. Es el unico sitio del producto donde el
+     usuario reparte Ghoosted por su cuenta, y cobrarle por hacerlo seria
+     cobrar por que nos haga publicidad. El escalon gratis corta las listas
+     en tres; el contador de la semana es el numero entero, porque un numero
+     no es la lista.
+
+     Lo que NUNCA sale en la imagen: nombres, arrobas, fotos. Ni uno. Quien
+     comparte esto lo cuelga en una historia que ve cualquiera, y las
+     personas que aparecerian ahi no han dado permiso para nada. Ademas el
+     misterio vende mas que la lista: "siete" da que hablar, siete arrobas
+     dan un problema.
+
+     Se dibuja en un canvas de 1080x1920 —formato historia, que es donde se
+     comparte esto— y se entrega por navigator.share si el navegador lo
+     admite con ficheros; si no, se descarga. */
+  const GHD_SEMANA = 7 * 864e5;
+
+  function ghdSemana() {
+    const gq = Date.now() - GHD_SEMANA;
+    return g.get(J.events, []).filter(gx => gx.type === "unfollow" && gx.ts >= gq).length;
+  }
+
+  /* Que frase toca segun el numero. Un "1 personas me dejaron" es el tipo
+     de detalle que hace que nadie comparta la imagen.
+
+     Dos formas para todos —uno y resto— y una tercera para el ruso, que es
+     el unico de los doce donde el resto se parte otra vez: 2-4 pide
+     "человека" y 5+ pide "человек". El arabe tiene mas formas todavia, y su
+     frase esta escrita para no depender de ellas. */
+  function ghdFrase(gq) {
+    if (gq === 1) return Y("share_line_1", "1");
+    const gx = gq % 100, gz = gq % 10;
+    if (gz >= 2 && gz <= 4 && (gx < 10 || gx >= 20)) return Y("share_line_f", String(gq));
+    return Y("share_line", String(gq));
+  }
+
+  function ghdTarjeta(gq) {
+    const gx = document.createElement("canvas");
+    gx.width = 1080, gx.height = 1920;
+    const c = gx.getContext("2d");
+    c.fillStyle = "#0d0d10", c.fillRect(0, 0, 1080, 1920);
+
+    const fuente = (gp, gw) => (gw || "700") + " " + gp + "px 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
+    c.textAlign = "center";
+
+    /* Se mide TODO antes de pintar nada, y luego se centra el bloque entero
+       en el lienzo. Pintar a alturas fijas dejaba media imagen vacia por
+       abajo cuando la frase cabia en dos lineas en vez de tres. */
+    const gN = String(gq), gT = gN.length > 2 ? 400 : 480;
+    c.font = fuente(60, "600");
+    const gL = ghdParte(c, ghdFrase(gq), 860);
+    const gH = gT + 150 + gL.length * 82 + 190;
+    let gy = (1920 - gH) / 2 + gT;
+
+    /* Un halo suelto detras del numero, para que no sea un rectangulo negro.
+       Los tonos son los del propio panel, no los de Instagram: esto es una
+       tarjeta de Ghoosted, no un pantallazo de la app de otro. */
+    const gz = c.createRadialGradient(540, gy - gT / 2.6, 40, 540, gy - gT / 2.6, 780);
+    gz.addColorStop(0, "rgba(214,66,126,.32)"), gz.addColorStop(.55, "rgba(150,47,191,.14)"),
+    gz.addColorStop(1, "rgba(13,13,16,0)"), c.fillStyle = gz, c.fillRect(0, 0, 1080, 1920);
+
+    // El numero, que es lo unico que de verdad se lee de un vistazo.
+    c.font = fuente(gT);
+    /* El degradado se monta sobre el ancho REAL del numero: fijo de 180 a
+       900, un "1" caia entero en la zona rosa y perdia el degradado. */
+    const gW = c.measureText(gN).width;
+    const gG = c.createLinearGradient(540 - gW / 2, 0, 540 + gW / 2, 0);
+    gG.addColorStop(0, "#feda75"), gG.addColorStop(.3, "#fa7e1e"),
+    gG.addColorStop(.6, "#d62976"), gG.addColorStop(1, "#962fbf");
+    c.fillStyle = gG, c.fillText(gN, 540, gy);
+
+    // La frase, partida a mano: un canvas no sabe hacer saltos de linea.
+    gy += 150, c.fillStyle = "#f2f2f5", c.font = fuente(60, "600");
+    gL.forEach((gt, gi) => c.fillText(gt, 540, gy + gi * 82));
+
+    // La firma. Sin esto la imagen no trae a nadie.
+    gy += gL.length * 82 + 118;
+    c.fillStyle = "#a6a6ae", c.font = fuente(40, "500");
+    c.fillText(Y("share_foot"), 540, gy);
+    c.fillStyle = "#f2f2f5", c.font = fuente(52, "700");
+    c.fillText("ghoosted.net", 540, gy + 72);
+    return gx;
+  }
+
+  /* Partir un texto por palabras para que quepa. Se mide con el canvas, que
+     es el unico que sabe cuanto ocupa de verdad con esa fuente. */
+  function ghdParte(c, gq, gx) {
+    const gz = String(gq).split(/\s+/), gL = [];
+    let gO = "";
+    for (const gX of gz) {
+      const gJ = gO ? gO + " " + gX : gX;
+      if (gO && c.measureText(gJ).width > gx) gL.push(gO), gO = gX; else gO = gJ;
+    }
+    return gO && gL.push(gO), gL;
+  }
+
+  async function ghdComparte(gq) {
+    const gx = ghdSemana();
+    gq && (gq.disabled = true);
+    try {
+      const gz = ghdTarjeta(gx);
+      const gL = await new Promise(gr => gz.toBlob(gr, "image/png"));
+      if (!gL) throw new Error("sin imagen");
+      const gO = new File([ gL ], "ghoosted.png", { type: "image/png" });
+      /* Compartir de verdad si se puede: asi va a la historia sin pasar por
+         la carpeta de descargas. canShare hay que preguntarlo CON el fichero
+         —hay navegadores que tienen share y no aceptan ficheros— y esto solo
+         funciona dentro del gesto del clic. */
+      if (navigator.canShare && navigator.canShare({ files: [ gO ] })) {
+        try { return void await navigator.share({ files: [ gO ] }); }
+        catch (gE) { if (gE && gE.name === "AbortError") return; }
+      }
+      const gX = document.createElement("a");
+      gX.href = URL.createObjectURL(gL), gX.download = "ghoosted-" + T(Date.now()) + ".png",
+      gX.click(), setTimeout(() => URL.revokeObjectURL(gX.href), 4e3),
+      G(Y("share_saved"), "ok");
+    } catch (gE) {
+      G(Y("share_failed"), "alert");
+    } finally {
+      gq && (gq.disabled = false);
+    }
+  }
+
+  /* La barra de compartir, arriba de la lista de los que te dejaron. Solo
+     sale si hay algo que contar: "0 personas te dejaron esta semana" no lo
+     comparte nadie, y ofrecerlo cuando no hay nada es ruido. */
+  function ghdBarraComparte() {
+    if (!p) return;
+    const gv = m.querySelector(".ghd-share");
+    const gn = ghdSemana();
+    if (j !== "unfollow" || !gn) return void (gv && gv.remove());
+    if (gv) return void (gv.querySelector("span").textContent = Y("share_bar", String(gn)));
+    const gq = document.createElement("div");
+    gq.className = "ghd-share";
+    const gx = document.createElement("span");
+    gx.textContent = Y("share_bar", String(gn));
+    const gz = document.createElement("button");
+    gz.type = "button", gz.className = "ghd-share-btn",
+    gz.textContent = Y("share_btn"),
+    gz.addEventListener("click", () => ghdComparte(gz));
+    gq.appendChild(gx), gq.appendChild(gz);
+    p.parentNode.insertBefore(gq, p);
+  }
+
   function ghdCierraLlave() {
     m.classList.remove("ghd-locked"), ghdBarraGratis(), g5();
   }
@@ -5039,6 +5186,7 @@
     if (!p) return;
     const gq = g3(p);
     p.innerHTML = "";
+    ghdBarraComparte();
     try {
       const gx = g.get(J.events, []);
       if (j === "unfollow") {

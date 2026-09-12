@@ -1720,3 +1720,17 @@
   background:none;color:var(--ink);padding:7px 11px;font:600 12px var(--font);white-space:nowrap}
 .ghd-gratis-btn:hover{background:var(--surface-2)}
 .ghd-gratis-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* Compartir el resultado. Mismo esqueleto que la barra de gratis, pero el
+   boton va en color: es lo unico del panel que le pedimos al usuario que
+   haga por nosotros, asi que se ve. */
+.ghd-share{display:flex;align-items:center;gap:10px;margin:0 0 10px;padding:9px 12px;
+  border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.ghd-share span{flex:1 1 auto;min-width:0;font-size:12.5px;line-height:1.4;color:var(--ink-2)}
+.ghd-share-btn{flex:0 0 auto;border:0;border-radius:9px;cursor:pointer;
+  background:var(--accent-grad);color:var(--on-accent);padding:8px 13px;
+  font:700 12px var(--font);white-space:nowrap;transition:filter .2s ease,transform .14s ease}
+.ghd-share-btn:hover{filter:brightness(1.08)}
+.ghd-share-btn:active{transform:scale(.96)}
+.ghd-share-btn:disabled{opacity:.55;cursor:default;transform:none}
+.ghd-share-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}

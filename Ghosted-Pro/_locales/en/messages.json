@@ -1349,5 +1349,55 @@
   },
   "free_have_key": {
     "message": "I have a key"
+  },
+  "share_bar": {
+    "message": "$1 left this week",
+    "description": "Cuantos te han dejado de seguir en los ultimos siete dias. $1 es el numero.",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "7"
+      }
+    }
+  },
+  "share_btn": {
+    "message": "Share",
+    "description": "Boton de compartir la imagen."
+  },
+  "share_line": {
+    "message": "$1 people unfollowed me this week",
+    "description": "La frase que va en la imagen. $1 es el numero.",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "7"
+      }
+    }
+  },
+  "share_foot": {
+    "message": "Found out with",
+    "description": "Firma al pie de la imagen, justo encima de ghoosted.net."
+  },
+  "share_saved": {
+    "message": "Saved to your downloads",
+    "description": "Cuando el navegador no sabe compartir ficheros y la imagen se descarga."
+  },
+  "share_failed": {
+    "message": "Could not create the image",
+    "description": "Cuando no se ha podido crear la imagen."
+  },
+  "share_line_1": {
+    "message": "One person unfollowed me this week",
+    "description": "La frase de la imagen cuando es una sola persona. Sin $1: el numero es uno."
+  },
+  "share_line_f": {
+    "message": "$1 people unfollowed me this week",
+    "description": "Forma para 2, 3 y 4. Solo el ruso la necesita distinta; en los demas idiomas es la misma frase que share_line y se traduce igual.",
+    "placeholders": {
+      "1": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
   }
 }
