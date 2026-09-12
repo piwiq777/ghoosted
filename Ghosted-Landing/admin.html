@@ -23,7 +23,15 @@
     .cifra{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:var(--paper)}
     .cifra b{display:block;font:700 24px var(--font);letter-spacing:-.5px}
     .cifra span{font-size:12px;color:var(--ink-2)}
-    .barra{display:flex;gap:10px;align-items:center;margin:0 0 14px}
+    .barra{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+    /* El buscador se queda con lo que sobra, los botones con lo que piden: sin
+       esto el input se lo comia todo y "Regalar Pro" partia en dos lineas. */
+    .barra input{flex:1 1 260px;min-width:0}
+    .barra button{flex:0 0 auto;white-space:nowrap}
+    .vacio{padding:30px 4px;color:var(--ink-3);font-size:14px}
+    .ad-login .aviso{margin-top:18px;padding:13px 15px;border-radius:12px;background:var(--paper);
+      border:1px solid var(--line-2);font-size:13px;line-height:1.6;color:var(--ink-2);text-align:left}
+    .ad-login code{font-size:12.5px}
     .tabla{width:100%;border-collapse:collapse;font-size:13px;background:var(--paper);
       border:1px solid var(--line);border-radius:14px;overflow:hidden}
     .tabla th{text-align:left;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;
@@ -48,6 +56,9 @@
       <input id="tok" type="password" autocomplete="off" placeholder="ADMIN_TOKEN">
       <p><button id="entrar" style="width:100%;margin-top:10px">Entrar</button></p>
       <p id="loginMsg" class="msg"></p>
+      <p class="aviso">Es el valor de <code>ADMIN_TOKEN</code> en Vercel → Settings →
+        Environment Variables. Si no lo has puesto todavía, el panel no existe:
+        ponlo, vuelve a desplegar, y entra con ese mismo valor.</p>
     </div>
 
     <div id="panel" hidden>
@@ -61,6 +72,7 @@
         <button id="regalar-plus" class="gris">Regalar Plus</button>
       </div>
       <div class="envuelve"><table class="tabla" id="tabla"></table></div>
+      <p class="vacio" id="vacio" hidden></p>
       <p id="msg" class="msg"></p>
     </div>
   </main>
@@ -97,11 +109,30 @@
       return d.toLocaleDateString() + ' ' + d.toLocaleTimeString().slice(0, 5);
     }
 
+    /* Lo que devuelve el servidor son codigos, no frases. Enseñarlos tal cual
+       deja al unico que usa esto mirando un "Error: no_encontrado" que no dice
+       ni que ha pasado ni que hacer. */
+    function porQue(r) {
+      var c = (r.d && r.d.error) || '';
+      if (c === 'no_encontrado' || r.status === 404)
+        return 'El panel no está encendido: falta la variable ADMIN_TOKEN en Vercel. '
+             + 'Ponla en Settings → Environment Variables (Production) y vuelve a desplegar.';
+      if (c === 'no_autorizado' || r.status === 401) return 'Ese token no es el que hay puesto en Vercel.';
+      if (c === 'demasiados_intentos') return 'Demasiados intentos seguidos. Espera un minuto.';
+      if (c === 'almacen_no_configurado') return 'El almacén de claves no responde. Mira las variables de KV en Vercel.';
+      if (c === 'clave_mal_formada') return 'Esa clave no tiene la forma GHST-XXXX-XXXX-XXXX-XXXX-XXXX.';
+      if (c === 'no_existe') return 'Esa clave no existe.';
+      return 'Algo ha fallado (' + (c || r.status) + ').';
+    }
+
     function cargar() {
       $('msg').textContent = 'Cargando…';
       return pedir('/api/admin').then(function (r) {
-        if (r.status === 401) { salir('Token incorrecto.'); return; }
-        if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
+        /* 404 tambien echa fuera: significa que el panel no existe todavia en
+           el servidor. Antes se quedaba aqui dentro, vacio y con un codigo
+           puesto debajo, como si el fallo fuera de esta pantalla. */
+        if (r.status === 401 || r.status === 404) { salir(porQue(r)); return; }
+        if (!r.ok) { $('msg').textContent = porQue(r); return; }
         datos = r.d; $('msg').textContent = '';
         pintar();
       });
@@ -164,7 +195,11 @@
           + '<button class="mini gris" data-a="reenviar" data-k="' + esc(l.key) + '">Reenviar</button>'
           + '</td></tr>';
       });
-      $('tabla').innerHTML = html;
+      $('tabla').innerHTML = filas.length ? html : '';
+      $('vacio').hidden = filas.length > 0;
+      $('vacio').textContent = datos.licencias.length
+        ? 'Ninguna coincide con lo que has buscado.'
+        : 'Todavía no hay ninguna venta. Los botones de regalar de arriba emiten una clave sin cobrarla.';
     }
 
     var TEXTO = {
@@ -185,7 +220,7 @@
         body: JSON.stringify({ accion: accion, key: key }),
       }).then(function (r) {
         b.disabled = false;
-        if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
+        if (!r.ok) { $('msg').textContent = porQue(r); return; }
         $('msg').textContent = 'Hecho: ' + accion + ' · ' + key;
         cargar();
       });
@@ -202,7 +237,7 @@
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ accion: 'regalar', plan: plan, motivo: motivo }),
       }).then(function (r) {
-        if (!r.ok) { $('msg').textContent = 'Error: ' + (r.d.error || r.status); return; }
+        if (!r.ok) { $('msg').textContent = porQue(r); return; }
         $('msg').textContent = 'Clave ' + r.d.plan + ': ' + r.d.key;
         try { navigator.clipboard.writeText(r.d.key); } catch (e) {}
         prompt('Copia la clave. No se manda por correo:', r.d.key);
