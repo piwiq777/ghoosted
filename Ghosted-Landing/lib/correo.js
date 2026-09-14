@@ -559,4 +559,40 @@ function correoLicencia({ key, producto, lang, urlDescarga, sitio }) {
   return { subject: t.subject(producto), html, text, adjunto: ficheroClave(), nombreAdjunto: 'ghoosted-clave.txt' };
 }
 
-module.exports = { correoLicencia, TEXTOS };
+/* El unico sitio que habla con Resend aparte de lib/entrega.js. Se saco aqui
+   porque el aviso de un creador nuevo no es una entrega de licencia y no tiene
+   por que arrastrar el adjunto, la descarga ni el idioma del comprador.
+
+   Falla en silencio a proposito: quien llama a esto esta haciendo otra cosa
+   mas importante —dar de alta a un creador, emitir una clave— y que no salga
+   un correo no puede tumbar la operacion. Devuelve si salio o no. */
+async function enviar({ to, subject, html, text, replyTo }) {
+  if (!process.env.RESEND_API_KEY || !to) return false;
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + process.env.RESEND_API_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: process.env.MAIL_FROM || 'Ghoosted <onboarding@resend.dev>',
+        to,
+        reply_to: replyTo || process.env.MAIL_REPLY_TO || 'hello@ghoosted.net',
+        subject,
+        html,
+        text: text || String(html || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
+      }),
+    });
+    if (!r.ok) { console.error('correo_no_salio', r.status); return false; }
+    return true;
+  } catch (e) {
+    console.error('correo_reventado', e && e.message);
+    return false;
+  }
+}
+
+/* A donde van los avisos de la casa. No es el reply_to: ese es el buzon de
+   soporte que se enseña a los compradores, y este es el del dueño. */
+function buzonDelDueno() {
+  return process.env.AVISO_EMAIL || process.env.MAIL_REPLY_TO || null;
+}
+
+module.exports = { correoLicencia, enviar, buzonDelDueno, TEXTOS };

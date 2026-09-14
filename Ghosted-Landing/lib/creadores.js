@@ -19,6 +19,7 @@
        le debe. Nunca quien compro, ni su correo, ni su clave.
    =========================================================================== */
 const { command, getJson, setJson } = require('./kv');
+const { enviar, buzonDelDueno } = require('./correo');
 
 /* Cinco a doce caracteres, mayusculas y numeros. Corto para decirlo en un
    video, largo para no chocar con el de otro. */
@@ -114,7 +115,86 @@ async function alta({ nombre, email, canal, seguidores, codigo }) {
   };
   await setJson(kAlta(c), registro);
   try { await command(['SADD', 'ghosted:creadores', c]); } catch (e) { /* el indice es comodidad */ }
+
+  /* Avisar. Antes esto se guardaba en el almacen y ya: nadie se enteraba de
+     que habia una solicitud, ni el dueño ni quien la mandaba. Se rellenaba el
+     formulario, salia "gracias", y la peticion se quedaba ahi para siempre
+     porque no habia forma de saber que existia.
+
+     Los dos correos van despues de guardar y dentro de un try: la solicitud ya
+     esta a salvo, y que Resend falle no puede perderla. */
+  try {
+    const buzon = buzonDelDueno();
+    if (buzon) await enviar({
+      to: buzon,
+      replyTo: registro.email,
+      subject: 'Creador nuevo: ' + registro.codigo,
+      html: '<p><b>' + esc(registro.nombre || '(sin nombre)') + '</b> pide el codigo <b>'
+        + esc(registro.codigo) + '</b>.</p><ul>'
+        + '<li>Correo: ' + esc(registro.email) + '</li>'
+        + '<li>Canal: ' + esc(registro.canal || '—') + '</li>'
+        + '<li>Seguidores: ' + esc(registro.seguidores || '—') + '</li></ul>'
+        + '<p>Se aprueba en el panel de ventas, en Creadores. Responder a este correo le llega a él.</p>',
+    });
+  } catch (e) { console.error('aviso_creador_fallo', e && e.message); }
+
+  try {
+    await enviar({
+      to: registro.email,
+      subject: 'Tu solicitud de creador de Ghoosted',
+      html: '<p>Recibida. Tu codigo seria <b>' + esc(registro.codigo) + '</b>.</p>'
+        + '<p>Lo revisamos a mano y te escribimos a este mismo correo. '
+        + 'Hasta que este aprobado el enlace todavia no cuenta ventas.</p>'
+        + '<p>— Ghoosted</p>',
+    });
+  } catch (e) { console.error('acuse_creador_fallo', e && e.message); }
+
   return { ok: true, codigo: c };
 }
 
-module.exports = { CODIGO, BASE, TOP, SALTO, normalizar, valido, tramo, visita, venta, numeros, alta };
+/* Las solicitudes, para el panel. El indice puede no estar —es comodidad, no
+   verdad— asi que si falta se devuelve vacio en vez de reventar. */
+async function listar() {
+  let codigos = [];
+  try { codigos = (await command(['SMEMBERS', 'ghosted:creadores'])) || []; } catch (e) { return []; }
+  const fuera = [];
+  for (const c of codigos) {
+    const r = await getJson(kAlta(c));
+    if (r) fuera.push(r);
+  }
+  return fuera.sort((a, b) => String(b.creado || '').localeCompare(String(a.creado || '')));
+}
+
+/* Aprobar o rechazar, y avisar al interesado. Sin esto el estado se quedaba
+   en 'pendiente' para siempre y habia que editar el almacen a mano. */
+async function decidir(codigo, aprobado) {
+  const c = normalizar(codigo);
+  const r = await getJson(kAlta(c));
+  if (!r) return { ok: false, error: 'no_existe' };
+  r.estado = aprobado ? 'aprobado' : 'rechazado';
+  r.decidido = new Date().toISOString();
+  await setJson(kAlta(c), r);
+  try {
+    await enviar({
+      to: r.email,
+      subject: aprobado ? 'Tu codigo de Ghoosted ya funciona' : 'Sobre tu solicitud de creador',
+      html: aprobado
+        ? '<p>Aprobado. Tu codigo es <b>' + esc(c) + '</b>.</p>'
+          + '<p>Tu enlace: <b>https://ghoosted.net/?ref=' + esc(c) + '</b></p>'
+          + '<p>Cada venta que llegue por ahi cuenta. Los numeros, en '
+          + 'https://ghoosted.net/creadores</p>'
+        : '<p>Esta vez no seguimos adelante con tu solicitud. Gracias por el interes.</p>',
+    });
+  } catch (e) { console.error('aviso_decision_fallo', e && e.message); }
+  return { ok: true, estado: r.estado };
+}
+
+/* Lo que va dentro de un correo es de fuera: nombre y canal los escribe quien
+   rellena el formulario. Sin esto, un "<img onerror>" en el nombre se ejecuta
+   en el lector de correo del dueño. */
+function esc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+module.exports = { CODIGO, BASE, TOP, SALTO, normalizar, valido, tramo, visita, venta, numeros, alta, listar, decidir };

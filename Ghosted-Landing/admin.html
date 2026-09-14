@@ -29,6 +29,11 @@
     .barra input{flex:1 1 260px;min-width:0}
     .barra button{flex:0 0 auto;white-space:nowrap}
     .vacio{padding:30px 4px;color:var(--ink-3);font-size:14px}
+    .seccion{font-family:var(--display);font-size:21px;letter-spacing:-.5px;margin:38px 0 14px;
+      display:flex;align-items:center;gap:10px}
+    .pendientes{font:700 11px var(--font);letter-spacing:.04em;background:var(--ink);color:#F7F5F0;
+      border-radius:100px;padding:4px 10px}
+    .ad button.verde{background:#127a4a;color:#fff;border:0}
     .ad-login .aviso{margin-top:18px;padding:13px 15px;border-radius:12px;background:var(--paper);
       border:1px solid var(--line-2);font-size:13px;line-height:1.6;color:var(--ink-2);text-align:left}
     .ad-login code{font-size:12.5px}
@@ -73,6 +78,10 @@
       </div>
       <div class="envuelve"><table class="tabla" id="tabla"></table></div>
       <p class="vacio" id="vacio" hidden></p>
+
+      <h2 class="seccion">Creadores <span class="pendientes" id="nPend" hidden></span></h2>
+      <div class="envuelve"><table class="tabla" id="tablaCr"></table></div>
+      <p class="vacio" id="vacioCr" hidden></p>
       <p id="msg" class="msg"></p>
     </div>
   </main>
@@ -160,6 +169,7 @@
         cifra(r.ingresosBrutos + ' €', 'bruto aproximado');
       $('sub').textContent = planes + (datos.completo ? '' : ' · lista recortada');
       filtrar();
+      pintarCreadores();
     }
 
     function filtrar() {
@@ -193,6 +203,8 @@
               : '<button class="mini gris" data-a="reactivar" data-k="' + esc(l.key) + '">Reactivar</button>')
           + '<button class="mini gris" data-a="soltar" data-k="' + esc(l.key) + '">Soltar cuenta</button>'
           + '<button class="mini gris" data-a="reenviar" data-k="' + esc(l.key) + '">Reenviar</button>'
+          + '<button class="mini gris" data-a="enviar_a" data-k="' + esc(l.key) + '">Correo…</button>'
+          + '<button class="mini gris" data-w="' + esc(l.key) + '">WhatsApp</button>'
           + '</td></tr>';
       });
       $('tabla').innerHTML = filas.length ? html : '';
@@ -202,26 +214,99 @@
         : 'Todavía no hay ninguna venta. Los botones de regalar de arriba emiten una clave sin cobrarla.';
     }
 
+    function pintarCreadores() {
+      var cr = datos.creadores || [];
+      var pend = cr.filter(function (c) { return c.estado === 'pendiente'; }).length;
+      $('nPend').hidden = !pend;
+      $('nPend').textContent = pend + ' sin decidir';
+      if (!cr.length) {
+        $('tablaCr').innerHTML = '';
+        $('vacioCr').hidden = false;
+        $('vacioCr').textContent = 'Nadie ha pedido entrar todavia.';
+        return;
+      }
+      $('vacioCr').hidden = true;
+      var html = '<tr><th>Codigo</th><th>Quien</th><th>Correo</th><th>Canal</th>'
+        + '<th>Seguidores</th><th>Pedido</th><th>Estado</th><th></th></tr>';
+      cr.forEach(function (c) {
+        var pill = c.estado === 'aprobado' ? 'ok' : (c.estado === 'rechazado' ? 'no' : 'warn');
+        html += '<tr>'
+          + '<td class="k">' + esc(c.codigo) + '</td>'
+          + '<td>' + esc(c.nombre || '—') + '</td>'
+          + '<td>' + esc(c.email || '—') + '</td>'
+          + '<td>' + esc(c.canal || '—') + '</td>'
+          + '<td class="gris2">' + esc(c.seguidores || '—') + '</td>'
+          + '<td class="gris2">' + esc(fecha(c.creado)) + '</td>'
+          + '<td><span class="pill ' + pill + '">' + esc(c.estado) + '</span></td>'
+          + '<td style="white-space:nowrap">'
+          + (c.estado === 'pendiente'
+              ? '<button class="mini verde" data-a="aprobar_creador" data-c="' + esc(c.codigo) + '">Aprobar</button>'
+                + '<button class="mini rojo" data-a="rechazar_creador" data-c="' + esc(c.codigo) + '">Rechazar</button>'
+              : '<span class="gris2">' + esc(fecha(c.decidido)) + '</span>')
+          + '</td></tr>';
+      });
+      $('tablaCr').innerHTML = html;
+    }
+
     var TEXTO = {
       revocar: 'Revocar esta clave? Deja de activar y de descargar. Uselo para devoluciones o fraude.',
       reactivar: 'Volver a dejarla activa?',
       soltar: 'Desatarla de su cuenta de Instagram? La proxima cuenta que la active se queda con ella.',
       reenviar: 'Volver a mandar el correo con la clave?',
+      aprobar_creador: 'Aprobar a este creador? Su codigo empieza a contar ventas y se le avisa por correo.',
+      rechazar_creador: 'Rechazar esta solicitud? Se le avisa por correo.',
     };
+
+    /* WhatsApp no pasa por el servidor: se abre wa.me con el mensaje escrito y
+       eliges el contacto en tu propio WhatsApp. Sin numero en la URL, porque
+       el numero lo sabes tu y no tiene por que estar en ningun sitio nuestro. */
+    document.addEventListener('click', function (e) {
+      var w = e.target.closest && e.target.closest('button[data-w]');
+      if (!w) return;
+      var k = w.dataset.w;
+      var txt = 'Tu clave de Ghoosted:\n\n' + k + '\n\n'
+        + 'Descarga: https://ghoosted.net/api/download?key=' + encodeURIComponent(k) + '\n'
+        + 'Como instalarlo: https://ghoosted.net/instalar';
+      window.open('https://wa.me/?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+    });
 
     document.addEventListener('click', function (e) {
       var b = e.target.closest && e.target.closest('button[data-a]');
       if (!b) return;
-      var accion = b.dataset.a, key = b.dataset.k;
-      if (!confirm(TEXTO[accion] + '\n\n' + key)) return;
+      var accion = b.dataset.a, key = b.dataset.k, cod = b.dataset.c, extra = {};
+
+      /* Aprobar o rechazar a un creador va por codigo, no por clave. */
+      if (cod) {
+        if (!confirm(TEXTO[accion] + '\n\n' + cod)) return;
+        b.disabled = true;
+        pedir('/api/admin', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ accion: accion, codigo: cod }),
+        }).then(function (r) {
+          b.disabled = false;
+          if (!r.ok) { $('msg').textContent = porQue(r); return; }
+          $('msg').textContent = cod + ' · ' + r.d.estado + '. Se le ha avisado por correo.';
+          cargar();
+        });
+        return;
+      }
+
+      if (accion === 'enviar_a') {
+        var destino = prompt('A que correo mando ' + key + '?');
+        if (!destino) return;
+        extra.email = destino.trim();
+      } else if (!confirm(TEXTO[accion] + '\n\n' + key)) return;
+
       b.disabled = true;
       pedir('/api/admin', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ accion: accion, key: key }),
+        body: JSON.stringify(Object.assign({ accion: accion, key: key }, extra)),
       }).then(function (r) {
         b.disabled = false;
         if (!r.ok) { $('msg').textContent = porQue(r); return; }
-        $('msg').textContent = 'Hecho: ' + accion + ' · ' + key;
+        $('msg').textContent = r.d.enviado_a
+          ? 'Mandada a ' + r.d.enviado_a
+          : 'Hecho: ' + accion + ' · ' + key;
         cargar();
       });
     });
