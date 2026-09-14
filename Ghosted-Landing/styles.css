@@ -106,21 +106,35 @@ img,svg{display:block;max-width:100%}
    caracteres y se solapaba incluso en pantalla ancha. Con la rejilla, la
    columna del medio se encoge cuando el menu crece, pero nunca se pisan. */
 .nav{position:relative;pointer-events:auto;display:grid;
-  grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:18px;width:100%;
+  /* 1fr auto 1fr, no auto 1fr auto. Las dos columnas de los lados valen
+     LO MISMO aunque su contenido no pese igual, asi que la del medio cae
+     justo en el centro de la barra y el buscador con ella. Con auto a los
+     lados, el hueco del medio empezaba donde acabara el menu y terminaba
+     donde empezara el idioma: su centro se iba noventa pixeles a la derecha.
+
+     Y va en la rejilla, no en absolute: centrado con position:absolute
+     tambien queda centrado, pero flotando por encima, y a 1440 "Como
+     instalar" se metia por debajo del buscador. */
+  grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;width:100%;
   padding:14px clamp(20px,3.4vw,44px);transition:background .3s var(--ease),border-color .3s,box-shadow .3s;
   border-bottom:1px solid transparent}
 /* La columna izquierda: boton, marca y menu, en ese orden visual.
    position:static a proposito — el menu desplegado se ancla a .nav, que es
    quien tiene el ancho de la barra entera. */
-.nav-left{grid-column:1;position:static;display:flex;align-items:center;gap:18px;min-width:0}
+.nav-left{grid-column:1;justify-self:start;position:static;display:flex;align-items:center;gap:18px;min-width:0}
 .nav.scrolled{background:var(--glass-strong);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
   border-bottom-color:var(--line)}
 /* centered liquid-glass search pill — truly centered on the bar itself
    (position:absolute + translate), not on the leftover flex gap, which was
    never symmetric because the brand+links group and the lang+CTA group on
    the right don't weigh the same */
-.nav-search{grid-column:2;justify-self:center;
-  display:flex;align-items:center;gap:10px;width:100%;max-width:clamp(200px,26vw,380px);
+/* Centrado sobre la barra entera con position:absolute, NO con la columna
+   del medio de la rejilla. La columna del medio empieza donde acaba la marca
+   y acaba donde empieza el idioma+boton, y esos dos grupos no pesan igual:
+   su centro cae unos noventa pixeles a la derecha del centro de la barra.
+   Se nota, y es lo primero que se mira al entrar. */
+.nav-search{grid-column:2;
+  display:flex;align-items:center;gap:10px;width:clamp(230px,24vw,360px);
   height:46px;padding:0 20px;border-radius:100px;cursor:pointer;
   background:rgba(255,255,255,.55);border:1px solid var(--line);
   backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);
@@ -129,14 +143,25 @@ img,svg{display:block;max-width:100%}
 .nav-search:hover{background:rgba(255,255,255,.85);border-color:var(--line-2);transform:translateY(-1px)}
 .nav-search svg{width:16px;height:16px;stroke:var(--ink-3);fill:none;flex:none}
 .nav-search span{font-size:14px;color:var(--ink-3);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-/* Por debajo de esto la celda central se queda tan estrecha que el
-   buscador es un boton con puntos suspensivos. Mejor sin el. */
-@media (max-width:1100px){.nav-search{display:none}
+/* 1500 y no 1100. Para que el buscador este centrado DE VERDAD, las dos
+   columnas de los lados tienen que valer lo mismo, y entonces el menu de la
+   izquierda tiene que caber en su mitad. Medido en los doce idiomas, el
+   aleman —el mas largo— empieza a meterse por debajo del buscador sobre los
+   1450. Asi que por debajo de 1500 no se enseña.
+
+   Se pierde el buscador en un portatil de 1440, que no es poco. Pero la
+   alternativa era dejarlo noventa pixeles a la derecha del centro en TODAS
+   las pantallas, que es lo que habia, o dejar que "Installationsanleitung"
+   se meta por debajo. De las tres, esta es la unica que no enseña algo
+   roto. */
+@media (max-width:1500px){.nav-search{display:none}
   .nav{grid-template-columns:auto 1fr auto}}
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px;letter-spacing:-.03em;flex:none;color:var(--ink)}
-.brand-mark{width:26px;height:26px;border-radius:50%;background:var(--ig);display:grid;place-items:center;flex:none;box-shadow:0 4px 12px -3px rgba(214,41,118,.5)}
-.brand-mark svg{width:16px;height:16px;fill:#fff}
-.brand-mark.sm{width:22px;height:22px}.brand-mark.sm svg{width:13px;height:13px}
+/* 28 y no 26: el fantasma tiene ojos, y a 16px de svg no llegaban a dos
+   pixeles de ancho. Se veia una mancha blanca sin cara. */
+.brand-mark{width:28px;height:28px;border-radius:50%;background:var(--ig);display:grid;place-items:center;flex:none;box-shadow:0 4px 12px -3px rgba(214,41,118,.5)}
+.brand-mark svg{width:18px;height:18px}
+.brand-mark.sm{width:24px;height:24px}.brand-mark.sm svg{width:15px;height:15px}
 .nav-links{display:flex;gap:26px;margin-left:8px}
 .nav-burger{display:none;order:-1;align-items:center;justify-content:center;flex-direction:column;gap:5px;
   width:38px;height:38px;margin-right:2px;border:1px solid var(--line);border-radius:11px;
@@ -150,7 +175,7 @@ img,svg{display:block;max-width:100%}
   transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after,.nav-links a:focus-visible::after{transform:scaleX(1);transform-origin:left}
-.nav-right{grid-column:3;display:flex;align-items:center;gap:8px}
+.nav-right{grid-column:3;justify-self:end;display:flex;align-items:center;gap:8px}
 .lang-wrap{position:relative}
 .lang-btn{display:flex;align-items:center;gap:6px;background:transparent;color:var(--ink-2);border:none;border-radius:100px;
   padding:10px 12px;min-height:44px;font:inherit;font-size:13px;cursor:pointer;transition:background .2s,color .2s}
