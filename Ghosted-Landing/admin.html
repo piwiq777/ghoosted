@@ -243,6 +243,7 @@
               ? '<button class="mini verde" data-a="aprobar_creador" data-c="' + esc(c.codigo) + '">Aprobar</button>'
                 + '<button class="mini rojo" data-a="rechazar_creador" data-c="' + esc(c.codigo) + '">Rechazar</button>'
               : '<span class="gris2">' + esc(fecha(c.decidido)) + '</span>')
+          + '<button class="mini gris" data-a="borrar_creador" data-c="' + esc(c.codigo) + '">Borrar</button>'
           + '</td></tr>';
       });
       $('tablaCr').innerHTML = html;
@@ -255,6 +256,7 @@
       reenviar: 'Volver a mandar el correo con la clave?',
       aprobar_creador: 'Aprobar a este creador? Su codigo empieza a contar ventas y se le avisa por correo.',
       rechazar_creador: 'Rechazar esta solicitud? Se le avisa por correo.',
+      borrar_creador: 'Borrarla del todo? El codigo queda libre para otro. No se avisa a nadie.',
     };
 
     /* WhatsApp no pasa por el servidor: se abre wa.me con el mensaje escrito y

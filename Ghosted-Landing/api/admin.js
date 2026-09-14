@@ -23,7 +23,7 @@ const { downloadFor } = require('../lib/downloads');
 const { entregar } = require('../lib/entrega');
 
 const ACCIONES = new Set(['revocar', 'reactivar', 'soltar', 'reenviar', 'regalar',
-  'aprobar_creador', 'rechazar_creador', 'enviar_a']);
+  'aprobar_creador', 'rechazar_creador', 'borrar_creador', 'enviar_a']);
 const CLAVE = /^GHST-(?:[A-Z0-9]{4}-){4}[A-Z0-9]{4}$/;
 
 module.exports = async (req, res) => {
@@ -91,6 +91,12 @@ module.exports = async (req, res) => {
     if (accion === 'regalar') {
       const ficha = await regalar(String(body.plan || 'pro'), body.motivo);
       return json(res, 200, { ok: true, key: ficha.key, plan: ficha.plan });
+    }
+
+    if (accion === 'borrar_creador') {
+      const r = await creadores.borrar(String(body.codigo || ''));
+      if (!r.ok) return json(res, 404, { error: r.error });
+      return json(res, 200, { ok: true, borrado: true });
     }
 
     if (accion === 'aprobar_creador' || accion === 'rechazar_creador') {

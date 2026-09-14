@@ -189,6 +189,18 @@ async function decidir(codigo, aprobado) {
   return { ok: true, estado: r.estado };
 }
 
+/* Quitar una solicitud del todo. Hace falta para la basura —pruebas, spam,
+   alguien que se equivoco de codigo— porque rechazar la deja ahi ocupando el
+   codigo, y un codigo ocupado no lo puede pedir nadie mas. No avisa a nadie:
+   borrar algo que no deberia existir no es una decision que comunicar. */
+async function borrar(codigo) {
+  const c = normalizar(codigo);
+  if (!(await getJson(kAlta(c)))) return { ok: false, error: 'no_existe' };
+  await command(['DEL', kAlta(c)]);
+  try { await command(['SREM', 'ghosted:creadores', c]); } catch (e) { /* el indice es comodidad */ }
+  return { ok: true };
+}
+
 /* Lo que va dentro de un correo es de fuera: nombre y canal los escribe quien
    rellena el formulario. Sin esto, un "<img onerror>" en el nombre se ejecuta
    en el lector de correo del dueño. */
@@ -197,4 +209,4 @@ function esc(v) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-module.exports = { CODIGO, BASE, TOP, SALTO, normalizar, valido, tramo, visita, venta, numeros, alta, listar, decidir };
+module.exports = { CODIGO, BASE, TOP, SALTO, normalizar, valido, tramo, visita, venta, numeros, alta, listar, decidir, borrar };
