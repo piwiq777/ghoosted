@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=123">
+  <link rel="stylesheet" href="styles.css?v=128">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -106,10 +106,7 @@
       <!-- Marca, boton y menu en un solo hueco de la rejilla: son la
            columna izquierda, y el buscador ocupa la del medio. -->
       <div class="nav-left">
-        <a class="brand" href="#top" aria-label="Ghoosted">
-          <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.2" cy="10.9" rx="1.75" ry="2.15" fill="#241036"/><ellipse cx="14.8" cy="10.9" rx="1.75" ry="2.15" fill="#241036"/></svg></span>
-          Ghoosted
-        </a>
+        <a class="brand" href="#top" aria-label="Ghoosted"><span class="wm">gh<span class="wm-ojos" aria-hidden="true"><i></i><i></i></span>sted</span></a>
         <button type="button" class="nav-burger" id="navBurger" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
           <span></span><span></span>
         </button>
@@ -145,6 +142,7 @@
     <section class="hero" id="hero">
       <div class="field" id="field" aria-hidden="true"></div>
       <div class="hero-center">
+        <span class="pega" data-i18n="pega_1">No password 🔒</span>
         <h1 class="hero-title"><span data-i18n="hero_l1">Find out what’s really happening</span> <span class="grad" data-i18n="hero_l2">on Instagram.</span></h1>
         <p class="hero-sub" data-i18n="hero_sub">Who unfollowed you. Who doesn’t follow back. Who’s watching. What changed.</p>
         <div class="hero-cta">
@@ -494,8 +492,7 @@
     <div class="foot-inner">
     <div class="foot-top">
       <div class="foot-brand">
-        <span class="brand-mark sm"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M5 10a7 7 0 0 1 14 0v9.4a.6.6 0 0 1-.95.49L16 18.2l-1.6 1.3a.6.6 0 0 1-.76 0L12 18.4l-1.64 1.1a.6.6 0 0 1-.76 0L8 18.2l-2.05 1.19A.6.6 0 0 1 5 18.9Z"/><ellipse cx="9.2" cy="10.9" rx="1.75" ry="2.15" fill="#241036"/><ellipse cx="14.8" cy="10.9" rx="1.75" ry="2.15" fill="#241036"/></svg></span>
-        <b translate="no">Ghoosted</b>
+        <b translate="no" class="foot-wm" aria-label="Ghoosted"><span class="wm">gh<span class="wm-ojos" aria-hidden="true"><i></i><i></i></span>sted</span></b>
         <span class="foot-tag" data-i18n="foot_tag">the signals behind the profile</span>
       </div>
       <div class="foot-cols">

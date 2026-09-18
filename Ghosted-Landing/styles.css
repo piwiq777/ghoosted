@@ -925,3 +925,164 @@ img,svg{display:block;max-width:100%}
   .hero-cta .btn-lg{white-space:normal;line-height:1.25;text-align:center;
     max-width:100%;flex:1 1 auto}
 }
+
+/* ==========================================================================
+   MARCA · LOS OJOS
+   --------------------------------------------------------------------------
+   La doble O de Ghoosted son dos ojos que miran: el nombre ya dice lo que
+   hace. Los ojos llevan el degradado de siempre y las pupilas miran a la
+   derecha, hacia el resto de la palabra.
+
+   Unbounded (OFL), alojada aqui, solo para la marca y los titulares que se
+   han rehecho. Las secciones que no se tocan —el collage, las cifras, las
+   preguntas y la banda del final— siguen con --display: si esto se quita
+   entero, la web vuelve a como estaba.
+   ========================================================================== */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-cyrillic-ext.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root{--marca:'Unbounded','Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+
+/* El logo en letra. */
+.wm{font-family:var(--marca);font-weight:800;letter-spacing:-.05em;display:inline-flex;align-items:center;line-height:1;color:var(--ink);white-space:nowrap}
+.wm-ojos{display:inline-flex;gap:.04em;margin:0 .02em;transform:translateY(.04em)}
+/* Un solo degradado repartido entre los dos ojos: el izquierdo se queda con
+   la mitad calida y el derecho con la fria, y juntos se leen como uno. */
+.wm-ojos i{position:relative;width:.7em;height:.7em;border-radius:50%;background:var(--ig);background-size:210% 100%}
+.wm-ojos i:first-child{background-position:0 0}
+.wm-ojos i:last-child{background-position:100% 0}
+.wm-ojos i::after{content:"";position:absolute;width:.27em;height:.27em;border-radius:50%;background:var(--ink);top:.21em;left:.32em}
+@media (prefers-reduced-motion:no-preference){
+  /* De vez en cuando miran a un lado y vuelven. Solo eso. */
+  .wm-ojos i::after{animation:mira 7s var(--ease) infinite}
+}
+@keyframes mira{0%,62%,100%{transform:none}68%,80%{transform:translate(-.2em,-.02em)}86%{transform:translate(.02em,.03em)}}
+
+/* El icono: los ojos solos, en blanco, sobre el degradado. */
+.brand-mark{border-radius:30%}
+.brand{font-family:var(--marca);font-weight:800;letter-spacing:-.05em}
+/* El logo en letra, arriba y en el pie, con tamaño de logo y no de enlace. */
+.nav .brand .wm{font-size:22px}
+.foot-wm .wm{font-size:26px}
+
+/* Los titulares rehechos. Unbounded es ancha: va un punto mas pequeña que
+   la Inter de antes para que quepa lo mismo en el mismo sitio. */
+.hero-title{font-family:var(--marca);font-weight:800;font-size:clamp(30px,4.7vw,62px);line-height:1.04;letter-spacing:-.05em}
+.hero-title .grad{font-style:normal;font-weight:800;letter-spacing:-.05em;background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.show-lede h3{font-family:var(--marca);font-weight:800;font-size:clamp(24px,2.9vw,36px);letter-spacing:-.045em}
+.pair-head h2{font-family:var(--marca);font-weight:800;font-size:clamp(30px,4.6vw,54px);letter-spacing:-.05em}
+.price-title{font-family:var(--marca);font-weight:800;font-size:clamp(32px,4.8vw,56px);letter-spacing:-.05em}
+.pcard-now{font-family:var(--marca);font-weight:800;font-size:clamp(44px,5.4vw,58px);letter-spacing:-.06em}
+
+/* La pegatina del hero, al estilo de las de una historia: girada, en
+   degradado, pegada al titular. */
+.pega{display:inline-block;position:relative;z-index:2;margin-bottom:16px;padding:9px 15px;border-radius:14px;background:var(--ig-2);color:#fff;
+  font-family:var(--marca);font-weight:700;font-size:13px;letter-spacing:-.02em;transform:rotate(-4deg);box-shadow:0 12px 24px -12px rgba(122,63,242,.7)}
+@media (prefers-reduced-motion:no-preference){.pega{animation:pega .7s var(--ease) .5s both}}
+@keyframes pega{from{opacity:0;transform:rotate(-14deg) scale(.6)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+
+/* ==========================================================================
+   MARCA · PRIMERA VERSION EN CLARO
+   --------------------------------------------------------------------------
+   Lo negro pasa a blanco o al degradado: los botones, la tarjeta de Pro, el
+   bloque del movil y el pie. El fondo crema se queda, que es el de siempre
+   y el de las secciones que no se tocan; la banda oscura del final tambien
+   se queda como esta.
+
+   Sobre fondo claro el degradado no empieza en el amarillo palido: con el,
+   la palabra de color del titular se lavaba y casi no se leia, y el texto
+   blanco de un boton quedaba sin contraste. Para letra y botones va la mitad
+   intensa del degradado, del naranja al azul.
+   ========================================================================== */
+:root{
+  --boton:linear-gradient(100deg,#e1306c,#c13584 40%,#833ab4 75%,#5851db);
+  --ig-texto:linear-gradient(95deg,#f56040,#e1306c 32%,#c13584 58%,#833ab4 82%,#5851db);
+}
+.hero-title .grad{background:var(--ig-texto);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pega{background:var(--boton)}
+
+/* Botones */
+.btn-primary{background:var(--boton);color:#fff;box-shadow:0 10px 26px -10px rgba(193,53,132,.55)}
+.btn-primary:hover{box-shadow:0 16px 34px -12px rgba(193,53,132,.65)}
+
+/* Pro: blanca, con el borde en degradado en vez de toda negra. */
+.pcard-pro{position:relative;background:#fff;box-shadow:0 34px 70px -40px rgba(193,53,132,.5)}
+.pcard-pro::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:var(--boton);pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.pcard-pro .pcard-name{color:var(--ink)}
+.pcard-pro .pcard-tier{color:#fff;background:var(--boton)}
+.pcard-pro .pcard-later,.pcard-pro .pcard-period,.pcard-pro .pcard-all{color:var(--ink-2)}
+.pcard-pro .pcard-feats{border-top-color:var(--line)}
+.pcard-pro .pcard-feats li{color:var(--ink)}
+.pcard-pro .pcard-cta{background:var(--boton);color:#fff}
+.pcard-pro .pcard-cta:hover{background:var(--boton);filter:brightness(1.07)}
+.pcard-pro .pcard-cta:focus-visible{outline-color:var(--ink)}
+
+/* El movil: la tarjeta en blanco. El telefono dibujado sigue oscuro, que es
+   como es un telefono. */
+.pair-card{background:#fff;box-shadow:0 34px 80px -46px rgba(20,18,16,.3),0 0 0 1px var(--line)}
+.pair-glow{background:radial-gradient(ellipse,rgba(225,48,108,.13),rgba(255,255,255,0) 70%)}
+.pair-badge{color:var(--ink-2);border-color:var(--line-2)}
+.pair-card.is-linked .pair-badge .pair-dot{background:#e1306c}
+.pair-head h2{color:var(--ink)}
+.pair-head p{color:var(--ink-2)}
+.pair-qr-card{background:#fff;border-color:var(--line);box-shadow:0 26px 50px -30px rgba(20,18,16,.35)}
+.pair-qr-titlebar{border-bottom-color:var(--line)}
+.pair-qr-titlebar i{background:rgba(20,18,16,.14)}
+.pair-qr-titlebar span{color:var(--ink-3)}
+.pair-qr-label{color:var(--ink)}
+.pair-qr-window{box-shadow:inset 0 0 0 1px var(--line)}
+.pair-qr-foot span:first-child{color:var(--ink-3)}
+.pair-qr-foot span:last-child{color:var(--ink)}
+.pair-connector::before{background:var(--line-2)}
+.pair-done i{background:var(--boton)}
+
+/* El pie, claro. */
+.footer{background:#fff;border-top:1px solid var(--line)}
+.foot-brand b{color:var(--ink)}
+.foot-tag,.foot-col h4{color:var(--ink-3)}
+.foot-col a{color:var(--ink-2)}
+.foot-col a:hover{color:var(--ink)}
+.foot-col a:focus-visible{outline-color:var(--ink)}
+.indep{border-top-color:var(--line)}
+.indep-lead{color:var(--ink-2)}
+.indep-sub,.foot-disclaimer,.foot-rights{color:var(--ink-3)}
+/* La banda del final no se toca: su boton recupera la sombra de antes, que
+   la regla de .btn-primary de arriba le cambiaria por la rosa. */
+.cta-band .btn-primary{box-shadow:0 6px 22px rgba(20,18,16,.18)}
+.cta-band .btn-primary:hover{box-shadow:0 14px 34px rgba(20,18,16,.28)}
+/* Mientras "escanea", el telefono esperaba apagado al 42 % y se encendia al
+   emparejarse. Sobre la tarjeta negra eso lo hacia retroceder; sobre blanco
+   lo volvia un fantasma gris translucido. Aqui espera entero pero en gris, y
+   al emparejarse recupera el color: el mismo "se enciende", sin transparencia. */
+.pair-phone{opacity:1;filter:grayscale(1) brightness(1.15);transition:filter .8s var(--ease),transform .8s var(--ease)}
+.pair-card.is-linked .pair-phone{filter:none}
