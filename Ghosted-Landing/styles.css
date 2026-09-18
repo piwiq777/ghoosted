@@ -975,12 +975,11 @@ img,svg{display:block;max-width:100%}
 /* El logo en letra. */
 .wm{font-family:var(--marca);font-weight:800;letter-spacing:-.05em;display:inline-flex;align-items:center;line-height:1;color:var(--ink);white-space:nowrap}
 .wm-ojos{display:inline-flex;gap:.04em;margin:0 .02em;transform:translateY(.04em)}
-/* Un solo degradado repartido entre los dos ojos: el izquierdo se queda con
-   la mitad calida y el derecho con la fria, y juntos se leen como uno. */
-.wm-ojos i{position:relative;width:.7em;height:.7em;border-radius:50%;background:var(--ig);background-size:210% 100%}
-.wm-ojos i:first-child{background-position:0 0}
-.wm-ojos i:last-child{background-position:100% 0}
-.wm-ojos i::after{content:"";position:absolute;width:.27em;height:.27em;border-radius:50%;background:var(--ink);top:.21em;left:.32em}
+/* Los ojos son del color de las letras —la doble O sigue leyendose como
+   dos oes— y lo que lleva color es la pupila. Con los discos enteros en
+   degradado, naranja uno y morado el otro, parecian dos ojos rojos. */
+.wm-ojos i{position:relative;width:.7em;height:.7em;border-radius:50%;background:currentColor}
+.wm-ojos i::after{content:"";position:absolute;width:.3em;height:.3em;border-radius:50%;background:linear-gradient(135deg,#e1306c,#833ab4);top:.2em;left:.32em}
 @media (prefers-reduced-motion:no-preference){
   /* De vez en cuando miran a un lado y vuelven. Solo eso. */
   .wm-ojos i::after{animation:mira 7s var(--ease) infinite}
@@ -1086,3 +1085,62 @@ img,svg{display:block;max-width:100%}
    al emparejarse recupera el color: el mismo "se enciende", sin transparencia. */
 .pair-phone{opacity:1;filter:grayscale(1) brightness(1.15);transition:filter .8s var(--ease),transform .8s var(--ease)}
 .pair-card.is-linked .pair-phone{filter:none}
+
+/* ==========================================================================
+   MARCA · CABECERA A DOS COLUMNAS Y COMO FUNCIONA
+   El texto grande a la izquierda y las fotos inclinadas a la derecha, con
+   etiquetas y un bocadillo: la pantalla habla como una red social.
+   ========================================================================== */
+.hero-grid{position:relative;z-index:20;width:100%;max-width:var(--maxw);margin:0 auto;padding:40px 24px;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center}
+.hero-grid .hero-center{text-align:left;max-width:none;pointer-events:auto}
+.hero-grid .hero-center::before{display:none}
+.hero-grid .hero-title{font-size:clamp(34px,4.7vw,66px);line-height:1.02}
+.hero-grid .hero-title .grad{display:block}
+.hero-grid .hero-sub{margin-left:0;max-width:40ch}
+.hero-grid .hero-cta{justify-content:flex-start}
+.hero-grid .hero-trust{margin-left:0}
+.hero-grid .pega{transform-origin:left center}
+
+.hero-fotos{position:relative;height:clamp(380px,40vw,520px)}
+.hf{position:absolute;margin:0;width:56%;aspect-ratio:3/4;border-radius:26px;overflow:hidden;background:#e9e6e0;
+  border:4px solid #fff;box-shadow:0 30px 60px -26px rgba(20,18,16,.45)}
+.hf img{width:100%;height:100%;object-fit:cover;display:block}
+.hf1{left:2%;top:12%;transform:rotate(-6deg)}
+.hf2{right:0;top:2%;transform:rotate(5deg)}
+.hf-etq{position:absolute;left:12px;bottom:12px;padding:6px 12px;border-radius:99px;background:rgba(20,18,16,.7);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;font:600 13px/1 var(--font);white-space:nowrap}
+.hf-bocadillo{position:absolute;right:6%;bottom:4%;z-index:2;padding:14px 20px;border-radius:22px;background:#feda75;color:var(--ink);
+  font-family:var(--marca);font-weight:800;font-size:clamp(15px,1.5vw,19px);letter-spacing:-.03em;transform:rotate(-4deg);
+  box-shadow:0 16px 30px -14px rgba(20,18,16,.45);white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .hf1{animation:hfEntra1 .9s var(--ease) .15s both}
+  .hf2{animation:hfEntra2 .9s var(--ease) .3s both}
+  .hf-bocadillo{animation:pega .7s var(--ease) .7s both}
+}
+@keyframes hfEntra1{from{opacity:0;transform:translateY(30px) rotate(-12deg)}to{opacity:1;transform:rotate(-6deg)}}
+@keyframes hfEntra2{from{opacity:0;transform:translateY(30px) rotate(11deg)}to{opacity:1;transform:rotate(5deg)}}
+
+/* Como funciona */
+.como{max-width:var(--maxw);margin:0 auto;padding:var(--sec) 24px 0}
+.como-titulo{font-family:var(--marca);font-weight:800;font-size:clamp(30px,4.4vw,52px);letter-spacing:-.05em;line-height:1.04;margin:0 0 36px}
+.como-pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.como-paso{padding:30px 28px 32px;border-radius:26px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.como-paso b{display:block;font-family:var(--marca);font-weight:800;font-size:44px;letter-spacing:-.05em;line-height:1;
+  background:var(--boton);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:26px}
+.como-paso h3{font-family:var(--marca);font-weight:700;font-size:20px;letter-spacing:-.035em;line-height:1.15;margin:0 0 10px;color:var(--ink)}
+.como-paso p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2)}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:28px;padding-top:24px}
+  .hero-fotos{height:340px;max-width:420px;width:100%;margin:0 auto}
+  .como-pasos{grid-template-columns:1fr}
+}
+[dir="rtl"] .hero-grid .hero-center{text-align:right}
+[dir="rtl"] .hero-grid .hero-cta{justify-content:flex-start}
+/* En un movil la barra lleva menu, logo, idioma y boton en 375px: con el
+   logo a 22px la bandera del idioma se le montaba encima de la "d". */
+@media (max-width:560px){
+  .nav .brand .wm{font-size:17px}
+  .nav .lang-caret{display:none}
+}

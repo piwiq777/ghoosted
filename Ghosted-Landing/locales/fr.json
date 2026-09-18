@@ -238,5 +238,15 @@
   "free_f4": "Pas de mode fantôme, pas de téléchargements, pas de désabonnement en série",
   "free_cta": "Télécharger gratuitement",
   "free_note": "La clé s’achète après et se colle dans la même installation. Rien à réinstaller.",
-  "pega_1": "Sans mot de passe 🔒"
+  "pega_1": "Sans mot de passe 🔒",
+  "hf_1": "Te regarde 👀",
+  "hf_2": "T’a quitté 💔",
+  "hf_3": "Tu t’es fait ghoster ! 👻",
+  "how_title": "Aussi simple que ça.",
+  "how_1_t": "Télécharge-le gratuitement",
+  "how_1_d": "Sans compte ni carte. Il s’installe dans Chrome en une minute.",
+  "how_2_t": "Ouvre ton Instagram",
+  "how_2_d": "Sur ton ordinateur, avec ta session habituelle. On ne te demande jamais ton mot de passe.",
+  "how_3_t": "Vois qui est qui",
+  "how_3_d": "Qui est parti, qui ne te suit pas et qui voit tes stories. Tout de suite."
 }

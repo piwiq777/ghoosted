@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=128">
+  <link rel="stylesheet" href="styles.css?v=130">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -139,8 +139,12 @@
   <main>
 
     <!-- HERO — floating photo-chip field (cosmos-style) -->
+    <!-- La cabecera a dos columnas: el texto a la izquierda, grande, y a la
+         derecha dos fotos inclinadas con su etiqueta y un bocadillo, como una
+         captura de lo que se ve en la app. Las fotos flotantes siguen en la
+         banda del final, que no se toca. -->
     <section class="hero" id="hero">
-      <div class="field" id="field" aria-hidden="true"></div>
+      <div class="hero-grid">
       <div class="hero-center">
         <span class="pega" data-i18n="pega_1">No password 🔒</span>
         <h1 class="hero-title"><span data-i18n="hero_l1">Find out what’s really happening</span> <span class="grad" data-i18n="hero_l2">on Instagram.</span></h1>
@@ -150,6 +154,12 @@
           <a class="btn btn-ghost btn-lg" href="#features" data-i18n="hero_cta2">See what it does</a>
         </div>
         <p class="hero-trust" data-i18n="hero_trust">No subscription. No password. Runs locally.</p>
+      </div>
+      <div class="hero-fotos" aria-hidden="true">
+        <figure class="hf hf1"><img src="assets/photos/pool.jpg" alt="" width="506" height="900" fetchpriority="high" decoding="async"><span class="hf-etq" data-i18n="hf_1">is watching 👀</span></figure>
+        <figure class="hf hf2"><img src="assets/photos/cove.jpg" alt="" width="675" height="900" fetchpriority="high" decoding="async"><span class="hf-etq" data-i18n="hf_2">unfollowed you 💔</span></figure>
+        <span class="hf-bocadillo" data-i18n="hf_3">You got ghosted! 👻</span>
+      </div>
       </div>
     </section>
 
@@ -279,6 +289,17 @@
           <button type="button" class="show-tab" data-tab="5"
                   data-i18n-attr="aria-label|fx_history_t" aria-label="Your own stories, kept"><span class="show-bar"><i></i></span></button>
       </div>
+    </section>
+
+    <!-- COMO FUNCIONA — tres pasos, y numerados porque son un orden de verdad:
+         sin descargarlo no se abre, y sin abrir Instagram no hay nada que ver. -->
+    <section class="como" id="como">
+      <h2 class="como-titulo" data-i18n="how_title">As easy as this.</h2>
+      <ol class="como-pasos">
+        <li class="como-paso"><b>01</b><h3 data-i18n="how_1_t">Download it free</h3><p data-i18n="how_1_d">No account, no card. It installs in Chrome in a minute.</p></li>
+        <li class="como-paso"><b>02</b><h3 data-i18n="how_2_t">Open your Instagram</h3><p data-i18n="how_2_d">On your computer, with your usual session. We never ask for your password.</p></li>
+        <li class="como-paso"><b>03</b><h3 data-i18n="how_3_t">See who's who</h3><p data-i18n="how_3_d">Who left, who doesn't follow back and who watches your stories. Right away.</p></li>
+      </ol>
     </section>
 
     <!-- PAIR PHONE — desktop-to-phone handoff (design 4b) -->
