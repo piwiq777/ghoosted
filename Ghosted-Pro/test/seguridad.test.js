@@ -51,6 +51,12 @@ module.exports = () => {
   /* El espejo del movil pinta nombres de Instagram, que los elige un tercero. */
   const m = leer('m.html');
   s.ok('el espejo escapa lo que pinta', /function esc\(s\)/.test(m));
+  /* La CSP de la web (font-src 'self', img-src 'self' data:) tambien manda
+     en el movil, y lo que bloquea lo bloquea SIN avisar: una fuente de Google
+     cae a la del sistema y una foto de Instagram sale rota. Mejor que no se
+     cuele ninguna. */
+  s.ok('el espejo no pide fuentes de fuera', !/fonts\.googleapis|fonts\.gstatic/.test(m));
+  s.ok('ni fotos de Instagram por URL', !/cdninstagram|fbcdn/.test(m));
 
   /* El puente al mundo de la pagina corre en instagram.com, donde hay mas
      scripts que los nuestros. */
