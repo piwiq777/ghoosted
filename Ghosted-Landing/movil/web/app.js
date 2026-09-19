@@ -219,7 +219,7 @@
     // Error 429 sin nada cargado: la pantalla "Hoy · error 429" del lienzo.
     if (!S.followers && (S.rate || S.error)) {
       return cab + '<button class="redondo vidrio" aria-label="Ayuda" data-a="ayuda">' + ico(I.ayuda, 19) + '</button></div>' +
-        (S.rate ? '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>Instagram pidió esperar</b><span>Código ' + (S.rate.status || 429) + ' · lo vuelvo a intentar ~ ' + hora(S.rate.until) + '</span></div></div>'
+        (S.rate ? '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>Instagram pidió esperar</b><span>Código ' + (S.rate.status || 429) + ' · lo vuelvo a intentar solo ~ ' + hora(S.rate.until) + '. No pulses Revisar mientras tanto.</span></div></div>'
           : '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>' + esc(errTxt(S.error)) + '</b><span>' + (S.error && S.error.status ? 'Código ' + S.error.status : 'Vuelve a intentarlo') + '</span></div></div>') +
         '<div class="cifras sueltas"><div><b class="vacia">—</b><span>seguidores</span></div><div><b class="vacia">—</b><span>seguidos</span></div><div><b class="vacia">—</b><span>no te siguen</span></div></div>' +
         vacio(I.reloj_arena, 'Aún no he podido cargar tus seguidores', 'Pulsa «Revisar ahora» para intentarlo otra vez.', true) + detalle();
@@ -572,7 +572,11 @@
     'intro-fin': function () { M.estado.intro = true; M.guardar(); pintar(); scrollTo(0, 0); },
     'login': function () { P.nativo('mostrarInstagram', {}); },
     'ir-inicio': function () { U.cargando = false; U.tab = 'hoy'; pintar(); },
-    'revisar': function () { M.revisar(true); },
+    'revisar': function () {
+      var r = M.estado.rate;
+      if (r && Date.now() < r.until) return toast('Instagram pidió esperar. Lo vuelvo a intentar solo a las ' + hora(r.until));
+      M.revisar(true);
+    },
     'buscar-act': function () {
       if (P.demo) return toast('En el navegador no hay actualizaciones');
       U.buscando = true; pintar();

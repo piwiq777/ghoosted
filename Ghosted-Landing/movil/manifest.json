@@ -1,20 +1,20 @@
 {
  "web": {
-  "version": 5,
+  "version": 6,
   "archivos": {
    "web/demo.js": "8d725e8d2bce7bc7524263b82cb1e5907872299dff4dcc4414bab1a446f0d360",
    "web/puente.js": "a9280e0b821349216474ab26a64dc12f960baa473e24aa8703b1a6cf446f7786",
-   "web/app.js": "6652e6d9ef1bb502538b2eb6e5eb1d082e5d79d97a004e11960a0927fee0be2c",
+   "web/app.js": "fd313f2af30d8654080b67eaecfe6248d1a23c30e8a5b5d5bd8eb6b66eee9936",
    "web/app.css": "05e366ece73979f622736747fd3095e6c960a74d18912e67f3afb7672b0c1a69",
-   "web/motor.js": "96c1902aadf834f570e3e43e793cd5553296c54533d07d5397f9241e39c5e653",
+   "web/motor.js": "e14a83f3b823f04293384c4ddda71a3e37498bb2807ec18c540ffc5b4657694a",
    "web/generos.js": "7bd50f34f95abe4dc7f4a5a1157bcd6b4e31c7e72eedb2fc63b6f8afadd251a6",
    "web/index.html": "b1ea9ed84ecae9b2926428be409a32947c8f736b032f3164a5d6c4f6498921a0",
-   "web/version.json": "c5980bb4de98c51aa0dd33bb9d809cb8d954b64099f8cf2b013dea7c25b82371",
+   "web/version.json": "6292bb7b1b7efbe51d34065ac34f623ecf1fe9fec7ae2f07d1af910ad1a66788",
    "web/fonts/Geist.woff2": "28258d0621216948416a859d32487ab6ad1c9effa0d08795698e70be3c917630",
    "web/fonts/GEIST-LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
    "web/fonts/unbounded-latin.woff2": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6",
    "web/fonts/unbounded-latin-ext.woff2": "845e1c9fe2e9a7bfbedfeb447fbeba4bc1b5ecd6246277910ccdaad35a7a532c",
-   "ig/puente-ig.js": "4cc2ac72448f7604048548631fb4a4451b7f82b1de3f7670df4f9a78a411e7da",
+   "ig/puente-ig.js": "05257aa9fafa2c5c8af3ca4944ea6fc6773b0debcdea1379e2702a6ac0f17c61",
    "ig/page-api.js": "45f0980cdefd842d91b094e1da3a8df8033de7e55019a0979f7d339d6693f1ed",
    "ig/ig-api.js": "5c252f21c56e26775102cb86c6b972aa301be7afac05f2a462d6d9aa7dc33813"
   }
@@ -22,6 +22,6 @@
  "apk": {
   "versionCode": 4,
   "url": "https://www.ghoosted.net/movil/Ghoosted.apk",
-  "sha256": "49e62382ad6257d0e96a5501b771fc0ffb6fb2cb770c022c9d242287836a1232"
+  "sha256": "9e56dd874a2d44ac40b835365570d67fa21897ec3af6037633e5dd25a43f7da5"
  }
 }
