@@ -21,7 +21,11 @@
 (function () {
   'use strict';
 
-  var APP_ID = '936619743392459';
+  // El id de la web de ordenador. La app del movil pone el de la web del
+  // movil en window.__ghdAppId: Instagram compara este id con el navegador
+  // que hace la peticion, y si no casan contesta "useragent mismatch" y las
+  // listas de seguidores salen vacias o a medias.
+  var APP_ID = window.__ghdAppId || '936619743392459';
   var ASBD_ID = '359341';
   var CLAIM_STORAGE_KEY = 'ghosted_www_claim';
   var IN = 'ghosted-content-fetch'; // messages coming FROM the content script
@@ -135,7 +139,7 @@
 
     try {
       var headers = {
-        'x-ig-app-id': APP_ID,
+        'x-ig-app-id': window.__ghdAppId || APP_ID,
         'x-asbd-id': ASBD_ID,
         'x-requested-with': 'XMLHttpRequest',
       };

@@ -59,6 +59,7 @@
     if (!m || m.tipo !== 'llamar') return;
     var id = m.id, metodo = String(m.metodo || '');
     if (metodo === 'sesion') return aApp(Object.assign({ tipo: 'resultado', id: id, ok: true }, { valor: sesion() }));
+    if (metodo === 'probar') return probar().then(function (v) { aApp({ tipo: 'resultado', id: id, ok: true, valor: v }); });
     if (!METODOS[metodo]) return aApp({ tipo: 'resultado', id: id, ok: false, error: { kind: 'other', message: 'metodo_no_permitido' } });
     var api = ig();
     if (!api || typeof api[metodo] !== 'function') return aApp({ tipo: 'resultado', id: id, ok: false, error: { kind: 'transport', message: 'ig_no_listo' } });
@@ -80,6 +81,33 @@
     }
   };
 
+  /* Diagnostico: una sola peticion a la lista de seguidores, con el id de
+     la web del movil y con el de la de ordenador, y lo que contesta
+     Instagram en cada caso. Es lo que hay que mirar cuando "no carga". */
+  function una(url, appId) {
+    return new Promise(function (ok) {
+      var x = new XMLHttpRequest();
+      x.open('GET', url, true);
+      x.withCredentials = true;
+      x.timeout = 15000;
+      x.setRequestHeader('x-ig-app-id', appId);
+      x.setRequestHeader('x-asbd-id', '359341');
+      x.setRequestHeader('x-requested-with', 'XMLHttpRequest');
+      x.onload = function () { ok({ app: appId, status: x.status, texto: String(x.responseText || '').slice(0, 160) }); };
+      x.onerror = function () { ok({ app: appId, status: 0, texto: 'error de red' }); };
+      x.ontimeout = function () { ok({ app: appId, status: 0, texto: 'tiempo agotado' }); };
+      x.send();
+    });
+  }
+  async function probar() {
+    var yo = galleta('ds_user_id');
+    if (!yo) return { yo: null };
+    var url = 'https://www.instagram.com/api/v1/friendships/' + yo + '/followers/?count=12&search_surface=follow_list_page';
+    var movil = await una(url, '1217981644879628');
+    var pc = await una(url, '936619743392459');
+    return { yo: yo, ua: navigator.userAgent.slice(0, 80), usado: window.__ghdAppId || 'pc', movil: movil, pc: pc };
+  }
+
   function sesion() {
     var yo = galleta('ds_user_id');
     // sessionid es HttpOnly y no se ve desde aqui; ds_user_id si, y solo
@@ -95,6 +123,23 @@
     anterior = k;
     aApp(Object.assign({ tipo: 'sesion' }, s));
   }
+  /* Con sesion abierta, se prueba una vez que id acepta Instagram para esta
+     cuenta y este navegador, y se usa ese. Queda guardado para la proxima. */
+  var elegido = false;
+  async function elegirId() {
+    if (elegido || !galleta('ds_user_id')) return;
+    elegido = true;
+    try {
+      var g = localStorage.getItem('ghd_app_id');
+      if (g) { window.__ghdAppId = g; return; }
+    } catch (e) {}
+    var r = await probar();
+    function bien(x) { return x && x.status === 200 && x.texto.indexOf('"users"') !== -1; }
+    var id = bien(r.movil) ? '1217981644879628' : bien(r.pc) ? '936619743392459' : null;
+    if (id) { window.__ghdAppId = id; try { localStorage.setItem('ghd_app_id', id); } catch (e) {} }
+    else elegido = false;   // ninguno contesto bien: se reintenta mas tarde
+  }
   avisar();
-  setInterval(avisar, 1500);
+  elegirId();
+  setInterval(function () { avisar(); elegirId(); }, 1500);
 })();

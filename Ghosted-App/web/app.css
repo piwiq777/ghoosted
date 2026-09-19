@@ -396,3 +396,19 @@ button:active,a.btn:active{opacity:.75}
    gratis y que no hasta chocarse con la hoja de pago. */
 .pro-chip{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;background:var(--ig);color:#FFFFFF;font-family:var(--marca);font-weight:700;font-size:9.5px;letter-spacing:0.06em;vertical-align:2px;flex-shrink:0}
 .pasos-login{display:flex;flex-direction:column;gap:10px;align-self:stretch}
+
+/* ---------- rendimiento en Android ----------
+   El lienzo usa desenfoque de verdad (filter/backdrop-filter) en muchas
+   capas. En el movil eso se recalcula al hacer scroll y al repintar, y la
+   app iba a tirones. Aqui las manchas son degradados (se ven igual y no
+   cuestan nada) y el vidrio se queda sin desenfoque salvo en la barra de
+   pestañas y las hojas, que son lo unico que pasa por encima de contenido. */
+:root[data-plataforma="android"] .manchas i{filter:none!important;background:radial-gradient(closest-side,var(--mc),transparent)!important;transform:scale(1.9)}
+:root[data-plataforma="android"] .manchas .m1{--mc:#FF9A3D} :root[data-plataforma="android"] .manchas .m2{--mc:#8E44D6}
+:root[data-plataforma="android"] .manchas .m3{--mc:#F0507A} :root[data-plataforma="android"] .manchas .m4{--mc:#6E4BE0}
+:root[data-plataforma="android"] .manchas .m5{--mc:#FF9A3D}
+:root[data-plataforma="android"][data-tema="oscuro"] .manchas .m1{--mc:#6E4BE0} :root[data-plataforma="android"][data-tema="oscuro"] .manchas .m2{--mc:#D62976}
+:root[data-plataforma="android"] .vidrio:not(.tabs),:root[data-plataforma="android"] .lista,:root[data-plataforma="android"] .vacio,
+:root[data-plataforma="android"] .mis,:root[data-plataforma="android"] .sol,:root[data-plataforma="android"] .tarjeta,
+:root[data-plataforma="android"] .cifras > *,:root[data-plataforma="android"] .ficha{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+:root[data-plataforma="android"] .heroe > .b1{filter:none;background:radial-gradient(closest-side,rgba(255,255,255,0.28),transparent)}

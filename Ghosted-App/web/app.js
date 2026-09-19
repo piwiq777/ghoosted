@@ -87,8 +87,12 @@
     if (k === 'auth') return 'Tienes que volver a iniciar sesión';
     if (k === 'no_existe') return 'No encuentro esa cuenta';
     if (k === 'network' || k === 'transport') return 'Instagram no contesta, prueba otra vez';
-    return 'No se ha podido hacer';
+    var m = e && (e.reason || e.message);
+    return 'No se ha podido hacer' + (m ? ' · ' + String(m).slice(0, 60) : '');
   }
+
+  window.addEventListener('error', function (ev) { M.registrar('js', { message: (ev.message || '') + ' @' + (ev.lineno || '') }); toast('Error: ' + String(ev.message || '').slice(0, 70)); });
+  window.addEventListener('unhandledrejection', function (ev) { M.registrar('promesa', ev.reason || {}); });
 
   /* ---------------- estado de la interfaz ---------------- */
   var U = { tab: 'hoy', paso: 1, cargando: false, seg: 'unfollow', busca: '', sel: null, act: 'cambios', hist: 'resumen',
@@ -406,9 +410,25 @@
       '<div class="ajuste"><span>Tema</span>' + segs([['sistema', 'Auto'], ['claro', 'Claro'], ['oscuro', 'Oscuro']], g || 'sistema', 'tema', true).replace('class="segs', 'style="width:190px" class="segs') + '</div>' +
       '<div class="ajuste"><span>Última revisión</span><span class="valor">' + (S.lastCheck ? 'hace ' + hace(S.lastCheck) : '—') + '</span></div>' +
       '<div class="ajuste"><span>Instagram</span><button class="enlace" data-a="ampliar" style="height:auto">Abrir</button></div>' +
+      '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
       '<div class="ajuste"><span>Cuenta</span><button class="rojo" data-a="salir">Cerrar sesión</button></div>' + yo +
       '</div></div>';
+  }
+  function hojaDiag() {
+    var S = M.estado, d = U.diag;
+    function res(x) { return x ? esc(x.status + ' · ' + x.texto) : '…'; }
+    var prueba = !d ? '<p>Pulsa «Probar» y mándame una captura de esta pantalla.</p>' : d.cargando ? '<p>Probando…</p>' :
+      '<div class="lista" style="padding:10px 16px;font-size:12.5px;line-height:1.5;word-break:break-all;-webkit-user-select:text;user-select:text">' +
+      '<b>Cuenta:</b> ' + esc(d.yo || 'sin sesión') + '<br><b>Id en uso:</b> ' + esc(d.usado || '') + '<br><b>Móvil:</b> ' + res(d.movil) + '<br><b>PC:</b> ' + res(d.pc) +
+      '<br><b>Navegador:</b> ' + esc(d.ua || '') + '</div>';
+    var log = (S.log || []).slice(0, 12).map(function (x) {
+      return esc(hora(x.ts) + ' ' + x.que + ' · ' + x.kind + (x.status ? ' ' + x.status : '') + (x.msg ? ' · ' + x.msg : ''));
+    }).join('<br>');
+    return '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Diagnóstico"><div class="asa"><span></span></div>' +
+      '<div class="h-cab"><h2>Diagnóstico</h2></div>' + prueba +
+      '<div class="lista" style="padding:10px 16px;font-size:12px;line-height:1.5;color:var(--ink-2);-webkit-user-select:text;user-select:text">' + (log || 'Sin incidencias guardadas.') + '</div>' +
+      '<div class="fila-btn"><button class="negro" data-a="probar">Probar</button></div></div>';
   }
   function hojaEspectadores() {
     var rk = M.ranking();
@@ -427,7 +447,9 @@
     var g = v.grupos[v.g], it = g && g.items[v.i];
     if (!it) return '';
     var barras = g.items.map(function (x, k) { return '<i class="' + (k < v.i ? 'hecha' : k === v.i ? 'ahora' : '') + '"></i>'; }).join('');
-    var medio = it.isVideo ? '<video src="' + esc(foto(it.url) || it.url) + '" autoplay playsinline></video>' : '<img alt="" src="' + esc(foto(it.url) || it.url) + '">';
+    // El video se baja entero antes (ver cargarVideo): el reproductor del
+    // movil no pasa por el proxy de fotos y sin eso salia el icono de play gris.
+    var medio = it.isVideo ? '<video playsinline autoplay poster="' + esc(foto(it.img) || '') + '"' + (it.blob ? ' src="' + esc(it.blob) + '"' : '') + '></video>' : '<img alt="" src="' + esc(foto(it.url) || it.url) + '">';
     return '<div class="visor"><div class="barras">' + barras + '</div><div class="quien-v">' + av(g.user) + '<b>' + esc(g.user.username) + '</b><span>' + hace(it.ts) + '</span>' +
       '<button aria-label="Cerrar" data-a="cerrar-visor">' + ico(I.cerrar, 24, 2) + '</button></div>' +
       '<div class="medio">' + medio + '<button class="zona izq" aria-label="Anterior" data-a="visor-ant"></button><button class="zona der" aria-label="Siguiente" data-a="visor-sig"></button></div>' +
@@ -448,10 +470,21 @@
       pintar(); temporizar();
     } catch (e) { toast(errTxt(e)); }
   }
+  var blobs = [];
+  function cargarVideo(it) {
+    if (it.blob || it.bajando) return;
+    it.bajando = true;
+    fetch(foto(it.url) || it.url).then(function (r) { if (!r.ok) throw new Error('video ' + r.status); return r.blob(); })
+      .then(function (b) { it.blob = URL.createObjectURL(b); blobs.push(it.blob); if (U.visor) { pintar(); temporizar(); } })
+      .catch(function (e) { M.registrar('video', e); it.isVideo = false; it.url = it.img; if (U.visor) pintar(); });
+  }
   function temporizar() {
     clearTimeout(visorT);
-    var v = U.visor; if (!v) return;
+    var v = U.visor; if (!v) { blobs.forEach(function (b) { URL.revokeObjectURL(b); }); blobs = []; return; }
     var it = v.grupos[v.g].items[v.i];
+    if (it.isVideo && !it.blob) { cargarVideo(it); return; }
+    // el siguiente, por adelantado
+    var sig = v.grupos[v.g].items[v.i + 1]; if (sig && sig.isVideo) cargarVideo(sig);
     if (it.isVideo) {
       var vid = document.querySelector('.visor video');
       if (vid) vid.onended = function () { avanzar(1); };
@@ -481,7 +514,7 @@
       var cuerpo = ({ hoy: hoy, personas: personas, historias: historias, actividad: actividad, historial: historial })[U.tab]();
       h = '<main class="pantalla">' + cuerpo + '</main>' + barra();
     }
-    if (U.hojaAbierta) h += ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores })[U.hojaAbierta]();
+    if (U.hojaAbierta) h += ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag })[U.hojaAbierta]();
     if (U.visor) h += visor();
     $app.innerHTML = h;
     if (foco) { var el = document.getElementById(foco.id); if (el) { el.focus(); try { el.setSelectionRange(foco.pos, foco.pos); } catch (e) {} } }
@@ -503,6 +536,11 @@
     'login': function () { P.nativo('mostrarInstagram', {}); },
     'ir-inicio': function () { U.cargando = false; U.tab = 'hoy'; pintar(); },
     'revisar': function () { M.revisar(true); },
+    'diag': function () { U.diag = null; abrir('diag'); },
+    'probar': function () {
+      U.diag = { cargando: true }; pintar();
+      P.ig('probar', []).then(function (r) { U.diag = r || { yo: null }; }).catch(function (e) { U.diag = { yo: '?', usado: errTxt(e) }; }).finally(pintar);
+    },
     'ampliar': function () { U.hojaAbierta = null; P.nativo('mostrarInstagram', {}); },
     'ajustes': function () { abrir('ajustes'); },
     'ayuda': function () { toast('Instagram frena si se le pide mucho. Espera y vuelve a probar.'); },
@@ -631,6 +669,11 @@
     // Mientras se escribe no se repinta por el reloj: se perderia el foco.
     var act = document.activeElement;
     if (act && act.tagName === 'INPUT' && !x.fin) return;
+    // El progreso llega varias veces por segundo: solo se repinta si se esta
+    // mirando Hoy o la pantalla de carga. Repintarlo todo era lo que hacia ir
+    // la app a tirones mientras revisaba.
+    if (x.fase && !U.cargando && U.tab !== 'hoy') return;
+    if (x.fase) { var ahora = Date.now(); if (ahora - (U.ultimoPinte || 0) < 400) return; U.ultimoPinte = ahora; }
     pintar();
   });
   setInterval(function () { if (!U.visor && !(document.activeElement && document.activeElement.tagName === 'INPUT')) pintar(); }, 30000);

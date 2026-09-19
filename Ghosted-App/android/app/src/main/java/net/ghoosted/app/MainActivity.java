@@ -178,7 +178,7 @@ public class MainActivity extends Activity {
     private void margenesUi() {
         float d = getResources().getDisplayMetrics().density;
         ui.evaluateJavascript("(function(s){s.setProperty('--sa-top','" + Math.round(insArriba / d) + "px');s.setProperty('--sa-bot','"
-                + Math.round(insAbajo / d) + "px');s.setProperty('--arriba','18px')})(document.documentElement.style)", null);
+                + Math.round(insAbajo / d) + "px');s.setProperty('--arriba','18px');document.documentElement.setAttribute('data-plataforma','android')})(document.documentElement.style)", null);
     }
 
     private void prepararIg() {
@@ -227,7 +227,7 @@ public class MainActivity extends Activity {
         String h = ig.getUrl() == null ? "" : Uri.parse(ig.getUrl()).getHost();
         if (h == null || !h.endsWith("instagram.com")) return;
         if (scriptsIg == null) {
-            scriptsIg = "if(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
+            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';\nif(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
         }
         ig.evaluateJavascript(scriptsIg, null);
     }

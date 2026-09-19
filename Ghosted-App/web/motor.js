@@ -30,7 +30,7 @@ window.Motor = (function () {
       yo: null, followers: null, following: null, counts: null, events: [], history: [],
       watch: [], activity: [], stories: { viewers: {}, items: {}, hist: [], ts: 0 },
       reqRule: 'manual', reqs: null, tray: null, inter: null, lastCheck: 0, nextCheck: 0,
-      rate: null, error: null, lic: null, intro: false, parcial: false
+      rate: null, error: null, lic: null, intro: false, parcial: false, log: []
     }, s || {});
   }
   var guardarT = 0;
@@ -44,6 +44,13 @@ window.Motor = (function () {
         try { localStorage.setItem(CLAVE, JSON.stringify(S)); } catch (e2) {}
       }
     }, 120);
+  }
+  /* Lo que ha ido pasando, para el diagnostico de Ajustes: sin esto, cuando
+     algo "no va" no hay manera de saber que contesto Instagram. */
+  function registrar(que, e) {
+    S.log = [{ ts: Date.now(), que: que, kind: e && e.kind || '', status: e && e.status || 0,
+               msg: String(e && (e.reason || e.message) || (typeof e === 'string' ? e : '')).slice(0, 140) }].concat(S.log || []).slice(0, 40);
+    guardar();
   }
   function avisar(extra) { oyentes.forEach(function (f) { try { f(extra || {}); } catch (e) {} }); }
   function on(f) { oyentes.push(f); }
@@ -125,6 +132,7 @@ window.Motor = (function () {
       // anterior. En cualquiera de los tres casos no se compara.
       if (!r || !r.complete || (cf > 0 && nuevos.length === 0) || (ant && ant.length > 20 && nuevos.length < ant.length * 0.5)) {
         S.parcial = true;
+        registrar('lista a medias', { message: 'completa=' + !!(r && r.complete) + ' recibidos=' + nuevos.length + ' perfil=' + (cf || '?') });
         return;
       }
       var se = [], llegan = [];
@@ -161,6 +169,7 @@ window.Motor = (function () {
       S.rate = null;
     } catch (e) {
       S.error = { kind: e && e.kind, status: e && e.status, ts: Date.now() };
+      registrar('revisar', e);
       if (e && e.kind === 'rate') {
         var espera0 = 0;
         try { espera0 = await ig('rateLeftMs', []); } catch (x) {}
@@ -359,7 +368,7 @@ window.Motor = (function () {
 
   return {
     get estado() { return S; }, get ocupado() { return ocupado; }, get fase() { return fase; },
-    LIBRE: LIBRE, on: on, guardar: guardar, avisar: avisar, sesion: sesion,
+    LIBRE: LIBRE, on: on, registrar: registrar, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
