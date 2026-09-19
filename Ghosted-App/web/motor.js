@@ -114,7 +114,9 @@ window.Motor = (function () {
 
   async function revisar(manual) {
     if (ocupado || !S.yo) return;
-    if (!manual && S.rate && Date.now() < S.rate.until) return;
+    // Con Instagram pidiendo esperar no se le pide nada, tampoco a mano:
+    // insistir es lo que alarga el freno.
+    if (S.rate && Date.now() < S.rate.until) { avisar({ frenado: true }); return; }
     ocupado = true; S.error = null; S.parcial = false;
     var ahora = Date.now();
     try {
@@ -176,7 +178,9 @@ window.Motor = (function () {
       if (e && e.kind === 'rate') {
         var espera0 = 0;
         try { espera0 = await ig('rateLeftMs', []); } catch (x) {}
-        S.rate = { status: e.status || 429, until: Date.now() + Math.max(espera0 || 0, 10 * 60000) };
+        var veces = (S.rate && S.rate.veces || 0) + 1;
+        // 30 min, 1 h, 2 h... hasta 6 h: cada vez que vuelve a frenar, mas calma.
+        S.rate = { status: e.status || 429, veces: veces, until: Date.now() + Math.max(espera0 || 0, Math.min(6, Math.pow(2, veces - 1) * 0.5) * 3600000) };
       }
       if (e && e.kind === 'auth') Puente.nativo('mostrarInstagram', {});
     } finally {
@@ -192,6 +196,7 @@ window.Motor = (function () {
   }
 
   async function diagnosticar() {
+    if (S.diag && Date.now() - S.diag.ts < 6 * 3600000) return;
     try { S.diag = Object.assign({ ts: Date.now() }, await ig('probar', [])); guardar(); avisar(); } catch (e) {}
   }
 
