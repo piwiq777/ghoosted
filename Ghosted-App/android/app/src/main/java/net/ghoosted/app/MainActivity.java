@@ -70,10 +70,12 @@ public class MainActivity extends Activity {
     private boolean igArriba = false;
     private boolean igFallo = false;      // la ultima carga de Instagram no llego (sin red al arrancar)
     private int insArriba = 0, insAbajo = 0;
+    private Actualizador act;
 
     @Override
     protected void onCreate(Bundle guardado) {
         super.onCreate(guardado);
+        act = new Actualizador(this);
         FrameLayout raiz = new FrameLayout(this);
 
         ig = new WebView(this);
@@ -128,6 +130,7 @@ public class MainActivity extends Activity {
         ig.loadUrl(IG);
         ui.loadUrl(INICIO);
         pedirPermisoAvisos();
+        buscar(false, null);
         if ((getApplicationInfo().flags & android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0) WebView.setWebContentsDebuggingEnabled(true);
     }
 
@@ -298,6 +301,28 @@ public class MainActivity extends Activity {
     private void orden(String id, String orden, JSONObject d) {
         Object valor = null;
         switch (orden) {
+            case "buscarActualizacion":
+                buscar(true, id);
+                return;   // contesta cuando termina
+            case "aplicarActualizacion":
+                // La web nueva ya esta en su carpeta: se recargan las dos vistas.
+                scriptsIg = null;
+                ig.reload();
+                ui.reload();
+                return;
+            case "instalarApk":
+                new Thread(() -> {
+                    try {
+                        JSONObject c = act.comprobar();
+                        act.instalarApk(c.getJSONObject("manifiesto"));
+                    } catch (Exception e) {
+                        runOnUiThread(() -> aUi("{\"tipo\":\"actualizacion\",\"error\":" + JSONObject.quote(String.valueOf(e.getMessage())) + "}"));
+                    }
+                }).start();
+                break;
+            case "version":
+                try { valor = new JSONObject().put("web", act.versionWeb()).put("apk", act.versionApk()); } catch (Exception e) { /* nada */ }
+                break;
             case "mostrarInstagram":
                 paraEntrar = !conectado;
                 mostrarIg();
@@ -329,6 +354,41 @@ public class MainActivity extends Activity {
         try {
             aUi(new JSONObject().put("tipo", "resultado").put("id", id).put("ok", true).put("valor", valor == null ? JSONObject.NULL : valor).toString());
         } catch (Exception e) { /* nada */ }
+    }
+
+    /** Mira si hay version nueva. Si es de la web, la baja y la deja lista;
+        si es del APK, avisa para que se pulse "Actualizar la app". */
+    private void buscar(boolean aMano, String id) {
+        new Thread(() -> {
+            JSONObject r = new JSONObject();
+            try {
+                JSONObject c = act.comprobar();
+                boolean web = c.optBoolean("web"), apk = c.optBoolean("apk");
+                if (web) act.instalarWeb(c.getJSONObject("manifiesto"));
+                r.put("tipo", "actualizacion").put("web", web).put("apk", apk).put("version", act.versionWeb());
+            } catch (Exception e) {
+                try { r.put("tipo", "actualizacion").put("error", String.valueOf(e.getMessage())); } catch (Exception x) { /* nada */ }
+            }
+            runOnUiThread(() -> {
+                if (id != null) {
+                    try { aUi(new JSONObject().put("tipo", "resultado").put("id", id).put("ok", true).put("valor", r).toString()); } catch (Exception e) { /* nada */ }
+                } else if (r.optBoolean("web") || r.optBoolean("apk")) {
+                    aUi(r.toString());
+                }
+            });
+        }).start();
+    }
+
+    @Override
+    protected void onNewIntent(Intent i) {
+        super.onNewIntent(i);
+        // El instalador de Android contesta aqui: si pide confirmacion, se la
+        // enseñamos.
+        if ("net.ghoosted.app.INSTALADO".equals(i.getAction())
+                && i.getIntExtra(android.content.pm.PackageInstaller.EXTRA_STATUS, -99) == android.content.pm.PackageInstaller.STATUS_PENDING_USER_ACTION) {
+            Intent confirmar = i.getParcelableExtra(Intent.EXTRA_INTENT);
+            if (confirmar != null) startActivity(confirmar);
+        }
     }
 
     /* -------------------------------------------------------- capa Instagram */
@@ -434,7 +494,7 @@ public class MainActivity extends Activity {
     private WebResourceResponse asset(String ruta) {
         if (ruta == null || !ruta.startsWith("/web/") || ruta.contains("..")) return new WebResourceResponse("text/plain", "utf-8", 404, "No", null, null);
         try {
-            InputStream in = getAssets().open(ruta.substring(1));
+            InputStream in = act.abrir(ruta.substring(1));
             String ext = ruta.substring(ruta.lastIndexOf('.') + 1);
             String tipo = TIPOS.containsKey(ext) ? TIPOS.get(ext) : "application/octet-stream";
             return new WebResourceResponse(tipo, tipo.startsWith("text") || tipo.endsWith("javascript") ? "utf-8" : null, in);
@@ -468,7 +528,7 @@ public class MainActivity extends Activity {
     }
 
     private String leer(String ruta) {
-        try (InputStream in = getAssets().open(ruta)) {
+        try (InputStream in = act.abrir(ruta)) {
             ByteArrayOutputStream o = new ByteArrayOutputStream();
             byte[] b = new byte[8192];
             int n;
