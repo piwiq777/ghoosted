@@ -262,6 +262,7 @@ window.Motor = (function () {
     if (!esPro() && S.watch.length >= LIBRE) throw { kind: 'pro' };
     S.watch.push({ pk: String(u.pk), username: u.username, full_name: u.full_name, pic: u.pic, bio: u.bio || '', is_private: !!u.is_private, desde: Date.now() });
     guardar(); avisar();
+    vigilarTodos().then(function () { guardar(); avisar(); }).catch(function () {});
     return u;
   }
   function dejarDeVigilar(pk) { S.watch = S.watch.filter(function (w) { return w.pk !== pk; }); guardar(); avisar(); }
@@ -279,6 +280,29 @@ window.Motor = (function () {
       });
       Object.assign(w, { username: u.username, full_name: u.full_name, pic: u.pic, bio: u.bio || '', is_private: !!u.is_private });
       await espera(azar(900, 1800));
+      /* A quien sigue: cada 6 h, hasta ~1.000 cuentas. Si es privada y no la
+         sigues, Instagram no da la lista y simplemente no sale nada. */
+      if (Date.now() - (w.sigueTs || 0) > SEGUIDOS_CADA) {
+        try {
+          var sg = await ig('fetchFollowingOf', [w.pk, null, 20]);
+          if (sg && sg.users && sg.users.length && sg.complete) {
+            var ahoraSet = {}, antes = w.sigue ? new Set(w.sigue) : null, hoyT = Date.now();
+            sg.users.forEach(function (x) { ahoraSet[x.pk] = x; });
+            if (antes) {
+              sg.users.forEach(function (x) {
+                if (!antes.has(String(x.pk))) S.activity.unshift({ ts: hoyT, type: 'follow_add', pk: w.pk, username: w.username, full_name: w.full_name, pic: w.pic, is_private: w.is_private, target: persona(x) });
+              });
+              antes.forEach(function (pk) {
+                if (!ahoraSet[pk]) S.activity.unshift({ ts: hoyT, type: 'follow_rem', pk: w.pk, username: w.username, full_name: w.full_name, pic: w.pic, is_private: w.is_private, target: { pk: pk, username: (w.sigueNom || {})[pk] || pk } });
+              });
+            }
+            w.sigue = sg.users.map(function (x) { return String(x.pk); });
+            w.sigueNom = {}; sg.users.forEach(function (x) { w.sigueNom[x.pk] = x.username; });
+            w.sigueTs = Date.now();
+          }
+        } catch (e) { if (e && e.kind === 'rate') throw e; registrar('seguidos de @' + w.username, e); }
+        await espera(azar(1500, 3000));
+      }
     }
     S.activity = S.activity.slice(0, 1000);
   }

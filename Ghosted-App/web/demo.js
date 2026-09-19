@@ -6,7 +6,8 @@ window.Demo = (function () {
   var H = 36e5, ahora = Date.now();
   function u(pk, username, full_name, extra) { return Object.assign({ pk: String(pk), username: username, full_name: full_name || '', pic: '', is_private: false, is_verified: false }, extra || {}); }
   var base = [];
-  for (var i = 0; i < 470; i++) base.push(u(1000 + i, 'seguidor_' + i, ''));
+  var NOMS = ['Lucía', 'Marta', 'Pablo', 'Sara', 'Hugo', 'Carla', 'Álvaro', 'Paula', 'Daniel', 'Laura', 'Irene', 'Javi', 'Nerea', 'Marcos', 'memes.diarios', 'Alba'];
+  for (var i = 0; i < 470; i++) base.push(u(1000 + i, 'seguidor_' + i, NOMS[i % NOMS.length] + ' ' + (i % 7 ? '' : '✨')));
   var diaye = u(7, 'diaayee_', 'Diaye');
   var sigo = [u(1, 'braedencarterrr', 'Braeden Carter', { is_verified: true }), u(2, 'danieldrh_', 'danieldrh_'), u(3, 'evaeliades', 'Eva 💋'), u(4, 'p.aaquiiless', 'p.aaquiiless', { is_private: true })]
     .concat(base.slice(0, 288));
@@ -29,6 +30,7 @@ window.Demo = (function () {
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
     if (m === 'fetchUserByUsername' || m === 'fetchUserProfile') return u(400 + String(a[0]).length, String(a[0]).replace(/^@/, ''), String(a[0]).replace(/^@/, ''));
     if (m === 'checkFollows') return { follows: Math.random() > .5, complete: true };
+    if (m === 'fetchFollowingOf') { var k = Math.floor(Date.now() / 1000) % 3; return { users: base.slice(k, k + 40), complete: true }; }
     if (m === 'getMyStoryItems') return [];
     if (m === 'fetchUserPosts') return [];
     return null;

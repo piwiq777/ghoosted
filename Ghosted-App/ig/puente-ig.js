@@ -43,7 +43,7 @@
     getMyStoryItems: 1, getStoryViewers: 1, fetchReelsTray: 1, fetchStoriesMany: 1, fetchStories: 1,
     pendingRequests: 1, approveRequest: 1, ignoreRequest: 1, unfollow: 1,
     checkFollows: 1, checkFollowedBy: 1, searchUsers: 1,
-    fetchUserPosts: 1, fetchPostLikers: 1, fetchPostComments: 1, rateLeftMs: 1
+    fetchUserPosts: 1, fetchPostLikers: 1, fetchPostComments: 1, rateLeftMs: 1, fetchFollowingOf: 1
   };
 
   function errorPlano(e) {

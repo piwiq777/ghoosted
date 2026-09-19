@@ -246,7 +246,7 @@
       '<div class="quien"><b>' + esc(p.full_name || p.username) + (p.is_verified ? ' ' + VERIF : '') + '</b><span>@' + esc(p.username) + (p.is_private ? ' · privada' : '') + '</span></div>' + d + '</div>';
   }
   function personas() {
-    var L = M.listas(), pro = M.esPro();
+    var L = M.listas(), esPro = M.esPro();
     var nb = L.notback;
     var h = cabecera('Personas') + segs([['unfollow', 'Te dejaron', L.unfollow.length], ['new', 'Nuevos', L.new.length], ['notback', 'No te siguen', nb ? nb.length : 0]], U.seg, 'seg');
     var todos = U.seg === 'notback' ? (nb || []) : L[U.seg];
@@ -260,15 +260,15 @@
     }
     h += '<div style="display:flex;gap:10px;align-items:center"><label class="busca">' + ico(I.lupa, 19, 2) + '<span class="sr">Buscar</span>' +
       '<input type="search" id="busca" placeholder="Buscar por nombre o @usuario" value="' + esc(U.busca) + '"></label>' +
-      (U.seg === 'notback' && pro ? '<button class="enlace" data-a="seleccionar">' + (U.sel ? 'Cancelar' : 'Seleccionar') + '</button>' : '') + '</div>';
+      (U.seg === 'notback' && esPro ? '<button class="enlace" data-a="seleccionar">' + (U.sel ? 'Cancelar' : 'Seleccionar') + '</button>' : '') + '</div>';
     h += gratis();
     var q = U.busca.toLowerCase().trim(), items = todos;
     if (q) items = items.filter(function (p) { return (p.username + ' ' + p.full_name).toLowerCase().indexOf(q) >= 0; });
-    var vis = pro ? items : items.slice(0, M.LIBRE);
+    var vis = esPro ? items : items.slice(0, M.LIBRE);
     var der = U.seg === 'notback' ? (U.sel ? 'sel' : 'dejar') : 'hora';
     h += '<div class="bloque"><div class="lista">' + (vis.length ? vis.map(function (p) { return filaPersona(p, der); }).join('') : vaciaFila(I.lupa, 'Nadie coincide', 'Prueba con otro nombre.')) + '</div>';
     if (U.seg === 'notback' && !q) h += '<p class="nota">' + num(items.length) + (items.length === 1 ? ' cuenta que sigues no te sigue.' : ' cuentas que sigues no te siguen.') + ' Tú decides a quién dejar.</p>';
-    if (!pro && items.length > M.LIBRE) h += '<p class="nota">Y ' + num(items.length - M.LIBRE) + ' más con Pro.</p>';
+    if (!esPro && items.length > M.LIBRE) h += '<p class="nota">Y ' + num(items.length - M.LIBRE) + ' más con Pro.</p>';
     h += '</div>';
     if (U.sel) {
       var k = Object.keys(U.sel).filter(function (x) { return U.sel[x]; }).length;
@@ -298,22 +298,22 @@
   }
 
   /* ---------------- Actividad ---------------- */
-  var TIPO = { name: 'Cambió el nombre', username: 'Cambió el usuario', photo: 'Cambió la foto de perfil', bio: 'Cambió la bio' };
-  var TAG = { name: 'perfil', username: 'perfil', photo: 'foto', bio: 'perfil' };
+  var TIPO = { name: 'Cambió el nombre', username: 'Cambió el usuario', photo: 'Cambió la foto de perfil', bio: 'Cambió la bio', follow_add: 'Empezó a seguir a', follow_rem: 'Dejó de seguir a' };
+  var TAG = { name: 'perfil', username: 'perfil', photo: 'foto', bio: 'perfil', follow_add: 'nuevo', follow_rem: 'sigue' };
   function actividad() {
-    var S = M.estado, pro = M.esPro();
+    var S = M.estado, esPro = M.esPro();
     var nReq = S.reqs ? S.reqs.users.length : 0;
     var h = cabecera('Actividad') + segs([['cambios', 'Cambios', S.activity.length], ['solicitudes', 'Solicitudes', nReq]], U.act, 'act');
     if (U.act === 'cambios') {
       h += '<div class="vigilar"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Vigilar usuario</span><input type="text" id="vigilar" placeholder="Busca a alguien para vigilar" autocapitalize="off"></label>' +
         '<button class="negro h46" data-a="vigilar">Vigilar</button></div>';
-      var a = pro ? S.activity : S.activity.slice(0, M.LIBRE);
-      if (!pro && S.activity.length > M.LIBRE) h += gratis();
+      var a = esPro ? S.activity : S.activity.slice(0, M.LIBRE);
+      if (!esPro && S.activity.length > M.LIBRE) h += gratis();
       h += '<div class="lista fina">' + (a.length ? a.map(function (e) {
-        var cambio = TIPO[e.type] + (e.from != null && e.to != null ? ' · ' + e.from + ' → ' + e.to : '');
+        var cambio = TIPO[e.type] + (e.target ? ' @' + e.target.username : '') + (e.from != null && e.to != null ? ' · ' + e.from + ' → ' + e.to : '');
         return '<div class="fila act" data-perfil="' + esc(e.username) + '">' + av(e) + '<div class="quien"><b>' + esc(e.full_name || e.username) + '</b><span>@' + esc(e.username) + (e.is_private ? ' · privada' : '') + '</span><em>' + esc(cambio) + '</em></div>' +
           '<div class="lado"><span>' + hace(e.ts) + '</span><span class="tag">' + TAG[e.type] + '</span></div></div>';
-      }).join('') : vaciaFila(I.actividad, S.watch.length ? 'Sin cambios todavía' : 'No vigilas a nadie', S.watch.length ? 'Te aviso cuando cambien foto, nombre o bio.' : 'Escribe un @ arriba y pulsa Vigilar.')) + '</div>';
+      }).join('') : vaciaFila(I.actividad, S.watch.length ? 'Sin cambios todavía' : 'No vigilas a nadie', S.watch.length ? 'Te aviso cuando sigan a alguien nuevo o cambien foto, nombre o bio.' : 'Escribe un @ arriba y pulsa Vigilar.')) + '</div>';
       if (S.watch.length) h += '<div class="bloque"><div class="cab"><h2>Vigilando · ' + num(S.watch.length) + '</h2></div><div class="lista">' + S.watch.map(function (w) {
         return '<div class="fila" data-perfil="' + esc(w.username) + '">' + av(w) + '<div class="quien"><b>' + esc(w.full_name || w.username) + '</b><span>@' + esc(w.username) + '</span></div><button class="chip" data-a="quitar-vigilar" data-pk="' + esc(w.pk) + '">Quitar</button></div>';
       }).join('') + '</div></div>';
@@ -355,11 +355,24 @@
       '<path d="' + d + ' L300 96 L0 96 Z" fill="url(#glf)"/><path d="' + d + '" fill="none" stroke="url(#gls)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>' +
       '<div class="g-pie"><span>' + (h.length > 1 ? 'hace ' + hace(h[0].ts) : 'hace 7 d') + '</span><span>hoy</span></div></div>';
   }
+  /* Hombres y mujeres entre quien te sigue (o a quien sigues), estimado por
+     el nombre. Gratis: es de lo primero que se quiere mirar. */
+  function genero() {
+    var S = M.estado, cual = U.gen || 'followers', src = S[cual] && S[cual].users;
+    var h = '<div class="bloque"><div class="cab"><h2>Hombres y mujeres</h2></div><div class="grafica vidrio">' +
+      segs([['followers', 'Te siguen'], ['following', 'Sigues']], cual, 'gen', true);
+    if (!src || !src.length) return h + '<p class="nota" style="padding:0">Pulsa «Revisar ahora» en Hoy para cargar la lista.</p></div></div>';
+    var r = Generos.reparto(src);
+    return h + '<div class="genero"><div class="gm"><span>Mujeres</span><b>' + r.pctM + '%</b></div><div class="gh"><span>Hombres</span><b>' + r.pctH + '%</b></div></div>' +
+      '<div class="gbarra"><i style="width:' + r.pctM + '%"></i></div>' +
+      '<div class="g-pie"><span>' + num(r.mujeres) + ' mujeres · ' + num(r.hombres) + ' hombres</span><span>' + num(r.sin) + ' sin clasificar</span></div>' +
+      '<p class="nota" style="padding:0">Estimado por el nombre de cada perfil. Los que no tienen un nombre claro no cuentan.</p></div></div>';
+  }
   function historial() {
     var S = M.estado;
     var h = cabecera('Historial') + segs([['resumen', 'Resumen'], ['interacciones', 'Interacciones']], U.hist, 'hist');
     if (U.hist === 'resumen') {
-      h += linea();
+      h += linea() + genero();
       var rk = M.ranking(), items = Object.keys(S.stories.items).length, ocup = U.trabajando.mis;
       var top = rk.length ? '<div class="mis-top"><div class="mis-ico" aria-hidden="true">' + ico(I.historial, 24, 2) + '</div><div><b>' + num(rk.length) + ' espectadores guardados</b><span>' + num(items) + (items === 1 ? ' historia' : ' historias') + ' · el que más: @' + esc(rk[0].user.username) + ' (' + rk[0].slides + ')</span></div></div>'
         : '<div class="mis-top"><div class="mis-ico" aria-hidden="true">' + ico(I.historial, 24, 2) + '</div><div><b>Aún no hay nada guardado</b><span>Si tienes una historia activa, actualiza para guardarla. Solo tú las ves.</span></div></div>';
@@ -389,6 +402,7 @@
     var v = [['Quién ve tus stories', 'Aunque no te lo digan.'], ['Ranking de espectadores', 'Los más fieles, guardado para siempre.'],
              ['Alertas al instante', 'Te enteras en cuanto pasa.'], ['Historial completo', 'Sin el límite de 3 por lista.']];
     return '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Ghoosted Pro"><div class="asa"><span></span></div>' +
+      (U.proQue ? '<div class="aviso-pro">' + ico(I.candado, 16, 2) + '<span><b>' + esc(U.proQue) + '</b> es una función de Pro</span></div>' : '') +
       '<div class="h-cab"><span class="pro">PRO</span><h2>Desbloquea ghoosted Pro</h2><p>Ahora ves las 3 primeras de cada lista. Con Pro, todo.</p></div>' +
       '<div class="ventajas">' + v.map(function (x) { return '<div class="ventaja"><span class="ok" aria-hidden="true">' + ico(I.ok, 14, 2.6) + '</span><div><b>' + x[0] + '</b><span>' + x[1] + '</span></div></div>'; }).join('') + '</div>' +
       '<div class="h-bajo"><div class="fila-btn" style="align-self:stretch"><button class="comprar" data-a="comprar"><b>Desbloquear por 5 €</b><span>Pago único · para siempre</span></button></div>' +
@@ -456,7 +470,7 @@
       '<div class="pie">Modo fantasma · no apareces en su lista</div></div>';
   }
   async function abrirVisor(reels) {
-    if (!M.esPro()) return abrir('pro');
+    if (!M.esPro()) return abrirPro('Ver historias sin salir en la lista');
     toast('Cargando historias…');
     try {
       var tray = M.estado.tray.list, datos = await M.verHistorias(reels), grupos = [];
@@ -519,7 +533,9 @@
     $app.innerHTML = h;
     if (foco) { var el = document.getElementById(foco.id); if (el) { el.focus(); try { el.setSelectionRange(foco.pos, foco.pos); } catch (e) {} } }
   }
-  function abrir(h) { U.hojaAbierta = h; pintar(); }
+  function abrir(h) { if (h !== 'pro' && h !== 'clave') U.proQue = null; U.hojaAbierta = h; pintar(); }
+  // Al tocar algo de pago se dice que es: «Dejar de seguir» es de Pro.
+  function abrirPro(que) { U.proQue = que || null; U.hojaAbierta = 'pro'; pintar(); }
 
   /* ---------------- acciones ---------------- */
   function valor(id) { var el = document.getElementById(id); return el ? el.value : ''; }
@@ -545,7 +561,7 @@
     'ajustes': function () { abrir('ajustes'); },
     'ayuda': function () { toast('Instagram frena si se le pide mucho. Espera y vuelve a probar.'); },
     'ver-dejaron': function () { U.tab = 'personas'; U.seg = 'unfollow'; U.busca = ''; U.sel = null; pintar(); scrollTo(0, 0); },
-    'pro': function () { abrir('pro'); },
+    'pro': function () { U.proQue = null; abrir('pro'); },
     'cerrar-hoja': function () { U.hojaAbierta = null; pintar(); },
     'comprar': function () { P.nativo('abrir', { url: 'https://ghoosted.net/#pricing' }); },
     'tengo-clave': function () { abrir('clave'); setTimeout(function () { var c = document.getElementById('clave'); if (c) c.focus(); }, 50); },
@@ -560,7 +576,7 @@
     'seleccionar': function () { U.sel = U.sel ? null : {}; pintar(); },
     'dejar': function (el) {
       var pk = el.getAttribute('data-pk');
-      if (!M.esPro()) return abrir('pro');
+      if (!M.esPro()) return abrirPro('Dejar de seguir');
       U.trabajando[pk] = true; pintar();
       M.dejarDeSeguir([pk]).then(function () { toast('Dejaste de seguirle'); }).catch(function (e) { toast(errTxt(e)); }).finally(function () { delete U.trabajando[pk]; pintar(); });
     },
@@ -584,13 +600,16 @@
     'visor-ant': function () { avanzar(-1); },
     'vigilar': function () {
       var n = valor('vigilar'); if (!n.trim()) return;
-      trabajo('vig', async function () { var u = await M.vigilar(n); toast('Vigilando a @' + u.username); });
+      trabajo('vig', async function () {
+        try { var u = await M.vigilar(n); toast('Vigilando a @' + u.username); }
+        catch (e) { if (e && e.kind === 'pro') return abrirPro('Vigilar más de 3 cuentas'); throw e; }
+      });
     },
     'quitar-vigilar': function (el) { M.dejarDeVigilar(el.getAttribute('data-pk')); },
     'cargar-sol': function () { trabajo('sol', function () { return M.solicitudes(); }); },
-    'aceptar': function (el) { if (!M.esPro()) return abrir('pro'); M.responder(el.getAttribute('data-pk'), true).catch(function (e) { toast(errTxt(e)); }); },
-    'rechazar': function (el) { if (!M.esPro()) return abrir('pro'); M.responder(el.getAttribute('data-pk'), false).catch(function (e) { toast(errTxt(e)); }); },
-    'aceptar-todas': function () { if (!M.esPro()) return abrir('pro'); trabajo('sol', function () { return M.aceptarVarias(); }); },
+    'aceptar': function (el) { if (!M.esPro()) return abrirPro('Aceptar solicitudes'); M.responder(el.getAttribute('data-pk'), true).catch(function (e) { toast(errTxt(e)); }); },
+    'rechazar': function (el) { if (!M.esPro()) return abrirPro('Rechazar solicitudes'); M.responder(el.getAttribute('data-pk'), false).catch(function (e) { toast(errTxt(e)); }); },
+    'aceptar-todas': function () { if (!M.esPro()) return abrirPro('Aceptar todas'); trabajo('sol', function () { return M.aceptarVarias(); }); },
     'comprobar': function () {
       var a = valor('cuentaA'), b = valor('cuentaB');
       if (!a.trim() || !b.trim()) return toast('Escribe las dos cuentas');
@@ -600,8 +619,8 @@
         U.ab = txt(r.a, r.b, r.ab) + '<br>' + txt(r.b, r.a, r.ba);
       });
     },
-    'mis-historias': function () { if (!M.esPro()) return abrir('pro'); trabajo('mis', function () { return M.misHistorias().then(function (it) { if (!it.length) toast('No tienes ninguna historia activa'); }); }); },
-    'espectadores': function () { if (!M.esPro()) return abrir('pro'); abrir('espectadores'); },
+    'mis-historias': function () { if (!M.esPro()) return abrirPro('Quién ve tus historias'); trabajo('mis', function () { return M.misHistorias().then(function (it) { if (!it.length) toast('No tienes ninguna historia activa'); }); }); },
+    'espectadores': function () { if (!M.esPro()) return abrirPro('Ranking de espectadores'); abrir('espectadores'); },
     'calcular': function () {
       trabajo('inter', function () { return M.interacciones(function (i, n) { U.trabajando.inter = i + '/' + n; pintar(); }); });
     },
@@ -619,7 +638,7 @@
   };
 
   document.addEventListener('click', function (ev) {
-    var t = ev.target.closest('[data-a],[data-tab],[data-seg],[data-act],[data-hist],[data-regla],[data-tema],[data-sel],[data-perfil]');
+    var t = ev.target.closest('[data-a],[data-tab],[data-seg],[data-act],[data-hist],[data-gen],[data-regla],[data-tema],[data-sel],[data-perfil]');
     if (!t) return;
     if (t.hasAttribute('data-a')) { var f = ACC[t.getAttribute('data-a')]; if (f) f(t); return; }
     if (t.hasAttribute('data-tab')) { U.tab = t.getAttribute('data-tab'); U.sel = null; pintar(); scrollTo(0, 0);
@@ -628,8 +647,9 @@
       return; }
     if (t.hasAttribute('data-seg')) { U.tab = 'personas'; U.seg = t.getAttribute('data-seg'); U.busca = ''; U.sel = null; pintar(); scrollTo(0, 0); return; }
     if (t.hasAttribute('data-act')) { U.act = t.getAttribute('data-act'); pintar(); if (U.act === 'solicitudes' && !M.estado.reqs) ACC['cargar-sol'](); return; }
+    if (t.hasAttribute('data-gen')) { U.gen = t.getAttribute('data-gen'); pintar(); return; }
     if (t.hasAttribute('data-hist')) { U.hist = t.getAttribute('data-hist'); pintar(); return; }
-    if (t.hasAttribute('data-regla')) { if (!M.esPro() && t.getAttribute('data-regla') !== 'manual') return abrir('pro'); M.regla(t.getAttribute('data-regla')); return; }
+    if (t.hasAttribute('data-regla')) { if (!M.esPro() && t.getAttribute('data-regla') !== 'manual') return abrirPro('Aprobar solicitudes automáticamente'); M.regla(t.getAttribute('data-regla')); return; }
     if (t.hasAttribute('data-tema')) { var v = t.getAttribute('data-tema'); if (v === 'sistema') { try { localStorage.removeItem('ghd_tema'); } catch (e) {} tema(); } else tema(v); pintar(); return; }
     if (t.hasAttribute('data-sel')) { var pk = t.getAttribute('data-sel'); U.sel[pk] = !U.sel[pk]; pintar(); return; }
     if (t.hasAttribute('data-perfil')) abrirPerfil(t.getAttribute('data-perfil'));

@@ -412,3 +412,19 @@ button:active,a.btn:active{opacity:.75}
 :root[data-plataforma="android"] .mis,:root[data-plataforma="android"] .sol,:root[data-plataforma="android"] .tarjeta,
 :root[data-plataforma="android"] .cifras > *,:root[data-plataforma="android"] .ficha{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 :root[data-plataforma="android"] .heroe > .b1{filter:none;background:radial-gradient(closest-side,rgba(255,255,255,0.28),transparent)}
+
+/* aviso "esto es de Pro" arriba de la hoja */
+.aviso-pro{display:flex;align-items:center;gap:8px;align-self:flex-start;padding:8px 12px;border-radius:14px;background:var(--fill);font-size:13.5px;color:var(--ink)}
+.aviso-pro svg{color:var(--rosa-txt);flex-shrink:0}
+.aviso-pro b{font-weight:700}
+/* hombres y mujeres */
+.genero{display:flex;gap:10px}
+.genero > div{flex:1;display:flex;flex-direction:column;gap:6px;padding:14px;border-radius:20px}
+.genero span{font-size:13px;font-weight:600}
+.genero b{font-family:var(--marca);font-weight:800;font-size:34px;letter-spacing:-0.03em;line-height:1}
+.genero .gm{background:rgba(214,41,118,0.10);color:#D62976}
+.genero .gh{background:rgba(110,75,224,0.10);color:#6E4BE0}
+:root[data-tema="oscuro"] .genero .gm{background:rgba(255,94,156,0.14);color:#FF5E9C}
+:root[data-tema="oscuro"] .genero .gh{background:rgba(160,140,255,0.14);color:#B7A6FF}
+.gbarra{height:8px;border-radius:999px;background:#6E4BE0;overflow:hidden}
+.gbarra i{display:block;height:100%;background:#D62976;border-radius:999px 0 0 999px}
