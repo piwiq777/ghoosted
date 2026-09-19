@@ -192,6 +192,24 @@
     return '<div class="vacia-fila"><div class="vi" aria-hidden="true">' + ico(icono, 20) + '</div><div class="vt"><b>' + t + '</b><span>' + d + '</span></div></div>';
   }
 
+  /* Lo que ha pasado de verdad, en una linea: con esto una captura basta
+     para saber que falla. */
+  function detalle() {
+    var S = M.estado, d = S.diag, e = S.error, t = [];
+    if (e) t.push('error ' + (e.kind || '?') + (e.status ? ' ' + e.status : ''));
+    if (S.parcial && S.parcialInfo) t.push('recibí ' + S.parcialInfo.recibidos + ' de ' + (S.parcialInfo.total || '?') + (S.parcialInfo.completa ? '' : ' (cortada)'));
+    if (d) {
+      if (!d.yo) t.push('sin sesión en Instagram');
+      else {
+        if (!d.listo) t.push('motor no cargado en ' + (d.ruta || '?'));
+        [['móvil', d.movil], ['móvil2', d.movil2], ['pc', d.pc], ['pc2', d.pc2]].forEach(function (x) {
+          if (x[1]) t.push(x[0] + ' ' + x[1].status + (x[1].usuarios != null ? '·' + x[1].usuarios : '') + (x[1].status !== 200 || !x[1].usuarios ? ' ' + String(x[1].texto || '').replace(/\s+/g, ' ').slice(0, 50) : ''));
+        });
+      }
+    }
+    return t.length ? '<p class="nota" style="font-size:11.5px;-webkit-user-select:text;user-select:text">Detalle: ' + esc(t.join(' · ')) + '</p>' : '';
+  }
+
   /* ---------------- Hoy ---------------- */
   function hoy() {
     var S = M.estado, L = M.listas(), c = S.counts;
@@ -204,7 +222,7 @@
         (S.rate ? '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>Instagram pidió esperar</b><span>Código ' + (S.rate.status || 429) + ' · lo vuelvo a intentar ~ ' + hora(S.rate.until) + '</span></div></div>'
           : '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>' + esc(errTxt(S.error)) + '</b><span>' + (S.error && S.error.status ? 'Código ' + S.error.status : 'Vuelve a intentarlo') + '</span></div></div>') +
         '<div class="cifras sueltas"><div><b class="vacia">—</b><span>seguidores</span></div><div><b class="vacia">—</b><span>seguidos</span></div><div><b class="vacia">—</b><span>no te siguen</span></div></div>' +
-        vacio(I.reloj_arena, 'Aún no he podido cargar tus seguidores', 'Pulsa «Revisar ahora» para intentarlo otra vez.', true);
+        vacio(I.reloj_arena, 'Aún no he podido cargar tus seguidores', 'Pulsa «Revisar ahora» para intentarlo otra vez.', true) + detalle();
     }
     var semana = Date.now() - 7 * 864e5;
     var se = L.unfollow.filter(function (e) { return e.ts >= semana; }), n = se.length, ult = se[0];
@@ -232,7 +250,7 @@
       '<div class="cifras"><button data-seg="new"><b>' + (c ? num(c.followers) : '—') + '</b><span>seguidores</span></button>' +
       '<button data-seg="new"><b>' + (c ? num(c.following) : '—') + '</b><span>seguidos</span></button>' +
       '<button data-seg="notback"><b class="rosa">' + (nb ? num(nb.length) : '—') + '</b><span>no te siguen</span></button></div>' +
-      '<div class="bloque">' + btn + est + '</div>' +
+      '<div class="bloque">' + btn + est + (S.parcial || S.error ? detalle() : '') + '</div>' +
       '<div class="bloque"><div class="cab"><h2>Nuevos · ' + num(L.new.length) + '</h2>' + (L.new.length > neu.length ? '<button data-seg="new">Ver todo</button>' : '') + '</div>' +
       '<div class="lista">' + (neu.length ? neu.map(function (p) { return filaPersona(p, 'hora'); }).join('') : vaciaFila(I.nuevo, 'Nadie nuevo, de momento', 'Te avisamos cuando alguien te siga.')) + '</div></div>';
   }
