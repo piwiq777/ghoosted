@@ -1,6 +1,6 @@
 {
  "web": {
-  "version": 2,
+  "version": 3,
   "archivos": {
    "web/demo.js": "8d725e8d2bce7bc7524263b82cb1e5907872299dff4dcc4414bab1a446f0d360",
    "web/puente.js": "a9280e0b821349216474ab26a64dc12f960baa473e24aa8703b1a6cf446f7786",
@@ -9,7 +9,7 @@
    "web/motor.js": "74b41be1ed5e28a6cb8d4790374ef9ff427534047ec0541524eaa0a9b96a4509",
    "web/generos.js": "7bd50f34f95abe4dc7f4a5a1157bcd6b4e31c7e72eedb2fc63b6f8afadd251a6",
    "web/index.html": "b1ea9ed84ecae9b2926428be409a32947c8f736b032f3164a5d6c4f6498921a0",
-   "web/version.json": "0899eaeee76dcfdd3c97f3afd61ce31158e7b795a26f1568d83727897e6cee85",
+   "web/version.json": "d916c65e2a446edc10bddda4dc2a5762f1a985979fe072208ff4ecc89f0d5cf3",
    "web/fonts/Geist.woff2": "28258d0621216948416a859d32487ab6ad1c9effa0d08795698e70be3c917630",
    "web/fonts/GEIST-LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
    "web/fonts/unbounded-latin.woff2": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6",
@@ -22,6 +22,6 @@
  "apk": {
   "versionCode": 2,
   "url": "https://www.ghoosted.net/movil/Ghoosted.apk",
-  "sha256": "67b9d5db4d704346b021809185055498d2e8b85e6312af56385a0f432687f543"
+  "sha256": "fab736490cf8c7658aa6011e1bf5e1d6d85e677d9b592cc39afb28bec96b13be"
  }
 }
