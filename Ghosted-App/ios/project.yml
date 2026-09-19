@@ -1,0 +1,29 @@
+# Proyecto de Xcode generado con XcodeGen (https://github.com/yonaskolb/XcodeGen):
+#   brew install xcodegen && ./preparar.sh && xcodegen && open Ghoosted.xcodeproj
+name: Ghoosted
+options:
+  bundleIdPrefix: net.ghoosted
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  Ghoosted:
+    type: application
+    platform: iOS
+    sources:
+      - Ghoosted
+      - path: Recursos
+        type: folder
+        buildPhase: resources
+    info:
+      path: Ghoosted/Info.plist
+      properties:
+        CFBundleDisplayName: Ghoosted
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIRequiresFullScreen: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: net.ghoosted.app
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"

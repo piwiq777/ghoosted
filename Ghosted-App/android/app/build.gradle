@@ -1,0 +1,44 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'net.ghoosted.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "net.ghoosted.app"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            // Firmada con la clave de depuracion para poder instalarla a mano.
+            // Para la Play Store hace falta una clave propia (ver LEEME.md).
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    // Las paginas de la app y los scripts de Instagram se copian aqui desde
+    // ../web y ../ig antes de compilar (tools/preparar.sh).
+    sourceSets { main { assets.srcDirs = [layout.buildDirectory.dir('generated/ghd-assets').get().asFile] } }
+}
+
+// Copia el diseño (../web), el puente (../ig) y los dos archivos de la
+// extension que hablan con Instagram (page-api.js e ig-api.js), tal cual, sin
+// duplicarlos en este repo: si se arreglan en la extension, se arreglan aqui.
+def ghdAssets = layout.buildDirectory.dir('generated/ghd-assets')
+tasks.register('copiarWeb', Copy) {
+    from('../../web') { into 'web' }
+    from('../../ig') { into 'ig' }
+    from('../../../Ghosted-Pro/src') { include 'page-api.js', 'ig-api.js'; into 'ig' }
+    into ghdAssets
+}
+preBuild.dependsOn copiarWeb
