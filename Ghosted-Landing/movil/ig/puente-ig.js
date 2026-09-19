@@ -93,7 +93,11 @@
       x.setRequestHeader('x-ig-app-id', appId);
       x.setRequestHeader('x-asbd-id', '359341');
       x.setRequestHeader('x-requested-with', 'XMLHttpRequest');
-      x.onload = function () { ok({ app: appId, status: x.status, texto: String(x.responseText || '').slice(0, 160) }); };
+      x.onload = function () {
+        var n = null;
+        try { var j = JSON.parse(x.responseText); n = Array.isArray(j.users) ? j.users.length : null; } catch (e) {}
+        ok({ app: appId, status: x.status, usuarios: n, texto: String(x.responseText || '').slice(0, 160) });
+      };
       x.onerror = function () { ok({ app: appId, status: 0, texto: 'error de red' }); };
       x.ontimeout = function () { ok({ app: appId, status: 0, texto: 'tiempo agotado' }); };
       x.send();
@@ -102,10 +106,13 @@
   async function probar() {
     var yo = galleta('ds_user_id');
     if (!yo) return { yo: null };
-    var url = 'https://www.instagram.com/api/v1/friendships/' + yo + '/followers/?count=12&search_surface=follow_list_page';
-    var movil = await una(url, '1217981644879628');
-    var pc = await una(url, '936619743392459');
-    return { yo: yo, ua: navigator.userAgent.slice(0, 80), usado: window.__ghdAppId || 'pc', movil: movil, pc: pc };
+    var base = 'https://www.instagram.com/api/v1/friendships/' + yo + '/followers/?';
+    var movil = await una(base + 'count=12&search_surface=follow_list_page', '1217981644879628');
+    var pc = await una(base + 'count=12&search_surface=follow_list_page', '936619743392459');
+    var movil2 = await una(base + 'count=12', '1217981644879628');
+    var pc2 = await una(base + 'count=12', '936619743392459');
+    return { yo: yo, ua: navigator.userAgent.slice(0, 80), usado: window.__ghdAppId || 'pc', movil: movil, pc: pc, movil2: movil2, pc2: pc2,
+             listo: !!window.GhostedIG, ruta: location.pathname };
   }
 
   function sesion() {
@@ -134,8 +141,8 @@
       if (g) { window.__ghdAppId = g; return; }
     } catch (e) {}
     var r = await probar();
-    function bien(x) { return x && x.status === 200 && x.texto.indexOf('"users"') !== -1; }
-    var id = bien(r.movil) ? '1217981644879628' : bien(r.pc) ? '936619743392459' : null;
+    function bien(x) { return x && x.status === 200 && x.usuarios > 0; }
+    var id = bien(r.movil) || bien(r.movil2) ? '1217981644879628' : bien(r.pc) || bien(r.pc2) ? '936619743392459' : null;
     if (id) { window.__ghdAppId = id; try { localStorage.setItem('ghd_app_id', id); } catch (e) {} }
     else elegido = false;   // ninguno contesto bien: se reintenta mas tarde
   }

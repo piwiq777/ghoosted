@@ -132,7 +132,9 @@ window.Motor = (function () {
       // anterior. En cualquiera de los tres casos no se compara.
       if (!r || !r.complete || (cf > 0 && nuevos.length === 0) || (ant && ant.length > 20 && nuevos.length < ant.length * 0.5)) {
         S.parcial = true;
+        S.parcialInfo = { recibidos: nuevos.length, total: cf || 0, completa: !!(r && r.complete) };
         registrar('lista a medias', { message: 'completa=' + !!(r && r.complete) + ' recibidos=' + nuevos.length + ' perfil=' + (cf || '?') });
+        diagnosticar();
         return;
       }
       var se = [], llegan = [];
@@ -170,6 +172,7 @@ window.Motor = (function () {
     } catch (e) {
       S.error = { kind: e && e.kind, status: e && e.status, ts: Date.now() };
       registrar('revisar', e);
+      diagnosticar();
       if (e && e.kind === 'rate') {
         var espera0 = 0;
         try { espera0 = await ig('rateLeftMs', []); } catch (x) {}
@@ -186,6 +189,10 @@ window.Motor = (function () {
     var h = S.history, x = { ts: Date.now(), followers: (S.counts && S.counts.followers) || n, following: S.counts && S.counts.following };
     if (h.length && dia(h[h.length - 1].ts) === dia(x.ts)) h[h.length - 1] = x; else h.push(x);
     S.history = h.slice(-365);
+  }
+
+  async function diagnosticar() {
+    try { S.diag = Object.assign({ ts: Date.now() }, await ig('probar', [])); guardar(); avisar(); } catch (e) {}
   }
 
   /* ---------------- listas ---------------- */
@@ -392,7 +399,7 @@ window.Motor = (function () {
 
   return {
     get estado() { return S; }, get ocupado() { return ocupado; }, get fase() { return fase; },
-    LIBRE: LIBRE, on: on, registrar: registrar, guardar: guardar, avisar: avisar, sesion: sesion,
+    LIBRE: LIBRE, on: on, registrar: registrar, diagnosticar: diagnosticar, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,

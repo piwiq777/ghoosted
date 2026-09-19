@@ -406,6 +406,14 @@
         }
         if (!Y2) throw Y4;
       } else Y2 = await y(o, N, W);
+      /* Primera pagina vacia y sin mas paginas: en la web del movil Instagram
+         a veces contesta asi (200, users: []) a la forma de pedir la lista
+         que usa la web de ordenador, en vez de dar error. Se prueba la
+         siguiente forma, igual que cuando contesta 400. */
+      if (Y0 === 0 && !(Y2.users || []).length && !Y2.next_max_id && U < 2) {
+        U++;
+        continue;
+      }
       const Y3 = Y2.users || [];
       for (const Y7 of Y3) {
         const Y8 = l(Y7);

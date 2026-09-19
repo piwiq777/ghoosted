@@ -1,27 +1,27 @@
 {
  "web": {
-  "version": 4,
+  "version": 5,
   "archivos": {
    "web/demo.js": "8d725e8d2bce7bc7524263b82cb1e5907872299dff4dcc4414bab1a446f0d360",
    "web/puente.js": "a9280e0b821349216474ab26a64dc12f960baa473e24aa8703b1a6cf446f7786",
-   "web/app.js": "1fdfcaeae7f3105b61dc6ef188903f752c34813e47e27d7aa99206d038bc2c5a",
+   "web/app.js": "6652e6d9ef1bb502538b2eb6e5eb1d082e5d79d97a004e11960a0927fee0be2c",
    "web/app.css": "05e366ece73979f622736747fd3095e6c960a74d18912e67f3afb7672b0c1a69",
-   "web/motor.js": "74b41be1ed5e28a6cb8d4790374ef9ff427534047ec0541524eaa0a9b96a4509",
+   "web/motor.js": "96c1902aadf834f570e3e43e793cd5553296c54533d07d5397f9241e39c5e653",
    "web/generos.js": "7bd50f34f95abe4dc7f4a5a1157bcd6b4e31c7e72eedb2fc63b6f8afadd251a6",
    "web/index.html": "b1ea9ed84ecae9b2926428be409a32947c8f736b032f3164a5d6c4f6498921a0",
-   "web/version.json": "93b7f31c5c32f184303f1093e936106ef90d1c62c7b00cf4dbbd1b00bcacf167",
+   "web/version.json": "c5980bb4de98c51aa0dd33bb9d809cb8d954b64099f8cf2b013dea7c25b82371",
    "web/fonts/Geist.woff2": "28258d0621216948416a859d32487ab6ad1c9effa0d08795698e70be3c917630",
    "web/fonts/GEIST-LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
    "web/fonts/unbounded-latin.woff2": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6",
    "web/fonts/unbounded-latin-ext.woff2": "845e1c9fe2e9a7bfbedfeb447fbeba4bc1b5ecd6246277910ccdaad35a7a532c",
-   "ig/puente-ig.js": "f28c4b641a2bcbebad869a1b2dce9961f00f4507cf8c0ce6a3b0080e2d53a134",
+   "ig/puente-ig.js": "4cc2ac72448f7604048548631fb4a4451b7f82b1de3f7670df4f9a78a411e7da",
    "ig/page-api.js": "45f0980cdefd842d91b094e1da3a8df8033de7e55019a0979f7d339d6693f1ed",
-   "ig/ig-api.js": "013a527dfc0b4b4fe2495f9970ecd346f4149098f37ccbcfda4d57142ba50e07"
+   "ig/ig-api.js": "5c252f21c56e26775102cb86c6b972aa301be7afac05f2a462d6d9aa7dc33813"
   }
  },
  "apk": {
-  "versionCode": 3,
+  "versionCode": 4,
   "url": "https://www.ghoosted.net/movil/Ghoosted.apk",
-  "sha256": "a33cdd683f68b1701ff9d02568fc208413d384876d1593aa9fa38c03bcb9b5c8"
+  "sha256": "49e62382ad6257d0e96a5501b771fc0ffb6fb2cb770c022c9d242287836a1232"
  }
 }

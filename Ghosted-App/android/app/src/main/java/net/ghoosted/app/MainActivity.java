@@ -252,7 +252,13 @@ public class MainActivity extends Activity {
                         String falla = JSONObject.quote(new JSONObject()
                                 .put("tipo", "resultado").put("id", id).put("ok", false)
                                 .put("error", new JSONObject().put("kind", "transport").put("message", "ig_no_listo")).toString());
-                        ig.evaluateJavascript("window.GhdIGRecibir ? GhdIGRecibir(" + q + ") : GhdNativoIG.aApp(" + falla + ")", null);
+                        // Si Instagram ha recargado la pagina y el motor no esta, se
+                        // vuelve a meter antes de pedirle nada.
+                        String llamada = "window.GhdIGRecibir ? GhdIGRecibir(" + q + ") : GhdNativoIG.aApp(" + falla + ")";
+                        ig.evaluateJavascript("!!window.GhdIGRecibir", v -> {
+                            if (!"true".equals(v)) inyectar();
+                            ig.evaluateJavascript(llamada, null);
+                        });
                     } else if ("nativo".equals(tipo)) {
                         orden(m.optString("id"), m.optString("orden"), m.optJSONObject("datos"));
                     }
