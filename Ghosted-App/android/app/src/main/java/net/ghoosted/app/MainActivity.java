@@ -128,6 +128,7 @@ public class MainActivity extends Activity {
         ig.loadUrl(IG);
         ui.loadUrl(INICIO);
         pedirPermisoAvisos();
+        if ((getApplicationInfo().flags & android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0) WebView.setWebContentsDebuggingEnabled(true);
     }
 
     private int dp(int v) { return Math.round(v * getResources().getDisplayMetrics().density); }
@@ -187,8 +188,10 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(false);
         s.setAllowContentAccess(false);
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
-        // Sin la marca "wv" Instagram trata la vista como el Chrome del movil.
-        s.setUserAgentString(s.getUserAgentString().replace("; wv", ""));
+        // El agente de usuario se deja tal cual. Cambiarlo para parecer Chrome
+        // hacia que Instagram viera dos navegadores distintos (el texto decia
+        // Chrome y las cabeceras Client Hints seguian diciendo WebView) y
+        // cortara las listas a medias con "useragent mismatch".
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(ig, true);
         ig.addJavascriptInterface(new PuenteIg(), "GhdNativoIG");
@@ -331,7 +334,13 @@ public class MainActivity extends Activity {
     /* -------------------------------------------------------- capa Instagram */
 
     private void mostrarIg() {
-        tituloIg.setText(conectado ? "Instagram" : "Inicia sesión · tu contraseña va solo a Instagram");
+        tituloIg.setText(conectado ? "Instagram" : "Entra con tu cuenta de Instagram");
+        // Sin sesion, directo al formulario de entrar (la portada de Instagram
+        // solo ofrece "Abrir la app"). Y si la vista se quedo en una respuesta
+        // de la API en vez de en una pagina, se vuelve al inicio.
+        String act = ig.getUrl() == null ? "" : ig.getUrl();
+        if (!conectado && !act.contains("/accounts/")) ig.loadUrl(IG + "accounts/login/");
+        else if (act.contains("/api/") || act.contains("/graphql/")) ig.loadUrl(IG);
         igArriba = true;
         capaIg.setVisibility(View.VISIBLE);
         capaIg.bringToFront();
@@ -446,7 +455,7 @@ public class MainActivity extends Activity {
             HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
             c.setConnectTimeout(15000);
             c.setReadTimeout(30000);
-            c.setRequestProperty("User-Agent", ig.getSettings().getUserAgentString());
+            c.setRequestProperty("User-Agent", WebSettings.getDefaultUserAgent(this));
             c.setRequestProperty("Referer", IG);
             int st = c.getResponseCode();
             String tipo = c.getContentType() == null ? "image/jpeg" : c.getContentType().split(";")[0];

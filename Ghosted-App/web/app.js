@@ -48,7 +48,7 @@
     historias: '<circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4"/>',
     actividad: '<path d="M3 12h4l2.5-6 5 12 2.5-6h4"/>',
     historial: '<path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.5 4.5v4h4"/><path d="M12 8v4.5l3 2"/>',
-    ampliar: '<path d="M14 4h6v6"/><path d="M10 20H4v-6"/><path d="M20 4l-7 7"/><path d="M4 20l7-7"/>',
+    ig: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/>',
     ajustes: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
     ayuda: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.3 2.4c-.5.2-.8.6-.8 1.1v.5"/><circle cx="12" cy="16.8" r="0.6" fill="currentColor"/>',
     revisar: '<path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/>',
@@ -86,7 +86,7 @@
     if (k === 'challenge') return 'Instagram pide que confirmes que eres tú';
     if (k === 'auth') return 'Tienes que volver a iniciar sesión';
     if (k === 'no_existe') return 'No encuentro esa cuenta';
-    if (k === 'network') return 'Sin conexión';
+    if (k === 'network' || k === 'transport') return 'Instagram no contesta, prueba otra vez';
     return 'No se ha podido hacer';
   }
 
@@ -148,11 +148,17 @@
       '<button class="inicio" data-a="ir-inicio">Ir al inicio</button></div>';
   }
   function sinSesion() {
-    return '<div class="intro"><div class="intro-top">' + wm(true) + '</div><div class="intro-medio centro">' +
-      '<div class="icono-caja"><div class="icono" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div>' +
-      '<div class="pega-abs"><span class="pega">sin contraseña</span></div></div>' +
-      '<div class="titulo"><h1>Entra en Instagram</h1><p>Se abre la página oficial de Instagram. Tu contraseña va a Instagram, no a nosotros.</p></div></div>' +
-      '<div class="intro-bajo"><div class="fila-btn"><button class="negro grande" data-a="login">Iniciar sesión en Instagram</button></div></div></div>';
+    // Antes de abrir Instagram se explica que va a pasar: sin esto, la app
+    // saltaba a la pagina de Instagram sin decir nada.
+    var pasos = [['1', 'Se abre Instagram dentro de la app. Es su página oficial.'],
+                 ['2', 'Entra con tu usuario y contraseña, como siempre.'],
+                 ['3', 'En cuanto entres, vuelves aquí solo y hago la primera foto.']];
+    return '<div class="intro"><div class="intro-top">' + wm(true) + '</div><div class="intro-medio">' +
+      '<div style="display:flex;justify-content:center"><div class="icono-caja"><div class="icono" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div>' +
+      '<div class="pega-abs"><span class="pega">sin contraseña</span></div></div></div>' +
+      '<div class="titulo"><h1>Conecta tu Instagram</h1><p>Tu contraseña va a Instagram, nunca a Ghoosted. Yo solo leo lo que Instagram te enseña a ti.</p></div>' +
+      '<div class="pasos">' + pasos.map(function (x) { return '<div class="paso vidrio"><span class="num">' + x[0] + '</span><div>' + x[1] + '</div></div>'; }).join('') + '</div></div>' +
+      '<div class="intro-bajo"><div class="fila-btn"><button class="negro grande" data-a="login">Entrar con Instagram</button></div></div></div>';
   }
 
   /* ---------------- barra de pestañas ---------------- */
@@ -169,6 +175,7 @@
       return '<button data-' + attr + '="' + s[0] + '" aria-pressed="' + on + '"' + (on ? ' class="on"' : '') + '>' + s[1] + (s[2] != null ? '<span>' + num(s[2]) + '</span>' : '') + '</button>';
     }).join('') + '</div>';
   }
+  function pro() { return M.esPro() ? '' : ' <span class="pro-chip">PRO</span>'; }
   function gratis() {
     if (M.esPro()) return '';
     return '<div class="gratis vidrio"><div><b>Versión gratuita</b><span>Ves las 3 primeras de cada lista</span></div><button data-a="pro">Pasar a Pro</button></div>';
@@ -211,7 +218,7 @@
     else if (S.error) est = '<span class="estado"><i class="rojo"></i><b>' + esc(errTxt(S.error)) + '</b></span>';
     else est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 18e5) + '</span>';
     var neu = L.new.slice(0, M.esPro() ? 5 : Math.min(5, M.LIBRE));
-    return cab + '<button class="redondo vidrio" aria-label="Abrir Instagram" data-a="ampliar">' + ico(I.ampliar, 17) + '</button>' +
+    return cab + '<button class="redondo vidrio" aria-label="Abrir Instagram" data-a="ampliar">' + ico(I.ig, 20) + '</button>' +
       '<button class="redondo vidrio" aria-label="Ajustes" data-a="ajustes">' + ico(I.ajustes, 19) + '</button></div>' +
       '<button class="heroe" data-a="ver-dejaron"><div class="b1" aria-hidden="true"></div><div class="b2" aria-hidden="true"></div>' +
       '<div class="heroe-top">' + ficha + '<span class="pega">' + pega + '</span></div>' +
@@ -228,7 +235,7 @@
   function filaPersona(p, der) {
     var d = '';
     if (der === 'hora') d = '<span class="hora">' + (p.ts ? hace(p.ts) : '') + '</span>';
-    if (der === 'dejar') d = U.trabajando[p.pk] ? '<button class="chip hecho" disabled>…</button>' : '<button class="chip" data-a="dejar" data-pk="' + esc(p.pk) + '">Dejar de seguir</button>';
+    if (der === 'dejar') d = U.trabajando[p.pk] ? '<button class="chip hecho" disabled>…</button>' : '<button class="chip" data-a="dejar" data-pk="' + esc(p.pk) + '">Dejar de seguir' + pro() + '</button>';
     if (der === 'sel') d = '';
     var marca = der === 'sel' ? '<span class="marca-sel' + (U.sel[p.pk] ? ' on' : '') + '" aria-hidden="true">' + (U.sel[p.pk] ? ico(I.ok, 14, 2.6) : '') + '</span>' : '';
     return '<div class="fila" data-perfil="' + esc(p.username) + '"' + (der === 'sel' ? ' data-sel="' + esc(p.pk) + '"' : '') + '>' + marca + av(p) +
@@ -270,9 +277,10 @@
   function historias() {
     var S = M.estado, t = S.tray && S.tray.list || [];
     var q = U.buscaHis.toLowerCase().trim(), lista = q ? t.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; }) : t;
-    var h = cabecera('Historias', '<div class="fantasma"><span class="pega">modo fantasma</span></div>');
+    var h = cabecera('Historias', '<div class="fantasma"><span class="pega">modo fantasma</span></div>' + (M.esPro() ? '' : '<span class="pro-chip">PRO</span>'));
     h += '<p class="sub">' + (S.tray ? num(t.length) + (t.length === 1 ? ' persona tiene' : ' personas tienen') + ' historia ahora. Ábrelas sin aparecer en su lista de espectadores.' : 'Mira las historias de quien sigues sin aparecer en su lista de espectadores.') + '</p>';
     h += '<div style="display:flex"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Buscar</span><input type="text" id="buscaHis" placeholder="Busca a alguien" value="' + esc(U.buscaHis) + '"></label></div>';
+    h += M.esPro() ? '' : '<div class="gratis vidrio"><div><b>Ver historias a escondidas es de Pro</b><span>Gratis ves quién tiene historia ahora</span></div><button data-a="pro">Pasar a Pro</button></div>';
     if (!S.tray) h += vacio(I.historias, 'Aún no he mirado las historias', 'Pulsa «Actualizar» para ver quién tiene historia ahora.');
     else if (!lista.length) h += vacio(I.historias, q ? 'Nadie coincide' : 'Nadie tiene historia ahora', q ? 'Prueba con otro nombre.' : 'Vuelve en un rato.');
     else h += '<div class="caras">' + lista.map(function (x) {
@@ -280,7 +288,7 @@
         (x.count > 1 ? '<span class="n">' + num(x.count) + '</span>' : '') + '</div><span class="nom">' + esc(x.username) + '</span></button>';
     }).join('') + '</div>';
     var ocup = U.trabajando.tray;
-    h += '<div class="dosbtn"><button class="claro vidrio" data-a="ver-todas"' + (lista.length ? '' : ' disabled style="opacity:.5"') + '>' + ico(I.play, 19) + 'Ver las ' + num(lista.length) + '</button>' +
+    h += '<div class="dosbtn"><button class="claro vidrio" data-a="ver-todas"' + (lista.length ? '' : ' disabled style="opacity:.5"') + '>' + ico(I.play, 19) + 'Ver las ' + num(lista.length) + pro() + '</button>' +
       '<button class="negro h50' + (ocup ? ' gira' : '') + '" data-a="bandeja">' + ico(I.revisar, 19, 2) + 'Actualizar</button></div>';
     return h;
   }
@@ -309,7 +317,7 @@
     }
     // Solicitudes
     var reqs = S.reqs ? S.reqs.users : [];
-    h += '<div class="sol"><div class="sol-cab"><div><span>Aprobar automáticamente</span>' + (reqs.length ? '<button data-a="aceptar-todas">Aceptar todas</button>' : '<button data-a="cargar-sol">Actualizar</button>') + '</div>' +
+    h += '<div class="sol"><div class="sol-cab"><div><span>Aprobar automáticamente' + pro() + '</span>' + (reqs.length ? '<button data-a="aceptar-todas">Aceptar todas' + pro() + '</button>' : '<button data-a="cargar-sol">Actualizar</button>') + '</div>' +
       segs([['manual', 'Manual'], ['sigo', 'A quien sigo'], ['todas', 'Todas']], S.reqRule, 'regla', true) + '</div>' +
       (!S.reqs ? vaciaFila(I.nuevo, 'Cargando solicitudes…', 'Solo aparecen si tu cuenta es privada.') :
         reqs.length ? reqs.map(function (p) {
@@ -351,7 +359,7 @@
       var rk = M.ranking(), items = Object.keys(S.stories.items).length, ocup = U.trabajando.mis;
       var top = rk.length ? '<div class="mis-top"><div class="mis-ico" aria-hidden="true">' + ico(I.historial, 24, 2) + '</div><div><b>' + num(rk.length) + ' espectadores guardados</b><span>' + num(items) + (items === 1 ? ' historia' : ' historias') + ' · el que más: @' + esc(rk[0].user.username) + ' (' + rk[0].slides + ')</span></div></div>'
         : '<div class="mis-top"><div class="mis-ico" aria-hidden="true">' + ico(I.historial, 24, 2) + '</div><div><b>Aún no hay nada guardado</b><span>Si tienes una historia activa, actualiza para guardarla. Solo tú las ves.</span></div></div>';
-      h += '<div class="bloque"><div class="cab"><h2>Mis historias</h2></div><div class="mis">' + top +
+      h += '<div class="bloque"><div class="cab"><h2>Mis historias' + pro() + '</h2></div><div class="mis">' + top +
         '<div class="dosbtn"><button class="claro vidrio h48" data-a="espectadores">Ver espectadores</button>' +
         '<button class="negro h48' + (ocup ? ' gira' : '') + '" data-a="mis-historias">' + ico(I.revisar, 19, 2) + 'Actualizar</button></div></div></div>';
       return h;
@@ -491,7 +499,7 @@
 
   var ACC = {
     'intro-sig': function () { if (U.paso < 4) { U.paso++; pintar(); } else ACC['intro-fin'](); },
-    'intro-fin': function () { M.estado.intro = true; M.guardar(); if (!M.estado.yo) P.nativo('mostrarInstagram', {}); pintar(); },
+    'intro-fin': function () { M.estado.intro = true; M.guardar(); pintar(); scrollTo(0, 0); },
     'login': function () { P.nativo('mostrarInstagram', {}); },
     'ir-inicio': function () { U.cargando = false; U.tab = 'hoy'; pintar(); },
     'revisar': function () { M.revisar(true); },

@@ -15,7 +15,10 @@ window.Motor = (function () {
   var SEGUIDOS_CADA = 6 * 3600000;  // la lista de seguidos pesa: cada 6 h
   var HISTORIAS_CADA = 30 * 60000;
   var LIBRE = 3;                    // "Ves las 3 primeras de cada lista"
-  var LIC_API = 'https://ghoosted.net/api/license/';
+  // Con www: ghoosted.net redirige a www, y una peticion con cuerpo JSON no
+  // sigue redirecciones desde otra web (el navegador la corta y parece que
+  // no hay red).
+  var LIC_API = 'https://www.ghoosted.net/api/license/';
 
   var S = cargar();
   var oyentes = [], ocupado = false, fase = null;
