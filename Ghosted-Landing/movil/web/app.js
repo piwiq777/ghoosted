@@ -226,6 +226,8 @@
     var ocup = M.ocupado;
     var btn = '<div class="fila-btn"><button class="negro' + (ocup ? ' gira' : '') + '" data-a="revisar">' + ico(I.revisar, 19, 2) + (ocup ? 'Revisando…' : 'Revisar ahora') + '</button></div>';
     var cab = '<div class="arriba"><div class="wm-caja">' + wm() + '</div>';
+    var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
+      (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
     // Error 429 sin nada cargado: la pantalla "Hoy · error 429" del lienzo.
     if (!S.followers && (S.rate || S.error)) {
       return cab + botonesCab() + '</div>' + banda +
@@ -250,8 +252,6 @@
     else if (S.error) est = '<span class="estado"><i class="rojo"></i><b>' + esc(errTxt(S.error)) + '</b></span>';
     else est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 18e5) + '</span>';
     var neu = L.new.slice(0, M.esPro() ? 5 : Math.min(5, M.LIBRE));
-    var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
-      (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
     if (S.pausa) {
       return cab + botonesCab() + '</div>' + banda +
         '<div class="vacio"><span class="vi vidrio" aria-hidden="true">' + ico(I.alerta, 30) + '</span>' +
@@ -463,6 +463,8 @@
       '<div class="ajuste"><span>Última revisión</span><span class="valor">' + (S.lastCheck ? 'hace ' + hace(S.lastCheck) : '—') + '</span></div>' +
       '<div class="ajuste"><span>Instagram</span><button class="enlace" data-a="ampliar" style="height:auto">Abrir</button></div>' +
       '<div class="ajuste"><span>Versión' + (U.ver ? ' <span class="valor">' + U.ver.web + '·' + U.ver.apk + '</span>' : '') + '</span><button class="enlace" data-a="buscar-act" style="height:auto">' + (U.buscando ? 'Buscando…' : 'Buscar actualización') + '</button></div>' +
+      '<div class="ajuste"><span>Peticiones a Instagram<span class="valor"> · tope por hora</span></span><span class="valor">' +
+        (U.gasto ? U.gasto.hora + '/' + U.gasto.topeHora + ' · hoy ' + U.gasto.dia + '/' + U.gasto.topeDia : '—') + '</span></div>' +
       '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
@@ -623,7 +625,7 @@
       P.ig('probar', []).then(function (r) { U.diag = r || { yo: null }; }).catch(function (e) { U.diag = { yo: '?', usado: errTxt(e) }; }).finally(pintar);
     },
     'ampliar': function () { U.hojaAbierta = null; P.nativo('mostrarInstagram', {}); },
-    'ajustes': function () { abrir('ajustes'); if (!P.demo) P.nativo('version', {}).then(function (v) { if (v) { U.ver = v; if (U.hojaAbierta === 'ajustes') pintar(); } }); },
+    'ajustes': function () { abrir('ajustes'); if (!P.demo) P.ig('gasto', []).then(function (g) { U.gasto = g; if (U.hojaAbierta === 'ajustes') pintar(); }).catch(function () {}); if (!P.demo) P.nativo('version', {}).then(function (v) { if (v) { U.ver = v; if (U.hojaAbierta === 'ajustes') pintar(); } }); },
     'ayuda': function () { toast('Instagram frena si se le pide mucho. Espera y vuelve a probar.'); },
     'ver-dejaron': function () { U.tab = 'personas'; U.seg = 'unfollow'; U.busca = ''; U.sel = null; pintar(); scrollTo(0, 0); },
     'pro': function () { U.proQue = null; abrir('pro'); },
