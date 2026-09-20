@@ -473,3 +473,11 @@ button:active,a.btn:active{opacity:.75}
 .chip:active{transform:scale(.94)}
 .segs button{transition:color .25s ease}
 .cara:active .aro{transform:scale(.94);transition:transform .2s ease}
+
+/* --- la misma cápsula, en los selectores de arriba --- */
+.segs{position:relative}
+.segs .s-cap{position:absolute;z-index:0;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--on-bg);box-shadow:var(--on-sombra);
+  transition:transform .46s cubic-bezier(.34,1.32,.5,1)}
+.segs.plano .s-cap{background:var(--on2-bg);box-shadow:var(--on2-sombra)}
+.segs button{position:relative;z-index:1;background:transparent!important;box-shadow:none!important;transition:color .3s ease,font-weight .2s ease}
+.segs .s-cap.liquida{animation:liquida .46s cubic-bezier(.34,1.32,.5,1)}
