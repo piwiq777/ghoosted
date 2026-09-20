@@ -632,17 +632,18 @@
       }
       var m = document.getElementById('pantalla');
       m.innerHTML = cuerpo;
-      colocarSegs();
       if (tabAnterior !== U.tab) {
         m.classList.remove('entra'); void m.offsetWidth; m.classList.add('entra');
         moverCapsula(tabAnterior !== null);
         tabAnterior = U.tab;
         segAnterior = {};
-        colocarSegs();
       }
     }
     pintarHoja();
     pintarVisor();
+    // Aqui abajo: asi entran tambien los selectores que viven dentro de una
+    // hoja, como el del Tema en Ajustes.
+    colocarSegs();
     if (foco) { var el = document.getElementById(foco.id); if (el) { el.focus(); try { el.setSelectionRange(foco.pos, foco.pos); } catch (e) {} } }
   }
 
