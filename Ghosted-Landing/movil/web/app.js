@@ -202,11 +202,37 @@
     if (animar) { cap.classList.remove('liquida'); void cap.offsetWidth; cap.classList.add('liquida'); }
   }
   function cabecera(t, extra) { return '<div class="cabecera"><h1>' + t + '</h1><div style="display:flex;gap:10px">' + (extra || '') + '</div></div>'; }
+  /* Los selectores de arriba llevan la misma pieza que la barra de abajo: una
+     capsula que viaja y se estira. Como el cuerpo se repinta entero, la
+     posicion anterior se guarda aqui y la animacion se lanza a mano (si no,
+     el navegador estrena la capsula ya colocada y no se mueve nada). */
+  var segAnterior = {};
   function segs(lista, activo, attr, plano) {
-    return '<div class="segs ' + (plano ? 'plano' : 'vidrio') + '" role="group">' + lista.map(function (s) {
-      var on = s[0] === activo;
-      return '<button data-' + attr + '="' + s[0] + '" aria-pressed="' + on + '"' + (on ? ' class="on"' : '') + '>' + s[1] + (s[2] != null ? '<span>' + num(s[2]) + '</span>' : '') + '</button>';
-    }).join('') + '</div>';
+    var i = Math.max(0, lista.map(function (x) { return x[0]; }).indexOf(activo));
+    return '<div class="segs ' + (plano ? 'plano' : 'vidrio') + '" role="group" data-grupo="' + attr + '" data-n="' + lista.length + '" data-i="' + i + '">' +
+      '<span class="s-cap" aria-hidden="true" style="width:calc((100% - 8px - ' + (lista.length - 1) * 2 + 'px) / ' + lista.length + ')"></span>' +
+      lista.map(function (s) {
+        var on = s[0] === activo;
+        return '<button data-' + attr + '="' + s[0] + '" aria-pressed="' + on + '"' + (on ? ' class="on"' : '') + '>' + s[1] + (s[2] != null ? '<span>' + num(s[2]) + '</span>' : '') + '</button>';
+      }).join('') + '</div>';
+  }
+  function colocarSegs() {
+    Array.prototype.forEach.call(document.querySelectorAll('.segs'), function (g) {
+      var grupo = g.getAttribute('data-grupo'), i = Number(g.getAttribute('data-i')) || 0;
+      var cap = g.querySelector('.s-cap');
+      if (!cap) return;
+      var antes = segAnterior[grupo];
+      function donde(k) { return 'translateX(calc(' + k + ' * (100% + 2px)))'; }
+      if (antes != null && antes !== i) {
+        cap.style.transition = 'none';
+        cap.style.transform = donde(antes);
+        void cap.offsetWidth;
+        cap.style.transition = '';
+        cap.classList.add('liquida');
+      }
+      cap.style.transform = donde(i);
+      segAnterior[grupo] = i;
+    });
   }
   function pro() { return M.esPro() ? '' : ' <span class="pro-chip">PRO</span>'; }
   function gratis() {
@@ -606,10 +632,13 @@
       }
       var m = document.getElementById('pantalla');
       m.innerHTML = cuerpo;
+      colocarSegs();
       if (tabAnterior !== U.tab) {
         m.classList.remove('entra'); void m.offsetWidth; m.classList.add('entra');
         moverCapsula(tabAnterior !== null);
         tabAnterior = U.tab;
+        segAnterior = {};
+        colocarSegs();
       }
     }
     pintarHoja();
