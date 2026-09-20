@@ -59,7 +59,7 @@
     if (!m || m.tipo !== 'llamar') return;
     var id = m.id, metodo = String(m.metodo || '');
     if (metodo === 'sesion') return aApp(Object.assign({ tipo: 'resultado', id: id, ok: true }, { valor: sesion() }));
-    if (metodo === 'probar') return probar().then(function (v) { aApp({ tipo: 'resultado', id: id, ok: true, valor: v }); });
+    if (metodo === 'probar') return window.GhdElegirId().then(function (v) { aApp({ tipo: 'resultado', id: id, ok: true, valor: v }); });
     if (!METODOS[metodo]) return aApp({ tipo: 'resultado', id: id, ok: false, error: { kind: 'other', message: 'metodo_no_permitido' } });
     var api = ig();
     if (!api || typeof api[metodo] !== 'function') return aApp({ tipo: 'resultado', id: id, ok: false, error: { kind: 'transport', message: 'ig_no_listo' } });
@@ -130,31 +130,26 @@
     anterior = k;
     aApp(Object.assign({ tipo: 'sesion' }, s));
   }
-  /* Con sesion abierta, se prueba una vez que id acepta Instagram para esta
-     cuenta y este navegador, y se usa ese. Queda guardado para la proxima. */
-  /* Como mucho una prueba cada 6 horas (se guarda la hora). Antes, si
-     ninguna forma funcionaba, se volvia a probar cada 1,5 s: decenas de
-     peticiones por minuto, justo lo que hace que Instagram frene la cuenta. */
-  var elegido = false;
+  /* Ya no se prueba nada por cuenta propia. Esa prueba automatica (cuatro
+     peticiones, y repetida cuando fallaba) es lo que hizo que Instagram
+     limitara la cuenta. El id se elige cuando TU pulsas "Probar" en Ajustes,
+     y si no, se usa el de la web del movil. */
   async function elegirId() {
-    if (elegido || !galleta('ds_user_id')) return;
-    elegido = true;
     try {
       var g = localStorage.getItem('ghd_app_id');
-      if (g) { window.__ghdAppId = g; return; }
-      var ult = Number(localStorage.getItem('ghd_app_id_ts') || 0);
-      if (Date.now() - ult < 6 * 3600000) return;
-      localStorage.setItem('ghd_app_id_ts', String(Date.now()));
-    } catch (e) { return; }
+      if (g) window.__ghdAppId = g;
+    } catch (e) {}
+  }
+  window.GhdElegirId = async function () {
     var r = await probar();
     function bien(x) { return x && x.status === 200 && x.usuarios > 0; }
     var id = bien(r.movil) || bien(r.movil2) ? '1217981644879628' : bien(r.pc) || bien(r.pc2) ? '936619743392459' : null;
     if (id) { window.__ghdAppId = id; try { localStorage.setItem('ghd_app_id', id); } catch (e) {} }
-    // Si ninguno contesta bien no se reintenta aqui: la marca de hora de
-    // arriba lo impide hasta dentro de 6 horas.
-  }
+    return Object.assign({ elegido: id }, r);
+  };
+
   avisar();
   elegirId();
-  // El aviso de sesion es solo mirar una cookie: no pide nada a Instagram.
-  setInterval(function () { avisar(); if (!elegido) elegirId(); }, 1500);
+  // Mirar una cookie no le pide nada a Instagram; esto se puede repetir.
+  setInterval(avisar, 1500);
 })();

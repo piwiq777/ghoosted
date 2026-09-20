@@ -11,9 +11,13 @@
 window.Motor = (function () {
   'use strict';
   var CLAVE = 'ghd_app_v1';
-  var CADA = 30 * 60000;            // "Reviso solo cada 30 min"
-  var SEGUIDOS_CADA = 6 * 3600000;  // la lista de seguidos pesa: cada 6 h
-  var HISTORIAS_CADA = 30 * 60000;
+  /* Cada cuanto se le pide algo a Instagram. Al principio era cada 30 min
+     como decia el diseño, y con eso (mas una prueba automatica que se repetia
+     sola) Instagram limito la cuenta. Ahora: una revision cada 3 h como
+     mucho, y solo con la app abierta. */
+  var CADA = 3 * 3600000;
+  var SEGUIDOS_CADA = 12 * 3600000;
+  var HISTORIAS_CADA = 3 * 3600000;
   var LIBRE = 3;                    // "Ves las 3 primeras de cada lista"
   // Con www: ghoosted.net redirige a www, y una peticion con cuerpo JSON no
   // sigue redirecciones desde otra web (el navegador la corta y parece que
@@ -26,11 +30,14 @@ window.Motor = (function () {
   function cargar() {
     var s = null;
     try { s = JSON.parse(localStorage.getItem(CLAVE) || 'null'); } catch (e) {}
+    // Quien ya venia frenado por Instagram arranca en pausa: al actualizar
+    // no se le pide nada hasta que lo diga.
+    if (s && !s.v2) { s.v2 = true; if (s.rate) s.pausa = true; }
     return Object.assign({
       yo: null, followers: null, following: null, counts: null, events: [], history: [],
       watch: [], activity: [], stories: { viewers: {}, items: {}, hist: [], ts: 0 },
       reqRule: 'manual', reqs: null, tray: null, inter: null, lastCheck: 0, nextCheck: 0,
-      rate: null, error: null, lic: null, intro: false, parcial: false, log: []
+      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false
     }, s || {});
   }
   var guardarT = 0;
@@ -114,6 +121,9 @@ window.Motor = (function () {
 
   async function revisar(manual) {
     if (ocupado || !S.yo) return;
+    // En pausa no se le pide nada a Instagram, ni a mano: es el freno de
+    // emergencia cuando Instagram ha limitado la cuenta.
+    if (S.pausa) { avisar({ pausada: true }); return; }
     // Con Instagram pidiendo esperar no se le pide nada, tampoco a mano:
     // insistir es lo que alarga el freno.
     if (S.rate && Date.now() < S.rate.until) { avisar({ frenado: true }); return; }
@@ -136,7 +146,6 @@ window.Motor = (function () {
         S.parcial = true;
         S.parcialInfo = { recibidos: nuevos.length, total: cf || 0, completa: !!(r && r.complete) };
         registrar('lista a medias', { message: 'completa=' + !!(r && r.complete) + ' recibidos=' + nuevos.length + ' perfil=' + (cf || '?') });
-        diagnosticar();
         return;
       }
       var se = [], llegan = [];
@@ -174,13 +183,15 @@ window.Motor = (function () {
     } catch (e) {
       S.error = { kind: e && e.kind, status: e && e.status, ts: Date.now() };
       registrar('revisar', e);
-      diagnosticar();
       if (e && e.kind === 'rate') {
         var espera0 = 0;
         try { espera0 = await ig('rateLeftMs', []); } catch (x) {}
         var veces = (S.rate && S.rate.veces || 0) + 1;
         // 30 min, 1 h, 2 h... hasta 6 h: cada vez que vuelve a frenar, mas calma.
         S.rate = { status: e.status || 429, veces: veces, until: Date.now() + Math.max(espera0 || 0, Math.min(6, Math.pow(2, veces - 1) * 0.5) * 3600000) };
+        // Dos frenos seguidos: Instagram esta limitando la cuenta. Se para
+        // del todo y no se vuelve solo: lo decides tu.
+        if (veces >= 2) S.pausa = true;
       }
       if (e && e.kind === 'auth') Puente.nativo('mostrarInstagram', {});
     } finally {
@@ -195,8 +206,8 @@ window.Motor = (function () {
     S.history = h.slice(-365);
   }
 
+  // Solo a mano, desde Ajustes: son cuatro peticiones.
   async function diagnosticar() {
-    if (S.diag && Date.now() - S.diag.ts < 6 * 3600000) return;
     try { S.diag = Object.assign({ ts: Date.now() }, await ig('probar', [])); guardar(); avisar(); } catch (e) {}
   }
 
@@ -404,7 +415,8 @@ window.Motor = (function () {
 
   return {
     get estado() { return S; }, get ocupado() { return ocupado; }, get fase() { return fase; },
-    LIBRE: LIBRE, on: on, registrar: registrar, diagnosticar: diagnosticar, guardar: guardar, avisar: avisar, sesion: sesion,
+    LIBRE: LIBRE, on: on, registrar: registrar, diagnosticar: diagnosticar,
+    pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
