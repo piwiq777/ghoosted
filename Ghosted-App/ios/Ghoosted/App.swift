@@ -43,7 +43,7 @@ final class Principal: UIViewController, WKScriptMessageHandler, WKNavigationDel
         // --- vista de Instagram, con los tres scripts inyectados en cada carga
         let cIg = WKWebViewConfiguration()
         cIg.websiteDataStore = .default()
-        let codigo = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';\nif(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js")
+        let codigo = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:1200,hora:90,dia:900};\nif(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js")
         cIg.userContentController.addUserScript(WKUserScript(source: codigo, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
         cIg.userContentController.add(self, name: "ghdig")
         ig = WKWebView(frame: .zero, configuration: cIg)

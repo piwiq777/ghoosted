@@ -86,6 +86,8 @@
     if (k === 'challenge') return 'Instagram pide que confirmes que eres tú';
     if (k === 'auth') return 'Tienes que volver a iniciar sesión';
     if (k === 'no_existe') return 'No encuentro esa cuenta';
+    var msg = String(e && e.message || '');
+    if (msg.indexOf('tope_') === 0) return 'Me he frenado solo para no molestar a Instagram. Prueba dentro de un rato';
     if (k === 'network' || k === 'transport') return 'Instagram no contesta, prueba otra vez';
     var m = e && (e.reason || e.message);
     return 'No se ha podido hacer' + (m ? ' · ' + String(m).slice(0, 60) : '');
@@ -192,6 +194,14 @@
     return '<div class="vacia-fila"><div class="vi" aria-hidden="true">' + ico(icono, 20) + '</div><div class="vt"><b>' + t + '</b><span>' + d + '</span></div></div>';
   }
 
+  /* Los tres botones de arriba van en TODAS las pantallas de Hoy. Antes, en
+     la de error, solo estaba el de ayuda: justo cuando hace falta entrar en
+     Instagram o cambiar de cuenta, no habia por donde. */
+  function botonesCab() {
+    return '<button class="redondo vidrio" aria-label="Abrir Instagram" data-a="ampliar">' + ico(I.ig, 20) + '</button>' +
+      '<button class="redondo vidrio" aria-label="Ajustes" data-a="ajustes">' + ico(I.ajustes, 19) + '</button>';
+  }
+
   /* Lo que ha pasado de verdad, en una linea: con esto una captura basta
      para saber que falla. */
   function detalle() {
@@ -218,7 +228,7 @@
     var cab = '<div class="arriba"><div class="wm-caja">' + wm() + '</div>';
     // Error 429 sin nada cargado: la pantalla "Hoy · error 429" del lienzo.
     if (!S.followers && (S.rate || S.error)) {
-      return cab + '<button class="redondo vidrio" aria-label="Ayuda" data-a="ayuda">' + ico(I.ayuda, 19) + '</button></div>' +
+      return cab + botonesCab() + '</div>' +
         (S.rate ? '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>Instagram pidió esperar</b><span>Código ' + (S.rate.status || 429) + ' · lo vuelvo a intentar solo ~ ' + hora(S.rate.until) + '. No pulses Revisar mientras tanto.</span></div></div>'
           : '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>' + esc(errTxt(S.error)) + '</b><span>' + (S.error && S.error.status ? 'Código ' + S.error.status : 'Vuelve a intentarlo') + '</span></div></div>') +
         '<div class="cifras sueltas"><div><b class="vacia">—</b><span>seguidores</span></div><div><b class="vacia">—</b><span>seguidos</span></div><div><b class="vacia">—</b><span>no te siguen</span></div></div>' +
@@ -241,7 +251,7 @@
     else est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 18e5) + '</span>';
     var neu = L.new.slice(0, M.esPro() ? 5 : Math.min(5, M.LIBRE));
     if (S.pausa) {
-      return cab + '<button class="redondo vidrio" aria-label="Ayuda" data-a="ayuda">' + ico(I.ayuda, 19) + '</button></div>' +
+      return cab + botonesCab() + '</div>' +
         '<div class="vacio"><span class="vi vidrio" aria-hidden="true">' + ico(I.alerta, 30) + '</span>' +
         '<div class="vt"><b>En pausa: Instagram limitó tu cuenta</b><span>Fue culpa mía: la app le pidió datos demasiadas veces. Mientras dure, Instagram no deja leer tus seguidores ni desde aquí ni desde el ordenador. Suele levantarse en unas horas.</span></div>' +
         '<div class="fila-btn"><button class="negro h50" data-a="reanudar">Ya puedo, reanudar</button></div></div>' +
@@ -457,7 +467,8 @@
       '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
-      '<div class="ajuste"><span>Cuenta</span><button class="rojo" data-a="salir">Cerrar sesión</button></div>' + yo +
+      '<div class="ajuste"><span>Cuenta</span><button class="enlace" data-a="cambiar" style="height:auto">Cambiar de cuenta</button></div>' +
+      '<div class="ajuste"><span>Salir de Instagram</span><button class="rojo" data-a="salir">Cerrar sesión</button></div>' + yo +
       '</div></div>';
   }
   function hojaDiag() {
@@ -685,6 +696,12 @@
       ['followers', 'following', 'counts', 'reqs', 'tray', 'inter', 'rate', 'error'].forEach(function (k) { S[k] = null; });
       S.events = []; S.history = []; S.activity = []; S.watch = []; S.stories = { viewers: {}, items: {}, hist: [], ts: 0 };
       M.guardar(); U.hojaAbierta = null; pintar(); toast('Borrado');
+    },
+    'cambiar': function () {
+      // A la pagina de Instagram: desde ahi se cambia de cuenta como siempre.
+      U.hojaAbierta = null;
+      P.nativo('mostrarInstagram', {});
+      toast('Cambia de cuenta en Instagram y vuelve con «Listo»');
     },
     'salir': function () {
       if (!confirm('¿Cerrar la sesión de Instagram en esta app?')) return;
