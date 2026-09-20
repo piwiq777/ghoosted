@@ -108,6 +108,13 @@ window.Motor = (function () {
     if (!s) return;
     var antes = S.yo;
     S.yo = s.conectado ? String(s.yo) : null;
+    // Al salir, lo de la cuenta anterior deja de estar: si luego entra otra,
+    // no se mezclan listas de dos cuentas distintas.
+    if (antes && !S.yo) {
+      ['followers', 'following', 'counts', 'reqs', 'tray', 'inter', 'rate', 'error', 'diag'].forEach(function (k) { S[k] = null; });
+      S.events = []; S.activity = []; S.history = []; S.stories = { viewers: {}, items: {}, hist: [], ts: 0 };
+      S.pausa = false; S.parcial = false;
+    }
     if (antes && S.yo && antes !== S.yo) {
       // Otra cuenta: lo guardado era de la anterior y no se mezcla.
       var lic = S.lic, intro = S.intro;

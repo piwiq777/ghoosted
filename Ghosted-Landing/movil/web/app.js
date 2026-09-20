@@ -702,14 +702,21 @@
       M.guardar(); U.hojaAbierta = null; pintar(); toast('Borrado');
     },
     'cambiar': function () {
-      // A la pagina de Instagram: desde ahi se cambia de cuenta como siempre.
+      /* Cerrar la sesion de la app y entrar de cero. Antes solo abria
+         Instagram, y si la sesion de antes estaba atascada en un aviso de
+         seguridad no habia manera de llegar a la pantalla de entrar. */
+      if (!confirm('Voy a cerrar la sesión de Instagram dentro de Ghoosted para que entres con otra cuenta. Tu cuenta no se toca. ¿Sigo?')) return;
       U.hojaAbierta = null;
-      P.nativo('mostrarInstagram', {});
-      toast('Cambia de cuenta en Instagram y vuelve con «Listo»');
+      M.pausar(false);
+      toast('Cerrando sesión…');
+      P.nativo('cerrarSesion', {}).then(function () {
+        setTimeout(function () { P.nativo('mostrarInstagram', {}); }, 800);
+      });
+      pintar();
     },
     'salir': function () {
       if (!confirm('¿Cerrar la sesión de Instagram en esta app?')) return;
-      U.hojaAbierta = null; P.nativo('cerrarSesion', {});
+      U.hojaAbierta = null; M.pausar(false); P.nativo('cerrarSesion', {});
     }
   };
 
