@@ -59,6 +59,7 @@
     if (!m || m.tipo !== 'llamar') return;
     var id = m.id, metodo = String(m.metodo || '');
     if (metodo === 'sesion') return aApp(Object.assign({ tipo: 'resultado', id: id, ok: true }, { valor: sesion() }));
+    if (metodo === 'gasto') return aApp({ tipo: 'resultado', id: id, ok: true, valor: gasto() });
     if (metodo === 'probar') return window.GhdElegirId().then(function (v) { aApp({ tipo: 'resultado', id: id, ok: true, valor: v }); });
     if (!METODOS[metodo]) return aApp({ tipo: 'resultado', id: id, ok: false, error: { kind: 'other', message: 'metodo_no_permitido' } });
     var api = ig();
@@ -113,6 +114,19 @@
     var pc2 = await una(base + 'count=12', '936619743392459');
     return { yo: yo, ua: navigator.userAgent.slice(0, 80), usado: window.__ghdAppId || 'pc', movil: movil, pc: pc, movil2: movil2, pc2: pc2,
              listo: !!window.GhostedIG, ruta: location.pathname };
+  }
+
+  /* Cuantas peticiones se le han hecho a Instagram. El tope vive en
+     page-api.js; esto solo lo cuenta para poder enseñarlo. */
+  function gasto() {
+    var g = { ultima: 0, hora: [], dia: [] };
+    try { g = JSON.parse(localStorage.getItem('ghosted_gasto') || 'null') || g; } catch (e) {}
+    var ahora = Date.now(), t = window.__ghdTope || {};
+    return {
+      hora: (g.hora || []).filter(function (x) { return ahora - x < 3600000; }).length,
+      dia: (g.dia || []).filter(function (x) { return ahora - x < 86400000; }).length,
+      topeHora: t.hora || 0, topeDia: t.dia || 0, ultima: g.ultima || 0
+    };
   }
 
   function sesion() {

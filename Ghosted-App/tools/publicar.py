@@ -42,6 +42,8 @@ fuentes = [('web', os.path.join(APP, 'web')), ('ig', os.path.join(APP, 'ig'))]
 for pref, carpeta in fuentes:
     for base, _, nombres in os.walk(carpeta):
         for n in nombres:
+            if n.startswith('_'):
+                continue   # herramientas de prueba: no se publican
             src = os.path.join(base, n)
             rel = pref + '/' + os.path.relpath(src, carpeta).replace(os.sep, '/')
             dst = os.path.join(DEST, rel)
