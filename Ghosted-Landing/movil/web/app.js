@@ -177,11 +177,29 @@
   }
 
   /* ---------------- barra de pestañas ---------------- */
+  var TABS = [['hoy', 'Hoy'], ['personas', 'Personas'], ['historias', 'Historias'], ['actividad', 'Actividad'], ['historial', 'Historial']];
+  /* La barra se pinta UNA vez y luego solo se le mueve la capsula. Si se
+     volviera a pintar entera en cada cambio, el navegador estrenaria los
+     elementos y no habria animacion que valga. */
   function barra() {
-    var t = [['hoy', 'Hoy'], ['personas', 'Personas'], ['historias', 'Historias'], ['actividad', 'Actividad'], ['historial', 'Historial']];
-    return '<div class="velo" aria-hidden="true"></div><nav class="tabs vidrio" aria-label="Secciones">' + t.map(function (x) {
-      return '<button data-tab="' + x[0] + '"' + (U.tab === x[0] ? ' class="on" aria-current="page"' : '') + '>' + ico(I[x[0]], 22) + '<span>' + x[1] + '</span></button>';
-    }).join('') + '</nav>';
+    return '<div class="velo" aria-hidden="true"></div><nav class="tabs vidrio" id="tabs" aria-label="Secciones"><span class="capsula" aria-hidden="true"></span>' +
+      TABS.map(function (x) {
+        return '<button data-tab="' + x[0] + '"' + (U.tab === x[0] ? ' class="on" aria-current="page"' : '') + '><i class="ti">' + ico(I[x[0]], 22) + '</i><span>' + x[1] + '</span></button>';
+      }).join('') + '</nav>';
+  }
+  function moverCapsula(animar) {
+    var nav = document.getElementById('tabs');
+    if (!nav) return;
+    var i = TABS.map(function (x) { return x[0]; }).indexOf(U.tab);
+    var cap = nav.querySelector('.capsula');
+    cap.style.transform = 'translateX(calc(' + i + ' * (100% + 2px)))';
+    Array.prototype.forEach.call(nav.querySelectorAll('button'), function (b, k) {
+      var on = TABS[k][0] === U.tab;
+      b.classList.toggle('on', on);
+      if (on) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+      if (on && animar) { b.classList.remove('salta'); void b.offsetWidth; b.classList.add('salta'); }
+    });
+    if (animar) { cap.classList.remove('liquida'); void cap.offsetWidth; cap.classList.add('liquida'); }
   }
   function cabecera(t, extra) { return '<div class="cabecera"><h1>' + t + '</h1><div style="display:flex;gap:10px">' + (extra || '') + '</div></div>'; }
   function segs(lista, activo, attr, plano) {
@@ -571,21 +589,98 @@
 
   /* ---------------- pintar ---------------- */
   var foco = null;
-  function pintar() {
-    var S = M.estado, h;
+  var conBarra = false, tabAnterior = null;
+  function pintar(animarTab) {
+    var S = M.estado;
     var act = document.activeElement;
     foco = act && act.id && act.tagName === 'INPUT' ? { id: act.id, pos: act.selectionStart } : null;
-    if (!S.intro) h = intro();
-    else if (!S.yo) h = sinSesion();
-    else if (U.cargando) h = cargando();
-    else {
+    if (!S.intro || !S.yo || U.cargando) {
+      conBarra = false;
+      $app.innerHTML = !S.intro ? intro() : !S.yo ? sinSesion() : cargando();
+    } else {
       var cuerpo = ({ hoy: hoy, personas: personas, historias: historias, actividad: actividad, historial: historial })[U.tab]();
-      h = '<main class="pantalla">' + cuerpo + '</main>' + barra();
+      if (!conBarra) {
+        $app.innerHTML = '<main class="pantalla" id="pantalla"></main>' + barra();
+        conBarra = true;
+        tabAnterior = null;
+      }
+      var m = document.getElementById('pantalla');
+      m.innerHTML = cuerpo;
+      if (tabAnterior !== U.tab) {
+        m.classList.remove('entra'); void m.offsetWidth; m.classList.add('entra');
+        moverCapsula(tabAnterior !== null);
+        tabAnterior = U.tab;
+      }
     }
-    if (U.hojaAbierta) h += ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag })[U.hojaAbierta]();
-    if (U.visor) h += visor();
-    $app.innerHTML = h;
+    pintarHoja();
+    pintarVisor();
     if (foco) { var el = document.getElementById(foco.id); if (el) { el.focus(); try { el.setSelectionRange(foco.pos, foco.pos); } catch (e) {} } }
+  }
+
+  /* ---------------- hojas: suben, se arrastran y bajan ---------------- */
+  var hojaPuesta = null, cajaHoja = null;
+  function pintarHoja() {
+    var quiere = U.hojaAbierta;
+    if (!quiere) { if (hojaPuesta) cerrarHoja(); return; }
+    var html = ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag })[quiere]();
+    if (hojaPuesta === quiere && cajaHoja) {
+      // misma hoja, contenido nuevo: se cambia por dentro y no vuelve a subir
+      var nueva = document.createElement('div');
+      nueva.innerHTML = html;
+      cajaHoja.querySelector('.hoja').innerHTML = nueva.querySelector('.hoja').innerHTML;
+      return;
+    }
+    if (cajaHoja) cajaHoja.remove();
+    cajaHoja = document.createElement('div');
+    cajaHoja.innerHTML = html;
+    document.body.appendChild(cajaHoja);
+    var hoja = cajaHoja.querySelector('.hoja');
+    arrastrar(hoja);
+    requestAnimationFrame(function () { cajaHoja.classList.add('abierta'); });
+    hojaPuesta = quiere;
+  }
+  function cerrarHoja() {
+    var caja = cajaHoja;
+    hojaPuesta = null; cajaHoja = null;
+    if (!caja) return;
+    caja.classList.add('cerrando');
+    setTimeout(function () { caja.remove(); }, 300);
+  }
+  // Arrastrar la hoja hacia abajo para cerrarla, como en iOS.
+  function arrastrar(hoja) {
+    var y0 = null, dy = 0, t0 = 0;
+    hoja.addEventListener('touchstart', function (e) {
+      if (hoja.scrollTop > 0) return;
+      y0 = e.touches[0].clientY; dy = 0; t0 = Date.now();
+      hoja.style.transition = 'none';
+    }, { passive: true });
+    hoja.addEventListener('touchmove', function (e) {
+      if (y0 == null) return;
+      dy = e.touches[0].clientY - y0;
+      if (dy < 0) dy = dy / 6;   // hacia arriba apenas cede
+      hoja.style.transform = 'translateY(' + dy + 'px)';
+    }, { passive: true });
+    hoja.addEventListener('touchend', function () {
+      if (y0 == null) return;
+      var rapido = dy > 40 && Date.now() - t0 < 300;
+      hoja.style.transition = '';
+      hoja.style.transform = '';
+      y0 = null;
+      if (dy > 110 || rapido) { U.hojaAbierta = null; U.proQue = null; cerrarHoja(); }
+    });
+  }
+  var visorPuesto = false;
+  function pintarVisor() {
+    var v = document.getElementById('visor');
+    if (!U.visor) { if (v) v.remove(); visorPuesto = false; return; }
+    var html = visor();
+    if (!v) {
+      var caja = document.createElement('div');
+      caja.id = 'visor';
+      caja.innerHTML = html;
+      document.body.appendChild(caja);
+      visorPuesto = true;
+    } else v.innerHTML = html;
   }
   function abrir(h) { if (h !== 'pro' && h !== 'clave') U.proQue = null; U.hojaAbierta = h; pintar(); }
   // Al tocar algo de pago se dice que es: «Dejar de seguir» es de Pro.
@@ -733,7 +828,7 @@
     var t = ev.target.closest('[data-a],[data-tab],[data-seg],[data-act],[data-hist],[data-gen],[data-regla],[data-tema],[data-sel],[data-perfil]');
     if (!t) return;
     if (t.hasAttribute('data-a')) { var f = ACC[t.getAttribute('data-a')]; if (f) f(t); return; }
-    if (t.hasAttribute('data-tab')) { U.tab = t.getAttribute('data-tab'); U.sel = null; pintar(); scrollTo(0, 0);
+    if (t.hasAttribute('data-tab')) { U.tab = t.getAttribute('data-tab'); U.sel = null; pintar(true); scrollTo(0, 0);
       if (U.tab === 'historias' && !M.estado.tray && !U.trabajando.tray) ACC.bandeja();
       if (U.tab === 'actividad' && U.act === 'solicitudes' && !M.estado.reqs) ACC['cargar-sol']();
       return; }

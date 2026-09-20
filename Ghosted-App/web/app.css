@@ -428,3 +428,48 @@ button:active,a.btn:active{opacity:.75}
 :root[data-tema="oscuro"] .genero .gh{background:rgba(160,140,255,0.14);color:#B7A6FF}
 .gbarra{height:8px;border-radius:999px;background:#6E4BE0;overflow:hidden}
 .gbarra i{display:block;height:100%;background:#D62976;border-radius:999px 0 0 999px}
+
+/* ==========================================================================
+   MOVIMIENTO
+   El vidrio de iOS no cambia de sitio de golpe: la pieza que marca la pestaña
+   viaja, se estira un poco por el camino (como si dentro hubiera liquido) y
+   al llegar se asienta. Las hojas suben desde abajo y se pueden arrastrar.
+   ========================================================================== */
+/* --- la capsula de la pestaña activa --- */
+.tabs{position:fixed}
+.tabs .capsula{position:absolute;z-index:0;top:5px;bottom:5px;left:5px;width:calc((100% - 10px - 8px) / 5);border-radius:999px;
+  background:var(--on-bg);box-shadow:var(--on-sombra);transition:transform .46s cubic-bezier(.34,1.32,.5,1)}
+.tabs button{position:relative;z-index:1;background:transparent!important;box-shadow:none!important}
+.tabs .ti{display:block;font-style:normal;line-height:0;transition:transform .42s cubic-bezier(.34,1.5,.5,1)}
+.tabs button.on .ti{transform:scale(1.14) translateY(-1px)}
+.tabs button.salta .ti{animation:salta .5s cubic-bezier(.34,1.5,.5,1)}
+@keyframes salta{0%{transform:scale(.88)}45%{transform:scale(1.26) translateY(-2px)}100%{transform:scale(1.14) translateY(-1px)}}
+/* el "líquido": al viajar se estira en el sentido de la marcha y luego vuelve */
+.tabs .capsula.liquida{animation:liquida .46s cubic-bezier(.34,1.32,.5,1)}
+@keyframes liquida{
+  0%{border-radius:999px}
+  35%{transform-origin:center;scale:1.1 .88;border-radius:999px}
+  70%{scale:.97 1.05}
+  100%{scale:1 1}
+}
+/* --- el cuerpo de cada pestaña entra con un pequeño desplazamiento --- */
+.pantalla.entra{animation:entraVista .34s cubic-bezier(.22,.9,.3,1)}
+@keyframes entraVista{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* --- hojas: suben, se arrastran, bajan --- */
+.hoja-velo{opacity:0;transition:opacity .3s ease}
+.hoja{transform:translateY(102%);transition:transform .42s cubic-bezier(.22,1,.3,1);touch-action:pan-y;will-change:transform}
+.abierta .hoja-velo{opacity:1}
+.abierta .hoja{transform:none}
+.cerrando .hoja-velo{opacity:0}
+.cerrando .hoja{transform:translateY(102%)}
+.hoja .asa{cursor:grab;padding:2px 0 4px;margin:-4px 0 0}
+/* --- el visor de historias aparece en negro --- */
+#visor .visor{animation:entraVisor .28s ease}
+@keyframes entraVisor{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+/* --- lo que se pulsa responde --- */
+.negro:active,.claro:active,.comprar:active{transform:scale(.97)}
+.negro,.claro,.comprar,.chip,.redondo{transition:transform .18s ease,opacity .18s ease}
+.chip:active{transform:scale(.94)}
+.segs button{transition:color .25s ease}
+.cara:active .aro{transform:scale(.94);transition:transform .2s ease}
