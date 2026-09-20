@@ -230,7 +230,7 @@ public class MainActivity extends Activity {
         String h = ig.getUrl() == null ? "" : Uri.parse(ig.getUrl()).getHost();
         if (h == null || !h.endsWith("instagram.com")) return;
         if (scriptsIg == null) {
-            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:1200,hora:90,dia:900};\nif(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
+            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:2500,hora:60,dia:600};\nif(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
         }
         ig.evaluateJavascript(scriptsIg, null);
     }

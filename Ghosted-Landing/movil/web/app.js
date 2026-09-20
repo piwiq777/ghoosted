@@ -250,7 +250,8 @@
     } else if (S.rate && Date.now() < S.rate.until) est = '<span class="estado"><i class="rojo"></i><b>Instagram pidió esperar</b>· reintento ~ ' + hora(S.rate.until) + '</span>';
     else if (S.parcial) est = '<span class="estado"><i class="ambar"></i><b>Lista a medias</b>· no he comparado, lo reintento ~ ' + hora(S.nextCheck) + '</span>';
     else if (S.error) est = '<span class="estado"><i class="rojo"></i><b>' + esc(errTxt(S.error)) + '</b></span>';
-    else est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 18e5) + '</span>';
+    else if (S.auto) est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 216e5) + '</span>';
+    else est = '<span class="estado"><i></i><b>Todo al día</b>· solo reviso cuando tú pulses</span>';
     var neu = L.new.slice(0, M.esPro() ? 5 : Math.min(5, M.LIBRE));
     if (S.pausa) {
       return cab + botonesCab() + '</div>' + banda +
@@ -465,6 +466,7 @@
       '<div class="ajuste"><span>Versión' + (U.ver ? ' <span class="valor">' + U.ver.web + '·' + U.ver.apk + '</span>' : '') + '</span><button class="enlace" data-a="buscar-act" style="height:auto">' + (U.buscando ? 'Buscando…' : 'Buscar actualización') + '</button></div>' +
       '<div class="ajuste"><span>Peticiones a Instagram<span class="valor"> · tope por hora</span></span><span class="valor">' +
         (U.gasto ? U.gasto.hora + '/' + U.gasto.topeHora + ' · hoy ' + U.gasto.dia + '/' + U.gasto.topeDia : '—') + '</span></div>' +
+      '<div class="ajuste"><span>Revisar sola cada 6 h<span class="valor"> · con la app abierta</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
       '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
@@ -618,6 +620,7 @@
     },
     'aplicar-act': function () { U.actu = null; P.nativo('aplicarActualizacion', {}); },
     'instalar-apk': function () { toast('Descargando la app nueva…'); P.nativo('instalarApk', {}); },
+    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola cada 6 h' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
     'pausa': function () { M.pausar(!M.estado.pausa); toast(M.estado.pausa ? 'En pausa: no le pido nada a Instagram' : 'Reanudada'); pintar(); },
     'diag': function () { U.diag = null; abrir('diag'); },
     'probar': function () {
