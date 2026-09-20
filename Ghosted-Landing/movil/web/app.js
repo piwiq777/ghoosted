@@ -240,6 +240,15 @@
     else if (S.error) est = '<span class="estado"><i class="rojo"></i><b>' + esc(errTxt(S.error)) + '</b></span>';
     else est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 18e5) + '</span>';
     var neu = L.new.slice(0, M.esPro() ? 5 : Math.min(5, M.LIBRE));
+    if (S.pausa) {
+      return cab + '<button class="redondo vidrio" aria-label="Ayuda" data-a="ayuda">' + ico(I.ayuda, 19) + '</button></div>' +
+        '<div class="vacio"><span class="vi vidrio" aria-hidden="true">' + ico(I.alerta, 30) + '</span>' +
+        '<div class="vt"><b>En pausa: Instagram limitó tu cuenta</b><span>Fue culpa mía: la app le pidió datos demasiadas veces. Mientras dure, Instagram no deja leer tus seguidores ni desde aquí ni desde el ordenador. Suele levantarse en unas horas.</span></div>' +
+        '<div class="fila-btn"><button class="negro h50" data-a="reanudar">Ya puedo, reanudar</button></div></div>' +
+        '<p class="nota">Antes de reanudar, entra en Instagram (botón de arriba) y comprueba que ya te deja moverte con normalidad.</p>' +
+        (S.counts ? '<div class="cifras sueltas"><div><b>' + num(S.counts.followers) + '</b><span>seguidores</span></div><div><b>' + num(S.counts.following) + '</b><span>seguidos</span></div><div><b class="rosa">' + (M.listas().notback ? num(M.listas().notback.length) : '—') + '</b><span>no te siguen</span></div></div>' : '') +
+        detalle();
+    }
     var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
       (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
     return cab + '<button class="redondo vidrio" aria-label="Abrir Instagram" data-a="ampliar">' + ico(I.ig, 20) + '</button>' +
@@ -445,6 +454,7 @@
       '<div class="ajuste"><span>Última revisión</span><span class="valor">' + (S.lastCheck ? 'hace ' + hace(S.lastCheck) : '—') + '</span></div>' +
       '<div class="ajuste"><span>Instagram</span><button class="enlace" data-a="ampliar" style="height:auto">Abrir</button></div>' +
       '<div class="ajuste"><span>Versión' + (U.ver ? ' <span class="valor">' + U.ver.web + '·' + U.ver.apk + '</span>' : '') + '</span><button class="enlace" data-a="buscar-act" style="height:auto">' + (U.buscando ? 'Buscando…' : 'Buscar actualización') + '</button></div>' +
+      '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
       '<div class="ajuste"><span>Cuenta</span><button class="rojo" data-a="salir">Cerrar sesión</button></div>' + yo +
@@ -572,7 +582,12 @@
     'intro-fin': function () { M.estado.intro = true; M.guardar(); pintar(); scrollTo(0, 0); },
     'login': function () { P.nativo('mostrarInstagram', {}); },
     'ir-inicio': function () { U.cargando = false; U.tab = 'hoy'; pintar(); },
+    'reanudar': function () {
+      M.pausar(false);
+      toast('Listo. Pulsa «Revisar ahora» una sola vez.');
+    },
     'revisar': function () {
+      if (M.estado.pausa) return toast('La app está en pausa');
       var r = M.estado.rate;
       if (r && Date.now() < r.until) return toast('Instagram pidió esperar. Lo vuelvo a intentar solo a las ' + hora(r.until));
       M.revisar(true);
@@ -591,6 +606,7 @@
     },
     'aplicar-act': function () { U.actu = null; P.nativo('aplicarActualizacion', {}); },
     'instalar-apk': function () { toast('Descargando la app nueva…'); P.nativo('instalarApk', {}); },
+    'pausa': function () { M.pausar(!M.estado.pausa); toast(M.estado.pausa ? 'En pausa: no le pido nada a Instagram' : 'Reanudada'); pintar(); },
     'diag': function () { U.diag = null; abrir('diag'); },
     'probar': function () {
       U.diag = { cargando: true }; pintar();
