@@ -15,7 +15,7 @@ window.Motor = (function () {
      como decia el diseño, y con eso (mas una prueba automatica que se repetia
      sola) Instagram limito la cuenta. Ahora: una revision cada 3 h como
      mucho, y solo con la app abierta. */
-  var CADA = 3 * 3600000;
+  var CADA = 6 * 3600000;
   var SEGUIDOS_CADA = 12 * 3600000;
   var HISTORIAS_CADA = 3 * 3600000;
   var LIBRE = 3;                    // "Ves las 3 primeras de cada lista"
@@ -37,7 +37,7 @@ window.Motor = (function () {
       yo: null, followers: null, following: null, counts: null, events: [], history: [],
       watch: [], activity: [], stories: { viewers: {}, items: {}, hist: [], ts: 0 },
       reqRule: 'manual', reqs: null, tray: null, inter: null, lastCheck: 0, nextCheck: 0,
-      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false
+      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false, auto: false
     }, s || {});
   }
   var guardarT = 0;
@@ -409,13 +409,17 @@ window.Motor = (function () {
   }
 
   /* ---------------- reloj ---------------- */
+  /* Por defecto la app NO revisa sola: solo cuando tu pulsas. Las revisiones
+     automaticas se encienden en Ajustes, y aun encendidas van cada 6 h. Es lo
+     que hace que la app no pueda molestar a Instagram por su cuenta. */
   setInterval(function () {
-    if (S.yo && !ocupado && Date.now() >= (S.nextCheck || 0)) revisar(false);
+    if (S.auto && S.yo && !ocupado && !S.pausa && Date.now() >= (S.nextCheck || 0)) revisar(false);
   }, 60000);
 
   return {
     get estado() { return S; }, get ocupado() { return ocupado; }, get fase() { return fase; },
     LIBRE: LIBRE, on: on, registrar: registrar, diagnosticar: diagnosticar,
+    automatico: function (v) { S.auto = !!v; guardar(); avisar(); },
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, listas: listas, dejarDeSeguir: dejarDeSeguir,
