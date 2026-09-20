@@ -127,13 +127,14 @@ window.Motor = (function () {
   function progreso(f) { fase = f; avisar({ fase: f }); }
 
   async function revisar(manual) {
-    if (ocupado || !S.yo) return;
+    if (ocupado) return;
+    if (!S.yo) { avisar({ fin: true, sinSesion: true }); return; }
     // En pausa no se le pide nada a Instagram, ni a mano: es el freno de
     // emergencia cuando Instagram ha limitado la cuenta.
-    if (S.pausa) { avisar({ pausada: true }); return; }
+    if (S.pausa) { avisar({ fin: true, pausada: true }); return; }
     // Con Instagram pidiendo esperar no se le pide nada, tampoco a mano:
     // insistir es lo que alarga el freno.
-    if (S.rate && Date.now() < S.rate.until) { avisar({ frenado: true }); return; }
+    if (S.rate && Date.now() < S.rate.until) { avisar({ fin: true, frenado: true }); return; }
     ocupado = true; S.error = null; S.parcial = false;
     var ahora = Date.now();
     try {

@@ -142,9 +142,18 @@
     return '<div class="intro"><div class="intro-top">' + wm(true) + (n < 4 ? '<button class="saltar" data-a="intro-fin">Saltar</button>' : '') + '</div>' + medio +
       '<div class="intro-bajo">' + puntos(n) + '<div class="fila-btn"><button class="negro grande" data-a="intro-sig">' + boton + '</button></div></div></div>';
   }
+  var relojCarga = 0;
   function cargando() {
     var f = M.fase || {}, n = f.n || 0, tot = f.total || 0;
-    var que = f.que === 'seguidos' ? 'Cargando seguidos' : f.que === 'guardando' ? 'Guardando la foto' : 'Cargando seguidores y seguidos';
+    // Si algo se atasca, esta pantalla no se queda dando vueltas para siempre.
+    clearTimeout(relojCarga);
+    relojCarga = setTimeout(function () {
+      if (!U.cargando) return;
+      U.cargando = false;
+      pintar();
+      if (!M.estado.followers) toast('No he podido terminar. Prueba «Revisar ahora»');
+    }, 180000);
+    var que = f.que === 'seguidos' ? 'Cargando seguidos' : f.que === 'guardando' ? 'Guardando la foto' : 'Cargando seguidores';
     var pc = tot ? Math.min(100, Math.round(n / tot * 100)) : (f.que === 'guardando' ? 100 : 6);
     return '<div class="intro"><div class="intro-top centro">' + wm(true) + '</div><div class="intro-medio g28">' +
       '<div class="icono p112" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div>' +
