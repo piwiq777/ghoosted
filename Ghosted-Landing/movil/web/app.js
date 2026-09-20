@@ -228,7 +228,7 @@
     var cab = '<div class="arriba"><div class="wm-caja">' + wm() + '</div>';
     // Error 429 sin nada cargado: la pantalla "Hoy · error 429" del lienzo.
     if (!S.followers && (S.rate || S.error)) {
-      return cab + botonesCab() + '</div>' +
+      return cab + botonesCab() + '</div>' + banda +
         (S.rate ? '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>Instagram pidió esperar</b><span>Código ' + (S.rate.status || 429) + ' · lo vuelvo a intentar solo ~ ' + hora(S.rate.until) + '. No pulses Revisar mientras tanto.</span></div></div>'
           : '<div class="aviso vidrio" role="status"><span class="ai" aria-hidden="true">' + ico(I.alerta, 20) + '</span><div class="at"><b>' + esc(errTxt(S.error)) + '</b><span>' + (S.error && S.error.status ? 'Código ' + S.error.status : 'Vuelve a intentarlo') + '</span></div></div>') +
         '<div class="cifras sueltas"><div><b class="vacia">—</b><span>seguidores</span></div><div><b class="vacia">—</b><span>seguidos</span></div><div><b class="vacia">—</b><span>no te siguen</span></div></div>' +
@@ -250,8 +250,10 @@
     else if (S.error) est = '<span class="estado"><i class="rojo"></i><b>' + esc(errTxt(S.error)) + '</b></span>';
     else est = '<span class="estado"><i></i><b>Todo al día</b>· próxima revisión ~ ' + hora(S.nextCheck || Date.now() + 18e5) + '</span>';
     var neu = L.new.slice(0, M.esPro() ? 5 : Math.min(5, M.LIBRE));
+    var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
+      (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
     if (S.pausa) {
-      return cab + botonesCab() + '</div>' +
+      return cab + botonesCab() + '</div>' + banda +
         '<div class="vacio"><span class="vi vidrio" aria-hidden="true">' + ico(I.alerta, 30) + '</span>' +
         '<div class="vt"><b>En pausa: Instagram limitó tu cuenta</b><span>Fue culpa mía: la app le pidió datos demasiadas veces. Mientras dure, Instagram no deja leer tus seguidores ni desde aquí ni desde el ordenador. Suele levantarse en unas horas.</span></div>' +
         '<div class="fila-btn"><button class="negro h50" data-a="reanudar">Ya puedo, reanudar</button></div></div>' +
@@ -259,10 +261,7 @@
         (S.counts ? '<div class="cifras sueltas"><div><b>' + num(S.counts.followers) + '</b><span>seguidores</span></div><div><b>' + num(S.counts.following) + '</b><span>seguidos</span></div><div><b class="rosa">' + (M.listas().notback ? num(M.listas().notback.length) : '—') + '</b><span>no te siguen</span></div></div>' : '') +
         detalle();
     }
-    var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
-      (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
-    return cab + '<button class="redondo vidrio" aria-label="Abrir Instagram" data-a="ampliar">' + ico(I.ig, 20) + '</button>' +
-      '<button class="redondo vidrio" aria-label="Ajustes" data-a="ajustes">' + ico(I.ajustes, 19) + '</button></div>' + banda +
+    return cab + botonesCab() + '</div>' + banda +
       '<button class="heroe" data-a="ver-dejaron"><div class="b1" aria-hidden="true"></div><div class="b2" aria-hidden="true"></div>' +
       '<div class="heroe-top">' + ficha + '<span class="pega">' + pega + '</span></div>' +
       '<div class="heroe-bajo"><div class="heroe-cifra' + cls + '">' + num(n) + '</div><div class="heroe-txt">' + (n === 1 ? 'persona te dejó de seguir.' : n ? 'personas te dejaron de seguir.' : 'nadie te ha dejado de seguir.') + '</div></div></button>' +
@@ -758,6 +757,7 @@
       if (m.error) { if (U.hojaAbierta === 'ajustes') toast('Actualización: ' + String(m.error).slice(0, 60)); }
       else if (m.web || m.apk) { U.actu = { apk: !!m.apk }; pintar(); }
     }
+    if (m.tipo === 'volver') { P.nativo('buscarActualizacion', {}).then(function (r) { if (r && (r.web || r.apk)) { U.actu = { apk: !!r.apk }; pintar(); } }); }
     if (m.tipo === 'volver') { if (M.estado.yo && Date.now() >= (M.estado.nextCheck || 0)) M.revisar(false); pintar(); }
   });
   M.on(function (x) {
