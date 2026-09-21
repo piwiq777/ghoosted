@@ -122,12 +122,27 @@ button:active,a.btn:active{opacity:.75}
 .wm{display:flex;align-items:center;font-family:var(--marca);font-weight:800;font-size:22px;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
 .wm .ojos{display:flex;gap:1px;margin:0 1px}
 .wm .ojos > span{display:inline-flex;align-items:center;justify-content:flex-end;width:17px;height:17px;border-radius:999px;padding-right:2px;box-sizing:border-box;vertical-align:middle}
-.wm .ojos > span:first-child{background:linear-gradient(135deg,#FF9A3D,#F0507A)}
-.wm .ojos > span:last-child{background:linear-gradient(135deg,#D62976,#6E4BE0)}
+/* Los ojos son blancos, como en la web: disco blanco, aro del color de las
+   letras y pupila oscura. En degradado entero parecian dos ojos rojos. */
+.wm .ojos > span{background:#fff;box-shadow:inset 0 0 0 1.3px currentColor}
 .wm .ojos > span > span{width:7px;height:7px;border-radius:999px;background:var(--pupila)}
 .wm.p20{font-size:20px}
 .wm.p20 .ojos > span{width:15px;height:15px}
 .wm.p20 .ojos > span > span{width:6px;height:6px}
+
+/* ---------- el muro de Pro ---------- */
+/* Ocupa la pantalla entera del apartado, con la barra de abajo puesta: se
+   entiende que ese sitio esta cerrado, no que la app se ha roto. */
+.muro{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;
+  padding:30px 22px 34px;margin-top:6px;border-radius:26px;
+  background:var(--l-bg);backdrop-filter:var(--l-filtro);-webkit-backdrop-filter:var(--l-filtro);
+  border:var(--l-borde);box-shadow:var(--l-sombra)}
+.muro-ico{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:999px;
+  background:var(--ig);color:#fff}
+.muro h2{margin:0;font-family:var(--marca);font-weight:800;font-size:23px;letter-spacing:-0.03em;line-height:1.15;color:var(--ink)}
+.muro p{margin:0;max-width:34ch;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.muro .ventajas{align-self:stretch;text-align:left;margin-top:4px}
+.muro .fila-btn{align-self:stretch;margin-top:4px}
 
 /* ---------- pantallas con barra ---------- */
 .pantalla{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;padding:calc(var(--sa-top) + var(--arriba,58px)) 20px calc(var(--sa-bot) + 130px);display:flex;flex-direction:column;gap:26px}

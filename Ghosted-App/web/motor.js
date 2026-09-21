@@ -45,7 +45,13 @@ window.Motor = (function () {
       yo: null, followers: null, following: null, counts: null, events: [], history: [],
       watch: [], activity: [], stories: { viewers: {}, items: {}, hist: [], ts: 0 },
       reqRule: 'manual', reqs: null, tray: null, inter: null, lastCheck: 0, nextCheck: 0,
-      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false, auto: false
+      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false, auto: false,
+      /* La cata: lo que un usuario sin Pro puede probar de Historias y de
+         Actividad. Una historia y una persona, una vez, y luego el muro.
+         Va aqui y no en la pantalla porque tiene que sobrevivir a cerrar la
+         app; y NO se borra al cambiar de cuenta de Instagram, o bastaria con
+         salir y entrar para volver a tener barra libre. */
+      cata: { historia: 0, persona: 0 }
     }, s || {});
   }
   var guardarT = 0;
@@ -142,6 +148,20 @@ window.Motor = (function () {
     if (!S.lastCheck) return 0;
     if (S.parcial || S.error) return 0;
     return Math.max(0, S.lastCheck + CADA - Date.now());
+  }
+
+  /* Cuanto queda de la cata de una funcion. 1 = le queda la prueba, 0 = se
+     acabo. Con Pro no hay cata que gastar: siempre queda. */
+  var CATA = { historia: 1, persona: 1 };
+  function cataQueda(que) {
+    if (esPro()) return 1;
+    return Math.max(0, (CATA[que] || 0) - ((S.cata && S.cata[que]) || 0));
+  }
+  function gastarCata(que) {
+    if (esPro()) return;
+    if (!S.cata) S.cata = { historia: 0, persona: 0 };
+    S.cata[que] = (S.cata[que] || 0) + 1;
+    guardar(); avisar();
   }
 
   async function revisar(manual) {
@@ -453,6 +473,7 @@ window.Motor = (function () {
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
+    cataQueda: cataQueda, gastarCata: gastarCata,
     listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
     vigilar: vigilar, dejarDeVigilar: dejarDeVigilar,
