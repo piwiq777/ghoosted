@@ -421,13 +421,11 @@ img,svg{display:block;max-width:100%}
   .show-stage{height:min(58vh,540px)}
 }
 @media (max-width:860px){
-  .pair-qr-side{align-items:center}
+  .pair-dl-side{align-items:center}
   .pair-ios{text-align:center}
 }
-/* En un movil el QR no sirve de nada: ya estas en el telefono. Se queda el
-   boton, que es lo que hay que pulsar. */
+/* El boton de descarga, a todo el ancho del movil. */
 @media (max-width:700px){
-  .pair-qr-card{display:none}
   .pair-dl{max-width:none}
 }
 @media (max-width:700px){
@@ -664,11 +662,11 @@ img,svg{display:block;max-width:100%}
 /* Both objects sit a little smaller than the design's raw sizes and lean in
    under the cursor — same "grow into place" gesture as the showcase shot at
    the top of the page. transform only, so nothing reflows around them. */
-.pair-qr-card,.pair-phone-wrap{transition:transform .5s var(--ease)}
-.pair-qr-card:hover,.pair-phone-wrap:hover{transform:scale(1.07)}
+.pair-phone-wrap{transition:transform .5s var(--ease)}
+.pair-phone-wrap:hover{transform:scale(1.07)}
 
 /* QR card — reads as the extension's own popup window */
-.pair-qr-side{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.pair-dl-side{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
 /* La descarga de la app: debajo del QR, para quien ya esta en el ordenador
    y prefiere mandarsela luego, y para quien entra desde el propio movil. */
 .pair-dl{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;max-width:330px;
@@ -677,20 +675,6 @@ img,svg{display:block;max-width:100%}
 .pair-dl:hover{transform:translateY(-1px)}
 .pair-dl svg{width:19px;height:19px;flex:none}
 .pair-ios{max-width:330px;margin:0;font-size:12.5px;line-height:1.45;color:var(--ink-2);text-align:right}
-.pair-qr-card{width:100%;max-width:330px;border-radius:16px;overflow:hidden;background:#0B0A09;
-  border:1px solid rgba(255,255,255,.11)}
-.pair-qr-titlebar{display:flex;align-items:center;gap:7px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.09)}
-.pair-qr-titlebar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
-.pair-qr-titlebar span{margin-left:10px;font-size:11.5px;color:rgba(255,255,255,.34)}
-.pair-qr-body{padding:28px 26px 30px;display:flex;flex-direction:column;gap:20px}
-.pair-qr-label{font-size:14px;font-weight:550;letter-spacing:-.015em;color:#FFFFFF}
-.pair-qr-window{position:relative;background:#FFFFFF;border-radius:14px;padding:18px;aspect-ratio:1/1;
-  display:flex;align-items:center;justify-content:center;overflow:hidden}
-.pair-qr-slot{width:100%;height:100%;opacity:.25;transition:opacity .6s ease}
-.pair-qr-slot svg{width:100%;height:100%;display:block}
-.pair-card.is-scanning .pair-qr-slot{opacity:1}
-/* real QR (rendered by qr.js, same generator the extension uses); it points
-   at this page, not a live pairing session — a static page can't mint one */
 .pair-scanline{position:absolute;left:10px;right:10px;height:2px;top:12%;
   background:linear-gradient(90deg,rgba(124,58,237,0),#7C3AED,#F0522F,rgba(240,82,47,0));
   box-shadow:0 0 24px 7px rgba(124,58,237,.4);opacity:0;pointer-events:none;
@@ -716,9 +700,6 @@ img,svg{display:block;max-width:100%}
 /* Two labels on one row inside a narrow card. Longer translations ("Tersambung",
    "Привязано") clipped the right-hand one, so the left label is allowed to
    shrink and the status label keeps its full width. */
-.pair-qr-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.pair-qr-foot span:first-child{font-size:12.5px;color:rgba(255,255,255,.42);min-width:0;flex:1 1 auto}
-.pair-qr-foot span:last-child{font-size:12.5px;font-weight:500;color:#FFFFFF;flex:0 0 auto}
 
 /* connector */
 .pair-connector{position:relative;display:flex;align-items:center;height:2px;width:120px;padding:0 26px}
@@ -782,7 +763,7 @@ img,svg{display:block;max-width:100%}
 @media (max-width:960px){
   .pair-inner{padding:72px 28px 76px}
   .pair-grid{grid-template-columns:1fr;gap:40px;justify-items:center}
-  .pair-qr-side,.pair-phone-side{width:100%;justify-content:center}
+  .pair-dl-side,.pair-phone-side{width:100%;justify-content:center}
   .pair-connector{display:none}
 }
 @media (max-width:560px){
@@ -798,7 +779,7 @@ img,svg{display:block;max-width:100%}
      under reduced motion, on the owner's call. Both are small, contained and
      confined to their own box: no parallax, nothing crossing the viewport.
      The hover grow keeps its easing too; snapping is more jarring than easing. */
-  .pair-phone,.pair-phone-glow,.pair-mirrored-pill,.pair-qr-slot,.pair-done{transition:none}
+  .pair-phone,.pair-phone-glow,.pair-mirrored-pill,.pair-done{transition:none}
   /* The blanket `*{animation:none!important}` at the bottom of this file wins on
      origin, so re-enabling these two takes !important plus more specificity —
      scoped to exactly these elements so nothing else comes back with them. */
@@ -1086,14 +1067,6 @@ img,svg{display:block;max-width:100%}
 .pair-card.is-linked .pair-badge .pair-dot{background:#e1306c}
 .pair-head h2{color:var(--ink)}
 .pair-head p{color:var(--ink-2)}
-.pair-qr-card{background:#fff;border-color:var(--line);box-shadow:0 26px 50px -30px rgba(20,18,16,.35)}
-.pair-qr-titlebar{border-bottom-color:var(--line)}
-.pair-qr-titlebar i{background:rgba(20,18,16,.14)}
-.pair-qr-titlebar span{color:var(--ink-3)}
-.pair-qr-label{color:var(--ink)}
-.pair-qr-window{box-shadow:inset 0 0 0 1px var(--line)}
-.pair-qr-foot span:first-child{color:var(--ink-3)}
-.pair-qr-foot span:last-child{color:var(--ink)}
 .pair-connector::before{background:var(--line-2)}
 .pair-done i{background:var(--boton)}
 
@@ -1182,7 +1155,11 @@ img,svg{display:block;max-width:100%}
    ahora es el movil. Un solo bloque, centrado, sin nada mas que decidir. */
 .bajar{padding:0 var(--gut) 90px}
 .bajar-caja{max-width:var(--max);margin:0 auto;padding:64px 32px 56px;border-radius:44px;text-align:center;
-  background:var(--ig);color:#fff;box-shadow:0 40px 80px -50px rgba(214,41,118,.8);
+  /* Negro. El color ya lo pone el icono de arriba; con toda la caja en
+     degradado el bloque gritaba mas que el precio, que es lo que tiene que
+     mandar en esta parte de la pagina. */
+  background:linear-gradient(180deg,#191919,#0D0D0D);color:#fff;
+  box-shadow:0 40px 80px -52px rgba(0,0,0,.75);
   display:flex;flex-direction:column;align-items:center;gap:0}
 .bajar-icono{display:block;width:76px;height:76px;margin-bottom:22px;filter:drop-shadow(0 16px 30px rgba(0,0,0,.28))}
 .bajar-icono svg{width:100%;height:100%;display:block;border-radius:22px}

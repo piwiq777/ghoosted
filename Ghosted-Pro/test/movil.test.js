@@ -143,14 +143,23 @@ module.exports = () => {
       return !['pair_trust_1', 'pair_trust_2', 'pair_trust_3', 'pair_step_1', 'pair_step_2', 'pair_step_3']
         .some((k) => k in d);
     }));
-  /* Pero el dibujo se queda entero: sin el no queda nada que explique nada. */
-  s.ok('el dibujo del emparejado sigue', /class="pair-qr-card"/.test(html) && /class="pair-phone"/.test(html));
+  /* El movil del dibujo se queda: es lo unico que enseña la app funcionando. */
+  s.ok('el movil del dibujo sigue', /class="pair-phone"/.test(html));
+  /* El QR se retiro: desde el telefono no sirve de nada y desde el ordenador
+     el boton de descarga dice lo mismo. Y si se va el naipe, se va con el todo
+     lo suyo: el generador, sus estilos y sus textos. */
+  s.ok('sin QR en la seccion del movil',
+    !/pair-qr|pairQrSlot/.test(html) && !/pair-qr/.test(css) && !/GhostedQR/.test(js));
+  s.ok('sin el generador de QR colgando de la portada', !/src="qr\.js"/.test(html));
+  s.ok('sin traducciones huerfanas del QR',
+    idiomas.every((f) => {
+      const d = JSON.parse(leer(path.join('locales', f)));
+      return !['pair_qr_label', 'pair_qr_note'].some((k) => k in d);
+    }));
 
   /* Ya no es un espejo: hay app de Android de verdad, y la web la ofrece. */
   s.ok('la seccion del movil ofrece descargar la app',
     /class="pair-dl"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html));
-  s.ok('el QR de la seccion lleva al APK, no a un dibujo',
-    /GhostedQR\.svg\('https:\/\/www\.ghoosted\.net\/movil\/Ghoosted\.apk'/.test(js));
   s.ok('y el movil del dibujo enseña la app, no el panel del PC',
     /assets\/app\/movil\.jpg/.test(html));
   s.ok('quien entra desde un Android tiene boton de descarga',

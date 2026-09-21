@@ -201,19 +201,9 @@
       paint();
     }
 
-    // Pair section — real QR (same vendored generator qr.js the extension
-    // El QR de la seccion del movil lleva a la descarga de la app de Android.
-    // Es un enlace de verdad, no un dibujo: quien lo escanee con el telefono
-    // se baja el APK.
-    const pairQrSlot = document.getElementById('pairQrSlot');
-    if (pairQrSlot && window.GhostedQR) {
-      pairQrSlot.innerHTML = GhostedQR.svg('https://www.ghoosted.net/movil/Ghoosted.apk', {
-        scale: 6, margin: 2, dark: '#0a0a0f', light: '#ffffff',
-      });
-    }
-
-    // Antes aqui habia un bucle que hacia como que un movil escaneaba el QR.
-    // Ya no hay nada que fingir: la app existe y el QR se escanea de verdad.
+    // Aqui estaba el QR de la seccion del movil. Fuera: quien mira esto desde
+    // el telefono ya esta en el telefono, y desde el ordenador el boton de
+    // descarga dice lo mismo sin pedir que saques la camara.
 
     // A phone visitor literally cannot run a Chrome extension — iOS has no
     // extension support in Chrome at all, and Android Chrome doesn't either.
