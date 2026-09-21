@@ -117,7 +117,9 @@
                repintado. */
             vig: '',
             /* Mientras se guarda una historia en el movil. */
-            bajando: false };
+            bajando: false,
+            /* La persona cuya ficha esta abierta. */
+            perfil: null };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -596,6 +598,64 @@
       '</div>';
   }
 
+  /* LA FICHA DE UNA PERSONA.
+     Antes, tocar a alguien te SACABA de Ghoosted y abria Instagram. Ahora se
+     abre aqui dentro con todo lo que ya sabemos de esa persona sin pedir
+     nada: si te sigue, si le sigues, de donde salio, y como se porta con tus
+     historias. El expediente —lo que hay que preguntarle a Instagram— va
+     detras de un boton, porque cada uno es una peticion. */
+  function hojaPerfil() {
+    var u = U.perfil; if (!u) return '';
+    var s = M.loQueSe(u.username), d = u.pk ? M.expedienteGuardado(u.pk) : null;
+    var p = (d || (s && s.user) || u);
+    var etiquetas = [];
+    if (s) {
+      etiquetas.push(s.teSigue ? ['si', 'Te sigue'] : ['no', 'No te sigue']);
+      etiquetas.push(s.leSigues ? ['si', 'Le sigues'] : ['no', 'No le sigues']);
+      if (s.vigilada) etiquetas.push(['si', 'La vigilas']);
+    }
+    if (d) {
+      if (d.is_private) etiquetas.push(['no', 'Privada']);
+      if (d.is_verified) etiquetas.push(['si', 'Verificada']);
+      if (d.is_business || d.is_pro) etiquetas.push(['si', d.category || 'Cuenta profesional']);
+    }
+    var h = '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Perfil"><div class="asa"><span></span></div>';
+    h += '<div class="pf-cab">' + av(p) + '<div><b>' + esc(p.full_name || p.username) + '</b><span>@' + esc(p.username) + '</span></div></div>';
+    if (etiquetas.length) h += '<div class="pf-etqs">' + etiquetas.map(function (e) {
+      return '<span class="pf-etq ' + e[0] + '">' + esc(e[1]) + '</span>';
+    }).join('') + '</div>';
+
+    if (d) {
+      h += '<div class="pf-cifras"><div><b>' + num(d.followers) + '</b><span>seguidores</span></div>' +
+        '<div><b>' + num(d.following) + '</b><span>siguiendo</span></div>' +
+        '<div><b>' + num(d.posts) + '</b><span>publicaciones</span></div></div>';
+      if (d.bio) h += '<p class="pf-bio">' + esc(d.bio) + '</p>';
+      var extra = [];
+      if (d.external_url) extra.push(['Enlace', d.external_url]);
+      (d.bio_links || []).slice(0, 2).forEach(function (l) { if (l !== d.external_url) extra.push(['Enlace', l]); });
+      if (d.public_email) extra.push(['Correo público', d.public_email]);
+      if (d.public_phone) extra.push(['Teléfono público', d.public_phone]);
+      if (extra.length) h += '<div class="pf-datos">' + extra.map(function (x) {
+        return '<div><span>' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b></div>';
+      }).join('') + '</div>';
+    }
+
+    if (s && s.historias) h += '<div class="pf-datos"><div><span>Tus historias</span><b>' +
+      num(s.historias.slides) + ' vistas · ' + num(s.historias.likes) + ' me gusta · ' + num(s.historias.dias) + ' días</b></div></div>';
+    if (s && s.cambios.length) h += '<div class="pf-datos">' + s.cambios.map(function (c) {
+      return '<div><span>hace ' + hace(c.ts) + '</span><b>' + esc(TIPO[c.type] || 'Cambió algo') + '</b></div>';
+    }).join('') + '</div>';
+
+    h += '<div class="h-bajo">';
+    if (!d) {
+      h += '<div class="fila-btn" style="align-self:stretch"><button class="negro' + (U.trabajando.exp ? ' gira' : '') + '" data-a="ver-exp">' +
+        ico(I.lupa, 19, 2) + 'Ver expediente' + pro() + '</button></div>' +
+        '<p class="nota" style="text-align:center">Una consulta a Instagram. Se guarda un día: volver a abrirla no gasta otra.</p>';
+    }
+    h += '<button class="tengo" data-a="abrir-ig">Abrir en Instagram</button></div></div>';
+    return h;
+  }
+
   function hojaPro() {
     var v = [['Quién ve tus stories', 'Aunque no te lo digan.'], ['Ranking de espectadores', 'Los más fieles, guardado para siempre.'],
              ['Alertas al instante', 'Te enteras en cuanto pasa.'], ['Historial completo', 'Sin el límite de 3 por lista.']];
@@ -769,7 +829,7 @@
   function pintarHoja() {
     var quiere = U.hojaAbierta;
     if (!quiere) { if (hojaPuesta) cerrarHoja(); return; }
-    var html = ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag })[quiere]();
+    var html = ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag, perfil: hojaPerfil })[quiere]();
     if (hojaPuesta === quiere && cajaHoja) {
       // misma hoja, contenido nuevo: se cambia por dentro y no vuelve a subir
       var nueva = document.createElement('div');
@@ -835,7 +895,13 @@
 
   /* ---------------- acciones ---------------- */
   function valor(id) { var el = document.getElementById(id); return el ? el.value : ''; }
-  function abrirPerfil(u) { if (u) P.nativo('abrir', { url: 'https://www.instagram.com/' + encodeURIComponent(u) + '/' }); }
+  function abrirPerfil(u) {
+    if (!u) return;
+    var s = M.loQueSe(u);
+    U.perfil = { username: String(u).replace(/^@+/, ''), pk: s && s.pk, full_name: s && s.user.full_name, pic: s && s.user.pic };
+    U.hojaAbierta = 'perfil';
+    pintar();
+  }
   async function trabajo(k, f) {
     if (U.trabajando[k]) return;
     U.trabajando[k] = true; pintar();
@@ -901,6 +967,21 @@
     'ver-dejaron': function () { U.tab = 'personas'; U.seg = 'unfollow'; U.busca = ''; U.sel = null; pintar(); scrollTo(0, 0); },
     'pro': function () { U.proQue = null; abrir('pro'); },
     'cerrar-hoja': function () { U.hojaAbierta = null; pintar(); },
+    'abrir-ig': function () {
+      var u = U.perfil && U.perfil.username; if (!u) return;
+      P.nativo('abrir', { url: 'https://www.instagram.com/' + encodeURIComponent(u) + '/' });
+    },
+    'ver-exp': function () {
+      if (!M.esPro()) return abrirPro('El expediente de una persona');
+      var p = U.perfil; if (!p) return;
+      trabajo('exp', async function () {
+        try { await M.expediente(p.pk, p.username); }
+        catch (e) {
+          if (e && e.kind === 'tope_exp') return toast('Ya has abierto ' + M.EXP_DIA + ' expedientes hoy. Mañana más — es lo que evita que Instagram te marque');
+          throw e;
+        }
+      });
+    },
     'comprar': function () { P.nativo('abrir', { url: 'https://ghoosted.net/#pricing' }); },
     'tengo-clave': function () { abrir('clave'); setTimeout(function () { var c = document.getElementById('clave'); if (c) c.focus(); }, 50); },
     'activar': function () {

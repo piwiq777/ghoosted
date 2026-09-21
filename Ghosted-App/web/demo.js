@@ -44,6 +44,13 @@ window.Demo = (function () {
     }
     if (m === 'pendingRequests') return { users: [u(301, 'rihab.mzn_', 'rihab'), u(302, 'adriiana_nieves', 'adriana'), u(303, 'elvispresleyyy_', 'elvispresleyyy_')] };
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
+    if (m === 'fetchDossier') {
+      var n = String(a[1] || a[0] || 'alguien').replace(/^@/, '');
+      return { pk: String(a[0] || 400), username: n, full_name: n, bio: 'Bio de mentira para el navegador.\nSegunda linea.',
+        bio_links: [], external_url: 'https://ejemplo.com', pic: '', pic_hd: '',
+        followers: 1234, following: 567, posts: 89, is_private: false, is_verified: true,
+        is_business: false, is_pro: false, category: '', public_email: 'hola@ejemplo.com', public_phone: '' };
+    }
     if (m === 'guardarMedia') return { ok: false, error: 'en el navegador no se guarda' };
     if (m === 'searchUsers') {
       var q = String(a[0] || '').toLowerCase();
