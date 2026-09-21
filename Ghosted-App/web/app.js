@@ -77,7 +77,9 @@
     corazon: '<path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z"/>',
     bocadillo: '<path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"/>',
     cerrar: '<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
-    bajar: '<path d="M12 3v11"/><path d="M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4.5 17.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"/>'
+    bajar: '<path d="M12 3v11"/><path d="M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4.5 17.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"/>',
+    ojo: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+    ojo_no: '<path d="M4 4l16 16"/><path d="M9.9 5.9A9.6 9.6 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3.3 4"/><path d="M6.6 7.9A17 17 0 0 0 2.5 12S6 18.5 12 18.5c1.2 0 2.3-.2 3.3-.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>'
   };
   function wm(p20) {
     return '<div class="wm' + (p20 ? ' p20' : '') + '" role="img" aria-label="ghoosted"><span>gh</span><span class="ojos"><span aria-hidden="true"><span></span></span><span aria-hidden="true"><span></span></span></span><span>sted</span></div>';
@@ -123,7 +125,7 @@
             /* La lista de seguidores/seguidos que se esta mirando. */
             gente: null,
             /* La pantalla de la cuenta de Ghoosted. */
-            cuentaModo: 'entrar', cCorreo: '', cuentaError: null, cuentaCorreoPendiente: null };
+            cuentaModo: 'entrar', cCorreo: '', cClave: '', verClave: false, cuentaError: null, cuentaCorreoPendiente: null };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -212,7 +214,9 @@
       segs([['entrar', 'Entrar'], ['crear', 'Crear cuenta']], modo, 'cuentamodo', true) +
       '<div class="pasos-login">' +
       '<label class="busca h50"><span class="sr">Correo</span><input type="email" id="cCorreo" inputmode="email" autocapitalize="off" autocomplete="email" placeholder="tu@correo.com" value="' + esc(U.cCorreo || '') + '"></label>' +
-      '<label class="busca h50"><span class="sr">Contraseña</span><input type="password" id="cClave" autocomplete="' + (modo === 'entrar' ? 'current-password' : 'new-password') + '" placeholder="Contraseña"></label>' +
+      '<div class="clave-caja"><label class="busca h50"><span class="sr">Contraseña</span>' +
+      '<input type="' + (U.verClave ? 'text' : 'password') + '" id="cClave" autocomplete="' + (modo === 'entrar' ? 'current-password' : 'new-password') + '" placeholder="Contraseña" value="' + esc(U.cClave || '') + '"></label>' +
+      '<button class="ojo" data-a="ver-clave" aria-label="' + (U.verClave ? 'Ocultar la contraseña' : 'Ver la contraseña') + '">' + ico(U.verClave ? I.ojo_no : I.ojo, 20, 1.8) + '</button></div>' +
       (U.cuentaError ? '<p class="nota" style="color:var(--rosa-txt);padding:0 4px">' + esc(U.cuentaError) + '</p>' : '') +
       '</div></div>' +
       '<div class="intro-bajo"><div class="fila-btn"><button class="negro grande' + (esperar ? ' gira' : '') + '" data-a="cuenta-ir">' +
@@ -1043,8 +1047,9 @@
     'intro-sig': function () { if (U.paso < 4) { U.paso++; pintar(); } else ACC['intro-fin'](); },
     'intro-fin': function () { M.estado.intro = true; M.guardar(); pintar(); scrollTo(0, 0); },
     'login': function () { P.nativo('mostrarInstagram', {}); },
+    'ver-clave': function () { U.verClave = !U.verClave; pintar(); },
     'cuenta-ir': function () {
-      var correo = (valor('cCorreo') || '').trim(), clave = valor('cClave') || '';
+      var correo = (U.cCorreo || valor('cCorreo') || '').trim(), clave = U.cClave || valor('cClave') || '';
       U.cCorreo = correo; U.cuentaError = null;
       if (!correo || correo.indexOf('@') < 1) { U.cuentaError = 'Escribe tu correo'; return pintar(); }
       if (clave.length < 6) { U.cuentaError = 'La contraseña son 6 letras o más'; return pintar(); }
@@ -1054,7 +1059,7 @@
           var r = crear ? await C.registrar(correo, clave) : await C.entrar(correo, clave);
           // Si el proyecto pide confirmar el correo, no hay sesion todavia.
           if (!r.dentro) { U.cuentaCorreoPendiente = r.confirmar; return pintar(); }
-          U.cCorreo = ''; U.cuentaError = null;
+          U.cCorreo = ''; U.cClave = ''; U.verClave = false; U.cuentaError = null;
           pintar();
         } catch (e) { U.cuentaError = C.texto(e); pintar(); }
       });
@@ -1419,6 +1424,10 @@
     if (ev.target.id === 'busca') { U.busca = ev.target.value; pintar(); }
     if (ev.target.id === 'buscaHis') { U.buscaHis = ev.target.value; pintar(); }
     if (ev.target.id === 'vigilar') { U.vig = ev.target.value; buscarLuego(ev.target.value); }
+    // Lo de la cuenta se guarda tal cual: al enseñar u ocultar la contraseña
+    // se repinta el campo, y sin esto se borraba lo escrito.
+    if (ev.target.id === 'cCorreo') U.cCorreo = ev.target.value;
+    if (ev.target.id === 'cClave') U.cClave = ev.target.value;
   });
   document.addEventListener('keydown', function (ev) {
     if (ev.key !== 'Enter') return;
