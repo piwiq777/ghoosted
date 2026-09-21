@@ -76,7 +76,8 @@
     flecha: '<path d="M4 12h14"/><path d="M13 6.5L18.5 12 13 17.5"/>',
     corazon: '<path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z"/>',
     bocadillo: '<path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"/>',
-    cerrar: '<path d="M6 6l12 12"/><path d="M18 6L6 18"/>'
+    cerrar: '<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
+    bajar: '<path d="M12 3v11"/><path d="M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4.5 17.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"/>'
   };
   function wm(p20) {
     return '<div class="wm' + (p20 ? ' p20' : '') + '" role="img" aria-label="ghoosted"><span>gh</span><span class="ojos"><span aria-hidden="true"><span></span></span><span aria-hidden="true"><span></span></span></span><span>sted</span></div>';
@@ -114,7 +115,9 @@
             sug: null,
             /* Lo escrito en el buscador de Actividad, para que sobreviva al
                repintado. */
-            vig: '' };
+            vig: '',
+            /* Mientras se guarda una historia en el movil. */
+            bajando: false };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -668,6 +671,7 @@
       // Las historias traen `takenAt` (en ms), no `ts`. Poniendo it.ts salia
       // "NaN sem" en la esquina SIEMPRE, en cualquier historia.
       (it.takenAt || it.ts ? hace(it.takenAt || it.ts) : '') + '</span>' +
+      '<button aria-label="' + (U.bajando ? 'Guardando' : 'Guardar en el móvil') + '" data-a="bajar-historia"' + (U.bajando ? ' class="gira"' : '') + '>' + ico(I.bajar, 22, 2) + '</button>' +
       '<button aria-label="Cerrar" data-a="cerrar-visor">' + ico(I.cerrar, 24, 2) + '</button></div>' +
       '<div class="medio">' + medio + '<button class="zona izq" aria-label="Anterior" data-a="visor-ant"></button><button class="zona der" aria-label="Siguiente" data-a="visor-sig"></button></div>' +
       '<div class="pie">Modo fantasma · no apareces en su lista</div></div>';
@@ -954,6 +958,24 @@
       var t = M.estado.tray && M.estado.tray.list || [], q = U.buscaHis.toLowerCase().trim();
       if (q) t = t.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; });
       if (t.length) abrirVisor(t.slice(0, 30).map(function (x) { return x.reelId; }));
+    },
+    /* Guardar la historia que se esta viendo. La descarga la hace la parte
+       nativa: un WebView no puede escribir en el telefono, y ademas las URL
+       de Instagram solo las da su CDN si se piden con la cabecera correcta. */
+    'bajar-historia': function () {
+      if (!M.esPro()) return abrirPro('Descargar historias');
+      var v = U.visor; if (!v) return;
+      var g = v.grupos[v.g], it = g && g.items[v.i];
+      if (!it) return;
+      if (P.demo) return toast('En el navegador no se puede guardar');
+      if (U.bajando) return;
+      U.bajando = true; pintar();
+      P.nativo('guardarMedia', { url: it.url, video: !!it.isVideo, de: g.user.username })
+        .then(function (r) {
+          toast(r && r.ok ? 'Guardado en ' + (r.donde || 'tu galería') : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40));
+        })
+        .catch(function () { toast('No se pudo guardar'); })
+        .finally(function () { U.bajando = false; pintar(); });
     },
     'cerrar-visor': function () { U.visor = null; clearTimeout(visorT); pintar(); },
     'visor-sig': function () { avanzar(1); },
