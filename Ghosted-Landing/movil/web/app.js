@@ -109,7 +109,12 @@
             hojaAbierta: null, buscaHis: '', ab: null, calc: null, visor: null, trabajando: {},
             /* Puertas abiertas a lo Pro por la prueba. Solo dura lo que dura:
                en cuanto se gasta, se cierra sola y vuelve el muro. */
-            cata: {} };
+            cata: {},
+            /* Lo que se esta buscando ahora mismo en Actividad. */
+            sug: null,
+            /* Lo escrito en el buscador de Actividad, para que sobreviva al
+               repintado. */
+            vig: '' };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -427,6 +432,21 @@
     return h;
   }
 
+  /* Las sugerencias mientras escribes. En la extension estaban y aqui no:
+     habia que acertar el @ exacto de memoria, y si te equivocabas no pasaba
+     nada — ni un aviso. */
+  function sugerencias() {
+    var g = U.sug;
+    if (!g || !g.q) return '';
+    if (g.cargando) return '<div class="sug"><div class="sug-nada">Buscando…</div></div>';
+    if (!g.lista.length) return '<div class="sug"><div class="sug-nada">No encuentro a nadie con «' + esc(g.q) + '»</div></div>';
+    return '<div class="sug">' + g.lista.map(function (p) {
+      return '<button class="sug-fila" data-a="elegir-sug" data-user="' + esc(p.username) + '">' + av(p) +
+        '<div class="quien"><b>' + esc(p.full_name || p.username) + '</b><span>@' + esc(p.username) +
+        (p.is_private ? ' · privada' : '') + '</span></div></button>';
+    }).join('') + '</div>';
+  }
+
   /* ---------------- Actividad ---------------- */
   var TIPO = { name: 'Cambió el nombre', username: 'Cambió el usuario', photo: 'Cambió la foto de perfil', bio: 'Cambió la bio', follow_add: 'Empezó a seguir a', follow_rem: 'Dejó de seguir a' };
   var TAG = { name: 'perfil', username: 'perfil', photo: 'foto', bio: 'perfil', follow_add: 'nuevo', follow_rem: 'sigue' };
@@ -446,8 +466,12 @@
     var nReq = S.reqs ? S.reqs.users.length : 0;
     var h = cabecera('Actividad') + segs([['cambios', 'Cambios', S.activity.length], ['solicitudes', 'Solicitudes', nReq]], U.act, 'act');
     if (U.act === 'cambios') {
-      h += '<div class="vigilar"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Vigilar usuario</span><input type="text" id="vigilar" placeholder="Busca a alguien para vigilar" autocapitalize="off"></label>' +
-        '<button class="negro h46" data-a="vigilar">Vigilar</button></div>' +
+      h += '<div class="vigilar"><label class="busca h46">' + ico(I.lupa, 19, 2) + /* El value es imprescindible: la pantalla se repinta entera cada vez que
+           llega algo (la sesion, el reloj, una sugerencia) y sin el, lo que
+           acabas de escribir se borra solo. Parte de "pongo un nombre y no va"
+           era esto: el nombre ya no estaba cuando pulsabas Vigilar. */
+        '<span class="sr">Vigilar usuario</span><input type="text" id="vigilar" placeholder="Busca a alguien para vigilar" autocapitalize="off" autocomplete="off" value="' + esc(U.vig || '') + '"></label>' +
+        '<button class="negro h46" data-a="vigilar">Vigilar</button></div>' + sugerencias() +
         (esPro ? '' : M.cataQueda('persona')
           ? '<div class="gratis vidrio"><div><b>Te queda una persona de prueba</b><span>Búscala y te aviso de todo lo que cambie en su perfil</span></div><button data-a="pro">Pasar a Pro</button></div>'
           : '<div class="gratis vidrio"><div><b>Prueba gastada</b><span>Ya vigilas a una. Con Pro, a quien quieras</span></div><button data-a="pro">Pasar a Pro</button></div>');
@@ -930,7 +954,7 @@
     'visor-sig': function () { avanzar(1); },
     'visor-ant': function () { avanzar(-1); },
     'vigilar': function () {
-      var n = valor('vigilar'); if (!n.trim()) return;
+      var n = U.vig || valor('vigilar'); if (!n.trim()) return;
       if (!M.cataQueda('persona')) { U.cata.actividad = false; return pintar(); }
       trabajo('vig', async function () {
         try {
@@ -938,10 +962,16 @@
           // Se gasta cuando se ha vigilado a alguien de verdad, no al
           // escribir: si el nombre no existe, la prueba sigue entera.
           M.gastarCata('persona');
+          U.sug = null; U.vig = '';
           toast('Vigilando a @' + u.username);
         }
         catch (e) { if (e && e.kind === 'pro') return abrirPro('Vigilar más de 3 cuentas'); throw e; }
       });
+    },
+    'elegir-sug': function (el) {
+      U.vig = el.getAttribute('data-user');
+      U.sug = null;
+      ACC.vigilar();
     },
     'quitar-vigilar': function (el) { M.dejarDeVigilar(el.getAttribute('data-pk')); },
     'cargar-sol': function () { trabajo('sol', function () { return M.solicitudes(); }); },
@@ -1011,9 +1041,27 @@
     if (t.hasAttribute('data-sel')) { var pk = t.getAttribute('data-sel'); U.sel[pk] = !U.sel[pk]; pintar(); return; }
     if (t.hasAttribute('data-perfil')) abrirPerfil(t.getAttribute('data-perfil'));
   });
+  /* Se espera a que pare de escribir. Cada busqueda es una peticion a
+     Instagram, y disparar una por tecla es justo lo que no se puede hacer. */
+  var sugT = 0;
+  function buscarLuego(q) {
+    clearTimeout(sugT);
+    q = String(q || '').replace(/^@+/, '').trim();
+    if (q.length < 3) { if (U.sug) { U.sug = null; pintar(); } return; }
+    U.sug = { q: q, lista: [], cargando: true }; pintar();
+    sugT = setTimeout(function () {
+      M.buscarGente(q).then(function (l) {
+        // Si ya se esta buscando otra cosa, esta respuesta llega tarde.
+        if (!U.sug || U.sug.q !== q) return;
+        U.sug = { q: q, lista: l, cargando: false }; pintar();
+      });
+    }, 600);
+  }
+
   document.addEventListener('input', function (ev) {
     if (ev.target.id === 'busca') { U.busca = ev.target.value; pintar(); }
     if (ev.target.id === 'buscaHis') { U.buscaHis = ev.target.value; pintar(); }
+    if (ev.target.id === 'vigilar') { U.vig = ev.target.value; buscarLuego(ev.target.value); }
   });
   document.addEventListener('keydown', function (ev) {
     if (ev.key !== 'Enter') return;

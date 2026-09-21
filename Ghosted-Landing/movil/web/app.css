@@ -299,6 +299,20 @@ button:active,a.btn:active{opacity:.75}
 
 /* ---------- Actividad / Solicitudes ---------- */
 .vigilar{display:flex;gap:10px;align-items:center}
+/* Las sugerencias del buscador. Cuelgan justo debajo, como una lista, no
+   como un menu flotante: en un movil un desplegable encima del teclado se
+   queda medio tapado. */
+.sug{display:flex;flex-direction:column;border-radius:22px;overflow:hidden;
+  background:var(--l-bg);-webkit-backdrop-filter:var(--l-filtro);backdrop-filter:var(--l-filtro);
+  box-shadow:var(--l-sombra);border:var(--l-borde)}
+.sug-fila{display:flex;align-items:center;gap:12px;padding:11px 14px;text-align:left;background:transparent;width:100%}
+.sug-fila + .sug-fila{border-top:0.5px solid var(--sep)}
+.sug-fila:active{background:var(--fill)}
+.sug-fila .av{width:42px;height:42px;font-size:15px;flex-shrink:0}
+.sug-fila .quien{display:flex;flex-direction:column;gap:1px;min-width:0}
+.sug-fila .quien b{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sug-fila .quien span{font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sug-nada{padding:14px;font-size:14px;color:var(--ink-2)}
 .sol{border-radius:28px;padding:16px 16px 2px;background:var(--l-bg);-webkit-backdrop-filter:var(--l-filtro);backdrop-filter:var(--l-filtro);box-shadow:var(--l-sombra);border:var(--l-borde)}
 .sol-cab{display:flex;flex-direction:column;gap:12px;padding-bottom:6px}
 .sol-cab > div:first-child{display:flex;align-items:center;justify-content:space-between}

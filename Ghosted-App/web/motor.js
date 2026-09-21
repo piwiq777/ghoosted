@@ -436,6 +436,24 @@ window.Motor = (function () {
     vigilarTodos().then(function () { guardar(); avisar(); }).catch(function () {});
     return u;
   }
+  /* BUSCAR GENTE MIENTRAS SE ESCRIBE.
+     La extension lo tenia y la app no: habia que acertar el @ exacto de
+     memoria. El metodo ya estaba permitido en el puente, solo faltaba usarlo.
+     Se guarda lo ya buscado porque al escribir se repiten mucho los mismos
+     principios de palabra, y cada busqueda es una peticion a Instagram. */
+  var cacheBusca = {};
+  async function buscarGente(q) {
+    q = String(q || '').replace(/^@+/, '').trim().toLowerCase();
+    if (q.length < 3) return [];
+    if (cacheBusca[q]) return cacheBusca[q];
+    var r = await ig('searchUsers', [q]).catch(function () { return []; });
+    var lista = (r || []).slice(0, 8);
+    cacheBusca[q] = lista;
+    // No se guarda para siempre: la gente cambia de nombre y de foto.
+    setTimeout(function () { delete cacheBusca[q]; }, 10 * 60000);
+    return lista;
+  }
+
   function dejarDeVigilar(pk) { S.watch = S.watch.filter(function (w) { return w.pk !== pk; }); guardar(); avisar(); }
   async function vigilarTodos() {
     for (var i = 0; i < S.watch.length && i < 30; i++) {
@@ -575,7 +593,7 @@ window.Motor = (function () {
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
-    cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy,
+    cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy, buscarGente: buscarGente,
     listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
     vigilar: vigilar, dejarDeVigilar: dejarDeVigilar,
