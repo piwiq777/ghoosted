@@ -1,28 +1,28 @@
 {
  "web": {
-  "version": 38,
+  "version": 39,
   "archivos": {
    "web/demo.js": "4fa990147a102884548a11ec2659407886b9fe8c05c40238b74459e0237fddcc",
    "web/cuenta.js": "83b53470a39435e2894476c80a3acfb206cd405f59a1b90e9e333a99503059f6",
    "web/puente.js": "a9280e0b821349216474ab26a64dc12f960baa473e24aa8703b1a6cf446f7786",
    "web/app.js": "27da66a5a1fa2bf9aea6427dde2d083c1e51219360858a2b3e1686d84601cb18",
    "web/app.css": "9fcd5f4e8d6744ac9e6a7742e2169bc9c4e8b7215c8c792a756f9719c3feea9b",
-   "web/motor.js": "c8efa2f32f9a5ab7bb6654998a5a96c1e024149cfd28be0e76821b3f4f6c228f",
+   "web/motor.js": "b9ec73d4a9ae6d122a2afda6bd4249690fdbab696730c0c264c55edc4537abaa",
    "web/generos.js": "13971b5d5bbabebd09257de574b1f4d761fa68be07f5d21360a244d065087c73",
    "web/index.html": "1c194baab843b32633da67a44cbbd6300da55870d90c24fdd966ab8df4b809bc",
-   "web/version.json": "5fe1f76ebe1a42be1b3005cc23809c2ae33d63d0379168fb798a93336834a507",
+   "web/version.json": "52e62a8a2ea88e9dfe7fb53f6145aa4fc8da011142bb66acf77fa9f736e8750a",
    "web/fonts/Geist.woff2": "28258d0621216948416a859d32487ab6ad1c9effa0d08795698e70be3c917630",
    "web/fonts/GEIST-LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
    "web/fonts/unbounded-latin.woff2": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6",
    "web/fonts/unbounded-latin-ext.woff2": "845e1c9fe2e9a7bfbedfeb447fbeba4bc1b5ecd6246277910ccdaad35a7a532c",
-   "ig/puente-ig.js": "5520538525afcd3499d1e64822e9b1cb7f0938525d084574650dd2c595832047",
+   "ig/puente-ig.js": "0adf5f652b0d940590c9b9b36af5276b56bdb3750fe8d7757ea179eb51da1259",
    "ig/page-api.js": "84e07dc2fc17b9669f5bef476094b1491237c3b030d3dd642c4082404d0a079e",
    "ig/ig-api.js": "5c252f21c56e26775102cb86c6b972aa301be7afac05f2a462d6d9aa7dc33813"
   }
  },
  "apk": {
-  "versionCode": 8,
+  "versionCode": 9,
   "url": "https://www.ghoosted.net/movil/Ghoosted.apk",
-  "sha256": "ce34395ef3beb586df22cd3db1cfca36021e3d2b3fd54f2a7cbc6d20f50a1227"
+  "sha256": "5a213d2696db5c8d3bab2165a138f1aa3fb8624b81effaf67b014b2fb4a2cb8c"
  }
 }

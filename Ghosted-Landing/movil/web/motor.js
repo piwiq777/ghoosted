@@ -123,7 +123,22 @@ window.Motor = (function () {
   }
   function avisar(extra) { oyentes.forEach(function (f) { try { f(extra || {}); } catch (e) {} }); }
   function on(f) { oyentes.push(f); }
-  function ig(m, a, p) { return Puente.ig(m, a, p); }
+  /* Una llamada a Instagram, con UN reintento si la pagina no estaba lista.
+     `transport` significa que la API no existia en ese momento — casi
+     siempre porque acaba de recargarse Instagram o porque hubo que volver a
+     inyectarla. La primera llamada la despierta y la segunda ya funciona; al
+     usuario no tiene por que enterarse. Un solo reintento: si tampoco va, es
+     otra cosa y hay que decirlo. */
+  async function ig(m, a, p) {
+    try {
+      return await Puente.ig(m, a, p);
+    } catch (e) {
+      if (!e || e.kind !== 'transport') throw e;
+      registrar('ig no listo', { kind: 'transport', message: m });
+      await espera(800);
+      return await Puente.ig(m, a, p);
+    }
+  }
   function espera(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
   function azar(a, b) { return a + Math.floor(Math.random() * (b - a)); }
   function dia(ts) { var d = new Date(ts); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
