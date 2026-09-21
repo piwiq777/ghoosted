@@ -1,16 +1,16 @@
 {
  "web": {
-  "version": 37,
+  "version": 38,
   "archivos": {
    "web/demo.js": "4fa990147a102884548a11ec2659407886b9fe8c05c40238b74459e0237fddcc",
    "web/cuenta.js": "83b53470a39435e2894476c80a3acfb206cd405f59a1b90e9e333a99503059f6",
    "web/puente.js": "a9280e0b821349216474ab26a64dc12f960baa473e24aa8703b1a6cf446f7786",
-   "web/app.js": "157fa3a2325bc51d6575ae1a81918380719aa0cb65f63ddf5430cb1d83df8e18",
+   "web/app.js": "27da66a5a1fa2bf9aea6427dde2d083c1e51219360858a2b3e1686d84601cb18",
    "web/app.css": "9fcd5f4e8d6744ac9e6a7742e2169bc9c4e8b7215c8c792a756f9719c3feea9b",
    "web/motor.js": "c8efa2f32f9a5ab7bb6654998a5a96c1e024149cfd28be0e76821b3f4f6c228f",
    "web/generos.js": "13971b5d5bbabebd09257de574b1f4d761fa68be07f5d21360a244d065087c73",
    "web/index.html": "1c194baab843b32633da67a44cbbd6300da55870d90c24fdd966ab8df4b809bc",
-   "web/version.json": "1447f614f4b248765e24cfef6410ced5ce7bea47ef1c85b93cffab564f8e3cea",
+   "web/version.json": "5fe1f76ebe1a42be1b3005cc23809c2ae33d63d0379168fb798a93336834a507",
    "web/fonts/Geist.woff2": "28258d0621216948416a859d32487ab6ad1c9effa0d08795698e70be3c917630",
    "web/fonts/GEIST-LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
    "web/fonts/unbounded-latin.woff2": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6",
@@ -23,6 +23,6 @@
  "apk": {
   "versionCode": 8,
   "url": "https://www.ghoosted.net/movil/Ghoosted.apk",
-  "sha256": "31aa37d0c59f1e4f264a1e2d2a95a47a8d676503a7a5e67c188d0e8d3a8d01ba"
+  "sha256": "ce34395ef3beb586df22cd3db1cfca36021e3d2b3fd54f2a7cbc6d20f50a1227"
  }
 }

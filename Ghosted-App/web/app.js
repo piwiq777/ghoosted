@@ -479,7 +479,11 @@
     }
     var q = U.buscaHis.toLowerCase().trim(), lista = q ? t.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; }) : t;
     var h = cabecera('Historias', '<div class="fantasma"><span class="pega">modo fantasma</span></div>' + (M.esPro() ? '' : '<span class="pro-chip">PRO</span>'));
-    h += '<p class="sub">' + (S.tray ? num(t.length) + (t.length === 1 ? ' persona tiene' : ' personas tienen') + ' historia ahora. Ábrelas sin aparecer en su lista de espectadores.' : 'Mira las historias de quien sigues sin aparecer en su lista de espectadores.') + '</p>';
+    h += '<p class="sub">' + (S.tray
+      ? num(t.length) + (t.length === 1 ? ' persona tiene' : ' personas tienen') + ' historia ahora' +
+        (Date.now() - (S.tray.ts || 0) > 15 * 60000 ? ' <span class="valor">· lista de hace ' + hace(S.tray.ts) + '</span>' : '') +
+        '. Ábrelas sin aparecer en su lista de espectadores.'
+      : 'Mira las historias de quien sigues sin aparecer en su lista de espectadores.') + '</p>';
     h += '<div style="display:flex"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Buscar</span><input type="text" id="buscaHis" placeholder="Busca a alguien" value="' + esc(U.buscaHis) + '"></label></div>';
     h += M.esPro() ? '' : (M.cataQueda('historia')
         ? '<div class="gratis vidrio"><div><b>Te queda una historia de prueba</b><span>Ábrela y verás cómo es: no sales en su lista de espectadores</span></div><button data-a="pro">Pasar a Pro</button></div>'
@@ -887,7 +891,15 @@
         var items = datos[r] || datos[u && u.pk] || [];
         if (u && items.length) grupos.push({ user: u, items: items });
       });
-      if (!grupos.length) return toast('Ya no están disponibles');
+      if (!grupos.length) {
+        /* Esa historia se ha ido mientras la lista seguia enseñandola. En vez
+           de dejar al usuario con un "no disponible" y una pantalla llena de
+           circulos muertos, se vuelve a pedir la lista. Es una peticion, y
+           solo cuando algo ha fallado de verdad. */
+        toast('Esa historia ya no está. Actualizando la lista…');
+        M.bandeja().then(function () { pintar(); }).catch(function () {});
+        return;
+      }
       // Aqui, y no antes: la prueba se cobra cuando la historia esta en
       // pantalla. Si Instagram no la da, no se ha visto nada y no se paga.
       if (!M.esPro()) M.gastarCata('historia');
@@ -1381,7 +1393,12 @@
          acababa de hacer. Parecia que no funcionaba nada. */
       if (t.getAttribute('data-tab') !== U.tab) U.cata = {};
       U.tab = t.getAttribute('data-tab'); U.sel = null; pintar(true); scrollTo(0, 0);
-      if (U.tab === 'historias' && !M.estado.tray && !U.trabajando.tray) ACC.bandeja();
+      /* Las historias duran 24 h. La lista se pedia UNA vez y no se volvia a
+         pedir nunca: al rato, todos los circulos de la pantalla apuntaban a
+         historias que ya no existen y al abrirlas salia "no disponible".
+         Se refresca si tiene mas de media hora. */
+      if (U.tab === 'historias' && !U.trabajando.tray &&
+          (!M.estado.tray || Date.now() - (M.estado.tray.ts || 0) > 30 * 60000)) ACC.bandeja();
       if (U.tab === 'actividad' && U.act === 'solicitudes' && !M.estado.reqs) ACC['cargar-sol']();
       return; }
     if (t.hasAttribute('data-seg')) { U.tab = 'personas'; U.seg = t.getAttribute('data-seg'); U.busca = ''; U.sel = null; pintar(); scrollTo(0, 0); return; }

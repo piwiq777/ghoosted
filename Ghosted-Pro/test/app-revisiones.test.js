@@ -43,5 +43,19 @@ module.exports = () => {
      galeria, no una ruta de carpetas. */
   s.ok('se dice donde queda la foto guardada', /En tu galería, álbum «Ghoosted»/.test(app));
 
+  /* LA LISTA DE HISTORIAS CADUCA.
+     Las historias duran 24 h, pero la lista se pedia UNA vez y no se volvia
+     a pedir jamas: al rato, todos los circulos de la pantalla apuntaban a
+     historias que ya no existen, y al abrir cualquiera salia "no
+     disponible". Parecia que la funcion estaba rota. */
+  s.ok('la lista se refresca si esta vieja',
+    /Date\.now\(\) - \(M\.estado\.tray\.ts \|\| 0\) > 30 \* 60000/.test(app));
+  s.ok('  y ya no se pide solo cuando no existe',
+    !/U\.tab === 'historias' && !M\.estado\.tray &&/.test(app));
+  s.ok('si una historia ya no esta, se rehace la lista sola',
+    /Esa historia ya no está\. Actualizando la lista/.test(app)
+    && /M\.bandeja\(\)\.then/.test(app));
+  s.ok('  y se dice de cuando es la lista', /lista de hace ' \+ hace\(S\.tray\.ts\)/.test(app));
+
   return s;
 };
