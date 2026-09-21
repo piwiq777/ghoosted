@@ -81,7 +81,17 @@
       function W(Y3) {
         if (!Y3 || Y3.source !== "ghosted-page-fetch" || Y3.id !== T) return;
         clearTimeout(I), window.removeEventListener("message", Y0), document.removeEventListener("ghosted:page-result", Y1);
-        if (Y3.error) return G(new x(Y3.error, "network"));
+        /* CUIDADO CON LA ETIQUETA. Todo lo que rechazaba page-api se marcaba
+           como "network", incluido NUESTRO PROPIO FRENO (tope_min, tope_hora,
+           tope_dia). Y como J() reintenta por el otro camino cuando ve
+           "network", el freno se saltaba: en la extension iba al fondo, y en
+           la app —donde no hay fondo— salia "sin_fondo", que se le enseñaba
+           al usuario como "Instagram no contesta". O sea que la app se
+           frenaba sola y le echaba la culpa a Instagram.
+           El freno lleva su propia etiqueta: ni se reintenta por otro lado
+           (saltarselo seria justo lo contrario de lo que hace) ni se confunde
+           con un fallo de red. */
+        if (Y3.error) return G(new x(Y3.error, String(Y3.error).indexOf("tope_") === 0 ? "tope" : "network"));
         try {
           B(L(Y3.status, Y3.contentType, Y3.text, Y3));
         } catch (Y4) {
@@ -406,6 +416,14 @@
         }
         if (!Y2) throw Y4;
       } else Y2 = await y(o, N, W);
+      /* Primera pagina vacia y sin mas paginas: en la web del movil Instagram
+         a veces contesta asi (200, users: []) a la forma de pedir la lista
+         que usa la web de ordenador, en vez de dar error. Se prueba la
+         siguiente forma, igual que cuando contesta 400. */
+      if (Y0 === 0 && !(Y2.users || []).length && !Y2.next_max_id && U < 2) {
+        U++;
+        continue;
+      }
       const Y3 = Y2.users || [];
       for (const Y7 of Y3) {
         const Y8 = l(Y7);

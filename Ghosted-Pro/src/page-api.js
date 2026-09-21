@@ -21,7 +21,11 @@
 (function () {
   'use strict';
 
-  var APP_ID = '936619743392459';
+  // El id de la web de ordenador. La app del movil pone el de la web del
+  // movil en window.__ghdAppId: Instagram compara este id con el navegador
+  // que hace la peticion, y si no casan contesta "useragent mismatch" y las
+  // listas de seguidores salen vacias o a medias.
+  var APP_ID = window.__ghdAppId || '936619743392459';
   var ASBD_ID = '359341';
   var CLAIM_STORAGE_KEY = 'ghosted_www_claim';
   var IN = 'ghosted-content-fetch'; // messages coming FROM the content script
@@ -117,6 +121,70 @@
   POST_ALLOWED = /^https:\/\/www\.instagram\.com\/api\/v1\/(friendships\/(create|destroy)\/\d+|web\/friendships\/\d+\/(approve|ignore))\/?$/;
 //#plus-on
 
+  /* ------------------------------------------------------------------
+     TOPE DE PETICIONES
+
+     Todo lo que Ghoosted le pide a Instagram pasa por aqui, asi que aqui
+     es donde se le pone un techo. La app del movil define window.__ghdTope
+     ({min, hora, dia}); en la extension no existe y nada cambia.
+
+     Esto no es una optimizacion: es lo que impide que un fallo nuestro
+     —un bucle que reintenta -- acabe con la cuenta del usuario limitada
+     por Instagram. Aunque el codigo de arriba se vuelva loco, de aqui no
+     salen mas peticiones de las que caben en el tope.
+     ------------------------------------------------------------------ */
+  var GASTO_KEY = 'ghosted_gasto';
+  var gasto = null;
+
+  function leerGasto() {
+    if (gasto) return gasto;
+    gasto = { ultima: 0, hora: [], dia: [] };
+    try {
+      var g = JSON.parse(localStorage.getItem(GASTO_KEY) || 'null');
+      if (g && Array.isArray(g.hora) && Array.isArray(g.dia)) gasto = { ultima: Number(g.ultima) || 0, hora: g.hora, dia: g.dia };
+    } catch (e) { /* sin almacen: solo esta sesion */ }
+    return gasto;
+  }
+  function guardarGasto() {
+    try { localStorage.setItem(GASTO_KEY, JSON.stringify(gasto)); } catch (e) { /* da igual */ }
+  }
+
+  /* Pura a proposito: recibe el gasto y devuelve cuanto hay que esperar y
+     si hay que negarse. Asi se puede comprobar con pruebas. */
+  function motivoTope(g, ahora, t) {
+    if (!t) return { espera: 0, motivo: '' };
+    var hora = (g.hora || []).filter(function (x) { return ahora - x < 3600000; });
+    var dia = (g.dia || []).filter(function (x) { return ahora - x < 86400000; });
+    if (t.dia && dia.length >= t.dia) return { espera: 0, motivo: 'tope_dia' };
+    if (t.hora && hora.length >= t.hora) return { espera: 0, motivo: 'tope_hora' };
+    var falta = (t.min || 0) - (ahora - (g.ultima || 0));
+    return { espera: falta > 0 ? falta : 0, motivo: '', hora: hora, dia: dia };
+  }
+
+  function dormir(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  // Las peticiones van de una en una: sin esto, veinte llamadas a la vez se
+  // saltarian la separacion minima entre peticiones.
+  var cola = Promise.resolve();
+  function pedirTurno() {
+    var t = window.__ghdTope;
+    if (!t) return Promise.resolve('');
+    var siguiente = cola.then(async function () {
+      var g = leerGasto();
+      var r = motivoTope(g, Date.now(), t);
+      if (r.motivo) return r.motivo;
+      if (r.espera) await dormir(r.espera);
+      var ahora = Date.now();
+      g.ultima = ahora;
+      g.hora = (r.hora || []).concat([ahora]);
+      g.dia = (r.dia || []).concat([ahora]);
+      guardarGasto();
+      return '';
+    });
+    cola = siguiente.catch(function () {});
+    return siguiente;
+  }
+
   async function handleFetch(req) {
     if (!req || !req.id || inFlight.has(req.id)) return;
     var url = String(req.url || '');
@@ -133,9 +201,16 @@
     inFlight.add(req.id);
     setTimeout(function () { inFlight.delete(req.id); }, 30000);
 
+    // El tope manda: si se ha gastado, se contesta que no en vez de pedirlo.
+    var frenado = await pedirTurno();
+    if (frenado) {
+      postResult({ source: OUT, id: req.id, error: frenado });
+      return;
+    }
+
     try {
       var headers = {
-        'x-ig-app-id': APP_ID,
+        'x-ig-app-id': window.__ghdAppId || APP_ID,
         'x-asbd-id': ASBD_ID,
         'x-requested-with': 'XMLHttpRequest',
       };

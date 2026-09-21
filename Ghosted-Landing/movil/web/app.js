@@ -99,7 +99,14 @@
     if (k === 'auth') return 'Tienes que volver a iniciar sesión';
     if (k === 'no_existe') return 'No encuentro esa cuenta';
     var msg = String(e && e.message || '');
-    if (msg.indexOf('tope_') === 0) return 'Me he frenado solo para no molestar a Instagram. Prueba dentro de un rato';
+    /* El freno propio, dicho con todas las letras y con su motivo: durante
+       horas se le enseñaba al usuario "Instagram no contesta" cuando quien
+       decia que no eramos nosotros. */
+    if (k === 'tope' || msg.indexOf('tope_') === 0) {
+      if (msg === 'tope_dia') return 'Me he frenado solo: hoy ya he pedido mucho a Instagram. Mañana sigo';
+      if (msg === 'tope_hora') return 'Me he frenado solo: demasiadas peticiones esta hora. Prueba en un rato';
+      return 'Voy despacio a propósito para no molestar a Instagram. Un momento';
+    }
     /* Llevaba el mismo texto para dos cosas MUY distintas: que la pagina de
        Instagram no estuviera lista (transport) y que la peticion no llegara
        (network). Diagnosticar a ciegas costo varias vueltas, asi que el
@@ -839,6 +846,17 @@
       '<div class="ajuste"><span>Salir de Ghoosted</span><button class="rojo" data-a="salir-cuenta">Cerrar mi cuenta</button></div>' + yo +
       '</div></div>';
   }
+  /* Cuanto se ha pedido a Instagram, en la pantalla de diagnostico. Sin esto
+     no habia forma de saber que el freno propio era quien estaba diciendo
+     que no, y se perdian horas buscando el fallo en otro sitio. */
+  function lineaGasto() {
+    var g = U.gasto;
+    if (!g) return '';
+    return '<div class="pf-datos"><div><span>Pedido a Instagram</span><b>' +
+      num(g.hora) + ' esta hora (tope ' + num(g.topeHora) + ') · ' +
+      num(g.dia) + ' hoy (tope ' + num(g.topeDia) + ')</b></div></div>';
+  }
+
   function hojaDiag() {
     var S = M.estado, d = U.diag;
     function res(x) { return x ? esc(x.status + ' · ' + x.texto) : '…'; }
@@ -850,7 +868,7 @@
       return esc(hora(x.ts) + ' ' + x.que + ' · ' + x.kind + (x.status ? ' ' + x.status : '') + (x.msg ? ' · ' + x.msg : ''));
     }).join('<br>');
     return '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Diagnóstico"><div class="asa"><span></span></div>' +
-      '<div class="h-cab"><h2>Diagnóstico</h2></div>' + prueba +
+      '<div class="h-cab"><h2>Diagnóstico</h2></div>' + lineaGasto() + prueba +
       '<div class="lista" style="padding:10px 16px;font-size:12px;line-height:1.5;color:var(--ink-2);-webkit-user-select:text;user-select:text">' + (log || 'Sin incidencias guardadas.') + '</div>' +
       '<div class="fila-btn"><button class="negro" data-a="probar">Probar</button></div></div>';
   }
@@ -1141,7 +1159,12 @@
     'instalar-apk': function () { toast('Descargando la app nueva…'); P.nativo('instalarApk', {}); },
     'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola cada mañana a las ' + M.HORA_AUTO + ':00' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
     'pausa': function () { M.pausar(!M.estado.pausa); toast(M.estado.pausa ? 'En pausa: no le pido nada a Instagram' : 'Reanudada'); pintar(); },
-    'diag': function () { U.diag = null; abrir('diag'); },
+    'diag': function () {
+      U.diag = null; abrir('diag');
+      // Lo primero que hay que mirar cuando algo no va: cuanto se ha pedido
+      // ya. Antes solo se veia en Ajustes y ahi nadie lo buscaba.
+      if (!P.demo) P.ig('gasto', []).then(function (g) { U.gasto = g; if (U.hojaAbierta === 'diag') pintar(); }).catch(function () {});
+    },
     'probar': function () {
       U.diag = { cargando: true }; pintar();
       P.ig('probar', []).then(function (r) { U.diag = r || { yo: null }; }).catch(function (e) { U.diag = { yo: '?', usado: errTxt(e) }; }).finally(pintar);

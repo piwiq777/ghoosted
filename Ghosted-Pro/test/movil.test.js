@@ -72,6 +72,27 @@ module.exports = () => {
 
   /* 7 · Los doce idiomas. */
   const idiomas = fs.readdirSync(path.join(WEB, 'locales')).filter((f) => f.endsWith('.json'));
+
+  /* 0 · QUE ES ESTO. Un desconocido tiene que saber de que va la app antes
+     de decidir nada: en el titular, sin adivinar. Se comprueba que nombra
+     Instagram y que lo primero que se ofrece es bajarsela — es gratis para
+     empezar, asi que pedir dinero en el primer clic sobra, y ademas es el
+     unico sitio desde el que un ordenador puede bajarse el APK. */
+  const heroe = html.slice(html.indexOf('class="hero-center"'), html.indexOf('hero-fotos'));
+  s.ok('el titular nombra Instagram', /data-i18n="hero_l2"/.test(heroe)
+    && idiomas.every((f) => /instagram|نستغرام/i.test(JSON.parse(leer(path.join('locales', f))).hero_l2 || '')));
+  s.ok('y lo primero que se ofrece es bajarla, no cobrar',
+    /class="tienda" href="\/movil\/Ghoosted\.apk" download/.test(heroe)
+    && !/data-cta="buy"/.test(heroe));
+  /* Los distintivos son los de tienda de toda la vida PERO no pueden fingir
+     que estamos en App Store o en Google Play: esos distintivos solo se
+     pueden usar enlazando a tu ficha real, y no tenemos ninguna. El de
+     iPhone ademas no puede ser un enlace: no hay app a la que llevar. */
+  s.ok('sin fingir que estamos en las tiendas',
+    !/App Store|Google Play|play\.google|apps\.apple/i.test(html.replace(/<!--[\s\S]*?-->/g, '')));
+  s.ok('y el de iPhone no es un enlace, que no hay adonde ir',
+    /<span class="tienda pronto" aria-disabled="true">/.test(heroe));
+
   s.eq('once idiomas ademas del ingles', idiomas.length, 11);
   for (const f of idiomas) {
     const d = JSON.parse(leer(path.join('locales', f)));
@@ -132,24 +153,42 @@ module.exports = () => {
   s.ok('la seccion conserva su encabezado para lectores de pantalla',
     /class="show-oculto" id="showTitle" data-i18n="show_title"/.test(html)
     && /\.show-oculto\{position:absolute/.test(css));
-  /* Del apartado del movil se quita la letra: la fila de garantias y los tres
-     pasos numerados. Se queda el titulo, la linea que dice que es, y el
-     dibujo — que es el que explica de un vistazo lo que hacian los pasos. */
-  s.ok('sin la fila de garantias ni los tres pasos',
-    !/pair-trust|pair-steps/.test(html) && !/\.pair-trust|\.pair-step/.test(css));
-  s.ok('sin traducciones huerfanas de esos textos',
+  /* EL APARTADO DEL MOVIL, FUERA ENTERO.
+     Era un dibujo de un movil con un boton al lado y medio metro de hueco en
+     medio, y lo que decia ya lo dice el bloque negro del final: la app, gratis,
+     y el boton. Dos veces lo mismo, y la fea primero. Si vuelve, que vuelva
+     con algo que enseñar dentro, no con un espacio vacio. */
+  s.ok('sin el apartado del movil', !/id="pair"|class="pair/.test(html));
+  s.ok('y sin sus estilos', !/\.pair-|@keyframes pair/.test(css));
+  s.ok('ni su enlace en el menu', !/href="#pair"/.test(html));
+  s.ok('ni el teatro del emparejado en el guion', !/pairStage|is-scanning|pair-card/.test(js));
+  s.ok('sin traducciones huerfanas del apartado',
     idiomas.every((f) => {
       const d = JSON.parse(leer(path.join('locales', f)));
-      return !['pair_trust_1', 'pair_trust_2', 'pair_trust_3', 'pair_step_1', 'pair_step_2', 'pair_step_3']
-        .some((k) => k in d);
+      return !['pair_title', 'pair_sub', 'pair_badge_app', 'pair_qr_label', 'pair_qr_note',
+        'pair_trust_1', 'pair_trust_2', 'pair_trust_3', 'pair_step_1', 'pair_step_2', 'pair_step_3',
+        'nav_pair', 'app_dl', 'app_ios', 'app_pill'].some((k) => k in d);
     }));
-  /* Pero el dibujo se queda entero: sin el no queda nada que explique nada. */
-  s.ok('el dibujo del emparejado sigue', /class="pair-qr-card"/.test(html) && /class="pair-phone"/.test(html));
+  s.ok('y sin el generador de QR colgando de la portada',
+    !/src="qr\.js"/.test(html) && !/GhostedQR/.test(js));
 
-  /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
-  s.ok('el apartado del movil dice de que va', /data-i18n="pair_title"/.test(html));
-  s.ok('y su titulo esta traducido en los once idiomas',
-    idiomas.every((f) => !!JSON.parse(leer(path.join('locales', f))).pair_title));
+  /* El bloque negro de descarga tambien se retiro: decia lo mismo que la
+     llamada final y se comian el cierre entre los dos. Se va con sus estilos
+     y sus cinco textos por idioma. El enlace al APK que se llevaba por
+     delante volvio al primer boton de la portada, que es su sitio. */
+  s.ok('sin el bloque negro de descarga',
+    !/class="bajar|id="bajar"/.test(html) && !/\.bajar/.test(css));
+  s.ok('sin traducciones huerfanas de ese bloque',
+    idiomas.every((f) => {
+      const d = JSON.parse(leer(path.join('locales', f)));
+      return !['dl_title', 'dl_sub', 'dl_android', 'dl_chrome', 'dl_ios'].some((k) => k in d);
+    }));
+  s.ok('quien entra desde un Android sigue teniendo boton de descarga',
+    /id="movilApp"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html) && /\/android\/i\.test\(navigator\.userAgent/.test(js));
+  // En arabe "Android" se escribe con su alfabeto, no en latino.
+  s.ok('y el requisito antes de pagar ya nombra la app',
+    idiomas.every((f) => /android|أندرويد/i.test(JSON.parse(leer(path.join('locales', f))).price_req || '')));
+
   /* Texto muerto: lo que se quedo sin sitio al quitar el bento. */
   const MUERTAS = ['feat_kicker', 'more_title', 'feat_intro', 'show_lede_0', 'show_tab_0',
     'fx_download_d', 'fx_tiktok_d', 'm7_d'];
