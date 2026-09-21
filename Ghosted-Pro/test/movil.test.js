@@ -72,6 +72,19 @@ module.exports = () => {
 
   /* 7 · Los doce idiomas. */
   const idiomas = fs.readdirSync(path.join(WEB, 'locales')).filter((f) => f.endsWith('.json'));
+
+  /* 0 · QUE ES ESTO. Un desconocido tiene que saber de que va la app antes
+     de decidir nada: en el titular, sin adivinar. Se comprueba que nombra
+     Instagram y que lo primero que se ofrece es bajarsela — es gratis para
+     empezar, asi que pedir dinero en el primer clic sobra, y ademas es el
+     unico sitio desde el que un ordenador puede bajarse el APK. */
+  const heroe = html.slice(html.indexOf('class="hero-center"'), html.indexOf('hero-fotos'));
+  s.ok('el titular nombra Instagram', /data-i18n="hero_l2"/.test(heroe)
+    && idiomas.every((f) => /instagram|نستغرام/i.test(JSON.parse(leer(path.join('locales', f))).hero_l2 || '')));
+  s.ok('y el primer boton baja la app, no cobra',
+    /class="btn btn-primary btn-lg" href="\/movil\/Ghoosted\.apk" download/.test(heroe)
+    && !/data-cta="buy"/.test(heroe));
+
   s.eq('once idiomas ademas del ingles', idiomas.length, 11);
   for (const f of idiomas) {
     const d = JSON.parse(leer(path.join('locales', f)));
@@ -153,11 +166,8 @@ module.exports = () => {
 
   /* El bloque negro de descarga tambien se retiro: decia lo mismo que la
      llamada final y se comian el cierre entre los dos. Se va con sus estilos
-     y sus cinco textos por idioma.
-     PERO OJO: con el se fue el ultimo enlace al APK que habia para quien
-     entra desde un ordenador. Hoy solo se ofrece a quien llega desde un
-     Android. Mientras la portada venda una app de movil, esto tiene que
-     volver a algun sitio. */
+     y sus cinco textos por idioma. El enlace al APK que se llevaba por
+     delante volvio al primer boton de la portada, que es su sitio. */
   s.ok('sin el bloque negro de descarga',
     !/class="bajar|id="bajar"/.test(html) && !/\.bajar/.test(css));
   s.ok('sin traducciones huerfanas de ese bloque',
