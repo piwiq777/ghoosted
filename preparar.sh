@@ -23,11 +23,15 @@ ade=$(git rev-list --count origin/"$r".."$r" 2>/dev/null || echo 0)
 [ "$ade" = "0" ] || echo "  AVISO $ade commits sin subir — usa: git push"
 
 echo
-echo "== Secretos (NO estan en el repositorio, se copian a mano) =="
-[ -f Ghosted-Landing/.env.local ] && si "Ghosted-Landing/.env.local" || no "Ghosted-Landing/.env.local (claves de Stripe)"
-[ -d Ghosted-Landing/.vercel ]    && si "Ghosted-Landing/.vercel"    || no "Ghosted-Landing/.vercel (enlace con Vercel)"
+echo "== Opcionales (NO van en el repositorio) =="
+echo "   Para escribir codigo, la web y los tests NO hacen falta.
+[ -f Ghosted-Landing/.env.local ] && si "Ghosted-Landing/.env.local" \
+  || echo "  -    Ghosted-Landing/.env.local — solo para levantar la web con pagos. Se copia del panel de Vercel."
+[ -d Ghosted-Landing/.vercel ]    && si "Ghosted-Landing/.vercel" \
+  || echo "  -    Ghosted-Landing/.vercel — se rehace con 'vercel link'."
 [ -f "$HOME/.android/debug.keystore" ] && si "~/.android/debug.keystore" \
-  || no "~/.android/debug.keystore — SIN ESTO el APK que compiles aqui NO se podra instalar encima del que ya esta puesto"
+  || echo "  -    ~/.android/debug.keystore — SOLO para compilar el APK. Sin el, compila el APK en el ordenador de casa;
+        la app se actualiza sola por internet sin tocar el APK."
 
 echo
 echo "== Para compilar el APK (solo si vas a tocar la app) =="
