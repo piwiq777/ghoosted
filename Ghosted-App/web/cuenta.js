@@ -133,7 +133,8 @@ window.Cuenta = (function () {
     if (c === 'user_already_exists' || /already registered/i.test(m)) return 'Ya hay una cuenta con ese correo. Entra en vez de registrarte';
     if (c === 'weak_password' || /password should be/i.test(m)) return 'La contraseña es muy corta: mínimo 6 letras';
     if (c === 'email_not_confirmed') return 'Confirma tu correo: te mandamos un enlace al registrarte';
-    if (c === 'over_email_send_rate_limit' || e.status === 429) return 'Demasiados intentos. Espera un poco';
+    if (c === 'over_email_send_rate_limit') return 'No se pueden mandar más correos ahora mismo. Prueba dentro de un rato';
+    if (e.status === 429) return 'Demasiados intentos. Espera un poco';
     return m ? m.slice(0, 80) : 'Algo ha fallado';
   }
 
