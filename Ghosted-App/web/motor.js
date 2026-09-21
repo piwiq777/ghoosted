@@ -143,6 +143,13 @@ window.Motor = (function () {
     } catch (e) { return null; }
   }
   function esPro() {
+    /* Dos caminos, y vale cualquiera de los dos:
+         1. La cuenta de Ghoosted dice que su plan es pro.
+         2. La clave de siempre, la que se compraba pegada a una cuenta de
+            Instagram. Quien ya pago asi no se queda fuera porque ahora haya
+            cuentas: seria quitarle lo que compro. */
+    var c = window.Cuenta;
+    if (c && c.esPro()) return true;
     var l = S.lic;
     return !!(l && l.valid && !l.refunded && !l.revoked && (!S.yo || !l.accountId || String(l.accountId) === String(S.yo)));
   }
