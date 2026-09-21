@@ -151,13 +151,21 @@ module.exports = () => {
   s.ok('y sin el generador de QR colgando de la portada',
     !/src="qr\.js"/.test(html) && !/GhostedQR/.test(js));
 
-  /* Pero lo que vendia NO puede desaparecer con el: la descarga de la app
-     tiene que seguir a un clic desde la portada, y hay que seguir diciendo
-     que de iPhone no hay. Eso vive ahora en el bloque negro del final. */
-  s.ok('la portada sigue ofreciendo la app',
-    /class="bajar-b[^"]*"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html));
-  s.ok('y sigue diciendo que de iPhone todavia no hay', /data-i18n="dl_ios"/.test(html));
-  s.ok('quien entra desde un Android tiene boton de descarga',
+  /* El bloque negro de descarga tambien se retiro: decia lo mismo que la
+     llamada final y se comian el cierre entre los dos. Se va con sus estilos
+     y sus cinco textos por idioma.
+     PERO OJO: con el se fue el ultimo enlace al APK que habia para quien
+     entra desde un ordenador. Hoy solo se ofrece a quien llega desde un
+     Android. Mientras la portada venda una app de movil, esto tiene que
+     volver a algun sitio. */
+  s.ok('sin el bloque negro de descarga',
+    !/class="bajar|id="bajar"/.test(html) && !/\.bajar/.test(css));
+  s.ok('sin traducciones huerfanas de ese bloque',
+    idiomas.every((f) => {
+      const d = JSON.parse(leer(path.join('locales', f)));
+      return !['dl_title', 'dl_sub', 'dl_android', 'dl_chrome', 'dl_ios'].some((k) => k in d);
+    }));
+  s.ok('quien entra desde un Android sigue teniendo boton de descarga',
     /id="movilApp"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html) && /\/android\/i\.test\(navigator\.userAgent/.test(js));
   // En arabe "Android" se escribe con su alfabeto, no en latino.
   s.ok('y el requisito antes de pagar ya nombra la app',

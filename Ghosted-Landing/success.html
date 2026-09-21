@@ -140,7 +140,7 @@
       }
       function boot(cb) {
         if (lang === 'en') { applyStatic(); cb(); return; }
-        fetch('locales/' + lang + '.json?v=67')
+        fetch('locales/' + lang + '.json?v=68')
           .then(function (r) { return r.ok ? r.json() : null; })
           .then(function (d) { dict = d; applyStatic(); cb(); })
           .catch(function () { applyStatic(); cb(); });
