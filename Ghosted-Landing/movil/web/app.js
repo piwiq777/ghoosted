@@ -479,7 +479,8 @@
            acabas de escribir se borra solo. Parte de "pongo un nombre y no va"
            era esto: el nombre ya no estaba cuando pulsabas Vigilar. */
         '<span class="sr">Vigilar usuario</span><input type="text" id="vigilar" placeholder="Busca a alguien para vigilar" autocapitalize="off" autocomplete="off" value="' + esc(U.vig || '') + '"></label>' +
-        '<button class="negro h46" data-a="vigilar">Vigilar</button></div>' + sugerencias() +
+        '<button class="negro h46" data-a="vigilar">Vigilar</button></div>' +
+        '<div id="sugCaja">' + sugerencias() + '</div>' +
         (esPro ? '' : M.cataQueda('persona')
           ? '<div class="gratis vidrio"><div><b>Te queda una persona de prueba</b><span>Búscala y te aviso de todo lo que cambie en su perfil</span></div><button data-a="pro">Pasar a Pro</button></div>'
           : '<div class="gratis vidrio"><div><b>Prueba gastada</b><span>Ya vigilas a una. Con Pro, a quien quieras</span></div><button data-a="pro">Pasar a Pro</button></div>');
@@ -754,6 +755,7 @@
         segAnterior = {};
       }
     }
+    document.body.classList.toggle('con-sug', !!(U.sug && (U.sug.lista.length || U.sug.cargando)));
     pintarHoja();
     pintarVisor();
     // Aqui abajo: asi entran tambien los selectores que viven dentro de una
@@ -1070,11 +1072,22 @@
   });
   /* Se espera a que pare de escribir. Cada busqueda es una peticion a
      Instagram, y disparar una por tecla es justo lo que no se puede hacer. */
+  /* Repintar SOLO las sugerencias. Antes, cada tecla repintaba la pantalla
+     entera de Actividad —la lista de cambios, a quien vigilas, los
+     selectores, la capsula que viaja— y en un telefono eso se nota: la app
+     se atascaba mientras escribias. Aqui se cambia un solo nodo. */
+  function pintarSug() {
+    var caja = document.getElementById('sugCaja');
+    if (!caja) return;
+    caja.innerHTML = sugerencias();
+    document.body.classList.toggle('con-sug', !!(U.sug && (U.sug.lista.length || U.sug.cargando)));
+  }
+
   var sugT = 0;
   function buscarLuego(q) {
     clearTimeout(sugT);
     q = String(q || '').replace(/^@+/, '').trim();
-    if (!q) { if (U.sug) { U.sug = null; pintar(); } return; }
+    if (!q) { if (U.sug) { U.sug = null; pintarSug(); } return; }
     /* DESDE LA PRIMERA LETRA. Lo de tu gente sale YA, sin esperar y sin
        pedirle nada a Instagram: tus seguidores y a quien sigues estan en el
        telefono. Para casi todo lo que se quiere vigilar, con esto basta. */
@@ -1087,8 +1100,9 @@
        seguidores que encajaban, no salia nunca nadie de fuera. */
     var fuera = q.length >= 3;
     U.sug = { q: q, propios: locales.slice(0, 5), lista: locales.slice(0, 5), cargando: fuera };
-    pintar();
-    if (!fuera) { U.sug.lista = locales; U.sug.propios = locales; pintar(); return; }
+    if (!fuera) { U.sug.lista = locales; U.sug.propios = locales; }
+    pintarSug();
+    if (!fuera) return;
     sugT = setTimeout(function () {
       M.buscarGente(q).then(function (l) {
         // Si ya se esta buscando otra cosa, esta respuesta llega tarde.
@@ -1097,7 +1111,7 @@
         var mios = locales.slice(0, 5);
         mios.forEach(function (u) { hay[u.pk] = 1; });
         var otros = (l || []).filter(function (u) { return !hay[u.pk]; }).slice(0, 5);
-        U.sug = { q: q, propios: mios, lista: mios.concat(otros), cargando: false }; pintar();
+        U.sug = { q: q, propios: mios, lista: mios.concat(otros), cargando: false }; pintarSug();
       });
     }, 500);
   }
