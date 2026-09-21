@@ -59,6 +59,7 @@ window.Motor = (function () {
          ("no puedes crear varias sesiones"), y no tiene nada que ver con
          cuantos datos pidas. Se llevan las marcas para poder avisar. */
       sesiones: [],
+      autoDia: null, manualDia: null, manuales: 0,
       /* Los expedientes ya pedidos. Se guardan porque cada uno es una
          peticion a Instagram y el perfil de alguien no cambia cada minuto:
          volver a entrar en la misma persona no puede costar otra. */
@@ -227,9 +228,47 @@ window.Motor = (function () {
      Si la ultima salio a medias o dio error no se hace esperar: el usuario se
      quedaria un dia entero con datos malos y sin poder hacer nada, que es
      peor que la peticion que nos ahorramos. */
-  function faltaParaRevisar() {
+  /* LA REVISION DE CADA DIA.
+     Una automatica por la mañana (a las 9, si la app esta abierta) y UNA
+     manual mas, pasadas unas horas. Dos al dia como mucho.
+     Antes era una cada 24 h y punto: si te enterabas de algo a mediodia no
+     podias volver a mirar hasta el dia siguiente, y eso no hay quien lo
+     aguante. Pero tampoco se puede abrir la mano del todo — la cuenta viene
+     de dos restricciones. */
+  var HORA_AUTO = 9;               // las 9 de la mañana
+  var ESPERA_MANUAL = 6 * 3600000; // y a mano, no antes de 6 h
+
+  function hoyClave(ts) {
+    var d = new Date(ts);
+    return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+  }
+
+  /* Cuando toca la automatica: la primera vez que se abre la app pasadas las
+     9, si hoy no se ha hecho ya. No hay servicio en segundo plano, asi que
+     no puede saltar sola con el telefono guardado: salta al abrir. */
+  function tocaAutomatica() {
+    if (!S.auto) return false;
+    var ahora = new Date();
+    if (ahora.getHours() < HORA_AUTO) return false;
+    return S.autoDia !== hoyClave(Date.now());
+  }
+
+  /* Cuantas manuales quedan hoy: una. */
+  function manualesHoy() {
+    return S.manualDia === hoyClave(Date.now()) ? (S.manuales || 0) : 0;
+  }
+
+  function faltaParaRevisar(manual) {
     if (!S.lastCheck) return 0;
     if (S.parcial || S.error) return 0;
+    if (manual) {
+      // Se acabo la manual de hoy: hasta mañana.
+      if (manualesHoy() >= 1) {
+        var m = new Date(); m.setHours(24, 0, 0, 0);
+        return m.getTime() - Date.now();
+      }
+      return Math.max(0, S.lastCheck + ESPERA_MANUAL - Date.now());
+    }
     return Math.max(0, S.lastCheck + CADA - Date.now());
   }
 
@@ -252,7 +291,7 @@ window.Motor = (function () {
     if (!S.yo) { avisar({ fin: true, sinSesion: true }); return; }
     // El tope del dia vale tambien para el boton: es justo el boton el que
     // se pulsa diez veces seguidas cuando algo no sale como se esperaba.
-    var falta = faltaParaRevisar();
+    var falta = faltaParaRevisar(manual);
     if (falta > 0) { avisar({ fin: true, hoyYa: true, falta: falta }); return; }
     // En pausa no se le pide nada a Instagram, ni a mano: es el freno de
     // emergencia cuando Instagram ha limitado la cuenta.
@@ -331,6 +370,13 @@ window.Motor = (function () {
       if (esPro() && Date.now() - (S.stories.ts || 0) > HISTORIAS_CADA) await misHistorias().catch(function () {});
       if (S.reqRule !== 'manual' && esPro()) await aplicarRegla().catch(function () {});
       S.lastCheck = Date.now();
+      if (manual) {
+        var hoy = hoyClave(Date.now());
+        S.manuales = (S.manualDia === hoy ? (S.manuales || 0) : 0) + 1;
+        S.manualDia = hoy;
+      } else {
+        S.autoDia = hoyClave(Date.now());
+      }
       S.rate = null;
     } catch (e) {
       S.error = { kind: e && e.kind, status: e && e.status, ts: Date.now() };
@@ -725,7 +771,8 @@ window.Motor = (function () {
      automaticas se encienden en Ajustes, y aun encendidas van una vez al dia.
      Es lo que hace que la app no pueda molestar a Instagram por su cuenta. */
   setInterval(function () {
-    if (S.auto && S.yo && !ocupado && !S.pausa && Date.now() >= (S.nextCheck || 0)) revisar(false);
+    if (!S.yo || ocupado || S.pausa) return;
+    if (tocaAutomatica() && !faltaParaRevisar(false)) revisar(false);
   }, 60000);
 
   return {
@@ -735,6 +782,7 @@ window.Motor = (function () {
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
+    manualesHoy: manualesHoy, HORA_AUTO: HORA_AUTO,
     cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy,
     buscarGente: buscarGente, buscarLocal: buscarLocal,
     expediente: expediente, expedienteGuardado: expedienteGuardado, expedientesHoy: expedientesHoy, EXP_DIA: EXP_DIA,

@@ -78,6 +78,7 @@
     bocadillo: '<path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.1A8 8 0 1 1 20 12z"/>',
     cerrar: '<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
     bajar: '<path d="M12 3v11"/><path d="M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4.5 17.5v1.5a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-1.5"/>',
+    tiktok: '<path d="M16.5 3.2c.5 1.9 1.9 3.3 3.8 3.6v2.8c-1.4 0-2.8-.4-3.9-1.2v5.9c0 3.2-2.6 5.7-5.7 5.7S5 17.5 5 14.3s2.6-5.7 5.7-5.7c.3 0 .6 0 .9.1v2.9a2.9 2.9 0 1 0 2 2.7V3.2h2.9z" fill="currentColor" stroke="none"/>',
     ojo: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
     ojo_no: '<path d="M4 4l16 16"/><path d="M9.9 5.9A9.6 9.6 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3.3 4"/><path d="M6.6 7.9A17 17 0 0 0 2.5 12S6 18.5 12 18.5c1.2 0 2.3-.2 3.3-.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>'
   };
@@ -361,10 +362,10 @@
     var ocup = M.ocupado;
     // Una revision al dia: el boton lo dice en vez de no hacer nada al
     // pulsarlo, que es lo que lleva a pulsarlo diez veces.
-    var falta = M.faltaParaRevisar();
+    var falta = M.faltaParaRevisar(true);
     var btn = '<div class="fila-btn"><button class="negro' + (ocup ? ' gira' : '') + (falta && !ocup ? ' espera' : '') + '" data-a="revisar">' +
       ico(falta && !ocup ? I.reloj_arena : I.revisar, 19, 2) +
-      (ocup ? 'Revisando…' : falta ? 'Ya revisado hoy · ' + queda(falta) : 'Revisar ahora') + '</button></div>';
+      (ocup ? 'Revisando…' : falta ? (M.manualesHoy() >= 1 ? 'Ya has revisado hoy · mañana más' : 'Puedes volver en ' + queda(falta)) : 'Revisar ahora') + '</button></div>';
     var cab = '<div class="arriba"><div class="wm-caja">' + wm() + '</div>';
     var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
       (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
@@ -691,11 +692,11 @@
        el mismo en las dos redes: una al perfil directo y otra al buscador. */
     var tt = encodeURIComponent(p.username);
     h += '<div class="pf-acciones">' +
-      '<button data-a="ir" data-url="https://www.tiktok.com/@' + esc(tt) + '">' + ico(I.play, 17) + 'TikTok</button>' +
-      '<button data-a="ir" data-url="https://www.tiktok.com/search/user?q=' + esc(tt) + '">' + ico(I.lupa, 17, 2) + 'Buscar en TikTok</button>' +
+      '<button class="tt" data-a="ir" data-url="https://www.tiktok.com/@' + esc(tt) + '">' + ico(I.tiktok, 17) + 'TikTok</button>' +
+      '<button class="tt2" data-a="ir" data-url="https://www.tiktok.com/search/user?q=' + esc(tt) + '">' + ico(I.lupa, 17, 2) + 'Buscar en TikTok</button>' +
       (s ? '<button data-a="' + (s.vigilada ? 'quitar-vigilar' : 'vigilar-a') + '" data-pk="' + esc(s.pk) + '" data-user="' + esc(p.username) + '">' +
         ico(I.actividad, 17, 2) + (s.vigilada ? 'Dejar de vigilar' : 'Vigilar') + '</button>' : '') +
-      (d && (d.pic_hd || d.pic) ? '<button data-a="bajar-foto">' + ico(I.bajar, 17, 2) + 'Guardar foto' + pro() + '</button>' : '') +
+      (d && (d.pic_hd || d.pic) ? '<button class="ig" data-a="bajar-foto">' + ico(I.bajar, 17, 2) + 'Guardar foto' + pro() + '</button>' : '') +
       '<button data-a="copiar-id" data-id="' + esc((d && d.pk) || (s && s.pk) || '') + '">' + ico(I.cambio, 17, 2) + 'Copiar ID</button>' +
       '</div>';
 
@@ -820,7 +821,7 @@
       '<div class="ajuste"><span>Versión' + (U.ver ? ' <span class="valor">' + U.ver.web + '·' + U.ver.apk + '</span>' : '') + '</span><button class="enlace" data-a="buscar-act" style="height:auto">' + (U.buscando ? 'Buscando…' : 'Buscar actualización') + '</button></div>' +
       '<div class="ajuste"><span>Peticiones a Instagram<span class="valor"> · tope por hora</span></span><span class="valor">' +
         (U.gasto ? U.gasto.hora + '/' + U.gasto.topeHora + ' · hoy ' + U.gasto.dia + '/' + U.gasto.topeDia : '—') + '</span></div>' +
-      '<div class="ajuste"><span>Revisar sola una vez al día<span class="valor"> · con la app abierta</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
+      '<div class="ajuste"><span>Revisar sola a las ' + M.HORA_AUTO + ':00<span class="valor"> · al abrir la app</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
       '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
@@ -1101,8 +1102,10 @@
       if (M.estado.pausa) return toast('La app está en pausa');
       var r = M.estado.rate;
       if (r && Date.now() < r.until) return toast('Instagram pidió esperar. Lo vuelvo a intentar solo a las ' + hora(r.until));
-      var f = M.faltaParaRevisar();
-      if (f) return toast('Ya has revisado hoy. Vuelve en ' + queda(f) + ' — es lo que evita que Instagram te marque');
+      var f = M.faltaParaRevisar(true);
+      if (f) return toast(M.manualesHoy() >= 1
+        ? 'Hoy ya has revisado a mano. Mañana a las ' + M.HORA_AUTO + ':00 se revisa sola'
+        : 'Aún no: vuelve en ' + queda(f) + ' — es lo que evita que Instagram te marque');
       M.revisar(true);
     },
     'buscar-act': function () {
@@ -1119,7 +1122,7 @@
     },
     'aplicar-act': function () { U.actu = null; P.nativo('aplicarActualizacion', {}); },
     'instalar-apk': function () { toast('Descargando la app nueva…'); P.nativo('instalarApk', {}); },
-    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola una vez al día' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
+    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola cada mañana a las ' + M.HORA_AUTO + ':00' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
     'pausa': function () { M.pausar(!M.estado.pausa); toast(M.estado.pausa ? 'En pausa: no le pido nada a Instagram' : 'Reanudada'); pintar(); },
     'diag': function () { U.diag = null; abrir('diag'); },
     'probar': function () {
@@ -1155,7 +1158,7 @@
       if (U.bajando) return;
       U.bajando = true; pintar();
       P.nativo('guardarMedia', { url: d.pic_hd || d.pic, video: false, de: d.username })
-        .then(function (r) { toast(r && r.ok ? 'Guardada en ' + (r.donde || 'tu galería') : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40)); })
+        .then(function (r) { toast(r && r.ok ? 'En tu galería, álbum «Ghoosted»' : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40)); })
         .catch(function () { toast('No se pudo guardar'); })
         .finally(function () { U.bajando = false; pintar(); });
     },
@@ -1294,7 +1297,7 @@
       U.bajando = true; pintar();
       P.nativo('guardarMedia', { url: it.url, video: !!it.isVideo, de: g.user.username })
         .then(function (r) {
-          toast(r && r.ok ? 'Guardado en ' + (r.donde || 'tu galería') : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40));
+          toast(r && r.ok ? 'En tu galería, álbum «Ghoosted»' : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40));
         })
         .catch(function () { toast('No se pudo guardar'); })
         .finally(function () { U.bajando = false; pintar(); });
@@ -1462,7 +1465,13 @@
       if (!antes && M.estado.yo && !M.estado.followers && M.estado.intro) { U.cargando = true; M.revisar(true); }
       else if (M.estado.yo && Date.now() >= (M.estado.nextCheck || 0)) M.revisar(false);
       M.reverificar();
-      pintar();
+      /* ESTE AVISO LLEGA CADA SEGUNDO Y MEDIO, SIEMPRE.
+         Antes se repintaba la pantalla entera cada vez que llegaba, hubiera
+         cambiado algo o no: 40 repintados por minuto. Y mientras miras una
+         historia, cada repintado recreaba el visor por dentro y le lanzaba
+         otra vez la animacion de entrada — de ahi lo de "se abre dos veces".
+         Solo se repinta si de verdad ha cambiado quien esta dentro. */
+      if (antes !== M.estado.yo) pintar();
     }
     if (m.tipo === 'atras') {
       if (U.visor) { U.visor = null; pintar(); }

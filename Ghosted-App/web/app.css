@@ -525,6 +525,20 @@ button:active,a.btn:active{opacity:.75}
   flex:1 1 auto;min-width:calc(50% - 4px);height:38px;padding:0 14px;
   border-radius:999px;background:var(--fill);color:var(--ink);font-size:13.5px;font-weight:600;white-space:nowrap}
 .pf-acciones button:active{transform:scale(.96)}
+/* Un poco de color donde ayuda a reconocer las cosas de un vistazo: el de
+   TikTok con lo suyo, el de la foto con el degradado de Instagram. El resto
+   se queda gris a proposito — si se pintan todos, no destaca ninguno. */
+.pf-acciones .tt{background:#000;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+.pf-acciones .tt svg{color:#25F4EE;filter:drop-shadow(1.4px 0 0 #FE2C55)}
+.pf-acciones .tt2{background:rgba(37,244,238,.14);color:var(--ink)}
+.pf-acciones .tt2 svg{color:#00B3AD}
+.pf-acciones .ig{background:var(--ig);color:#fff;box-shadow:inset 1px 1px 0 rgba(255,255,255,.35)}
+[data-tema="oscuro"] .pf-acciones .tt{background:#fff;color:#161616}
+[data-tema="oscuro"] .pf-acciones .tt2 svg{color:#25F4EE}
+/* Y las cifras del expediente dejan de ser tres cajas grises iguales. */
+.pf-cifras > div:nth-child(2) b{color:var(--cifra-rosa)}
+.pf-cifras > div:nth-child(3) b{color:var(--lila)}
+[data-tema="oscuro"] .pf-cifras > div:nth-child(3) b{color:#B7A6FF}
 .pf-cifras{display:flex;gap:10px}
 .pf-cifras > div{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:14px 8px;border-radius:20px;background:var(--fill)}
 .pf-cifras b{font-family:var(--marca);font-weight:800;font-size:20px;letter-spacing:-0.03em}
@@ -657,7 +671,10 @@ button:active,a.btn:active{opacity:.75}
 .cerrando .hoja{transform:translateY(102%)}
 .hoja .asa{cursor:grab;padding:2px 0 4px;margin:-4px 0 0}
 /* --- el visor de historias aparece en negro --- */
-#visor .visor{animation:entraVisor .28s ease}
+/* La animacion va en la caja de fuera (#visor), que NO se recrea, y no en la
+   de dentro, que se rehace en cada repintado. Puesta dentro, cualquier
+   repintado la relanzaba y parecia que la historia se abria otra vez. */
+#visor{animation:entraVisor .28s ease}
 @keyframes entraVisor{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
 /* --- lo que se pulsa responde --- */
 .negro:active,.claro:active,.comprar:active{transform:scale(.97)}
