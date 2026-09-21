@@ -625,16 +625,33 @@
       return '<span class="pf-etq ' + e[0] + '">' + esc(e[1]) + '</span>';
     }).join('') + '</div>';
 
+    /* LAS ACCIONES, como en la extension. Lo de TikTok esta aqui porque es
+       para lo que se usa de verdad: encuentras a alguien en Instagram y lo
+       siguiente es ver si esta en TikTok. Van dos, porque el @ no siempre es
+       el mismo en las dos redes: una al perfil directo y otra al buscador. */
+    var tt = encodeURIComponent(p.username);
+    h += '<div class="pf-acciones">' +
+      '<button data-a="ir" data-url="https://www.tiktok.com/@' + esc(tt) + '">' + ico(I.play, 17) + 'TikTok</button>' +
+      '<button data-a="ir" data-url="https://www.tiktok.com/search/user?q=' + esc(tt) + '">' + ico(I.lupa, 17, 2) + 'Buscar en TikTok</button>' +
+      (s ? '<button data-a="' + (s.vigilada ? 'quitar-vigilar' : 'vigilar-a') + '" data-pk="' + esc(s.pk) + '" data-user="' + esc(p.username) + '">' +
+        ico(I.actividad, 17, 2) + (s.vigilada ? 'Dejar de vigilar' : 'Vigilar') + '</button>' : '') +
+      (d && (d.pic_hd || d.pic) ? '<button data-a="bajar-foto">' + ico(I.bajar, 17, 2) + 'Guardar foto' + pro() + '</button>' : '') +
+      '<button data-a="copiar-id" data-id="' + esc((d && d.pk) || (s && s.pk) || '') + '">' + ico(I.cambio, 17, 2) + 'Copiar ID</button>' +
+      '</div>';
+
     if (d) {
-      h += '<div class="pf-cifras"><div><b>' + num(d.followers) + '</b><span>seguidores</span></div>' +
-        '<div><b>' + num(d.following) + '</b><span>siguiendo</span></div>' +
-        '<div><b>' + num(d.posts) + '</b><span>publicaciones</span></div></div>';
+      h += '<div class="pf-cifras"><div><b>' + num(d.posts) + '</b><span>publicaciones</span></div>' +
+        '<div><b>' + num(d.followers) + '</b><span>seguidores</span></div>' +
+        '<div><b>' + num(d.following) + '</b><span>siguiendo</span></div></div>';
       if (d.bio) h += '<p class="pf-bio">' + esc(d.bio) + '</p>';
       var extra = [];
-      if (d.external_url) extra.push(['Enlace', d.external_url]);
+      if (d.pronouns) extra.push(['Pronombres', d.pronouns]);
+      if (d.external_url) extra.push(['Web', d.external_url]);
       (d.bio_links || []).slice(0, 2).forEach(function (l) { if (l !== d.external_url) extra.push(['Enlace', l]); });
+      if (d.category) extra.push(['Categoría', d.category]);
       if (d.public_email) extra.push(['Correo público', d.public_email]);
       if (d.public_phone) extra.push(['Teléfono público', d.public_phone]);
+      if (d.address) extra.push(['Dirección', d.address]);
       if (extra.length) h += '<div class="pf-datos">' + extra.map(function (x) {
         return '<div><span>' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b></div>';
       }).join('') + '</div>';
@@ -967,6 +984,33 @@
     'ver-dejaron': function () { U.tab = 'personas'; U.seg = 'unfollow'; U.busca = ''; U.sel = null; pintar(); scrollTo(0, 0); },
     'pro': function () { U.proQue = null; abrir('pro'); },
     'cerrar-hoja': function () { U.hojaAbierta = null; pintar(); },
+    'ir': function (el) { P.nativo('abrir', { url: el.getAttribute('data-url') }); },
+    'vigilar-a': function (el) {
+      var n = el.getAttribute('data-user');
+      if (!M.cataQueda('persona')) return abrirPro('Vigilar a alguien');
+      trabajo('vig', async function () {
+        var u = await M.vigilar(n);
+        M.gastarCata('persona');
+        toast('Vigilando a @' + u.username);
+      });
+    },
+    'copiar-id': function (el) {
+      var id = el.getAttribute('data-id');
+      if (!id) return toast('Todavía no sé su ID: abre el expediente');
+      try { navigator.clipboard.writeText(id); toast('ID copiado'); } catch (e) { toast('No he podido copiar'); }
+    },
+    'bajar-foto': function () {
+      if (!M.esPro()) return abrirPro('Descargar la foto de perfil');
+      var p = U.perfil, d = p && p.pk && M.expedienteGuardado(p.pk);
+      if (!d) return;
+      if (P.demo) return toast('En el navegador no se puede guardar');
+      if (U.bajando) return;
+      U.bajando = true; pintar();
+      P.nativo('guardarMedia', { url: d.pic_hd || d.pic, video: false, de: d.username })
+        .then(function (r) { toast(r && r.ok ? 'Guardada en ' + (r.donde || 'tu galería') : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40)); })
+        .catch(function () { toast('No se pudo guardar'); })
+        .finally(function () { U.bajando = false; pintar(); });
+    },
     'abrir-ig': function () {
       var u = U.perfil && U.perfil.username; if (!u) return;
       P.nativo('abrir', { url: 'https://www.instagram.com/' + encodeURIComponent(u) + '/' });

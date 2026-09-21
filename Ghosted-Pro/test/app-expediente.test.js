@@ -44,5 +44,25 @@ module.exports = () => {
     && /expedientesHoy\(\) >= EXP_DIA\) throw/.test(motor));
   s.ok('  y al llegar al tope se explica por que', /Ya has abierto ' \+ M\.EXP_DIA \+ ' expedientes hoy/.test(app));
 
+  /* LAS ACCIONES, como en la extension. Lo de TikTok es para lo que se usa
+     de verdad: encuentras a alguien en Instagram y lo siguiente que quieres
+     es ver si esta en TikTok. Van DOS, porque el @ no tiene por que ser el
+     mismo en las dos redes: una al perfil directo y otra al buscador. */
+  s.ok('esta TikTok, al perfil directo', /tiktok\.com\/@' \+ esc\(tt\)/.test(app));
+  s.ok('  y buscar en TikTok, por si el @ no coincide', /tiktok\.com\/search\/user\?q=' \+ esc\(tt\)/.test(app));
+  s.ok('  con el nombre escapado para la URL', /var tt = encodeURIComponent\(p\.username\)/.test(app));
+  s.ok('se puede vigilar desde la ficha', /'vigilar-a': function/.test(app));
+  s.ok('se puede copiar el ID', /'copiar-id': function/.test(app));
+  s.ok('  y si todavia no se sabe, se dice', /Todavía no sé su ID: abre el expediente/.test(app));
+  s.ok('se puede guardar la foto de perfil en HD', /'bajar-foto': function/.test(app)
+    && /d\.pic_hd \|\| d\.pic/.test(app));
+  s.ok('  y eso es de Pro', /abrirPro\('Descargar la foto de perfil'\)/.test(app));
+
+  /* Y del expediente se enseña TODO lo que esa unica peticion trae: si se
+     pide y no se pinta, es gasto tirado. */
+  for (const campo of ['pronouns', 'external_url', 'bio_links', 'category', 'public_email', 'public_phone', 'address']) {
+    s.ok('se enseña el campo ' + campo, new RegExp('d\\.' + campo).test(app));
+  }
+
   return s;
 };
