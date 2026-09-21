@@ -75,5 +75,25 @@ module.exports = () => {
     /k === 'transport'\) return 'La página de Instagram no estaba lista/.test(app)
     && /k === 'network'\) return 'Instagram no contesta · network/.test(app));
 
+  /* EL FRENO PROPIO SE DISFRAZABA DE FALLO DE INSTAGRAM.
+     page-api rechaza cuando se pasa del tope (tope_min/hora/dia), pero
+     ig-api etiquetaba TODO rechazo como "network". Y J() reintenta por el
+     otro camino cuando ve "network": en la extension iba al fondo — o sea
+     que el freno se saltaba —, y en la app, que no tiene fondo, salia
+     "sin_fondo" y se le enseñaba al usuario como "Instagram no contesta".
+     Horas buscando un fallo de red que no existia. */
+  const igApi = fs.readFileSync(path.join(APP, '..', 'Ghosted-Pro', 'src', 'ig-api.js'), 'utf8');
+  s.ok('el freno lleva su propia etiqueta',
+    /indexOf\("tope_"\) === 0 \? "tope" : "network"/.test(igApi));
+  s.ok('  asi no se reintenta por el otro camino (saltarselo es lo contrario de frenar)',
+    /N\.kind !== "network" && N\.kind !== "transport"\) throw N;/.test(igApi));
+  s.ok('y el aviso dice que somos nosotros, no Instagram',
+    /Me he frenado solo: hoy ya he pedido mucho/.test(app)
+    && /Me he frenado solo: demasiadas peticiones esta hora/.test(app));
+  s.ok('el diagnostico enseña cuanto se ha pedido ya',
+    /function lineaGasto/.test(app) && /Pedido a Instagram/.test(app));
+  s.ok('  y se pide al abrirlo, no solo desde Ajustes',
+    /'diag': function \(\) \{[\s\S]{0,260}P\.ig\('gasto'/.test(app));
+
   return s;
 };

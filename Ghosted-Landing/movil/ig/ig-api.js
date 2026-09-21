@@ -81,7 +81,17 @@
       function W(Y3) {
         if (!Y3 || Y3.source !== "ghosted-page-fetch" || Y3.id !== T) return;
         clearTimeout(I), window.removeEventListener("message", Y0), document.removeEventListener("ghosted:page-result", Y1);
-        if (Y3.error) return G(new x(Y3.error, "network"));
+        /* CUIDADO CON LA ETIQUETA. Todo lo que rechazaba page-api se marcaba
+           como "network", incluido NUESTRO PROPIO FRENO (tope_min, tope_hora,
+           tope_dia). Y como J() reintenta por el otro camino cuando ve
+           "network", el freno se saltaba: en la extension iba al fondo, y en
+           la app —donde no hay fondo— salia "sin_fondo", que se le enseñaba
+           al usuario como "Instagram no contesta". O sea que la app se
+           frenaba sola y le echaba la culpa a Instagram.
+           El freno lleva su propia etiqueta: ni se reintenta por otro lado
+           (saltarselo seria justo lo contrario de lo que hace) ni se confunde
+           con un fallo de red. */
+        if (Y3.error) return G(new x(Y3.error, String(Y3.error).indexOf("tope_") === 0 ? "tope" : "network"));
         try {
           B(L(Y3.status, Y3.contentType, Y3.text, Y3));
         } catch (Y4) {
