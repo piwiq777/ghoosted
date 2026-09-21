@@ -1,20 +1,20 @@
 {
  "web": {
-  "version": 26,
+  "version": 27,
   "archivos": {
-   "web/demo.js": "7de0d7c35d13361c964e82d8a2fe78964b2fcc91ddb03bf172f214858521c2f7",
+   "web/demo.js": "77188a36b3b6c4f546ca7f0fe443e57fdb4c1c878fda3aad4055d6576acddc1b",
    "web/puente.js": "a9280e0b821349216474ab26a64dc12f960baa473e24aa8703b1a6cf446f7786",
-   "web/app.js": "5c4a797f0cb7aae3ff9070ba6960a10659e86fd54edc99c7049bb23b2e93a87c",
-   "web/app.css": "7553a6329e10a0a791bda48abe603c92567d71bdab241d5ab9cb6ef378645ce4",
-   "web/motor.js": "2c5d0d4a37fb023f33c95c78f4180b32f8fd4319fec30dc67dc90cdbc4c6e733",
+   "web/app.js": "347996e4271dab5b2451c2b1ed0b28384f54e9f16baadc08882bdfd4f1f50273",
+   "web/app.css": "3d4a0ea1fb1a7f70278d5dcd3beaff65149c40fd17ff15e24deb1533689297d2",
+   "web/motor.js": "57fdaf4f92b539aed16705e5140f82ec90b93edad7ecbcac070b1bed1860a090",
    "web/generos.js": "13971b5d5bbabebd09257de574b1f4d761fa68be07f5d21360a244d065087c73",
    "web/index.html": "b1ea9ed84ecae9b2926428be409a32947c8f736b032f3164a5d6c4f6498921a0",
-   "web/version.json": "02dd62bf73c6d0d7b135fc57d442c912385b739bbedf77d7169269e58ce04b4f",
+   "web/version.json": "7c4778079af54686e965f23834968c4dc705e36b750addb9c43b23793e5d87b5",
    "web/fonts/Geist.woff2": "28258d0621216948416a859d32487ab6ad1c9effa0d08795698e70be3c917630",
    "web/fonts/GEIST-LICENSE.txt": "930853ee1daa68554d9e35c8a9175affb74f699fad9a5da6ee5ebe76379d9137",
    "web/fonts/unbounded-latin.woff2": "22f9b928aa3928a896340422b54d690fbb5875c30eae4c106f029c61f2289fd6",
    "web/fonts/unbounded-latin-ext.woff2": "845e1c9fe2e9a7bfbedfeb447fbeba4bc1b5ecd6246277910ccdaad35a7a532c",
-   "ig/puente-ig.js": "e13eb95d7f7dd28a82691e6964e1af045efa145bb78bc9da749edf4df6664b71",
+   "ig/puente-ig.js": "0d1461a244f17c2e5d5d5b5f67884c74e0f92d012f5eb2ded416dfc0da4119c8",
    "ig/page-api.js": "84e07dc2fc17b9669f5bef476094b1491237c3b030d3dd642c4082404d0a079e",
    "ig/ig-api.js": "5c252f21c56e26775102cb86c6b972aa301be7afac05f2a462d6d9aa7dc33813"
   }
@@ -22,6 +22,6 @@
  "apk": {
   "versionCode": 8,
   "url": "https://www.ghoosted.net/movil/Ghoosted.apk",
-  "sha256": "5f8478af03efa6d3897300f432b3054c70e768b25636aff6b66c9cf69d554c3f"
+  "sha256": "483a9d1c608a43f9fb5131199840d20e1c533ab8a451ad037704997ca1cd03f4"
  }
 }

@@ -58,7 +58,11 @@ window.Motor = (function () {
          rato es de las cosas que mas rapido hacen saltar una restriccion
          ("no puedes crear varias sesiones"), y no tiene nada que ver con
          cuantos datos pidas. Se llevan las marcas para poder avisar. */
-      sesiones: []
+      sesiones: [],
+      /* Los expedientes ya pedidos. Se guardan porque cada uno es una
+         peticion a Instagram y el perfil de alguien no cambia cada minuto:
+         volver a entrar en la misma persona no puede costar otra. */
+      exp: {}
     }, s || {});
   }
   /* REPARAR A QUIEN YA SE COMIO EL FALLO DE ARRIBA.
@@ -483,6 +487,61 @@ window.Motor = (function () {
     return lista;
   }
 
+  /* EL EXPEDIENTE DE UNA PERSONA.
+     Una sola peticion (la misma que usa la extension) y trae todo: bio,
+     enlaces, cuantos sigue, cuantos le siguen, publicaciones, si es privada,
+     verificada, de empresa, y el correo o telefono que haya puesto publicos.
+     Se guarda 24 h: abrir a la misma persona dos veces no cuesta dos.
+     Y hay tope diario, porque abrir perfiles en cadena es de las cosas que
+     Instagram mira. */
+  var EXP_DIA = 15;
+  function expedientesHoy() {
+    var n = 0, e = S.exp || {};
+    Object.keys(e).forEach(function (k) { if (Date.now() - (e[k].ts || 0) < 86400000) n++; });
+    return n;
+  }
+  function expedienteGuardado(pk) {
+    var e = (S.exp || {})[String(pk)];
+    return e && Date.now() - e.ts < 86400000 ? e.datos : null;
+  }
+  async function expediente(pk, username) {
+    var ya = expedienteGuardado(pk);
+    if (ya) return ya;
+    if (expedientesHoy() >= EXP_DIA) throw { kind: 'tope_exp' };
+    var d = await ig('fetchDossier', [pk || null, username || null]);
+    if (!d || !d.username) throw { kind: 'no_existe' };
+    if (!S.exp) S.exp = {};
+    S.exp[String(pk || d.pk)] = { ts: Date.now(), datos: d };
+    // No se guardan para siempre: se tiran los de mas de dos dias.
+    Object.keys(S.exp).forEach(function (k) { if (Date.now() - S.exp[k].ts > 2 * 86400000) delete S.exp[k]; });
+    guardar(); avisar();
+    return d;
+  }
+
+  /* Todo lo que ya sabemos de alguien SIN pedir nada: de donde salio, si te
+     sigue, si le sigues, y como se comporta con tus historias. */
+  function loQueSe(username) {
+    var u = String(username || '').replace(/^@+/, '').toLowerCase();
+    function buscar(lista) {
+      return (lista || []).filter(function (x) { return x && String(x.username).toLowerCase() === u; })[0];
+    }
+    var quien = buscar((S.followers || {}).users) || buscar((S.following || {}).users)
+      || buscar(S.watch) || buscar(S.events) || buscar(S.activity);
+    if (!quien) return null;
+    var pk = String(quien.pk);
+    var teSigue = !!buscar((S.followers || {}).users);
+    var leSigues = !!buscar((S.following || {}).users);
+    var vigilada = !!buscar(S.watch);
+    var v = (S.stories.viewers || {})[pk] || null;
+    var suyos = (S.events || []).filter(function (e) { return String(e.pk) === pk; });
+    var cambios = (S.activity || []).filter(function (e) { return String(e.pk) === pk; });
+    return {
+      user: quien, pk: pk, teSigue: teSigue, leSigues: leSigues, vigilada: vigilada,
+      historias: v ? { slides: v.slides, likes: v.likes, dias: (v.dias || []).length } : null,
+      eventos: suyos.slice(0, 4), cambios: cambios.slice(0, 5)
+    };
+  }
+
   function dejarDeVigilar(pk) { S.watch = S.watch.filter(function (w) { return w.pk !== pk; }); guardar(); avisar(); }
   async function vigilarTodos() {
     for (var i = 0; i < S.watch.length && i < 30; i++) {
@@ -624,6 +683,8 @@ window.Motor = (function () {
     revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
     cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy,
     buscarGente: buscarGente, buscarLocal: buscarLocal,
+    expediente: expediente, expedienteGuardado: expedienteGuardado, expedientesHoy: expedientesHoy, EXP_DIA: EXP_DIA,
+    loQueSe: loQueSe,
     listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
     vigilar: vigilar, dejarDeVigilar: dejarDeVigilar,
