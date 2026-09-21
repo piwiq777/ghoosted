@@ -100,7 +100,12 @@
     if (k === 'no_existe') return 'No encuentro esa cuenta';
     var msg = String(e && e.message || '');
     if (msg.indexOf('tope_') === 0) return 'Me he frenado solo para no molestar a Instagram. Prueba dentro de un rato';
-    if (k === 'network' || k === 'transport') return 'Instagram no contesta, prueba otra vez';
+    /* Llevaba el mismo texto para dos cosas MUY distintas: que la pagina de
+       Instagram no estuviera lista (transport) y que la peticion no llegara
+       (network). Diagnosticar a ciegas costo varias vueltas, asi que el
+       aviso lleva el codigo: una captura basta para saber cual es. */
+    if (k === 'transport') return 'La página de Instagram no estaba lista. Prueba otra vez · transport';
+    if (k === 'network') return 'Instagram no contesta · network' + (e && e.status ? ' ' + e.status : '');
     var m = e && (e.reason || e.message);
     return 'No se ha podido hacer' + (m ? ' · ' + String(m).slice(0, 60) : '');
   }
