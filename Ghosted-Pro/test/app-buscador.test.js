@@ -29,14 +29,26 @@ module.exports = () => {
   s.ok('  se pintan las sugerencias', /function sugerencias/.test(app) && /\.sug-fila\{/.test(css));
   s.ok('  y al tocar una se vigila a esa persona', /'elegir-sug': function/.test(app));
 
-  /* Pero sin freir a Instagram: cada busqueda es una peticion. */
+  /* DESDE LA PRIMERA LETRA, y gastando MENOS que antes: tus seguidores y a
+     quien sigues ya estan en el telefono, asi que se buscan ahi primero y
+     sin una sola peticion. A Instagram solo se le pregunta por gente que no
+     es tuya, y cuando has parado de escribir. */
+  s.ok('se busca en tu propia gente', /function buscarLocal/.test(motor));
+  s.ok('  mirando seguidores, seguidos y vigilados',
+    /\(S\.followers \|\| \{\}\)\.users, \(S\.following \|\| \{\}\)\.users, S\.watch/.test(motor));
+  s.ok('  primero los que EMPIEZAN por lo escrito', /empiezan\.concat\(dentro\)/.test(motor));
+  s.ok('con una sola letra ya salen sugerencias, sin pedir nada',
+    /var locales = M\.buscarLocal\(q\);/.test(app) && /if \(q\.length < 2 \|\| locales\.length >= 8\) return;/.test(app));
+  s.ok('  y con una sola letra NO se pregunta a Instagram', /if \(q\.length < 2\) return \[\];/.test(motor));
+
+  /* Y lo de fuera, con freno: cada busqueda es una peticion. */
   s.ok('no se busca por cada tecla: se espera a que pares',
-    /sugT = setTimeout\(/.test(app) && /\}, 600\);/.test(app));
+    /sugT = setTimeout\(/.test(app) && /\}, 500\);/.test(app));
   s.ok('  y se limpia la espera anterior', /clearTimeout\(sugT\)/.test(app));
-  s.ok('no se busca con menos de 3 letras',
-    /if \(q\.length < 3\)/.test(app) && /if \(q\.length < 3\) return \[\];/.test(motor));
+  s.ok('  y no se pregunta si tu gente ya llena la lista', /locales\.length >= 8\) return;/.test(app));
   s.ok('lo ya buscado no se vuelve a pedir', /cacheBusca\[q\]/.test(motor));
   s.ok('  pero no se guarda para siempre', /delete cacheBusca\[q\]/.test(motor));
+  s.ok('lo de fuera se añade a lo tuyo, no lo sustituye', /locales\.concat\(/.test(app));
 
   /* Una respuesta que llega tarde no puede pisar lo que se esta buscando. */
   s.ok('una respuesta atrasada no pisa la busqueda nueva',

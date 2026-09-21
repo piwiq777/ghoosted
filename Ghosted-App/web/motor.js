@@ -441,10 +441,39 @@ window.Motor = (function () {
      memoria. El metodo ya estaba permitido en el puente, solo faltaba usarlo.
      Se guarda lo ya buscado porque al escribir se repiten mucho los mismos
      principios de palabra, y cada busqueda es una peticion a Instagram. */
+  /* DESDE LA PRIMERA LETRA, SIN PEDIR NADA.
+     Tus seguidores y a quien sigues ya estan en el telefono: son miles de
+     personas que se pueden buscar al instante y sin una sola peticion. Y son
+     justo las que vas a querer vigilar. Va por delante de la busqueda de
+     Instagram, que solo sirve para encontrar a alguien de fuera.
+     Primero los que EMPIEZAN por lo escrito, luego los que lo llevan dentro:
+     escribir "mar" tiene que sacar a Marta antes que a Ainmara. */
+  function buscarLocal(q) {
+    q = String(q || '').replace(/^@+/, '').trim().toLowerCase();
+    if (!q) return [];
+    var vistos = {}, empiezan = [], dentro = [];
+    var fuentes = [(S.followers || {}).users, (S.following || {}).users, S.watch];
+    for (var f = 0; f < fuentes.length; f++) {
+      var lista = fuentes[f] || [];
+      for (var i = 0; i < lista.length; i++) {
+        var u = lista[i];
+        if (!u || !u.username || vistos[u.pk]) continue;
+        var us = String(u.username).toLowerCase();
+        var nm = String(u.full_name || '').toLowerCase();
+        if (us.indexOf(q) === 0 || nm.indexOf(q) === 0) { vistos[u.pk] = 1; empiezan.push(u); }
+        else if (us.indexOf(q) > 0 || nm.indexOf(q) > 0) { vistos[u.pk] = 1; dentro.push(u); }
+        if (empiezan.length >= 8) break;
+      }
+    }
+    return empiezan.concat(dentro).slice(0, 8);
+  }
+
   var cacheBusca = {};
   async function buscarGente(q) {
     q = String(q || '').replace(/^@+/, '').trim().toLowerCase();
-    if (q.length < 3) return [];
+    // Con una sola letra Instagram devuelve a los famosos del mundo, que no
+    // es lo que busca nadie aqui. Lo local ya cubre esa primera letra.
+    if (q.length < 2) return [];
     if (cacheBusca[q]) return cacheBusca[q];
     var r = await ig('searchUsers', [q]).catch(function () { return []; });
     var lista = (r || []).slice(0, 8);
@@ -593,7 +622,8 @@ window.Motor = (function () {
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
-    cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy, buscarGente: buscarGente,
+    cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy,
+    buscarGente: buscarGente, buscarLocal: buscarLocal,
     listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
     vigilar: vigilar, dejarDeVigilar: dejarDeVigilar,

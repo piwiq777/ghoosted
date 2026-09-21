@@ -438,13 +438,14 @@
   function sugerencias() {
     var g = U.sug;
     if (!g || !g.q) return '';
-    if (g.cargando) return '<div class="sug"><div class="sug-nada">Buscando…</div></div>';
-    if (!g.lista.length) return '<div class="sug"><div class="sug-nada">No encuentro a nadie con «' + esc(g.q) + '»</div></div>';
+    if (!g.lista.length) return '<div class="sug"><div class="sug-nada">' +
+      (g.cargando ? 'Buscando…' : 'No encuentro a nadie con «' + esc(g.q) + '»') + '</div></div>';
+    // Con gente ya en pantalla, lo de fuera se añade debajo sin tapar nada.
     return '<div class="sug">' + g.lista.map(function (p) {
       return '<button class="sug-fila" data-a="elegir-sug" data-user="' + esc(p.username) + '">' + av(p) +
         '<div class="quien"><b>' + esc(p.full_name || p.username) + '</b><span>@' + esc(p.username) +
         (p.is_private ? ' · privada' : '') + '</span></div></button>';
-    }).join('') + '</div>';
+    }).join('') + (g.cargando ? '<div class="sug-nada">Buscando más en Instagram…</div>' : '') + '</div>';
   }
 
   /* ---------------- Actividad ---------------- */
@@ -1047,15 +1048,26 @@
   function buscarLuego(q) {
     clearTimeout(sugT);
     q = String(q || '').replace(/^@+/, '').trim();
-    if (q.length < 3) { if (U.sug) { U.sug = null; pintar(); } return; }
-    U.sug = { q: q, lista: [], cargando: true }; pintar();
+    if (!q) { if (U.sug) { U.sug = null; pintar(); } return; }
+    /* DESDE LA PRIMERA LETRA. Lo de tu gente sale YA, sin esperar y sin
+       pedirle nada a Instagram: tus seguidores y a quien sigues estan en el
+       telefono. Para casi todo lo que se quiere vigilar, con esto basta. */
+    var locales = M.buscarLocal(q);
+    U.sug = { q: q, lista: locales, cargando: q.length >= 2 && locales.length < 8 };
+    pintar();
+    // Y solo si hace falta buscar fuera (alguien que no es de tu gente) se le
+    // pregunta a Instagram, cuando has parado de escribir.
+    if (q.length < 2 || locales.length >= 8) return;
     sugT = setTimeout(function () {
       M.buscarGente(q).then(function (l) {
         // Si ya se esta buscando otra cosa, esta respuesta llega tarde.
         if (!U.sug || U.sug.q !== q) return;
-        U.sug = { q: q, lista: l, cargando: false }; pintar();
+        var hay = {};
+        locales.forEach(function (u) { hay[u.pk] = 1; });
+        var mezcla = locales.concat((l || []).filter(function (u) { return !hay[u.pk]; }));
+        U.sug = { q: q, lista: mezcla.slice(0, 8), cargando: false }; pintar();
       });
-    }, 600);
+    }, 500);
   }
 
   document.addEventListener('input', function (ev) {
