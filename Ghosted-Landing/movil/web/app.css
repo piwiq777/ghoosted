@@ -459,11 +459,13 @@ button:active,a.btn:active{opacity:.75}
   font-size:13px;font-weight:600;background:var(--fill);color:var(--ink-2)}
 .pf-etq.si{background:rgba(18,147,90,.12);color:var(--verde-ico)}
 .pf-etq.no{background:rgba(214,41,118,.12);color:var(--rosa-txt)}
-/* Las acciones del expediente. En fila que se desborda a lo ancho: en un
-   movil, apiladas ocuparian media pantalla antes de ver un solo dato. */
-.pf-acciones{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.pf-acciones::-webkit-scrollbar{display:none}
-.pf-acciones button{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;height:38px;padding:0 14px;
+/* Las acciones del expediente. En varias filas, NO en una sola que se
+   desliza: deslizando, el ultimo boton se queda cortado en el borde y
+   parece que no hay nada mas. Nadie lo busca. Aqui se ven todos de un
+   vistazo y ya esta. */
+.pf-acciones{display:flex;flex-wrap:wrap;gap:8px}
+.pf-acciones button{display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  flex:1 1 auto;min-width:calc(50% - 4px);height:38px;padding:0 14px;
   border-radius:999px;background:var(--fill);color:var(--ink);font-size:13.5px;font-weight:600;white-space:nowrap}
 .pf-acciones button:active{transform:scale(.96)}
 .pf-cifras{display:flex;gap:10px}

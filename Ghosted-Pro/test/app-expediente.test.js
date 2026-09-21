@@ -103,5 +103,13 @@ module.exports = () => {
   }
   s.ok('  y lo hace con flex:0 0 auto, no con alturas a dedo', /\{flex:0 0 auto\}/.test(noAplastar));
 
+  /* Y los botones se ven TODOS. En una fila que se desliza, el ultimo se
+     queda cortado en el borde y parece que no hay nada mas: nadie lo busca.
+     Se envuelven en varias filas. */
+  const acc = css.slice(css.indexOf('.pf-acciones{'), css.indexOf('.pf-acciones{') + 400);
+  s.ok('los botones se envuelven, no se deslizan',
+    /flex-wrap:wrap/.test(acc) && !/overflow-x:auto/.test(acc));
+  s.ok('  y ninguno se queda a medias', /min-width:calc\(50% - 4px\)/.test(acc));
+
   return s;
 };
