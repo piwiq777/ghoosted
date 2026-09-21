@@ -102,6 +102,9 @@ a{color:inherit;text-decoration:none}
 .negro{display:flex;align-items:center;justify-content:center;gap:8px;flex:1 1 0;height:56px;padding:0 20px;border-radius:999px;font-size:16px;font-weight:600;letter-spacing:-0.02em;background:var(--b-bg);color:var(--b-ink);box-shadow:var(--b-sombra)}
 .negro.h50{height:50px} .negro.h48{height:48px} .negro.h46{flex:0 0 auto;height:46px}
 .negro.grande{height:56px;font-size:17px;box-shadow:var(--b2-sombra)}
+/* Ya revisado hoy: el boton sigue ahi y sigue diciendo cuanto falta, pero
+   apagado. Esconderlo dejaba la pantalla sin saber que hacer. */
+.negro.espera{background:var(--b-espera,rgba(120,120,128,.16));color:var(--tinta-2);box-shadow:none;font-weight:550}
 .claro{display:flex;align-items:center;justify-content:center;gap:8px;flex:1 1 0;height:50px;padding:0 18px;border-radius:999px;font-size:15px;font-weight:600;color:var(--ink)}
 .claro.h48{height:48px}
 .gira svg{animation:gira .8s linear infinite}
@@ -119,12 +122,32 @@ button:active,a.btn:active{opacity:.75}
 .wm{display:flex;align-items:center;font-family:var(--marca);font-weight:800;font-size:22px;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
 .wm .ojos{display:flex;gap:1px;margin:0 1px}
 .wm .ojos > span{display:inline-flex;align-items:center;justify-content:flex-end;width:17px;height:17px;border-radius:999px;padding-right:2px;box-sizing:border-box;vertical-align:middle}
-.wm .ojos > span:first-child{background:linear-gradient(135deg,#FF9A3D,#F0507A)}
-.wm .ojos > span:last-child{background:linear-gradient(135deg,#D62976,#6E4BE0)}
+/* Los ojos son blancos, como en la web: disco blanco, aro del color de las
+   letras y pupila oscura. En degradado entero parecian dos ojos rojos. */
+.wm .ojos > span{background:#fff;box-shadow:inset 0 0 0 1.3px currentColor}
 .wm .ojos > span > span{width:7px;height:7px;border-radius:999px;background:var(--pupila)}
 .wm.p20{font-size:20px}
 .wm.p20 .ojos > span{width:15px;height:15px}
 .wm.p20 .ojos > span > span{width:6px;height:6px}
+
+/* ---------- el muro de Pro ---------- */
+/* Ocupa la pantalla entera del apartado, con la barra de abajo puesta: se
+   entiende que ese sitio esta cerrado, no que la app se ha roto. */
+.muro{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;
+  padding:30px 22px 34px;margin-top:6px;border-radius:26px;
+  background:var(--l-bg);backdrop-filter:var(--l-filtro);-webkit-backdrop-filter:var(--l-filtro);
+  border:var(--l-borde);box-shadow:var(--l-sombra)}
+.muro-ico{display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:999px;
+  background:var(--ig);color:#fff}
+.muro h2{margin:0;font-family:var(--marca);font-weight:800;font-size:23px;letter-spacing:-0.03em;line-height:1.15;color:var(--ink)}
+.muro p{margin:0;max-width:34ch;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.muro .ventajas{align-self:stretch;text-align:left;margin-top:4px}
+.muro .fila-btn{align-self:stretch;margin-top:4px}
+/* La prueba, dentro del muro: se ve, pero no le quita el sitio a pagar. */
+.muro .probar{display:flex;align-items:center;justify-content:center;gap:8px;align-self:stretch;height:50px;border-radius:999px;
+  background:var(--fill);color:var(--ink);font-size:15px;font-weight:600}
+.muro .probar:active{transform:scale(.97)}
+.muro .tengo{height:40px}
 
 /* ---------- pantallas con barra ---------- */
 .pantalla{position:relative;z-index:1;max-width:430px;margin:0 auto;min-height:100vh;padding:calc(var(--sa-top) + var(--arriba,58px)) 20px calc(var(--sa-bot) + 130px);display:flex;flex-direction:column;gap:26px}
@@ -214,18 +237,26 @@ button:active,a.btn:active{opacity:.75}
 .dos button.si{background:var(--b-bg);color:var(--b-ink)}
 .marca-sel{width:24px;height:24px;flex-shrink:0;border-radius:999px;border:1.5px solid var(--ink-2);display:flex;align-items:center;justify-content:center;color:#fff}
 .marca-sel.on{border:0;background:var(--ig)}
-.vacia-fila{display:flex;align-items:center;gap:12px;padding:14px 0}
-.vacia-fila .vi{width:46px;height:46px;border-radius:999px;background:var(--fill);display:flex;align-items:center;justify-content:center;color:var(--ink-2);flex-shrink:0}
-.vacia-fila .vt{display:flex;flex-direction:column;gap:2px}
-.vacia-fila .vt b{font-size:16px;font-weight:600}
-.vacia-fila .vt span{font-size:13.5px;color:var(--ink-2)}
+/* Lo mismo dentro de una lista: deja de ser un renglon de lado y pasa a ser
+   un bloque centrado. Es lo unico que hay en esa lista, al fin y al cabo. */
+.vacia-fila{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:34px 16px 30px}
+.vacia-fila .vi{width:76px;height:76px;border-radius:26px;background:var(--fill);display:flex;align-items:center;justify-content:center;color:var(--ink-2);flex-shrink:0}
+.vacia-fila .vt{display:flex;flex-direction:column;gap:5px}
+.vacia-fila .vt b{font-family:var(--marca);font-weight:700;font-size:18px;letter-spacing:-0.03em}
+.vacia-fila .vt span{font-size:14px;line-height:1.45;color:var(--ink-2);max-width:32ch}
 
 /* tarjeta vacia grande (VacioDejaron, HoyError) */
-.vacio{display:flex;flex-direction:column;align-items:center;gap:16px;padding:30px 22px 22px;border-radius:30px;text-align:center;background:var(--l-bg);-webkit-backdrop-filter:var(--l-filtro);backdrop-filter:var(--l-filtro);box-shadow:var(--l-sombra);border:var(--l-borde)}
-.vacio .vi{width:76px;height:76px;border-radius:26px;display:flex;align-items:center;justify-content:center;color:var(--ink)}
-.vacio .vt{display:flex;flex-direction:column;gap:6px}
-.vacio .vt b{font-size:18px;font-weight:600;letter-spacing:-0.02em;line-height:1.3;text-wrap:balance}
-.vacio .vt span{font-size:14.5px;line-height:1.5;color:var(--ink-2);text-wrap:pretty}
+/* Una pantalla vacia no es un aviso pequeño: casi siempre es LO UNICO que
+   hay delante (cuenta nueva, nadie te ha dejado de seguir todavia, aun no
+   has revisado). Asi que ocupa como lo que es, con el icono grande en el
+   degradado de la marca. Antes parecia que algo habia fallado. */
+.vacio{display:flex;flex-direction:column;align-items:center;gap:20px;padding:48px 24px 30px;border-radius:32px;text-align:center;background:var(--l-bg);-webkit-backdrop-filter:var(--l-filtro);backdrop-filter:var(--l-filtro);box-shadow:var(--l-sombra);border:var(--l-borde)}
+.vacio .vi{position:relative;width:108px;height:108px;border-radius:36px;display:flex;align-items:center;justify-content:center;
+  background:var(--ig);color:#FFFFFF;
+  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,0.45),inset -1px -1px 0 rgba(0,0,0,0.10),0 24px 48px rgba(214,41,118,0.30)}
+.vacio .vt{display:flex;flex-direction:column;gap:8px}
+.vacio .vt b{font-family:var(--marca);font-weight:800;font-size:22px;letter-spacing:-0.035em;line-height:1.18;text-wrap:balance}
+.vacio .vt span{font-size:15px;line-height:1.5;color:var(--ink-2);text-wrap:pretty;max-width:30ch}
 .vacio .fila-btn{align-self:stretch}
 
 /* banda de version gratuita */

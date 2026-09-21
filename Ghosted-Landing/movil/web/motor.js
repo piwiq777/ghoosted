@@ -2,7 +2,7 @@
  *
  * Hace lo mismo que la extension en revisar() (content.js, YL): pide tus
  * seguidores, los compara con la foto anterior y apunta quien se fue y quien
- * llego. La lista de seguidos se refresca cada 6 h o cuando lo pides tu. Si
+ * llego. Todo se refresca una vez al dia, ni a mano mas veces. Si
  * la lista vuelve a medias (Instagram corta a veces) NO se compara: sin ese
  * freno, una lista cortada sacaba a medio mundo como "te dejo de seguir".
  *
@@ -13,11 +13,19 @@ window.Motor = (function () {
   var CLAVE = 'ghd_app_v1';
   /* Cada cuanto se le pide algo a Instagram. Al principio era cada 30 min
      como decia el diseño, y con eso (mas una prueba automatica que se repetia
-     sola) Instagram limito la cuenta. Ahora: una revision cada 3 h como
+     sola) Instagram limito la cuenta. Ahora: una revision al dia como
      mucho, y solo con la app abierta. */
-  var CADA = 6 * 3600000;
-  var SEGUIDOS_CADA = 12 * 3600000;
-  var HISTORIAS_CADA = 3 * 3600000;
+  /* UNA VEZ AL DIA. Ni a mano.
+     Instagram no mide lo que pides, mide cada cuanto lo pides desde el mismo
+     sitio. Una cuenta que baja su lista de seguidores cuatro veces al dia no
+     se parece a nadie, y eso es lo que acabo con la cuenta de pruebas. Una vez
+     al dia si se parece a mirar el movil por la mañana.
+     Ademas los datos no dan para mas: quien te dejo de seguir hoy sigue siendo
+     el mismo dentro de dos horas. Revisar mas a menudo no enseña nada nuevo;
+     solo gasta el margen que tenemos con Instagram. */
+  var CADA = 24 * 3600000;
+  var SEGUIDOS_CADA = 24 * 3600000;
+  var HISTORIAS_CADA = 24 * 3600000;
   var LIBRE = 3;                    // "Ves las 3 primeras de cada lista"
   // Con www: ghoosted.net redirige a www, y una peticion con cuerpo JSON no
   // sigue redirecciones desde otra web (el navegador la corta y parece que
@@ -37,9 +45,35 @@ window.Motor = (function () {
       yo: null, followers: null, following: null, counts: null, events: [], history: [],
       watch: [], activity: [], stories: { viewers: {}, items: {}, hist: [], ts: 0 },
       reqRule: 'manual', reqs: null, tray: null, inter: null, lastCheck: 0, nextCheck: 0,
-      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false, auto: false
+      rate: null, error: null, lic: null, intro: false, parcial: false, log: [], pausa: false, auto: false,
+      /* La cata: lo que un usuario sin Pro puede probar de Historias y de
+         Actividad. Una historia y una persona, una vez, y luego el muro.
+         Va aqui y no en la pantalla porque tiene que sobrevivir a cerrar la
+         app; y NO se borra al cambiar de cuenta de Instagram, o bastaria con
+         salir y entrar para volver a tener barra libre. */
+      cata: { historia: 0, persona: 0 }
     }, s || {});
   }
+  /* REPARAR A QUIEN YA SE COMIO EL FALLO DE ARRIBA.
+     Su primer seguidor no dejo evento y no hay forma de que aparezca solo:
+     la proxima revision comparara 1 con 1 y no vera ningun cambio. Pero no
+     hay que inventar nada para arreglarlo — sabemos QUIENES son (la lista
+     guardada) y CUANDO nos enteramos (la marca de tiempo de esa lista).
+     Se hace una sola vez y solo en el caso exacto del fallo: hay seguidores
+     guardados, no hay ni un evento, y el historial empieza en cero. Quien
+     instalo la app con seguidores ya tiene su historial empezando en otro
+     numero, asi que no le toca nada. */
+  function repararNuevos() {
+    if (!S.followers || !(S.followers.users || []).length) return;
+    if ((S.events || []).length) return;
+    if (!(S.history || []).length || S.history[0].followers !== 0) return;
+    S.events = S.followers.users.map(function (u) {
+      return Object.assign({ type: 'new', ts: S.followers.ts || Date.now() }, u);
+    });
+    registrar('nuevos rehechos', { message: 'n=' + S.events.length });
+    guardar();
+  }
+
   var guardarT = 0;
   function guardar() {
     clearTimeout(guardarT);
@@ -126,9 +160,37 @@ window.Motor = (function () {
   /* ---------------- la revision ---------------- */
   function progreso(f) { fase = f; avisar({ fase: f }); }
 
+  /* Cuanto falta para poder volver a revisar. 0 = se puede ahora.
+     Si la ultima salio a medias o dio error no se hace esperar: el usuario se
+     quedaria un dia entero con datos malos y sin poder hacer nada, que es
+     peor que la peticion que nos ahorramos. */
+  function faltaParaRevisar() {
+    if (!S.lastCheck) return 0;
+    if (S.parcial || S.error) return 0;
+    return Math.max(0, S.lastCheck + CADA - Date.now());
+  }
+
+  /* Cuanto queda de la cata de una funcion. 1 = le queda la prueba, 0 = se
+     acabo. Con Pro no hay cata que gastar: siempre queda. */
+  var CATA = { historia: 1, persona: 1 };
+  function cataQueda(que) {
+    if (esPro()) return 1;
+    return Math.max(0, (CATA[que] || 0) - ((S.cata && S.cata[que]) || 0));
+  }
+  function gastarCata(que) {
+    if (esPro()) return;
+    if (!S.cata) S.cata = { historia: 0, persona: 0 };
+    S.cata[que] = (S.cata[que] || 0) + 1;
+    guardar(); avisar();
+  }
+
   async function revisar(manual) {
     if (ocupado) return;
     if (!S.yo) { avisar({ fin: true, sinSesion: true }); return; }
+    // El tope del dia vale tambien para el boton: es justo el boton el que
+    // se pulsa diez veces seguidas cuando algo no sale como se esperaba.
+    var falta = faltaParaRevisar();
+    if (falta > 0) { avisar({ fin: true, hoyYa: true, falta: falta }); return; }
     // En pausa no se le pide nada a Instagram, ni a mano: es el freno de
     // emergencia cuando Instagram ha limitado la cuenta.
     if (S.pausa) { avisar({ fin: true, pausada: true }); return; }
@@ -157,7 +219,18 @@ window.Motor = (function () {
         return;
       }
       var se = [], llegan = [];
-      if (ant && ant.length) {
+      /* OJO CON ESTE IF. Antes decia `ant && ant.length`, y ahi estaba el
+         fallo: una cuenta que empieza con CERO seguidores guarda una lista
+         vacia, y `[].length` es 0, o sea falso. Resultado: el primer
+         seguidor de tu vida no generaba evento y "Nuevos" seguia diciendo 0
+         mientras la portada ya decia 1. Justo en el momento en que la app
+         tiene que funcionar.
+         Lo que hay que mirar no es si la lista de antes tenia gente, sino si
+         hubo una revision antes. Y eso lo dice S.followers: si es null no
+         hemos mirado nunca (y no se compara, o el primer escaneo anunciaria
+         a TODOS tus seguidores como nuevos); si es una lista vacia, si
+         miramos, y no habia nadie. De 0 a 1 es un seguidor nuevo. */
+      if (ant) {
         var hoyM = new Map(nuevos.map(function (u) { return [u.pk, u]; }));
         var antM = new Map(ant.map(function (u) { return [u.pk, u]; }));
         antM.forEach(function (u, pk) { if (!hoyM.has(pk)) se.push(u); });
@@ -311,7 +384,7 @@ window.Motor = (function () {
       });
       Object.assign(w, { username: u.username, full_name: u.full_name, pic: u.pic, bio: u.bio || '', is_private: !!u.is_private });
       await espera(azar(900, 1800));
-      /* A quien sigue: cada 6 h, hasta ~1.000 cuentas. Si es privada y no la
+      /* A quien sigue: una vez al dia, hasta ~1.000 cuentas. Si es privada y no la
          sigues, Instagram no da la lista y simplemente no sale nada. */
       if (Date.now() - (w.sigueTs || 0) > SEGUIDOS_CADA) {
         try {
@@ -416,10 +489,13 @@ window.Motor = (function () {
     return { a: persona(ua), b: persona(ub), ab: ab, ba: ba };
   }
 
+  // Al arrancar, una sola vez: rehacer los "Nuevos" que se perdio el fallo.
+  repararNuevos();
+
   /* ---------------- reloj ---------------- */
   /* Por defecto la app NO revisa sola: solo cuando tu pulsas. Las revisiones
-     automaticas se encienden en Ajustes, y aun encendidas van cada 6 h. Es lo
-     que hace que la app no pueda molestar a Instagram por su cuenta. */
+     automaticas se encienden en Ajustes, y aun encendidas van una vez al dia.
+     Es lo que hace que la app no pueda molestar a Instagram por su cuenta. */
   setInterval(function () {
     if (S.auto && S.yo && !ocupado && !S.pausa && Date.now() >= (S.nextCheck || 0)) revisar(false);
   }, 60000);
@@ -430,7 +506,9 @@ window.Motor = (function () {
     automatico: function (v) { S.auto = !!v; guardar(); avisar(); },
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
-    revisar: revisar, listas: listas, dejarDeSeguir: dejarDeSeguir,
+    revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
+    cataQueda: cataQueda, gastarCata: gastarCata,
+    listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
     vigilar: vigilar, dejarDeVigilar: dejarDeVigilar,
     bandeja: bandeja, verHistorias: verHistorias, misHistorias: misHistorias, ranking: ranking,

@@ -16,6 +16,14 @@
     if (m < 1) return 'ahora'; if (m < 60) return m + ' min'; if (h < 24) return h + ' h'; if (d < 7) return d + ' d';
     return Math.floor(d / 7) + ' sem';
   }
+  /* "3 h" o "12 min": lo que falta, en la unidad que se entiende de un
+     vistazo. Por debajo de un minuto no se dice nada, ya casi esta. */
+  function queda(ms) {
+    var m = Math.ceil(ms / 60000);
+    if (m >= 120) return Math.round(m / 60) + ' h';
+    if (m >= 60) return Math.floor(m / 60) + ' h ' + (m % 60 ? (m % 60) + ' min' : '');
+    return Math.max(1, m) + ' min';
+  }
   function hora(ts) { var d = new Date(ts); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
   function iniciales(p) {
     var w = String(p.full_name || '').trim().split(/\s+/).filter(Boolean);
@@ -98,7 +106,10 @@
 
   /* ---------------- estado de la interfaz ---------------- */
   var U = { tab: 'hoy', paso: 1, cargando: false, seg: 'unfollow', busca: '', sel: null, act: 'cambios', hist: 'resumen',
-            hojaAbierta: null, buscaHis: '', ab: null, calc: null, visor: null, trabajando: {} };
+            hojaAbierta: null, buscaHis: '', ab: null, calc: null, visor: null, trabajando: {},
+            /* Puertas abiertas a lo Pro por la prueba. Solo dura lo que dura:
+               en cuanto se gasta, se cierra sola y vuelve el muro. */
+            cata: {} };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -240,11 +251,14 @@
     return '<div class="gratis vidrio"><div><b>Versión gratuita</b><span>Ves las 3 primeras de cada lista</span></div><button data-a="pro">Pasar a Pro</button></div>';
   }
   function vacio(icono, t, d, conBoton) {
-    return '<div class="vacio"><span class="vi vidrio" aria-hidden="true">' + ico(icono, 30) + '</span><div class="vt"><b>' + t + '</b><span>' + d + '</span></div>' +
+    return '<div class="vacio"><span class="vi" aria-hidden="true">' + ico(icono, 46) + '</span><div class="vt"><b>' + t + '</b><span>' + d + '</span></div>' +
       (conBoton ? '<div class="fila-btn"><button class="negro h50" data-a="revisar">' + ico(I.revisar, 19, 2) + 'Revisar ahora</button></div>' : '') + '</div>';
   }
+  /* Cuando una lista esta vacia no es un renglon gris: es lo unico que hay en
+     la pantalla, asi que ocupa como tal. Icono grande en el degradado de la
+     marca y el texto debajo, centrado. Antes parecia un error. */
   function vaciaFila(icono, t, d) {
-    return '<div class="vacia-fila"><div class="vi" aria-hidden="true">' + ico(icono, 20) + '</div><div class="vt"><b>' + t + '</b><span>' + d + '</span></div></div>';
+    return '<div class="vacia-fila"><div class="vi" aria-hidden="true">' + ico(icono, 34) + '</div><div class="vt"><b>' + t + '</b><span>' + d + '</span></div></div>';
   }
 
   /* Los tres botones de arriba van en TODAS las pantallas de Hoy. Antes, en
@@ -277,7 +291,12 @@
   function hoy() {
     var S = M.estado, L = M.listas(), c = S.counts;
     var ocup = M.ocupado;
-    var btn = '<div class="fila-btn"><button class="negro' + (ocup ? ' gira' : '') + '" data-a="revisar">' + ico(I.revisar, 19, 2) + (ocup ? 'Revisando…' : 'Revisar ahora') + '</button></div>';
+    // Una revision al dia: el boton lo dice en vez de no hacer nada al
+    // pulsarlo, que es lo que lleva a pulsarlo diez veces.
+    var falta = M.faltaParaRevisar();
+    var btn = '<div class="fila-btn"><button class="negro' + (ocup ? ' gira' : '') + (falta && !ocup ? ' espera' : '') + '" data-a="revisar">' +
+      ico(falta && !ocup ? I.reloj_arena : I.revisar, 19, 2) +
+      (ocup ? 'Revisando…' : falta ? 'Ya revisado hoy · ' + queda(falta) : 'Revisar ahora') + '</button></div>';
     var cab = '<div class="arriba"><div class="wm-caja">' + wm() + '</div>';
     var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
       (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
@@ -372,11 +391,24 @@
   /* ---------------- Historias ---------------- */
   function historias() {
     var S = M.estado, t = S.tray && S.tray.list || [];
+    // Lo primero que se ve es la pantalla de desbloquear. La prueba esta ahi
+    // dentro, en un boton: se entra a probar, no se entra y ya.
+    if (!M.esPro() && !U.cata.historias) {
+      var quedaH = M.cataQueda('historia');
+      return muroPro('Historias',
+        quedaH ? 'Abre la historia de quien sea sin aparecer en su lista de espectadores. Te dejo probarlo con una, gratis.'
+               : 'Ya has visto una historia sin aparecer en su lista de espectadores. Con Pro no hay límite.',
+        [['Modo fantasma', 'Abre historias sin salir en la lista de espectadores.'],
+         ['Quién ve las tuyas', 'La lista entera, y cuántas veces ha vuelto cada uno.'],
+         ['Ranking de espectadores', 'Los más fieles, guardado para siempre.'],
+         ['Descargas en HD', 'Historias, destacadas y publicaciones.']],
+        quedaH ? ['probar-his', 'Probar con una gratis'] : null);
+    }
     var q = U.buscaHis.toLowerCase().trim(), lista = q ? t.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; }) : t;
     var h = cabecera('Historias', '<div class="fantasma"><span class="pega">modo fantasma</span></div>' + (M.esPro() ? '' : '<span class="pro-chip">PRO</span>'));
     h += '<p class="sub">' + (S.tray ? num(t.length) + (t.length === 1 ? ' persona tiene' : ' personas tienen') + ' historia ahora. Ábrelas sin aparecer en su lista de espectadores.' : 'Mira las historias de quien sigues sin aparecer en su lista de espectadores.') + '</p>';
     h += '<div style="display:flex"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Buscar</span><input type="text" id="buscaHis" placeholder="Busca a alguien" value="' + esc(U.buscaHis) + '"></label></div>';
-    h += M.esPro() ? '' : '<div class="gratis vidrio"><div><b>Ver historias a escondidas es de Pro</b><span>Gratis ves quién tiene historia ahora</span></div><button data-a="pro">Pasar a Pro</button></div>';
+    h += M.esPro() ? '' : '<div class="gratis vidrio"><div><b>Te queda una historia de prueba</b><span>Ábrela y verás cómo es: no sales en su lista de espectadores</span></div><button data-a="pro">Pasar a Pro</button></div>';
     if (!S.tray) h += vacio(I.historias, 'Aún no he mirado las historias', 'Pulsa «Actualizar» para ver quién tiene historia ahora.');
     else if (!lista.length) h += vacio(I.historias, q ? 'Nadie coincide' : 'Nadie tiene historia ahora', q ? 'Prueba con otro nombre.' : 'Vuelve en un rato.');
     else h += '<div class="caras">' + lista.map(function (x) {
@@ -394,11 +426,23 @@
   var TAG = { name: 'perfil', username: 'perfil', photo: 'foto', bio: 'perfil', follow_add: 'nuevo', follow_rem: 'sigue' };
   function actividad() {
     var S = M.estado, esPro = M.esPro();
+    if (!esPro && !U.cata.actividad) {
+      var quedaP = M.cataQueda('persona');
+      return muroPro('Actividad',
+        quedaP ? 'Vigila a alguien y te aviso en cuanto cambie la foto, el nombre o la bio, o empiece a seguir a otra persona. Prueba con una, gratis.'
+               : 'Ya has vigilado a una persona. Con Pro vigilas a quien quieras.',
+        [['Vigila a quien quieras', 'Sin el límite de una.'],
+         ['Cambios de perfil', 'Foto, nombre, usuario y bio, en cuanto pasan.'],
+         ['A quién empieza a seguir', 'Y a quién deja de seguir.'],
+         ['¿Se siguen?', 'Comprueba dos cuentas a la vez.']],
+        quedaP ? ['probar-act', 'Probar con una persona'] : null);
+    }
     var nReq = S.reqs ? S.reqs.users.length : 0;
     var h = cabecera('Actividad') + segs([['cambios', 'Cambios', S.activity.length], ['solicitudes', 'Solicitudes', nReq]], U.act, 'act');
     if (U.act === 'cambios') {
       h += '<div class="vigilar"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Vigilar usuario</span><input type="text" id="vigilar" placeholder="Busca a alguien para vigilar" autocapitalize="off"></label>' +
-        '<button class="negro h46" data-a="vigilar">Vigilar</button></div>';
+        '<button class="negro h46" data-a="vigilar">Vigilar</button></div>' +
+        (esPro ? '' : '<div class="gratis vidrio"><div><b>Te queda una persona de prueba</b><span>Búscala y te aviso de todo lo que cambie en su perfil</span></div><button data-a="pro">Pasar a Pro</button></div>');
       var a = esPro ? S.activity : S.activity.slice(0, M.LIBRE);
       if (!esPro && S.activity.length > M.LIBRE) h += gratis();
       h += '<div class="lista fina">' + (a.length ? a.map(function (e) {
@@ -490,6 +534,27 @@
   }
 
   /* ---------------- hojas ---------------- */
+  /* EL MURO. Historias y Actividad son de Pro, pero se prueban antes de
+     pagar: una historia y una persona. Gastada la prueba, el apartado entero
+     pasa a ser esta pantalla, en vez de pedir la clave en una esquina.
+     La barra de abajo se queda: esto no es una trampa, se sale cuando se
+     quiere. Y lo primero que dice es lo que ya has probado, que es lo que
+     convence — no "paga", sino "ya has visto como es". */
+  function muroPro(titulo, probado, ventajas, probar) {
+    return cabecera(titulo, '<span class="pro-chip">PRO</span>') +
+      '<div class="muro">' +
+      '<span class="muro-ico" aria-hidden="true">' + ico(I.candado, 26, 2) + '</span>' +
+      '<h2>' + esc(titulo) + ' es de Pro</h2>' +
+      '<p>' + esc(probado) + '</p>' +
+      '<div class="ventajas">' + ventajas.map(function (x) {
+        return '<div class="ventaja"><span class="ok" aria-hidden="true">' + ico(I.ok, 14, 2.6) + '</span><div><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div></div>';
+      }).join('') + '</div>' +
+      '<div class="fila-btn"><button class="comprar" data-a="comprar"><b>Desbloquear por 5 €</b><span>Pago único · para siempre</span></button></div>' +
+      (probar ? '<button class="probar" data-a="' + probar[0] + '">' + ico(I.play, 17) + probar[1] + '</button>' : '') +
+      '<button class="tengo" data-a="tengo-clave">Ya lo compré · tengo una clave</button>' +
+      '</div>';
+  }
+
   function hojaPro() {
     var v = [['Quién ve tus stories', 'Aunque no te lo digan.'], ['Ranking de espectadores', 'Los más fieles, guardado para siempre.'],
              ['Alertas al instante', 'Te enteras en cuanto pasa.'], ['Historial completo', 'Sin el límite de 3 por lista.']];
@@ -519,7 +584,7 @@
       '<div class="ajuste"><span>Versión' + (U.ver ? ' <span class="valor">' + U.ver.web + '·' + U.ver.apk + '</span>' : '') + '</span><button class="enlace" data-a="buscar-act" style="height:auto">' + (U.buscando ? 'Buscando…' : 'Buscar actualización') + '</button></div>' +
       '<div class="ajuste"><span>Peticiones a Instagram<span class="valor"> · tope por hora</span></span><span class="valor">' +
         (U.gasto ? U.gasto.hora + '/' + U.gasto.topeHora + ' · hoy ' + U.gasto.dia + '/' + U.gasto.topeDia : '—') + '</span></div>' +
-      '<div class="ajuste"><span>Revisar sola cada 6 h<span class="valor"> · con la app abierta</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
+      '<div class="ajuste"><span>Revisar sola una vez al día<span class="valor"> · con la app abierta</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
       '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
@@ -738,6 +803,8 @@
       if (M.estado.pausa) return toast('La app está en pausa');
       var r = M.estado.rate;
       if (r && Date.now() < r.until) return toast('Instagram pidió esperar. Lo vuelvo a intentar solo a las ' + hora(r.until));
+      var f = M.faltaParaRevisar();
+      if (f) return toast('Ya has revisado hoy. Vuelve en ' + queda(f) + ' — es lo que evita que Instagram te marque');
       M.revisar(true);
     },
     'buscar-act': function () {
@@ -754,7 +821,7 @@
     },
     'aplicar-act': function () { U.actu = null; P.nativo('aplicarActualizacion', {}); },
     'instalar-apk': function () { toast('Descargando la app nueva…'); P.nativo('instalarApk', {}); },
-    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola cada 6 h' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
+    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola una vez al día' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
     'pausa': function () { M.pausar(!M.estado.pausa); toast(M.estado.pausa ? 'En pausa: no le pido nada a Instagram' : 'Reanudada'); pintar(); },
     'diag': function () { U.diag = null; abrir('diag'); },
     'probar': function () {
@@ -793,8 +860,20 @@
         .then(function (h) { toast('Hecho: ' + h.length + ' de ' + pks.length); }).catch(function (e) { toast(errTxt(e)); });
     },
     'bandeja': function () { trabajo('tray', function () { return M.bandeja(); }); },
-    'ver-historia': function (el) { abrirVisor([el.getAttribute('data-reel')]); },
+    'probar-his': function () { U.cata.historias = true; pintar(); },
+    'probar-act': function () { U.cata.actividad = true; pintar(); },
+    'ver-historia': function (el) {
+      // La prueba se gasta AL ABRIR: es el momento en que se ve lo que hace.
+      // Y se cierra la puerta a la vez, asi que al salir del visor lo que hay
+      // detras ya es el muro. Se ve lo que se compra y se pide el dinero.
+      if (!M.cataQueda('historia')) { U.cata.historias = false; return pintar(); }
+      M.gastarCata('historia');
+      U.cata.historias = false;
+      abrirVisor([el.getAttribute('data-reel')]);
+    },
     'ver-todas': function () {
+      // Verlas todas de una no es la prueba: eso ya es la funcion entera.
+      if (!M.esPro()) { M.gastarCata('historia'); U.cata.historias = false; return pintar(); }
       var t = M.estado.tray && M.estado.tray.list || [], q = U.buscaHis.toLowerCase().trim();
       if (q) t = t.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; });
       if (t.length) abrirVisor(t.slice(0, 30).map(function (x) { return x.reelId; }));
@@ -804,8 +883,16 @@
     'visor-ant': function () { avanzar(-1); },
     'vigilar': function () {
       var n = valor('vigilar'); if (!n.trim()) return;
+      if (!M.cataQueda('persona')) { U.cata.actividad = false; return pintar(); }
       trabajo('vig', async function () {
-        try { var u = await M.vigilar(n); toast('Vigilando a @' + u.username); }
+        try {
+          var u = await M.vigilar(n);
+          // Se gasta cuando se ha vigilado a alguien de verdad, no al
+          // escribir: si el nombre no existe, la prueba sigue entera.
+          M.gastarCata('persona');
+          U.cata.actividad = false;
+          toast('Vigilando a @' + u.username);
+        }
         catch (e) { if (e && e.kind === 'pro') return abrirPro('Vigilar más de 3 cuentas'); throw e; }
       });
     },
