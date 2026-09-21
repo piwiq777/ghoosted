@@ -257,7 +257,7 @@ public class MainActivity extends Activity {
                "ig_no_listo" y no habia salida salvo recargar a mano.
                Mirando lo que de verdad hace falta, un fallo se arregla solo en
                la siguiente inyeccion. */
-            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:2500,hora:60,dia:600};\nif(!window.GhostedIG){\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
+            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:2000,hora:150,dia:900};\nif(!window.GhostedIG){\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
         }
         ig.evaluateJavascript(scriptsIg, null);
     }

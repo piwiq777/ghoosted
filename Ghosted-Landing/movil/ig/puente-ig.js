@@ -31,6 +31,14 @@
     return;
   }
 
+  /* EL TOPE, MAS ALTO. 60 peticiones por hora se gastaban solo con abrir
+     Historias y mirar unas cuantas: el freno saltaba a los dos minutos de
+     uso normal. Lo que protege la cuenta es el ritmo (2 s entre peticiones)
+     y el tope del dia, no un techo por hora tan bajo que impide usar la app.
+     page-api lee window.__ghdTope en CADA peticion, asi que esto vale sin
+     esperar a un APK nuevo. */
+  window.__ghdTope = { min: 2000, hora: 150, dia: 900 };
+
   if (window.__ghdPuenteIG) return;
   window.__ghdPuenteIG = true;
 
