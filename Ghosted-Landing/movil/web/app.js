@@ -441,8 +441,12 @@
     if (!g.lista.length) return '<div class="sug"><div class="sug-nada">' +
       (g.cargando ? 'Buscando…' : 'No encuentro a nadie con «' + esc(g.q) + '»') + '</div></div>';
     // Con gente ya en pantalla, lo de fuera se añade debajo sin tapar nada.
-    return '<div class="sug">' + g.lista.map(function (p) {
-      return '<button class="sug-fila" data-a="elegir-sug" data-user="' + esc(p.username) + '">' + av(p) +
+    var nMios = (g.propios || g.lista).length;
+    return '<div class="sug">' + g.lista.map(function (p, i) {
+      // Una linea que separa a tu gente de la que viene de Instagram: si no,
+      // aparecen desconocidos mezclados con los tuyos y no se entiende.
+      var cab = (i === nMios && nMios > 0) ? '<div class="sug-cab">En Instagram</div>' : '';
+      return cab + '<button class="sug-fila" data-a="elegir-sug" data-user="' + esc(p.username) + '">' + av(p) +
         '<div class="quien"><b>' + esc(p.full_name || p.username) + '</b><span>@' + esc(p.username) +
         (p.is_private ? ' · privada' : '') + '</span></div></button>';
     }).join('') + (g.cargando ? '<div class="sug-nada">Buscando más en Instagram…</div>' : '') + '</div>';
@@ -1053,19 +1057,25 @@
        pedirle nada a Instagram: tus seguidores y a quien sigues estan en el
        telefono. Para casi todo lo que se quiere vigilar, con esto basta. */
     var locales = M.buscarLocal(q);
-    U.sug = { q: q, lista: locales, cargando: q.length >= 2 && locales.length < 8 };
+    /* Con una o dos letras, solo lo tuyo: a Instagram no se le pregunta por
+       "m" porque contesta con los famosos del mundo.
+       A partir de TRES letras se busca fuera SIEMPRE, aunque tu gente ya
+       llene la lista: si escribes tres letras es que buscas a alguien
+       concreto, y puede no ser de los tuyos. Antes, si tenias muchos
+       seguidores que encajaban, no salia nunca nadie de fuera. */
+    var fuera = q.length >= 3;
+    U.sug = { q: q, propios: locales.slice(0, 5), lista: locales.slice(0, 5), cargando: fuera };
     pintar();
-    // Y solo si hace falta buscar fuera (alguien que no es de tu gente) se le
-    // pregunta a Instagram, cuando has parado de escribir.
-    if (q.length < 2 || locales.length >= 8) return;
+    if (!fuera) { U.sug.lista = locales; U.sug.propios = locales; pintar(); return; }
     sugT = setTimeout(function () {
       M.buscarGente(q).then(function (l) {
         // Si ya se esta buscando otra cosa, esta respuesta llega tarde.
         if (!U.sug || U.sug.q !== q) return;
         var hay = {};
-        locales.forEach(function (u) { hay[u.pk] = 1; });
-        var mezcla = locales.concat((l || []).filter(function (u) { return !hay[u.pk]; }));
-        U.sug = { q: q, lista: mezcla.slice(0, 8), cargando: false }; pintar();
+        var mios = locales.slice(0, 5);
+        mios.forEach(function (u) { hay[u.pk] = 1; });
+        var otros = (l || []).filter(function (u) { return !hay[u.pk]; }).slice(0, 5);
+        U.sug = { q: q, propios: mios, lista: mios.concat(otros), cargando: false }; pintar();
       });
     }, 500);
   }
