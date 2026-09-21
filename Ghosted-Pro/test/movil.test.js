@@ -132,49 +132,37 @@ module.exports = () => {
   s.ok('la seccion conserva su encabezado para lectores de pantalla',
     /class="show-oculto" id="showTitle" data-i18n="show_title"/.test(html)
     && /\.show-oculto\{position:absolute/.test(css));
-  /* Del apartado del movil se quita la letra: la fila de garantias y los tres
-     pasos numerados. Se queda el titulo, la linea que dice que es, y el
-     dibujo — que es el que explica de un vistazo lo que hacian los pasos. */
-  s.ok('sin la fila de garantias ni los tres pasos',
-    !/pair-trust|pair-steps/.test(html) && !/\.pair-trust|\.pair-step/.test(css));
-  s.ok('sin traducciones huerfanas de esos textos',
+  /* EL APARTADO DEL MOVIL, FUERA ENTERO.
+     Era un dibujo de un movil con un boton al lado y medio metro de hueco en
+     medio, y lo que decia ya lo dice el bloque negro del final: la app, gratis,
+     y el boton. Dos veces lo mismo, y la fea primero. Si vuelve, que vuelva
+     con algo que enseñar dentro, no con un espacio vacio. */
+  s.ok('sin el apartado del movil', !/id="pair"|class="pair/.test(html));
+  s.ok('y sin sus estilos', !/\.pair-|@keyframes pair/.test(css));
+  s.ok('ni su enlace en el menu', !/href="#pair"/.test(html));
+  s.ok('ni el teatro del emparejado en el guion', !/pairStage|is-scanning|pair-card/.test(js));
+  s.ok('sin traducciones huerfanas del apartado',
     idiomas.every((f) => {
       const d = JSON.parse(leer(path.join('locales', f)));
-      return !['pair_trust_1', 'pair_trust_2', 'pair_trust_3', 'pair_step_1', 'pair_step_2', 'pair_step_3']
-        .some((k) => k in d);
+      return !['pair_title', 'pair_sub', 'pair_badge_app', 'pair_qr_label', 'pair_qr_note',
+        'pair_trust_1', 'pair_trust_2', 'pair_trust_3', 'pair_step_1', 'pair_step_2', 'pair_step_3',
+        'nav_pair', 'app_dl', 'app_ios', 'app_pill'].some((k) => k in d);
     }));
-  /* El movil del dibujo se queda: es lo unico que enseña la app funcionando. */
-  s.ok('el movil del dibujo sigue', /class="pair-phone"/.test(html));
-  /* El QR se retiro: desde el telefono no sirve de nada y desde el ordenador
-     el boton de descarga dice lo mismo. Y si se va el naipe, se va con el todo
-     lo suyo: el generador, sus estilos y sus textos. */
-  s.ok('sin QR en la seccion del movil',
-    !/pair-qr|pairQrSlot/.test(html) && !/pair-qr/.test(css) && !/GhostedQR/.test(js));
-  s.ok('sin el generador de QR colgando de la portada', !/src="qr\.js"/.test(html));
-  s.ok('sin traducciones huerfanas del QR',
-    idiomas.every((f) => {
-      const d = JSON.parse(leer(path.join('locales', f)));
-      return !['pair_qr_label', 'pair_qr_note'].some((k) => k in d);
-    }));
+  s.ok('y sin el generador de QR colgando de la portada',
+    !/src="qr\.js"/.test(html) && !/GhostedQR/.test(js));
 
-  /* Ya no es un espejo: hay app de Android de verdad, y la web la ofrece. */
-  s.ok('la seccion del movil ofrece descargar la app',
-    /class="pair-dl"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html));
-  s.ok('y el movil del dibujo enseña la app, no el panel del PC',
-    /assets\/app\/movil\.jpg/.test(html));
+  /* Pero lo que vendia NO puede desaparecer con el: la descarga de la app
+     tiene que seguir a un clic desde la portada, y hay que seguir diciendo
+     que de iPhone no hay. Eso vive ahora en el bloque negro del final. */
+  s.ok('la portada sigue ofreciendo la app',
+    /class="bajar-b[^"]*"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html));
+  s.ok('y sigue diciendo que de iPhone todavia no hay', /data-i18n="dl_ios"/.test(html));
   s.ok('quien entra desde un Android tiene boton de descarga',
     /id="movilApp"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html) && /\/android\/i\.test\(navigator\.userAgent/.test(js));
-  s.ok('se dice que de iPhone todavia no hay', /data-i18n="app_ios"/.test(html));
   // En arabe "Android" se escribe con su alfabeto, no en latino.
   s.ok('y el requisito antes de pagar ya nombra la app',
     idiomas.every((f) => /android|أندرويد/i.test(JSON.parse(leer(path.join('locales', f))).price_req || '')));
-  /* Se fue el teatro del emparejado: ya no hay nada que fingir. */
-  s.ok('sin el bucle que simulaba el escaneo', !/pairStage|is-scanning/.test(js));
 
-  /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
-  s.ok('el apartado del movil dice de que va', /data-i18n="pair_title"/.test(html));
-  s.ok('y su titulo esta traducido en los once idiomas',
-    idiomas.every((f) => !!JSON.parse(leer(path.join('locales', f))).pair_title));
   /* Texto muerto: lo que se quedo sin sitio al quitar el bento. */
   const MUERTAS = ['feat_kicker', 'more_title', 'feat_intro', 'show_lede_0', 'show_tab_0',
     'fx_download_d', 'fx_tiktok_d', 'm7_d'];

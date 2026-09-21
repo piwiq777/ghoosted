@@ -60,7 +60,7 @@
     // herramienta de captura -- el visitante ve una pagina en blanco con el
     // contenido perfectamente presente en el DOM. Ya nos ha pasado. Asi que el
     // efecto es un adorno y va montado como tal: se apaga solo ante la duda.
-    const targets = document.querySelectorAll('.features-head,.section-head,.stats,.film,.worlds,.pcard,.faq-list,.fb-grid,.show,.pair-card');
+    const targets = document.querySelectorAll('.features-head,.section-head,.stats,.film,.worlds,.pcard,.faq-list,.fb-grid,.show');
     // Al rendirse se QUITA la clase 'reveal', no se anade 'in'. Anadir 'in'
     // deja el elemento dependiendo de una transicion de opacidad, y una
     // transicion no avanza en una pestana en segundo plano: se queda 'running'
@@ -145,7 +145,7 @@
     // Deliberately NOT gated on prefers-reduced-motion: this timer is the
     // only thing that shows a visitor the second slide exists at all, and
     // killing it leaves the section stuck on slide 1 with no story (same
-    // reasoning as the pair-section loop above). Reduced motion instead
+    // reasoning). Reduced motion instead
     // drops just the kinetic bits — the photo's scale-drift (styles.css) and
     // the progress-bar fill going instant instead of animated (below).
     const showStage = document.getElementById('showStage');
@@ -200,10 +200,6 @@
       }
       paint();
     }
-
-    // Aqui estaba el QR de la seccion del movil. Fuera: quien mira esto desde
-    // el telefono ya esta en el telefono, y desde el ordenador el boton de
-    // descarga dice lo mismo sin pedir que saques la camara.
 
     // A phone visitor literally cannot run a Chrome extension — iOS has no
     // extension support in Chrome at all, and Android Chrome doesn't either.
