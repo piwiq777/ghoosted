@@ -9,7 +9,6 @@
   "hero_l1": "Mira quién te dejó de seguir",
   "hero_l2": "en Instagram.",
   "hero_sub": "Una app de móvil: entras con tu Instagram y ves quién se fue, quién no te sigue de vuelta y quién mira tus historias. Sin contraseña.",
-  "hero_cta1": "Descargar para Android",
   "hero_cta2": "Ver qué hace",
   "hero_trust": "Gratis para empezar · sin contraseña · el análisis, en tu teléfono",
   "shot_live": "En vivo en instagram.com",
@@ -236,5 +235,9 @@
   "mob_app": "Descargar la app",
   "mob_h_and": "Ghoosted para Android",
   "mob_p_and": "Descarga la app y revisa tu Instagram desde el móvil. En el ordenador es una extensión de Chrome.",
-  "pro_price": "5 €"
+  "pro_price": "5 €",
+  "tienda_and_1": "Descárgala ya",
+  "tienda_and_2": "para Android",
+  "tienda_ios_1": "Muy pronto",
+  "tienda_ios_2": "para iPhone"
 }

@@ -78,7 +78,7 @@
   <!-- Self-hosted (GDPR: no visitor IP ever reaches Google Fonts or a CDN — cf. LG München I, 3 O 17493/20) -->
   <link rel="stylesheet" href="assets/fonts/inter.css?v=1">
   <link rel="stylesheet" href="assets/flags/flag-icons.min.css?v=1">
-  <link rel="stylesheet" href="styles.css?v=140">
+  <link rel="stylesheet" href="styles.css?v=141">
 </head>
 <body id="top">
   <div class="grain" aria-hidden="true"></div>
@@ -156,10 +156,24 @@
              empezar, asi que pedir dinero en el primer clic sobra — y es el
              unico sitio de la portada desde el que un ordenador puede bajarse
              el APK. -->
-        <div class="hero-cta">
-          <a class="btn btn-primary btn-lg" href="/movil/Ghoosted.apk" download><span data-i18n="hero_cta1">Download for Android</span></a>
-          <a class="btn btn-ghost btn-lg" href="#features" data-i18n="hero_cta2">See what it does</a>
+        <!-- Los dos distintivos de tienda de toda la vida, pero honestos: no
+             estamos ni en App Store ni en Google Play, y esos distintivos solo
+             se pueden usar enlazando a tu ficha de verdad. Asi que el formato
+             es el mismo — que es lo que hace que se entienda de un vistazo que
+             esto es una app — y lo que dicen es lo que hay: descarga directa
+             para Android, y el de iPhone apagado porque todavia no existe.
+             El dia que este en Play, esto es cambiar el enlace. -->
+        <div class="hero-cta tiendas">
+          <a class="tienda" href="/movil/Ghoosted.apk" download>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M7.8 9.6 12 13.8l4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><rect x="4.2" y="16.4" width="15.6" height="4.4" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+            <span><i data-i18n="tienda_and_1">Download it now</i><b data-i18n="tienda_and_2">for Android</b></span>
+          </a>
+          <span class="tienda pronto" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.6" width="11" height="18.8" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M10.6 18.6h2.8" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+            <span><i data-i18n="tienda_ios_1">Coming soon</i><b data-i18n="tienda_ios_2">for iPhone</b></span>
+          </span>
         </div>
+        <a class="hero-ver" href="#features" data-i18n="hero_cta2">See what it does</a>
         <p class="hero-trust" data-i18n="hero_trust">Free to start · no password · analysed on your phone</p>
       </div>
       <div class="hero-fotos" aria-hidden="true">

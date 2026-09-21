@@ -81,9 +81,17 @@ module.exports = () => {
   const heroe = html.slice(html.indexOf('class="hero-center"'), html.indexOf('hero-fotos'));
   s.ok('el titular nombra Instagram', /data-i18n="hero_l2"/.test(heroe)
     && idiomas.every((f) => /instagram|نستغرام/i.test(JSON.parse(leer(path.join('locales', f))).hero_l2 || '')));
-  s.ok('y el primer boton baja la app, no cobra',
-    /class="btn btn-primary btn-lg" href="\/movil\/Ghoosted\.apk" download/.test(heroe)
+  s.ok('y lo primero que se ofrece es bajarla, no cobrar',
+    /class="tienda" href="\/movil\/Ghoosted\.apk" download/.test(heroe)
     && !/data-cta="buy"/.test(heroe));
+  /* Los distintivos son los de tienda de toda la vida PERO no pueden fingir
+     que estamos en App Store o en Google Play: esos distintivos solo se
+     pueden usar enlazando a tu ficha real, y no tenemos ninguna. El de
+     iPhone ademas no puede ser un enlace: no hay app a la que llevar. */
+  s.ok('sin fingir que estamos en las tiendas',
+    !/App Store|Google Play|play\.google|apps\.apple/i.test(html.replace(/<!--[\s\S]*?-->/g, '')));
+  s.ok('y el de iPhone no es un enlace, que no hay adonde ir',
+    /<span class="tienda pronto" aria-disabled="true">/.test(heroe));
 
   s.eq('once idiomas ademas del ingles', idiomas.length, 11);
   for (const f of idiomas) {

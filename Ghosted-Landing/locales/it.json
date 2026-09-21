@@ -9,7 +9,6 @@
   "hero_l1": "Guarda chi ha smesso di seguirti",
   "hero_l2": "su Instagram.",
   "hero_sub": "Un'app per il telefono: entri con il tuo Instagram e vedi chi se n'è andato, chi non ti segue e chi guarda le tue storie. Senza password.",
-  "hero_cta1": "Scarica per Android",
   "hero_cta2": "Guarda cosa fa",
   "hero_trust": "Gratis per iniziare · senza password · analisi sul tuo telefono",
   "shot_live": "Live su instagram.com",
@@ -236,5 +235,9 @@
   "mob_app": "Scarica l’app",
   "mob_h_and": "Ghoosted per Android",
   "mob_p_and": "Scarica l’app e controlla il tuo Instagram dal telefono. Sul computer è un’estensione di Chrome.",
-  "pro_price": "5 €"
+  "pro_price": "5 €",
+  "tienda_and_1": "Scaricala ora",
+  "tienda_and_2": "per Android",
+  "tienda_ios_1": "Molto presto",
+  "tienda_ios_2": "per iPhone"
 }

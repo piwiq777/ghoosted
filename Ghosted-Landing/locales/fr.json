@@ -9,7 +9,6 @@
   "hero_l1": "Vois qui s'est désabonné",
   "hero_l2": "sur Instagram.",
   "hero_sub": "Une appli mobile : tu te connectes avec ton Instagram et tu vois qui est parti, qui ne te suit pas en retour et qui regarde tes stories. Sans mot de passe.",
-  "hero_cta1": "Télécharger pour Android",
   "hero_cta2": "Voir ce qu'elle fait",
   "hero_trust": "Gratuit pour commencer · sans mot de passe · analyse sur ton téléphone",
   "shot_live": "En direct sur instagram.com",
@@ -236,5 +235,9 @@
   "mob_app": "Télécharger l’appli",
   "mob_h_and": "Ghoosted pour Android",
   "mob_p_and": "Télécharge l’appli et regarde ton Instagram depuis le téléphone. Sur ordinateur, c’est une extension Chrome.",
-  "pro_price": "5 €"
+  "pro_price": "5 €",
+  "tienda_and_1": "Télécharge-la",
+  "tienda_and_2": "pour Android",
+  "tienda_ios_1": "Bientôt",
+  "tienda_ios_2": "pour iPhone"
 }

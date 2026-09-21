@@ -8,7 +8,6 @@
   "hero_l1": "フォローを外した人がわかる",
   "hero_l2": "Instagram で。",
   "hero_sub": "スマホのアプリです。Instagram でログインすると、離れていった人、フォローを返していない人、ストーリーを見ている人がわかります。パスワードは不要。",
-  "hero_cta1": "Android 版をダウンロード",
   "hero_cta2": "できることを見る",
   "hero_trust": "無料で始められます · パスワード不要 · 解析は端末内で",
   "shot_live": "instagram.com上でライブ動作中",
@@ -236,5 +235,9 @@
   "mob_app": "アプリをダウンロード",
   "mob_h_and": "Android 版 Ghoosted",
   "mob_p_and": "アプリをダウンロードして、スマホから Instagram を確認できます。パソコンでは Chrome 拡張機能です。",
-  "pro_price": "€5"
+  "pro_price": "€5",
+  "tienda_and_1": "今すぐ入手",
+  "tienda_and_2": "Android 版",
+  "tienda_ios_1": "近日公開",
+  "tienda_ios_2": "iPhone 版"
 }

@@ -80,7 +80,7 @@
     }
     function arrancar(cb) {
       if (lang === 'en') { pintar(); cb(); return; }
-      fetch('locales/' + lang + '.json?v=70')
+      fetch('locales/' + lang + '.json?v=71')
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) { dict = d; pintar(); cb(); })
         .catch(function () { pintar(); cb(); });

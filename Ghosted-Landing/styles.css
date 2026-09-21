@@ -897,6 +897,32 @@ img,svg{display:block;max-width:100%}
    maquina, y ademas pesa menos. El degradado sigue donde no molesta: los
    botones, la pegatina y los ojos del logo. */
 .hero-title .grad{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ig-plano)}
+
+/* Los distintivos de tienda. El formato es el de siempre — rectangulo
+   oscuro, icono a la izquierda, linea pequeña arriba y nombre grande abajo —
+   porque es el que la gente reconoce sin leerlo: "esto es una app". */
+.tiendas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.tienda{display:inline-flex;align-items:center;gap:11px;padding:11px 20px 11px 17px;border-radius:13px;
+  background:var(--ink);color:#F7F5F0;transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+  box-shadow:0 14px 28px -16px rgba(20,18,16,.7)}
+.tienda:hover{transform:translateY(-2px);box-shadow:0 18px 34px -16px rgba(20,18,16,.8)}
+.tienda svg{width:25px;height:25px;flex:none}
+.tienda > span{display:flex;flex-direction:column;gap:2px;line-height:1.05;text-align:left}
+.tienda i{font-style:normal;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;opacity:.72}
+.tienda b{font-family:var(--marca);font-weight:700;font-size:16px;letter-spacing:-.025em}
+/* El de iPhone no lleva a ningun sitio porque todavia no hay app: no es un
+   enlace, no se puede pulsar y se nota a simple vista que esta apagado. */
+.tienda.pronto{background:none;color:var(--ink-2);border:1px solid var(--line);box-shadow:none;cursor:default}
+.tienda.pronto:hover{transform:none}
+/* "Ver que hace" baja a enlace de texto: con dos distintivos al lado, un
+   tercer boton competia con ellos y ninguno ganaba. */
+.hero-ver{display:inline-block;margin-top:18px;font-size:14.5px;color:var(--ink-2);
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-2)}
+.hero-ver:hover{color:var(--ink)}
+@media (max-width:420px){
+  .tiendas{width:100%}
+  .tienda{flex:1 1 100%;justify-content:flex-start}
+}
 .pega{background:var(--boton)}
 
 /* Botones */

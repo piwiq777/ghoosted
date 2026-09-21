@@ -9,7 +9,6 @@
   "hero_l1": "Lihat siapa yang berhenti mengikutimu",
   "hero_l2": "di Instagram.",
   "hero_sub": "Aplikasi HP: kamu masuk dengan Instagram-mu dan lihat siapa yang pergi, siapa yang tidak follow back, dan siapa yang menonton storimu. Tanpa kata sandi.",
-  "hero_cta1": "Unduh untuk Android",
   "hero_cta2": "Lihat apa yang bisa",
   "hero_trust": "Gratis untuk mulai · tanpa kata sandi · analisis di HP-mu",
   "shot_live": "Live di instagram.com",
@@ -236,5 +235,9 @@
   "mob_app": "Unduh aplikasinya",
   "mob_h_and": "Ghoosted untuk Android",
   "mob_p_and": "Unduh aplikasinya dan periksa Instagram-mu dari ponsel. Di komputer, ini ekstensi Chrome.",
-  "pro_price": "€5"
+  "pro_price": "€5",
+  "tienda_and_1": "Unduh sekarang",
+  "tienda_and_2": "untuk Android",
+  "tienda_ios_1": "Segera hadir",
+  "tienda_ios_2": "untuk iPhone"
 }
