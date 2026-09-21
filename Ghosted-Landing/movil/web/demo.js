@@ -44,6 +44,10 @@ window.Demo = (function () {
     }
     if (m === 'pendingRequests') return { users: [u(301, 'rihab.mzn_', 'rihab'), u(302, 'adriiana_nieves', 'adriana'), u(303, 'elvispresleyyy_', 'elvispresleyyy_')] };
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
+    if (m === 'searchUsers') {
+      var q = String(a[0] || '').toLowerCase();
+      return base.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; }).slice(0, 8);
+    }
     if (m === 'fetchUserByUsername' || m === 'fetchUserProfile') return u(400 + String(a[0]).length, String(a[0]).replace(/^@/, ''), String(a[0]).replace(/^@/, ''));
     if (m === 'checkFollows') return { follows: Math.random() > .5, complete: true };
     if (m === 'fetchFollowingOf') { var k = Math.floor(Date.now() / 1000) % 3; return { users: base.slice(k, k + 40), complete: true }; }
