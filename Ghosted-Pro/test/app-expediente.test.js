@@ -111,5 +111,23 @@ module.exports = () => {
     /flex-wrap:wrap/.test(acc) && !/overflow-x:auto/.test(acc));
   s.ok('  y ninguno se queda a medias', /min-width:calc\(50% - 4px\)/.test(acc));
 
+  /* MIRAR DE VERDAD: la foto grande, las destacadas y su gente. */
+  s.ok('la foto de perfil se toca y se ve grande', /'ver-foto': function/.test(app)
+    && /d\.pic_hd \|\| d\.pic/.test(app));
+  s.ok('  y se nota que se puede tocar', /\.pf-foto::after/.test(css));
+  s.ok('las destacadas se abren', /'ver-dest': function/.test(app)
+    && /fetchHighlightStories: 1/.test(puente));
+  s.ok('  con una peticion y guardadas una hora', /function historiasDestacada/.test(motor)
+    && /cacheDest\[k\]/.test(motor));
+  s.ok('  y eso es de Pro', /abrirPro\('Ver sus destacadas'\)/.test(app));
+  s.ok('se pueden ver sus seguidores y a quien sigue',
+    /data-cual="seguidores"/.test(app) && /data-cual="seguidos"/.test(app)
+    && /fetchFollowersOf: 1/.test(puente));
+  s.ok('  cada lista es una peticion y cuenta para el tope del dia',
+    /function genteDe/.test(motor) && /expedientesHoy\(\) >= EXP_DIA\) throw/.test(motor.slice(motor.indexOf('async function genteDe'))));
+  s.ok('  se guarda una hora', /Date\.now\(\) - g\.ts < 3600000/.test(motor));
+  s.ok('  y se avisa de que NO es la lista entera',
+    /no la lista entera: Instagram no la da completa/.test(app));
+
   return s;
 };
