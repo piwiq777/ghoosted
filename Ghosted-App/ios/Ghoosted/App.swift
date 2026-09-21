@@ -72,10 +72,15 @@ final class Principal: UIViewController, WKScriptMessageHandler, WKNavigationDel
         barra.layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 8)
         titulo.font = .systemFont(ofSize: 14)
         titulo.textColor = UIColor(red: 0.39, green: 0.39, blue: 0.42, alpha: 1)
-        let listo = UIButton(type: .system)
-        listo.setTitle("Listo", for: .normal)
-        listo.titleLabel?.font = .boldSystemFont(ofSize: 16)
-        listo.tintColor = UIColor(red: 0.84, green: 0.16, blue: 0.46, alpha: 1)
+        // Para volver a Ghoosted: su propio logo.
+        let listo = UIButton(type: .custom)
+        listo.setImage(UIImage(named: "AppIcon") ?? UIImage(named: "logo"), for: .normal)
+        listo.imageView?.contentMode = .scaleAspectFit
+        listo.accessibilityLabel = "Volver a Ghoosted"
+        listo.widthAnchor.constraint(equalToConstant: 34).isActive = true
+        listo.heightAnchor.constraint(equalToConstant: 34).isActive = true
+        listo.layer.cornerRadius = 9
+        listo.clipsToBounds = true
         listo.addTarget(self, action: #selector(ocultarIg), for: .touchUpInside)
         barra.addArrangedSubview(titulo)
         barra.addArrangedSubview(listo)

@@ -9,7 +9,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -94,15 +93,15 @@ public class MainActivity extends Activity {
         tituloIg = new TextView(this);
         tituloIg.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         tituloIg.setTextColor(0xFF63636B);
-        TextView cerrar = new TextView(this);
-        cerrar.setText("Listo");
-        cerrar.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        cerrar.setTypeface(Typeface.DEFAULT_BOLD);
-        cerrar.setTextColor(0xFFD62976);
-        cerrar.setPadding(dp(12), dp(8), dp(12), dp(8));
+        // Para volver a Ghoosted: su propio logo, no un "Listo" de texto.
+        android.widget.ImageView cerrar = new android.widget.ImageView(this);
+        cerrar.setImageResource(R.mipmap.ic_launcher);
+        cerrar.setContentDescription("Volver a Ghoosted");
+        cerrar.setPadding(dp(8), dp(4), dp(8), dp(4));
         cerrar.setOnClickListener(v -> ocultarIg());
+        LinearLayout.LayoutParams lpLogo = new LinearLayout.LayoutParams(dp(50), dp(42));
         barra.addView(tituloIg, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-        barra.addView(cerrar);
+        barra.addView(cerrar, lpLogo);
         capaIg.addView(barra, new LinearLayout.LayoutParams(-1, -2));
         capaIg.addView(ig, new LinearLayout.LayoutParams(-1, 0, 1));
 
