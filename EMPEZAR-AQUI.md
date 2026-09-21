@@ -2,6 +2,15 @@
 
 Dile a Claude: **"lee EMPEZAR-AQUI.md y sigue"**.
 
+## Lo primero de todo
+
+```bash
+bash preparar.sh
+```
+
+Dice qué falta en este ordenador (secretos, programas) y pasa los tests.
+Si sale "Todo listo", se puede trabajar.
+
 ## Qué es esto
 
 - **Ghosted-App** — app de Android (WebView + Instagram). Es el producto.
