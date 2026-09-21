@@ -67,6 +67,22 @@ module.exports = () => {
   s.ok('una respuesta atrasada no pisa la busqueda nueva',
     /if \(!U\.sug \|\| U\.sug\.q !== q\) return;/.test(app));
 
+  /* LA BARRA DE ABAJO NO PUEDE QUEDARSE EN MEDIO DE LA LISTA.
+     Es position:fixed, asi que flotaba SOBRE las sugerencias y las partia por
+     la mitad: parecia que la app se habia roto. */
+  s.ok('con la lista abierta, la barra se quita de en medio',
+    /\.con-sug \.tabs, \.con-sug \.velo\{display:none\}/.test(css));
+  s.ok('  y la lista no crece hasta tapar la pantalla', /max-height:50vh/.test(css));
+  s.ok('  la clase se pone y se quita sola', /classList\.toggle\('con-sug'/.test(app));
+
+  /* Y escribir no puede repintar la pantalla entera: en un telefono eso es
+     lo que hacia que la app se atascara mientras escribias. */
+  s.ok('las sugerencias tienen su propia caja', /id="sugCaja"/.test(app));
+  s.ok('  y al teclear solo se repinta esa', /function pintarSug/.test(app)
+    && /caja\.innerHTML = sugerencias\(\)/.test(app));
+  s.ok('  el buscador ya no llama a pintar() entero',
+    !/U\.sug = \{[^}]*\}; pintar\(\);/.test(app));
+
   /* Y si el nombre no existe, se dice. */
   s.ok('si no existe esa cuenta, se avisa', /k === 'no_existe'/.test(app));
 

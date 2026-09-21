@@ -302,7 +302,13 @@ button:active,a.btn:active{opacity:.75}
 /* Las sugerencias del buscador. Cuelgan justo debajo, como una lista, no
    como un menu flotante: en un movil un desplegable encima del teclado se
    queda medio tapado. */
-.sug{display:flex;flex-direction:column;border-radius:22px;overflow:hidden;
+/* Con la lista abierta, la barra de abajo se quita de en medio. Es fija y se
+   quedaba FLOTANDO SOBRE la lista, partiendola por la mitad: parecia que la
+   app se habia roto. Mientras buscas no hace falta, y al elegir o borrar
+   vuelve sola. */
+.con-sug .tabs, .con-sug .velo{display:none}
+/* Y la lista no crece sin fin: con el teclado abierto queda poca pantalla. */
+.sug{display:flex;flex-direction:column;border-radius:22px;overflow:auto;max-height:50vh;-webkit-overflow-scrolling:touch;
   background:var(--l-bg);-webkit-backdrop-filter:var(--l-filtro);backdrop-filter:var(--l-filtro);
   box-shadow:var(--l-sombra);border:var(--l-borde)}
 .sug-fila{display:flex;align-items:center;gap:12px;padding:11px 14px;text-align:left;background:transparent;width:100%}
