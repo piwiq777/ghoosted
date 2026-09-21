@@ -67,7 +67,7 @@ window.GhostedI18n = (function () {
     if (code === 'en') return null;
     if (cache[code]) return cache[code];
     try {
-      const r = await fetch('locales/' + code + '.json?v=62');
+      const r = await fetch('locales/' + code + '.json?v=65');
       if (!r.ok) throw new Error('404');
       cache[code] = await r.json();
       return cache[code];

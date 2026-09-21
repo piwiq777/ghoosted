@@ -39,7 +39,9 @@
   --maxw:1180px;
 
   --font:'Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,system-ui,sans-serif;
-  --display:'Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,system-ui,sans-serif;
+  /* Los titulares van todos con la letra de la marca (Unbounded). Antes
+     habia dos: Inter en unas secciones y Unbounded en otras, y se notaba. */
+  --display:'Unbounded','Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,system-ui,sans-serif;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;min-width:0}
@@ -952,10 +954,10 @@ img,svg{display:block;max-width:100%}
    hace. Los ojos llevan el degradado de siempre y las pupilas miran a la
    derecha, hacia el resto de la palabra.
 
-   Unbounded (OFL), alojada aqui, solo para la marca y los titulares que se
-   han rehecho. Las secciones que no se tocan —el collage, las cifras, las
-   preguntas y la banda del final— siguen con --display: si esto se quita
-   entero, la web vuelve a como estaba.
+   Unbounded (OFL), alojada aqui, es la letra de la casa: la marca y TODOS
+   los titulares. --display apunta a ella, asi que no queda ningun titular
+   con la letra de antes. El texto corrido sigue en Geist, que es la que se
+   lee comoda en parrafos largos.
    ========================================================================== */
 @font-face {
   font-family: 'Unbounded';
@@ -994,14 +996,12 @@ img,svg{display:block;max-width:100%}
 /* El logo en letra. */
 .wm{font-family:var(--marca);font-weight:800;letter-spacing:-.05em;display:inline-flex;align-items:center;line-height:1;color:var(--ink);white-space:nowrap}
 .wm-ojos{display:inline-flex;gap:.04em;margin:0 .02em;transform:translateY(.04em)}
-/* Los ojos son del color de las letras —la doble O sigue leyendose como
-   dos oes— y lo que lleva color es la pupila. Con los discos enteros en
-   degradado, naranja uno y morado el otro, parecian dos ojos rojos. */
-/* Los ojos, como en la app: el disco lleva el color y la pupila es oscura.
-   Al reves —disco negro y pupila de color— se veian apagados. */
-.wm-ojos i{position:relative;width:.72em;height:.72em;border-radius:50%}
-.wm-ojos i:first-child{background:linear-gradient(135deg,#FF9A3D,#F0507A)}
-.wm-ojos i:last-child{background:linear-gradient(135deg,#D62976,#6E4BE0)}
+/* Los ojos son blancos, como unos ojos de verdad: el disco blanco, el
+   aro del color de las letras (para que se vean sobre fondo claro) y la
+   pupila oscura. Sobre la banda oscura el aro es blanco y lo unico que
+   se ve es la pupila, que es justo lo que se quiere. */
+.wm-ojos i{position:relative;width:.72em;height:.72em;border-radius:50%;
+  background:#fff;box-shadow:inset 0 0 0 .075em currentColor}
 .wm-ojos i::after{content:"";position:absolute;width:.3em;height:.3em;border-radius:50%;background:#161616;top:.21em;left:.33em}
 @media (prefers-reduced-motion:no-preference){
   /* De vez en cuando miran a un lado y vuelven. Solo eso. */
@@ -1024,6 +1024,15 @@ img,svg{display:block;max-width:100%}
 .pair-head h2{font-family:var(--marca);font-weight:800;font-size:clamp(30px,4.6vw,54px);letter-spacing:-.05em}
 .price-title{font-family:var(--marca);font-weight:800;font-size:clamp(32px,4.8vw,56px);letter-spacing:-.05em}
 .pcard-now{font-family:var(--marca);font-weight:800;font-size:clamp(44px,5.4vw,58px);letter-spacing:-.06em}
+/* Unbounded ocupa bastante mas que Inter: los titulares que quedaban se
+   bajan de cuerpo y suben de peso para que pesen lo mismo en la pagina. */
+.worlds-title{font-family:var(--marca);font-weight:800;font-size:clamp(28px,4.4vw,54px);letter-spacing:-.05em}
+.stat b{font-family:var(--marca);font-weight:800;font-size:clamp(25px,3.7vw,41px);letter-spacing:-.055em}
+.section-title{font-family:var(--marca);font-weight:800;font-size:clamp(27px,4.3vw,47px);letter-spacing:-.05em}
+.show-title{font-family:var(--marca);font-weight:800;font-size:clamp(27px,3.7vw,45px);letter-spacing:-.05em}
+.cta-band h2{font-family:var(--marca);font-weight:800;font-size:clamp(29px,4.8vw,55px);letter-spacing:-.05em}
+.movil-h{font-family:var(--marca);font-weight:700;font-size:17px;letter-spacing:-.03em}
+
 
 /* La pegatina del hero, al estilo de las de una historia: girada, en
    degradado, pegada al titular. */
