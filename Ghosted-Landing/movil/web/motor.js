@@ -51,7 +51,14 @@ window.Motor = (function () {
          Va aqui y no en la pantalla porque tiene que sobrevivir a cerrar la
          app; y NO se borra al cambiar de cuenta de Instagram, o bastaria con
          salir y entrar para volver a tener barra libre. */
-      cata: { historia: 0, persona: 0 }
+      cata: { historia: 0, persona: 0 },
+      /* Cada vez que se entra en Instagram dentro de la app, Instagram apunta
+         una SESION NUEVA. Cerrar sesion aqui borra las cookies, asi que la
+         siguiente entrada es una sesion de cero. Repetirlo varias veces en un
+         rato es de las cosas que mas rapido hacen saltar una restriccion
+         ("no puedes crear varias sesiones"), y no tiene nada que ver con
+         cuantos datos pidas. Se llevan las marcas para poder avisar. */
+      sesiones: []
     }, s || {});
   }
   /* REPARAR A QUIEN YA SE COMIO EL FALLO DE ARRIBA.
@@ -174,10 +181,19 @@ window.Motor = (function () {
   }
 
   /* ---------------- sesion ---------------- */
+  /* Cuantas veces se ha entrado en Instagram en las ultimas 24 h. */
+  function sesionesHoy() {
+    return (S.sesiones || []).filter(function (t) { return Date.now() - t < 86400000; }).length;
+  }
+
   function sesion(s) {
     if (!s) return;
     var antes = S.yo;
     S.yo = s.conectado ? String(s.yo) : null;
+    if (!antes && S.yo) {
+      S.sesiones = (S.sesiones || []).filter(function (t) { return Date.now() - t < 7 * 86400000; });
+      S.sesiones.push(Date.now());
+    }
     // Al salir, lo de la cuenta anterior deja de estar: si luego entra otra,
     // no se mezclan listas de dos cuentas distintas.
     if (antes && !S.yo) {
@@ -308,6 +324,13 @@ window.Motor = (function () {
     } catch (e) {
       S.error = { kind: e && e.kind, status: e && e.status, ts: Date.now() };
       registrar('revisar', e);
+      /* Instagram ha puesto una restriccion o pide confirmar que eres tu. A
+         partir de aqui insistir es lo peor que se puede hacer: la app se
+         para sola y no vuelve a pedir nada hasta que lo digas tu. */
+      if (e && (e.kind === 'challenge' || e.kind === 'auth')) {
+        S.pausa = true;
+        registrar('pausa automatica', { message: 'motivo=' + e.kind });
+      }
       if (e && e.kind === 'rate') {
         var espera0 = 0;
         try { espera0 = await ig('rateLeftMs', []); } catch (x) {}
@@ -552,7 +575,7 @@ window.Motor = (function () {
     pausar: function (v) { S.pausa = !!v; if (!v) { S.rate = null; S.error = null; } guardar(); avisar(); }, guardar: guardar, avisar: avisar, sesion: sesion,
     esPro: esPro, activar: activar, reverificar: reverificar,
     revisar: revisar, faltaParaRevisar: faltaParaRevisar, CADA: CADA,
-    cataQueda: cataQueda, gastarCata: gastarCata,
+    cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy,
     listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
     vigilar: vigilar, dejarDeVigilar: dejarDeVigilar,

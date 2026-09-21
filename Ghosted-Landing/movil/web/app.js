@@ -807,6 +807,21 @@
     try { return await f(); } catch (e) { toast(errTxt(e)); } finally { delete U.trabajando[k]; pintar(); }
   }
 
+  /* EL AVISO ANTES DE CERRAR SESION.
+     Instagram apunta una sesion nueva cada vez que se entra, y cerrar sesion
+     aqui borra las cookies: la siguiente entrada es una sesion de cero.
+     Hacerlo varias veces en un rato es lo que dispara "no puedes crear
+     varias sesiones", y no tiene NADA que ver con cuantos datos pidas. Si ya
+     van varias hoy, se dice con todas las letras antes de sumar otra. */
+  function avisoSesiones(que) {
+    var n = M.sesionesHoy();
+    if (n < 2) return confirm('Voy a cerrar la sesión de Instagram dentro de Ghoosted. Tu cuenta no se toca. ¿Sigo?');
+    return confirm('Cuidado: hoy ya has entrado ' + n + ' veces en Instagram desde la app.\n\n' +
+      'Cada entrada cuenta como una sesión nueva, y encadenar varias es justo lo que hace que Instagram ' +
+      'restrinja una cuenta («no puedes crear varias sesiones»). No tiene que ver con revisar tus seguidores.\n\n' +
+      'Si puedes, deja pasar unas horas antes de ' + que + '. ¿Aun así sigo?');
+  }
+
   var ACC = {
     'intro-sig': function () { if (U.paso < 4) { U.paso++; pintar(); } else ACC['intro-fin'](); },
     'intro-fin': function () { M.estado.intro = true; M.guardar(); pintar(); scrollTo(0, 0); },
@@ -958,7 +973,7 @@
       /* Cerrar la sesion de la app y entrar de cero. Antes solo abria
          Instagram, y si la sesion de antes estaba atascada en un aviso de
          seguridad no habia manera de llegar a la pantalla de entrar. */
-      if (!confirm('Voy a cerrar la sesión de Instagram dentro de Ghoosted para que entres con otra cuenta. Tu cuenta no se toca. ¿Sigo?')) return;
+      if (!avisoSesiones('cambiar de cuenta')) return;
       U.hojaAbierta = null;
       M.pausar(false);
       toast('Cerrando sesión…');
@@ -968,7 +983,7 @@
       pintar();
     },
     'salir': function () {
-      if (!confirm('¿Cerrar la sesión de Instagram en esta app?')) return;
+      if (!avisoSesiones('cerrar sesión')) return;
       U.hojaAbierta = null; M.pausar(false); P.nativo('cerrarSesion', {});
     }
   };
