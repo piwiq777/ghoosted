@@ -64,5 +64,31 @@ module.exports = () => {
     s.ok('se enseña el campo ' + campo, new RegExp('d\\.' + campo).test(app));
   }
 
+  /* PUBLICACIONES Y DESTACADAS, EN EL MISMO BOTON.
+     Pedirlas aparte obligaria a pulsar otra vez y esperar otra vez para ver
+     media ficha. Son dos peticiones mas, con calma entre una y otra. */
+  s.ok('el expediente trae tambien las publicaciones', /ig\('fetchUserPosts'/.test(motor));
+  s.ok('  y las destacadas', /ig\('fetchHighlights'/.test(motor) && /fetchHighlights: 1/.test(puente));
+  s.ok('  con calma entre peticiones, no de golpe',
+    (motor.match(/await espera\(azar\(700, 1400\)\)/g) || []).length >= 2);
+  s.ok('  y las destacadas solo si tiene', /if \(d\.has_highlights\)/.test(motor));
+  s.ok('a una cuenta privada que no sigues ni se le piden',
+    /!d\.is_private \|\| \(S\.following/.test(motor));
+  s.ok('  y se dice por que no hay nada', /Es privada y no la sigues/.test(app));
+  s.ok('si una de las dos falla, el expediente sale igual',
+    (motor.match(/\.catch\(function \(\) \{ return \[\]; \}\)/g) || []).length >= 2);
+
+  /* EL ENGAGEMENT NO CUESTA NADA. Los me gusta y los comentarios vienen
+     DENTRO de cada publicacion: calcular la media no es otra peticion. Si
+     alguien lo "mejora" pidiendo los likers uno a uno, esto se pone rojo. */
+  s.ok('la media sale de las publicaciones ya pedidas',
+    /x\.likes \|\| 0/.test(app) && /x\.comments \|\| 0/.test(app));
+  s.ok('  sin pedir los likers de cada publicacion',
+    !/fetchPostLikers/.test(motor.slice(motor.indexOf('async function expediente'), motor.indexOf('function loQueSe'))));
+  s.ok('  y si esconde los me gusta, se dice', /Esconde los me gusta/.test(app));
+  s.ok('  la tasa se calcula sobre sus seguidores', /\/ d\.followers \* 100/.test(app));
+
+  s.ok('tocar una publicacion la abre en el visor', /'ver-post': function/.test(app));
+
   return s;
 };
