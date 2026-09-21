@@ -408,14 +408,28 @@ button:active,a.btn:active{opacity:.75}
 .intro-top{display:flex;align-items:center;justify-content:space-between;height:44px}
 .intro-top.centro{justify-content:center}
 .saltar{font-size:15px;font-weight:600;color:var(--ink-2);height:44px;display:flex;align-items:center}
-.intro-medio{flex:1 1 0;display:flex;flex-direction:column;justify-content:center;gap:30px}
+/* `flex:1 1 0` deja que el navegador APLASTE este bloque cuando no cabe, y
+   con el teclado abierto no cabe nunca: el boton de abajo se subia hasta
+   pegarse al campo de la contraseña. Con `auto` el contenido manda, y lo que
+   sobra se desplaza — para eso la pantalla tiene scroll. */
+.intro-medio{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;gap:30px}
+/* Y con el teclado abierto se deja de centrar: centrado, lo de arriba se
+   sale por el techo y no hay forma de volver a verlo. */
+.intro{overflow-y:auto;-webkit-overflow-scrolling:touch}
+@media (max-height:620px){
+  .intro{justify-content:flex-start;padding-top:calc(var(--sa-top) + 16px)}
+  .intro-medio{justify-content:flex-start;gap:18px}
+  .intro-bajo{padding-top:8px}
+}
 .intro-medio.centro{align-items:center;gap:34px}
 .intro-medio.g24{gap:24px}
 .intro-medio.g28{align-items:center;gap:28px}
 .intro h1{margin:0;font-family:var(--marca);font-weight:700;font-size:28px;line-height:1.15;letter-spacing:-0.02em;text-align:center;text-wrap:balance}
 .intro .titulo{display:flex;flex-direction:column;gap:12px;align-items:center}
 .intro .titulo p{margin:0;font-size:16px;line-height:1.5;color:var(--ink-2);text-align:center;text-wrap:pretty}
-.intro-bajo{display:flex;flex-direction:column;gap:22px}
+/* Aire entre el formulario y el boton. Sin esto, con el teclado abierto se
+   tocaban y parecia que el boton era parte del campo. */
+.intro-bajo{display:flex;flex-direction:column;gap:22px;margin-top:26px;flex:0 0 auto}
 .puntos{display:flex;gap:6px;justify-content:center}
 .puntos span{width:7px;height:7px;border-radius:999px;background:var(--punto)}
 .puntos span.on{width:22px;background:var(--ig)}
@@ -565,6 +579,15 @@ button:active,a.btn:active{opacity:.75}
    gratis y que no hasta chocarse con la hoja de pago. */
 .pro-chip{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;background:var(--ig);color:#FFFFFF;font-family:var(--marca);font-weight:700;font-size:9.5px;letter-spacing:0.06em;vertical-align:2px;flex-shrink:0}
 .pasos-login{display:flex;flex-direction:column;gap:10px;align-self:stretch}
+/* Ver lo que escribes. Sin esto se teclea una contraseña a ciegas en un
+   movil, que es donde mas se falla, y no hay forma de saber por que no
+   entra. */
+.clave-caja{position:relative;display:flex}
+.clave-caja .busca{flex:1}
+.clave-caja input{padding-right:52px}
+.ojo{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:42px;height:42px;
+  display:flex;align-items:center;justify-content:center;border-radius:999px;background:transparent;color:var(--ink-2)}
+.ojo:active{background:var(--fill)}
 
 /* ---------- rendimiento en Android ----------
    El lienzo usa desenfoque de verdad (filter/backdrop-filter) en muchas

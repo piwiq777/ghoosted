@@ -57,5 +57,23 @@ module.exports = () => {
   s.ok('en el navegador no se pide cuenta: es para mirar el diseño',
     /window\.Puente && window\.Puente\.demo/.test(cuenta));
 
+  /* VER LA CONTRASEÑA. En un movil se teclea a ciegas y es donde mas se
+     falla; sin poder mirarla, no hay forma de saber por que no entra. */
+  const css = fs.readFileSync(path.join(WEB, 'app.css'), 'utf8');
+  s.ok('se puede ver la contraseña', /'ver-clave': function/.test(app) && /\.ojo\{/.test(css));
+  s.ok('  y el icono cambia segun este visible o no', /U\.verClave \? I\.ojo_no : I\.ojo/.test(app));
+  s.ok('  lo escrito no se pierde al enseñarla',
+    /if \(ev\.target\.id === 'cClave'\) U\.cClave = ev\.target\.value;/.test(app));
+  s.ok('  y se olvida al entrar, no se queda dando vueltas',
+    /U\.cClave = ''; U\.verClave = false;/.test(app));
+
+  /* CON EL TECLADO ABIERTO NO CABE NADA, y el navegador aplasta lo que puede:
+     el boton se subia hasta pegarse al campo de la contraseña. */
+  s.ok('el bloque del medio no se deja aplastar',
+    /\.intro-medio\{flex:1 1 auto/.test(css));
+  s.ok('  hay aire entre el formulario y el boton', /\.intro-bajo\{[^}]*margin-top:26px/.test(css));
+  s.ok('  y con poca altura se deja de centrar y se desplaza',
+    /@media \(max-height:620px\)/.test(css) && /\.intro\{overflow-y:auto/.test(css));
+
   return s;
 };
