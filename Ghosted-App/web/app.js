@@ -371,7 +371,11 @@
     }
     h += '<div style="display:flex;gap:10px;align-items:center"><label class="busca">' + ico(I.lupa, 19, 2) + '<span class="sr">Buscar</span>' +
       '<input type="search" id="busca" placeholder="Buscar por nombre o @usuario" value="' + esc(U.busca) + '"></label>' +
-      (U.seg === 'notback' && esPro ? '<button class="enlace" data-a="seleccionar">' + (U.sel ? 'Cancelar' : 'Seleccionar') + '</button>' : '') + '</div>';
+      /* "Seleccionar" ya no se esconde a quien no tiene Pro: se veia la
+         lista de quien no te sigue y no habia NADA que dijera que se podia
+         hacer algo con ella. Ahora esta, con su chapa, y al pulsarla se
+         explica. Esconder una funcion no la vende; enseñarla, si. */
+      (U.seg === 'notback' ? '<button class="enlace" data-a="seleccionar">' + (U.sel ? 'Cancelar' : 'Seleccionar') + (esPro ? '' : pro()) + '</button>' : '') + '</div>';
     h += gratis();
     var q = U.busca.toLowerCase().trim(), items = todos;
     if (q) items = items.filter(function (p) { return (p.username + ' ' + p.full_name).toLowerCase().indexOf(q) >= 0; });
@@ -408,7 +412,9 @@
     var h = cabecera('Historias', '<div class="fantasma"><span class="pega">modo fantasma</span></div>' + (M.esPro() ? '' : '<span class="pro-chip">PRO</span>'));
     h += '<p class="sub">' + (S.tray ? num(t.length) + (t.length === 1 ? ' persona tiene' : ' personas tienen') + ' historia ahora. Ábrelas sin aparecer en su lista de espectadores.' : 'Mira las historias de quien sigues sin aparecer en su lista de espectadores.') + '</p>';
     h += '<div style="display:flex"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Buscar</span><input type="text" id="buscaHis" placeholder="Busca a alguien" value="' + esc(U.buscaHis) + '"></label></div>';
-    h += M.esPro() ? '' : '<div class="gratis vidrio"><div><b>Te queda una historia de prueba</b><span>Ábrela y verás cómo es: no sales en su lista de espectadores</span></div><button data-a="pro">Pasar a Pro</button></div>';
+    h += M.esPro() ? '' : (M.cataQueda('historia')
+        ? '<div class="gratis vidrio"><div><b>Te queda una historia de prueba</b><span>Ábrela y verás cómo es: no sales en su lista de espectadores</span></div><button data-a="pro">Pasar a Pro</button></div>'
+        : '<div class="gratis vidrio"><div><b>Prueba gastada</b><span>Esta es la última vez que ves esta pantalla sin Pro</span></div><button data-a="pro">Pasar a Pro</button></div>');
     if (!S.tray) h += vacio(I.historias, 'Aún no he mirado las historias', 'Pulsa «Actualizar» para ver quién tiene historia ahora.');
     else if (!lista.length) h += vacio(I.historias, q ? 'Nadie coincide' : 'Nadie tiene historia ahora', q ? 'Prueba con otro nombre.' : 'Vuelve en un rato.');
     else h += '<div class="caras">' + lista.map(function (x) {
@@ -442,7 +448,9 @@
     if (U.act === 'cambios') {
       h += '<div class="vigilar"><label class="busca h46">' + ico(I.lupa, 19, 2) + '<span class="sr">Vigilar usuario</span><input type="text" id="vigilar" placeholder="Busca a alguien para vigilar" autocapitalize="off"></label>' +
         '<button class="negro h46" data-a="vigilar">Vigilar</button></div>' +
-        (esPro ? '' : '<div class="gratis vidrio"><div><b>Te queda una persona de prueba</b><span>Búscala y te aviso de todo lo que cambie en su perfil</span></div><button data-a="pro">Pasar a Pro</button></div>');
+        (esPro ? '' : M.cataQueda('persona')
+          ? '<div class="gratis vidrio"><div><b>Te queda una persona de prueba</b><span>Búscala y te aviso de todo lo que cambie en su perfil</span></div><button data-a="pro">Pasar a Pro</button></div>'
+          : '<div class="gratis vidrio"><div><b>Prueba gastada</b><span>Ya vigilas a una. Con Pro, a quien quieras</span></div><button data-a="pro">Pasar a Pro</button></div>');
       var a = esPro ? S.activity : S.activity.slice(0, M.LIBRE);
       if (!esPro && S.activity.length > M.LIBRE) h += gratis();
       h += '<div class="lista fina">' + (a.length ? a.map(function (e) {
@@ -627,13 +635,19 @@
     // El video se baja entero antes (ver cargarVideo): el reproductor del
     // movil no pasa por el proxy de fotos y sin eso salia el icono de play gris.
     var medio = it.isVideo ? '<video playsinline autoplay poster="' + esc(foto(it.img) || '') + '"' + (it.blob ? ' src="' + esc(it.blob) + '"' : '') + '></video>' : '<img alt="" src="' + esc(foto(it.url) || it.url) + '">';
-    return '<div class="visor"><div class="barras">' + barras + '</div><div class="quien-v">' + av(g.user) + '<b>' + esc(g.user.username) + '</b><span>' + hace(it.ts) + '</span>' +
+    return '<div class="visor"><div class="barras">' + barras + '</div><div class="quien-v">' + av(g.user) + '<b>' + esc(g.user.username) + '</b><span>' +
+      // Las historias traen `takenAt` (en ms), no `ts`. Poniendo it.ts salia
+      // "NaN sem" en la esquina SIEMPRE, en cualquier historia.
+      (it.takenAt || it.ts ? hace(it.takenAt || it.ts) : '') + '</span>' +
       '<button aria-label="Cerrar" data-a="cerrar-visor">' + ico(I.cerrar, 24, 2) + '</button></div>' +
       '<div class="medio">' + medio + '<button class="zona izq" aria-label="Anterior" data-a="visor-ant"></button><button class="zona der" aria-label="Siguiente" data-a="visor-sig"></button></div>' +
       '<div class="pie">Modo fantasma · no apareces en su lista</div></div>';
   }
-  async function abrirVisor(reels) {
-    if (!M.esPro()) return abrirPro('Ver historias sin salir en la lista');
+  /* `cata` = viene de la prueba gratis. Sin eso, esto era Pro y punto: se
+     gastaba la prueba, se llamaba aqui, y aqui mismo saltaba la hoja de
+     pago. O sea que la prueba no dejaba ver NADA y encima se consumia. */
+  async function abrirVisor(reels, cata) {
+    if (!M.esPro() && !cata) return abrirPro('Ver historias sin salir en la lista');
     toast('Cargando historias…');
     try {
       var tray = M.estado.tray.list, datos = await M.verHistorias(reels), grupos = [];
@@ -643,6 +657,9 @@
         if (u && items.length) grupos.push({ user: u, items: items });
       });
       if (!grupos.length) return toast('Ya no están disponibles');
+      // Aqui, y no antes: la prueba se cobra cuando la historia esta en
+      // pantalla. Si Instagram no la da, no se ha visto nada y no se paga.
+      if (!M.esPro()) M.gastarCata('historia');
       U.visor = { grupos: grupos, g: 0, i: 0 };
       pintar(); temporizar();
     } catch (e) { toast(errTxt(e)); }
@@ -844,7 +861,10 @@
         else toast(r && r.error === 'demasiados_intentos' ? 'Demasiados intentos, espera un poco' : r && r.error === 'red' ? 'Sin conexión' : 'Esa clave no vale para esta cuenta');
       });
     },
-    'seleccionar': function () { U.sel = U.sel ? null : {}; pintar(); },
+    'seleccionar': function () {
+      if (!M.esPro()) return abrirPro('Dejar de seguir a varios a la vez');
+      U.sel = U.sel ? null : {}; pintar();
+    },
     'dejar': function (el) {
       var pk = el.getAttribute('data-pk');
       if (!M.esPro()) return abrirPro('Dejar de seguir');
@@ -863,17 +883,13 @@
     'probar-his': function () { U.cata.historias = true; pintar(); },
     'probar-act': function () { U.cata.actividad = true; pintar(); },
     'ver-historia': function (el) {
-      // La prueba se gasta AL ABRIR: es el momento en que se ve lo que hace.
-      // Y se cierra la puerta a la vez, asi que al salir del visor lo que hay
-      // detras ya es el muro. Se ve lo que se compra y se pide el dinero.
       if (!M.cataQueda('historia')) { U.cata.historias = false; return pintar(); }
-      M.gastarCata('historia');
-      U.cata.historias = false;
-      abrirVisor([el.getAttribute('data-reel')]);
+      abrirVisor([el.getAttribute('data-reel')], true);
     },
     'ver-todas': function () {
-      // Verlas todas de una no es la prueba: eso ya es la funcion entera.
-      if (!M.esPro()) { M.gastarCata('historia'); U.cata.historias = false; return pintar(); }
+      // Verlas todas de una no es la prueba: eso ya es la funcion entera. Y
+      // no cuesta la prueba: no se cobra por enseñar el muro.
+      if (!M.esPro()) { U.cata.historias = false; return pintar(); }
       var t = M.estado.tray && M.estado.tray.list || [], q = U.buscaHis.toLowerCase().trim();
       if (q) t = t.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; });
       if (t.length) abrirVisor(t.slice(0, 30).map(function (x) { return x.reelId; }));
@@ -890,7 +906,6 @@
           // Se gasta cuando se ha vigilado a alguien de verdad, no al
           // escribir: si el nombre no existe, la prueba sigue entera.
           M.gastarCata('persona');
-          U.cata.actividad = false;
           toast('Vigilando a @' + u.username);
         }
         catch (e) { if (e && e.kind === 'pro') return abrirPro('Vigilar más de 3 cuentas'); throw e; }
@@ -945,7 +960,13 @@
     var t = ev.target.closest('[data-a],[data-tab],[data-seg],[data-act],[data-hist],[data-gen],[data-regla],[data-tema],[data-sel],[data-perfil]');
     if (!t) return;
     if (t.hasAttribute('data-a')) { var f = ACC[t.getAttribute('data-a')]; if (f) f(t); return; }
-    if (t.hasAttribute('data-tab')) { U.tab = t.getAttribute('data-tab'); U.sel = null; pintar(true); scrollTo(0, 0);
+    if (t.hasAttribute('data-tab')) {
+      /* Al salir del apartado se cierra la puerta que abrio la prueba. NO al
+         usarla: si se cerraba en el momento de abrir la historia o de vigilar
+         a alguien, se volvia al muro sin haber llegado a ver lo que se
+         acababa de hacer. Parecia que no funcionaba nada. */
+      if (t.getAttribute('data-tab') !== U.tab) U.cata = {};
+      U.tab = t.getAttribute('data-tab'); U.sel = null; pintar(true); scrollTo(0, 0);
       if (U.tab === 'historias' && !M.estado.tray && !U.trabajando.tray) ACC.bandeja();
       if (U.tab === 'actividad' && U.act === 'solicitudes' && !M.estado.reqs) ACC['cargar-sol']();
       return; }
