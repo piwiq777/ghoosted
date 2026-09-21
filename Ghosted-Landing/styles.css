@@ -418,6 +418,16 @@ img,svg{display:block;max-width:100%}
   .show{padding:136px 24px 132px}
   .show-stage{height:min(58vh,540px)}
 }
+@media (max-width:860px){
+  .pair-qr-side{align-items:center}
+  .pair-ios{text-align:center}
+}
+/* En un movil el QR no sirve de nada: ya estas en el telefono. Se queda el
+   boton, que es lo que hay que pulsar. */
+@media (max-width:700px){
+  .pair-qr-card{display:none}
+  .pair-dl{max-width:none}
+}
 @media (max-width:700px){
   /* Las flechas dejan de robar ancho y se ponen ENCIMA de la foto, en sus dos
      bordes. En un movil, 52px por lado son 104px menos de imagen — el ancho
@@ -656,7 +666,15 @@ img,svg{display:block;max-width:100%}
 .pair-qr-card:hover,.pair-phone-wrap:hover{transform:scale(1.07)}
 
 /* QR card — reads as the extension's own popup window */
-.pair-qr-side{display:flex;justify-content:flex-end}
+.pair-qr-side{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+/* La descarga de la app: debajo del QR, para quien ya esta en el ordenador
+   y prefiere mandarsela luego, y para quien entra desde el propio movil. */
+.pair-dl{display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;max-width:330px;
+  padding:14px 20px;border-radius:100px;background:var(--ig-2);color:#fff;font-weight:600;font-size:15px;
+  letter-spacing:-.01em;box-shadow:0 14px 30px -14px rgba(214,41,118,.6);transition:transform .2s var(--ease)}
+.pair-dl:hover{transform:translateY(-1px)}
+.pair-dl svg{width:19px;height:19px;flex:none}
+.pair-ios{max-width:330px;margin:0;font-size:12.5px;line-height:1.45;color:var(--ink-2);text-align:right}
 .pair-qr-card{width:100%;max-width:330px;border-radius:16px;overflow:hidden;background:#0B0A09;
   border:1px solid rgba(255,255,255,.11)}
 .pair-qr-titlebar{display:flex;align-items:center;gap:7px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.09)}
@@ -900,6 +918,7 @@ img,svg{display:block;max-width:100%}
   -webkit-tap-highlight-color:transparent}
 .movil-b:active{transform:scale(.97)}
 .movil-b1{border-color:transparent;background:var(--ig-2);color:#fff}
+.movil-b-app{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
 .movil-b:focus-visible{outline:2px solid #F7F5F0;outline-offset:2px}
 .movil-ok{margin:10px 0 0;font-size:12.5px;color:rgba(247,245,240,.72);min-height:1em}
 .movil-ok:empty{display:none}

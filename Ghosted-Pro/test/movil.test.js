@@ -146,6 +146,22 @@ module.exports = () => {
   /* Pero el dibujo se queda entero: sin el no queda nada que explique nada. */
   s.ok('el dibujo del emparejado sigue', /class="pair-qr-card"/.test(html) && /class="pair-phone"/.test(html));
 
+  /* Ya no es un espejo: hay app de Android de verdad, y la web la ofrece. */
+  s.ok('la seccion del movil ofrece descargar la app',
+    /class="pair-dl"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html));
+  s.ok('el QR de la seccion lleva al APK, no a un dibujo',
+    /GhostedQR\.svg\('https:\/\/www\.ghoosted\.net\/movil\/Ghoosted\.apk'/.test(js));
+  s.ok('y el movil del dibujo enseña la app, no el panel del PC',
+    /assets\/app\/movil\.jpg/.test(html));
+  s.ok('quien entra desde un Android tiene boton de descarga',
+    /id="movilApp"[^>]*href="\/movil\/Ghoosted\.apk"/.test(html) && /\/android\/i\.test\(navigator\.userAgent/.test(js));
+  s.ok('se dice que de iPhone todavia no hay', /data-i18n="app_ios"/.test(html));
+  // En arabe "Android" se escribe con su alfabeto, no en latino.
+  s.ok('y el requisito antes de pagar ya nombra la app',
+    idiomas.every((f) => /android|أندرويد/i.test(JSON.parse(leer(path.join('locales', f))).price_req || '')));
+  /* Se fue el teatro del emparejado: ya no hay nada que fingir. */
+  s.ok('sin el bucle que simulaba el escaneo', !/pairStage|is-scanning/.test(js));
+
   /* El apartado del movil tenia un titulo bonito que no decia de que iba. */
   s.ok('el apartado del movil dice de que va', /data-i18n="pair_title"/.test(html));
   s.ok('y su titulo esta traducido en los once idiomas',

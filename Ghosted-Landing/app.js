@@ -202,42 +202,18 @@
     }
 
     // Pair section — real QR (same vendored generator qr.js the extension
-    // itself uses), pointing at this very section rather than a live pairing
-    // session: a static marketing page can't mint a real channel+key like the
-    // extension does at click-time, and /pair no longer exists as a page.
+    // El QR de la seccion del movil lleva a la descarga de la app de Android.
+    // Es un enlace de verdad, no un dibujo: quien lo escanee con el telefono
+    // se baja el APK.
     const pairQrSlot = document.getElementById('pairQrSlot');
     if (pairQrSlot && window.GhostedQR) {
-      pairQrSlot.innerHTML = GhostedQR.svg('https://ghoosted.net/#pair', {
+      pairQrSlot.innerHTML = GhostedQR.svg('https://www.ghoosted.net/movil/Ghoosted.apk', {
         scale: 6, margin: 2, dark: '#0a0a0f', light: '#ffffff',
       });
     }
 
-    // Pair section — loops the illustration between "scanning" and "linked" so
-    // a visitor sees the whole flow without a real device. Ships is-linked by
-    // default (see the class in the HTML) so a no-JS visitor still gets the
-    // finished state rather than a stuck mid-scan frame.
-    //
-    // Deliberately NOT gated on prefers-reduced-motion: this loop is the only
-    // thing that explains what pairing does, and killing it leaves the panel
-    // frozen on a checkmark with no story. That setting asks for less MOTION,
-    // so the CSS drops the two genuinely kinetic bits instead (the sweeping
-    // scanline and the travelling connector dot) and keeps the crossfade.
-    const pairStage = document.getElementById('pairStage');
-    if (pairStage) {
-      const SCAN_MS = 5600, LINK_MS = 3400;
-      const labels = [document.getElementById('pairLabel'), document.getElementById('pairLabel2')].filter(Boolean);
-      const setStage = (linked) => {
-        pairStage.classList.toggle('is-linked', linked);
-        pairStage.classList.toggle('is-scanning', !linked);
-        const text = GhostedI18n.t(linked ? 'pair_badge_linked' : 'pair_badge_scanning', linked ? 'Linked' : 'Waiting for scan');
-        labels.forEach((el) => { el.textContent = text; });
-      };
-      const loop = () => {
-        setStage(false);
-        setTimeout(() => { setStage(true); setTimeout(loop, LINK_MS); }, SCAN_MS);
-      };
-      setTimeout(loop, 1200); // hold the finished state a beat before the first demo pass
-    }
+    // Antes aqui habia un bucle que hacia como que un movil escaneaba el QR.
+    // Ya no hay nada que fingir: la app existe y el QR se escanea de verdad.
 
     // A phone visitor literally cannot run a Chrome extension — iOS has no
     // extension support in Chrome at all, and Android Chrome doesn't either.
@@ -388,6 +364,19 @@
         const canon = document.querySelector('link[rel="canonical"]');
         const ENLACE = (canon && canon.href) || (location.origin + '/');
         const T = function (k, d) { return window.GhostedI18n ? window.GhostedI18n.t(k, d) : d; };
+
+        /* Android puede instalar la app: eso es lo util que se le ofrece.
+           En un iPhone todavia no hay app, asi que se queda lo de siempre —
+           mandarse el enlace para abrirlo en el ordenador. */
+        const android = /android/i.test(navigator.userAgent || '');
+        const botonApp = document.getElementById('movilApp');
+        if (android && botonApp) {
+          botonApp.hidden = false;
+          const titulo = aviso.querySelector('.movil-h');
+          const parrafo = aviso.querySelector('.movil-p');
+          if (titulo) { titulo.setAttribute('data-i18n', 'mob_h_and'); titulo.textContent = T('mob_h_and', 'Ghoosted for Android'); }
+          if (parrafo) { parrafo.setAttribute('data-i18n', 'mob_p_and'); parrafo.textContent = T('mob_p_and', 'Download the app and check your Instagram from the phone. On a computer it is a Chrome extension.'); }
+        }
 
         const ok = document.getElementById('movilOk');
         let borrar = null;
