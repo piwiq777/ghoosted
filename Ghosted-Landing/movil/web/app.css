@@ -448,8 +448,14 @@ button:active,a.btn:active{opacity:.75}
 .hoja > .pf-cab, .hoja > .pf-etqs, .hoja > .pf-acciones, .hoja > .pf-cifras,
 .hoja > .pf-bio, .hoja > .pf-datos, .hoja > .pf-sec, .hoja > .pf-dest,
 .hoja > .pf-posts, .hoja > .nota{flex:0 0 auto}
+/* La lista de su gente si puede encogerse: es la que lleva el scroll. */
+.hoja > .lista.fina{flex:1 1 auto;min-height:120px;overflow:auto;-webkit-overflow-scrolling:touch}
 .pf-cab{display:flex;align-items:center;gap:14px}
 .pf-cab .av{width:62px;height:62px;font-size:22px;flex-shrink:0}
+.pf-foto{padding:0;background:none;border-radius:999px;flex-shrink:0;position:relative}
+.pf-foto:active{transform:scale(.94)}
+/* Un aro fino que dice que se puede tocar para verla grande. */
+.pf-foto::after{content:"";position:absolute;inset:-3px;border-radius:999px;border:1.5px solid var(--punto)}
 .pf-cab > div{display:flex;flex-direction:column;gap:2px;min-width:0}
 .pf-cab b{font-family:var(--marca);font-weight:800;font-size:20px;letter-spacing:-0.03em;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -482,7 +488,8 @@ button:active,a.btn:active{opacity:.75}
 /* Destacadas: portadas en fila, con el aro de siempre. */
 .pf-dest{display:flex;gap:12px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .pf-dest::-webkit-scrollbar{display:none}
-.pf-d{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:66px}
+.pf-d{display:flex;flex-direction:column;align-items:center;gap:6px;flex:0 0 auto;width:66px;padding:0;background:none}
+.pf-d:active{transform:scale(.94)}
 .pf-d .aro{padding:2px;border-radius:999px;background:var(--ig)}
 .pf-d .aro > div{width:58px;height:58px;border-radius:999px;overflow:hidden;background:var(--fill);border:2px solid var(--bg)}
 .pf-d img{width:100%;height:100%;object-fit:cover;display:block}

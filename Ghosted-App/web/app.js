@@ -119,7 +119,9 @@
             /* Mientras se guarda una historia en el movil. */
             bajando: false,
             /* La persona cuya ficha esta abierta. */
-            perfil: null };
+            perfil: null,
+            /* La lista de seguidores/seguidos que se esta mirando. */
+            gente: null };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -620,7 +622,9 @@
       if (d.is_business || d.is_pro) etiquetas.push(['si', d.category || 'Cuenta profesional']);
     }
     var h = '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Perfil"><div class="asa"><span></span></div>';
-    h += '<div class="pf-cab">' + av(p) + '<div><b>' + esc(p.full_name || p.username) + '</b><span>@' + esc(p.username) + '</span></div></div>';
+    h += '<div class="pf-cab">' + (d && (d.pic_hd || d.pic)
+      ? '<button class="pf-foto" data-a="ver-foto" aria-label="Ver la foto grande">' + av(p) + '</button>'
+      : av(p)) + '<div><b>' + esc(p.full_name || p.username) + '</b><span>@' + esc(p.username) + '</span></div></div>';
     if (etiquetas.length) h += '<div class="pf-etqs">' + etiquetas.map(function (e) {
       return '<span class="pf-etq ' + e[0] + '">' + esc(e[1]) + '</span>';
     }).join('') + '</div>';
@@ -656,11 +660,19 @@
         return '<div><span>' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b></div>';
       }).join('') + '</div>';
 
+      /* Su gente. Cada lista es una peticion, asi que van detras de su
+         boton y cuentan para el tope del dia. */
+      h += '<div class="pf-sec">Su gente</div><div class="pf-acciones">' +
+        '<button data-a="ver-gente" data-cual="seguidores"' + (U.trabajando.gente ? ' class="gira"' : '') + '>' +
+        ico(I.personas, 17, 2) + 'Sus seguidores' + pro() + '</button>' +
+        '<button data-a="ver-gente" data-cual="seguidos"' + (U.trabajando.gente ? ' class="gira"' : '') + '>' +
+        ico(I.flecha, 17, 2) + 'A quién sigue' + pro() + '</button></div>';
+
       /* Destacadas: las portadas, en fila. */
       var dst = d.destacadas || [];
       if (dst.length) h += '<div class="pf-sec">Destacadas</div><div class="pf-dest">' + dst.map(function (x) {
-        return '<div class="pf-d"><div class="aro"><div>' + (foto(x.full) || x.full ? '<img alt="" src="' + esc(foto(x.full) || x.full) + '" loading="lazy" onerror="this.remove()">' : '') + '</div></div>' +
-          '<span>' + esc(x.title || '·') + '</span></div>';
+        return '<button class="pf-d" data-a="ver-dest" data-id="' + esc(x.id) + '"><div class="aro"><div>' + (foto(x.full) || x.full ? '<img alt="" src="' + esc(foto(x.full) || x.full) + '" loading="lazy" onerror="this.remove()">' : '') + '</div></div>' +
+          '<span>' + esc(x.title || '·') + '</span></button>';
       }).join('') + '</div>';
 
       /* Publicaciones, y con ellas el engagement: los me gusta y los
@@ -706,6 +718,20 @@
     }
     h += '<button class="tengo" data-a="abrir-ig">Abrir en Instagram</button></div></div>';
     return h;
+  }
+
+  /* La lista de sus seguidores o de a quien sigue. Instagram no la da
+     entera nunca: da un trozo. Se dice, para que nadie cuente mal. */
+  function hojaGente() {
+    var g = U.gente; if (!g) return '';
+    return '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Su gente"><div class="asa"><span></span></div>' +
+      '<div class="h-cab"><h2>' + (g.cual === 'seguidores' ? 'Sus seguidores' : 'A quién sigue') + '</h2>' +
+      '<p>@' + esc(g.de) + ' · una muestra de ' + num(g.lista.length) + ', no la lista entera: Instagram no la da completa.</p></div>' +
+      '<div class="lista fina">' + (g.lista.length ? g.lista.map(function (u) {
+        return '<div class="fila" data-perfil="' + esc(u.username) + '">' + av(u) +
+          '<div class="quien"><b>' + esc(u.full_name || u.username) + '</b><span>@' + esc(u.username) +
+          (u.is_private ? ' · privada' : '') + '</span></div></div>';
+      }).join('') : vaciaFila(I.personas, 'No hay nada que enseñar', 'Instagram no ha dado la lista.')) + '</div></div>';
   }
 
   function hojaPro() {
@@ -881,7 +907,7 @@
   function pintarHoja() {
     var quiere = U.hojaAbierta;
     if (!quiere) { if (hojaPuesta) cerrarHoja(); return; }
-    var html = ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag, perfil: hojaPerfil })[quiere]();
+    var html = ({ pro: hojaPro, clave: hojaClave, ajustes: hojaAjustes, espectadores: hojaEspectadores, diag: hojaDiag, perfil: hojaPerfil, gente: hojaGente })[quiere]();
     if (hojaPuesta === quiere && cajaHoja) {
       // misma hoja, contenido nuevo: se cambia por dentro y no vuelve a subir
       var nueva = document.createElement('div');
@@ -1056,6 +1082,42 @@
       U.visor = { grupos: [{ user: { username: d.username, full_name: d.full_name, pic: d.pic },
         items: [{ url: x.full || x.thumb, img: x.thumb, isVideo: !!x.isVideo, takenAt: x.ts }] }], g: 0, i: 0 };
       pintar(); temporizar();
+    },
+    'ver-foto': function () {
+      var p = U.perfil, d = p && p.pk && M.expedienteGuardado(p.pk);
+      if (!d) return;
+      U.hojaAbierta = null;
+      U.visor = { grupos: [{ user: d, items: [{ url: d.pic_hd || d.pic, img: d.pic, isVideo: false, takenAt: 0 }] }], g: 0, i: 0 };
+      pintar(); temporizar();
+    },
+    'ver-dest': function (el) {
+      if (!M.esPro()) return abrirPro('Ver sus destacadas');
+      var p = U.perfil, d = p && p.pk && M.expedienteGuardado(p.pk);
+      if (!d) return;
+      var id = el.getAttribute('data-id');
+      toast('Abriendo la destacada…');
+      M.historiasDestacada(id).then(function (items) {
+        if (!items.length) return toast('No he podido abrirla');
+        U.hojaAbierta = null;
+        U.visor = { grupos: [{ user: d, items: items }], g: 0, i: 0 };
+        pintar(); temporizar();
+      }).catch(function (e) { toast(errTxt(e)); });
+    },
+    'ver-gente': function (el) {
+      if (!M.esPro()) return abrirPro('Ver sus seguidores');
+      var p = U.perfil; if (!p || !p.pk) return;
+      var cual = el.getAttribute('data-cual');
+      trabajo('gente', async function () {
+        try {
+          var lista = await M.genteDe(p.pk, cual);
+          U.gente = { cual: cual, lista: lista, de: p.username };
+          U.hojaAbierta = 'gente';
+          pintar();
+        } catch (e) {
+          if (e && e.kind === 'tope_exp') return toast('Ya has hecho ' + M.EXP_DIA + ' consultas hoy. Mañana más');
+          throw e;
+        }
+      });
     },
     'abrir-ig': function () {
       var u = U.perfil && U.perfil.username; if (!u) return;

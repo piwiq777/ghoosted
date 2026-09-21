@@ -44,13 +44,21 @@ window.Demo = (function () {
     }
     if (m === 'pendingRequests') return { users: [u(301, 'rihab.mzn_', 'rihab'), u(302, 'adriiana_nieves', 'adriana'), u(303, 'elvispresleyyy_', 'elvispresleyyy_')] };
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
+    if (m === 'fetchHighlightStories') return [0,1,2].map(function (i) {
+      var c = ['%236E4BE0','%23FF9A3D','%23D62976'][i];
+      var img = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="405" height="720"><rect width="405" height="720" fill="' + c + '"/></svg>';
+      return { mediaId: 'd' + i, url: img, img: img, isVideo: false, takenAt: ahora - i * 86400000 };
+    });
+    if (m === 'fetchFollowersOf') return { users: base.slice(0, 40), complete: false };
     if (m === 'fetchHighlights') return [0,1,2,3].map(function (i) {
       return { id: 'h' + i, mediaId: 'm' + i, title: ['Viajes','Gym','2024','Amigos'][i], covers: [], full: '', count: 3 + i };
     });
     if (m === 'fetchDossier') {
       var n = String(a[1] || a[0] || 'alguien').replace(/^@/, '');
       return { pk: String(a[0] || 400), username: n, full_name: n, bio: 'Bio de mentira para el navegador.\nSegunda linea.',
-        bio_links: [], external_url: 'https://ejemplo.com', pic: '', pic_hd: '',
+        bio_links: [], external_url: 'https://ejemplo.com',
+        pic: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="%23D62976"/></svg>',
+        pic_hd: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640"><rect width="640" height="640" fill="%23D62976"/></svg>',
         followers: 1234, following: 567, posts: 89, is_private: false, is_verified: true,
         is_business: false, is_pro: false, category: '', has_highlights: true, public_email: 'hola@ejemplo.com', public_phone: '' };
     }

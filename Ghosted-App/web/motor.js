@@ -537,6 +537,34 @@ window.Motor = (function () {
     return d;
   }
 
+  /* Las historias de una destacada. Una peticion, y se guarda: volver a
+     abrir la misma destacada no cuesta otra. */
+  var cacheDest = {};
+  async function historiasDestacada(id) {
+    var k = String(id);
+    if (cacheDest[k] && Date.now() - cacheDest[k].ts < 3600000) return cacheDest[k].items;
+    var items = await ig('fetchHighlightStories', ['highlight:' + k]).catch(function () { return []; });
+    if (!items.length) items = await ig('fetchHighlightStories', [k]).catch(function () { return []; });
+    cacheDest[k] = { ts: Date.now(), items: items || [] };
+    return items || [];
+  }
+
+  /* Sus seguidores o a quien sigue. Una peticion por lista, se guarda una
+     hora, y cuenta para el tope del dia: pedir la lista de mucha gente
+     seguida es de lo que mas mira Instagram. */
+  async function genteDe(pk, cual) {
+    var k = cual + ':' + pk;
+    if (!S.exp) S.exp = {};
+    var g = S.exp[k];
+    if (g && Date.now() - g.ts < 3600000) return g.datos;
+    if (expedientesHoy() >= EXP_DIA) throw { kind: 'tope_exp' };
+    var r = await ig(cual === 'seguidores' ? 'fetchFollowersOf' : 'fetchFollowingOf', [String(pk), null, 60]);
+    var lista = (r && r.users || []).slice(0, 60);
+    S.exp[k] = { ts: Date.now(), datos: lista };
+    guardar(); avisar();
+    return lista;
+  }
+
   /* Todo lo que ya sabemos de alguien SIN pedir nada: de donde salio, si te
      sigue, si le sigues, y como se comporta con tus historias. */
   function loQueSe(username) {
@@ -703,6 +731,7 @@ window.Motor = (function () {
     cataQueda: cataQueda, gastarCata: gastarCata, sesionesHoy: sesionesHoy,
     buscarGente: buscarGente, buscarLocal: buscarLocal,
     expediente: expediente, expedienteGuardado: expedienteGuardado, expedientesHoy: expedientesHoy, EXP_DIA: EXP_DIA,
+    historiasDestacada: historiasDestacada, genteDe: genteDe,
     loQueSe: loQueSe,
     listas: listas, dejarDeSeguir: dejarDeSeguir,
     solicitudes: solicitudes, responder: responder, aceptarVarias: aceptarVarias, regla: regla,
