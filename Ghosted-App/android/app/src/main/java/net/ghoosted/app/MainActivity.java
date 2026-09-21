@@ -74,6 +74,16 @@ public class MainActivity extends Activity {
     private boolean oscuro = false;
     private boolean igArriba = false;
     private boolean igFallo = false;      // la ultima carga de Instagram no llego (sin red al arrancar)
+    /* LA PAGINA DE INSTAGRAM TARDA EN ESTAR LISTA, Y LAS LLAMADAS NO ESPERABAN.
+       Se pedia el dato en el mismo instante en que se mandaba a recargar la
+       pagina: la recarga es asincrona, asi que la llamada caia en una pagina
+       a medio cargar y se perdia. De ahi los dos errores que se veian —
+       "ig_no_listo" cuando el puente aun no estaba, y un plantón de cuatro
+       minutos cuando no habia ni con quien hablar.
+       Ahora hay una cola: si la pagina no esta lista, la llamada espera, y se
+       suelta en cuanto termina de cargar. */
+    private boolean igListo = false;
+    private final java.util.ArrayList<String> igCola = new java.util.ArrayList<>();
     private int insArriba = 0, insAbajo = 0;
     private Actualizador act;
 
@@ -216,7 +226,11 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onPageFinished(WebView v, String url) { inyectar(); }
+            public void onPageFinished(WebView v, String url) {
+                inyectar();
+                igListo = true;
+                soltarCola();
+            }
 
             @Override
             public void onReceivedError(WebView v, WebResourceRequest r, WebResourceError e) {
@@ -224,7 +238,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onPageStarted(WebView v, String url, android.graphics.Bitmap f) { igFallo = false; }
+            public void onPageStarted(WebView v, String url, android.graphics.Bitmap f) { igFallo = false; igListo = false; }
         });
     }
 
@@ -259,28 +273,67 @@ public class MainActivity extends Activity {
                     JSONObject m = new JSONObject(s);
                     String tipo = m.optString("tipo");
                     if ("llamar".equals(tipo)) {
-                        if (igFallo) ig.loadUrl(IG);
-                        String id = m.optString("id");
-                        String q = JSONObject.quote(s);
-                        String falla = JSONObject.quote(new JSONObject()
-                                .put("tipo", "resultado").put("id", id).put("ok", false)
-                                .put("error", new JSONObject().put("kind", "transport").put("message", "ig_no_listo")).toString());
-                        // Si Instagram ha recargado la pagina y el motor no esta, se
-                        // vuelve a meter antes de pedirle nada.
-                        String llamada = "window.GhdIGRecibir ? GhdIGRecibir(" + q + ") : GhdNativoIG.aApp(" + falla + ")";
-                        // Se comprueban LAS DOS: el puente y la API. Con solo
-                        // el puente, la pagina contestaba "no listo" sin que
-                        // nadie volviera a inyectar nada.
-                        ig.evaluateJavascript("!!(window.GhdIGRecibir && window.GhostedIG)", v -> {
-                            if (!"true".equals(v)) inyectar();
-                            ig.evaluateJavascript(llamada, null);
-                        });
+                        pedirAIg(s);
                     } else if ("nativo".equals(tipo)) {
                         orden(m.optString("id"), m.optString("orden"), m.optJSONObject("datos"));
                     }
                 } catch (Exception e) { /* mensaje roto: se ignora */ }
             });
         }
+    }
+
+    /** Manda una llamada a la vista de Instagram, esperando si hace falta.
+        Si la pagina no esta cargada todavia, la llamada se guarda y sale en
+        cuanto lo este: antes se lanzaba igual y se perdia por el camino. */
+    private void pedirAIg(String mensaje) {
+        String url = ig.getUrl();
+        boolean enInstagram = url != null && Uri.parse(url).getHost() != null
+                && Uri.parse(url).getHost().endsWith("instagram.com");
+        if (igFallo || !enInstagram) {
+            igCola.add(mensaje);
+            igFallo = false;
+            igListo = false;
+            ig.loadUrl(IG);
+            return;
+        }
+        if (!igListo) { igCola.add(mensaje); return; }
+        lanzarAIg(mensaje);
+    }
+
+    /** Suelta lo que estaba esperando a que la pagina acabara de cargar. */
+    private void soltarCola() {
+        if (igCola.isEmpty()) return;
+        java.util.ArrayList<String> copia = new java.util.ArrayList<>(igCola);
+        igCola.clear();
+        for (String m : copia) lanzarAIg(m);
+    }
+
+    /** Mete el guion si falta y hace la llamada. La llamada va DENTRO del
+        callback, cuando ya se sabe si hubo que inyectar o no. */
+    private void lanzarAIg(String mensaje) {
+        String id;
+        try { id = new JSONObject(mensaje).optString("id"); } catch (Exception e) { return; }
+        String q = JSONObject.quote(mensaje);
+        String falla;
+        try {
+            falla = JSONObject.quote(new JSONObject()
+                    .put("tipo", "resultado").put("id", id).put("ok", false)
+                    .put("error", new JSONObject().put("kind", "transport").put("message", "ig_no_listo")).toString());
+        } catch (Exception e) { return; }
+        String llamada = "window.GhdIGRecibir ? GhdIGRecibir(" + q + ") : GhdNativoIG.aApp(" + falla + ")";
+        // Se comprueban LAS DOS: el puente y la API. Con solo el puente, la
+        // pagina contestaba "no listo" sin que nadie volviera a inyectar nada.
+        ig.evaluateJavascript("!!(window.GhdIGRecibir && window.GhostedIG)", v -> {
+            if (!"true".equals(v)) {
+                inyectar();
+                // Se le da un respiro a la inyeccion antes de pedirle nada:
+                // evaluateJavascript no garantiza que lo anterior haya
+                // terminado de ejecutarse.
+                ig.postDelayed(() -> ig.evaluateJavascript(llamada, null), 250);
+            } else {
+                ig.evaluateJavascript(llamada, null);
+            }
+        });
     }
 
     /** Lo que manda la vista de Instagram (puente-ig.js). Se reenvia tal cual:

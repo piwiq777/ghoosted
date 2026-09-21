@@ -53,5 +53,27 @@ module.exports = () => {
     (motor.slice(motor.indexOf('async function ig('), motor.indexOf('function espera(')).match(/Puente\.ig\(m, a, p\)/g) || []).length === 2);
   s.ok('  y queda apuntado en el registro', /registrar\('ig no listo'/.test(motor));
 
+  /* LA LLAMADA NO PUEDE SALIR ANTES DE QUE LA PAGINA ESTE.
+     Se pedia el dato en el mismo instante en que se mandaba a recargar
+     Instagram. La recarga es asincrona, asi que la llamada caia en una
+     pagina a medio cargar y se perdia: o contestaba "ig_no_listo", o no
+     contestaba nadie y el usuario se comia un planton de cuatro minutos. */
+  s.ok('hay cola para lo que llega antes de tiempo', /private final java\.util\.ArrayList<String> igCola/.test(java));
+  s.ok('  y se sabe cuando la pagina esta lista', /private boolean igListo/.test(java));
+  s.ok('  se marca al empezar y al terminar de cargar',
+    /igFallo = false; igListo = false;/.test(java) && /igListo = true;\s*\n\s*soltarCola\(\);/.test(java));
+  s.ok('  sin pagina de Instagram, se encola y se carga', /igCola\.add\(mensaje\);\s*\n\s*igFallo = false;/.test(java));
+  s.ok('  y se suelta todo junto al acabar', /private void soltarCola/.test(java));
+  s.ok('la llamada va DENTRO del callback, no en paralelo',
+    /if \(!"true"\.equals\(v\)\) \{\s*\n\s*inyectar\(\);/.test(java));
+  s.ok('  y se le da un respiro a la inyeccion', /postDelayed\(\(\) -> ig\.evaluateJavascript\(llamada, null\), 250\)/.test(java));
+
+  /* Y que el aviso diga CUAL de los dos es: diagnosticar a ciegas costo
+     varias vueltas. */
+  const app = fs.readFileSync(path.join(APP, 'web', 'app.js'), 'utf8');
+  s.ok('el aviso distingue transport de network',
+    /k === 'transport'\) return 'La página de Instagram no estaba lista/.test(app)
+    && /k === 'network'\) return 'Instagram no contesta · network/.test(app));
+
   return s;
 };
