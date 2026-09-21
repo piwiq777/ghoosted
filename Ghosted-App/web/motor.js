@@ -74,6 +74,22 @@ window.Motor = (function () {
     guardar();
   }
 
+  /* DEVOLVER EL PRO A QUIEN SE QUEDO SIN EL.
+     Quien abrio la app sin sesion con la clave puesta tiene guardado
+     {valid:false, error:'account'} para siempre. Arreglar el fallo no se lo
+     devuelve solo: seguiria leyendo ese false. Aqui se borra esa marca y se
+     deja que la proxima comprobacion CON sesion decida de verdad. Si la
+     clave estuviera mal de verdad (revocada, de otra cuenta, caducada), eso
+     se respeta y no se toca. */
+  function repararLicencia() {
+    var l = S.lic;
+    if (!l || !l.key || l.valid !== false) return;
+    if (NO_DE_VERDAD[l.error]) return;
+    S.lic = Object.assign({}, l, { valid: true, error: null, vts: 0 });
+    registrar('licencia rehecha', { message: 'motivo=' + (l.error || '?') });
+    guardar();
+  }
+
   var guardarT = 0;
   function guardar() {
     clearTimeout(guardarT);
@@ -128,13 +144,33 @@ window.Motor = (function () {
     if (j && j.valid) { S.lic = Object.assign({ key: clave, accountId: S.yo, ts: Date.now() }, j, { valid: true }); guardar(); avisar(); }
     return j || { valid: false, error: (r && r.status === 429) ? 'demasiados_intentos' : 'red' };
   }
+  /* Motivos por los que el servidor dice que NO y hay que hacerle caso: son
+     cosas de la clave. Cualquier otra respuesta negativa habla de nosotros
+     (no hay sesion, no hay red, demasiados intentos, el servidor caido) y NO
+     puede quitarle el Pro a quien ha pagado. */
+  var NO_DE_VERDAD = { invalid: 1, revoked: 1, bound: 1, expired: 1, wrong_product: 1 };
+
   async function reverificar() {
     var l = S.lic;
     if (!l || !l.key || Date.now() - (l.vts || 0) < 24 * 3600000) return;
+    /* AQUI ESTABA EL FALLO QUE DEJABA SIN PRO A QUIEN HABIA PAGADO.
+       Esto se llama cada vez que llega el estado de la sesion — tambien
+       cuando llega "desconectado", que es lo primero que llega al abrir la
+       app y justo lo que llega al cerrar sesion. Entonces S.yo es null, se
+       preguntaba por la clave SIN cuenta, el servidor contestaba
+       {valid:false, error:'account'} (su comprobacion exige un id numerico),
+       y esa respuesta se guardaba tal cual: la clave quedaba marcada como
+       invalida PARA SIEMPRE. Al volver a entrar en la misma cuenta de la que
+       se compro, ya no habia Pro. Y como se acababa de sellar vts, no se
+       volvia a preguntar en 24 h.
+       Sin sesion no se pregunta nada. */
+    if (!S.yo) return;
     var r = await post(LIC_API + 'verify', { key: l.key, accountId: S.yo, product: 'pro' });
     var j = r && r.json;
-    // Solo cambia si el servidor contesta algo claro: sin red, se queda como estaba.
-    if (j && typeof j.valid === 'boolean') { S.lic = Object.assign({}, l, j, { vts: Date.now() }); guardar(); avisar(); }
+    if (!j || typeof j.valid !== 'boolean') return;          // sin red: como estaba
+    if (!j.valid && !NO_DE_VERDAD[j.error]) return;          // el problema no es la clave
+    S.lic = Object.assign({}, l, j, { vts: Date.now() });
+    guardar(); avisar();
   }
 
   /* ---------------- sesion ---------------- */
@@ -499,6 +535,7 @@ window.Motor = (function () {
 
   // Al arrancar, una sola vez: rehacer los "Nuevos" que se perdio el fallo.
   repararNuevos();
+  repararLicencia();
 
   /* ---------------- reloj ---------------- */
   /* Por defecto la app NO revisa sola: solo cuando tu pulsas. Las revisiones

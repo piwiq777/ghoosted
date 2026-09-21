@@ -858,7 +858,24 @@
       trabajo('clave', async function () {
         var r = await M.activar(k);
         if (r && r.valid) { U.hojaAbierta = null; toast('Pro activado ✓'); }
-        else toast(r && r.error === 'demasiados_intentos' ? 'Demasiados intentos, espera un poco' : r && r.error === 'red' ? 'Sin conexión' : 'Esa clave no vale para esta cuenta');
+        else {
+          // "Esa clave no vale para esta cuenta" se decia para TODO, incluso
+          // cuando el problema era que no habias entrado en Instagram o que
+          // la clave era de Plus. Cada motivo tiene el suyo.
+          var CLAVE_MAL = {
+            demasiados_intentos: 'Demasiados intentos, espera un poco',
+            red: 'Sin conexión',
+            sin_sesion: 'Entra antes en tu Instagram desde la app',
+            account: 'Entra antes en tu Instagram desde la app',
+            vacia: 'Escribe la clave',
+            invalid: 'Esa clave no existe. Míralo bien, o recupérala en ghoosted.net',
+            bound: 'Esa clave ya está en uso en otra cuenta de Instagram',
+            revoked: 'Esa clave está anulada',
+            expired: 'Esa clave ha caducado',
+            wrong_product: 'Esa clave es de Ghoosted Plus y aquí hace falta una de Pro'
+          };
+          toast(CLAVE_MAL[r && r.error] || 'Esa clave no vale para esta cuenta');
+        }
       });
     },
     'seleccionar': function () {
