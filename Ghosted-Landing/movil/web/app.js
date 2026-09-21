@@ -5,7 +5,7 @@
  * bios— lo escribe un tercero y pasa por esc() antes de pintarse. */
 (function () {
   'use strict';
-  var M = window.Motor, P = window.Puente;
+  var M = window.Motor, P = window.Puente, C = window.Cuenta;
   var $app = document.getElementById('app');
 
   /* ---------------- utilidades ---------------- */
@@ -121,7 +121,9 @@
             /* La persona cuya ficha esta abierta. */
             perfil: null,
             /* La lista de seguidores/seguidos que se esta mirando. */
-            gente: null };
+            gente: null,
+            /* La pantalla de la cuenta de Ghoosted. */
+            cuentaModo: 'entrar', cCorreo: '', cuentaError: null, cuentaCorreoPendiente: null };
 
   function tema(t) {
     if (t) try { localStorage.setItem('ghd_tema', t); } catch (e) {}
@@ -185,6 +187,39 @@
       '<div class="carga-pie">Un momento, esto puede tardar</div></div>' +
       '<button class="inicio" data-a="ir-inicio">Ir al inicio</button></div>';
   }
+  /* LA CUENTA DE GHOOSTED. Va antes que todo: antes de Instagram, antes de
+     la presentacion. Es la que lleva el plan, asi que sin ella no se sabe
+     que puede hacer quien abre la app.
+     Registrarse y entrar son la MISMA pantalla con un interruptor: son dos
+     campos iguales y separarlas en dos pantallas solo hace que la gente se
+     equivoque de sitio y crea que no tiene cuenta. */
+  function pantallaCuenta() {
+    var modo = U.cuentaModo || 'entrar';
+    var esperar = !!U.trabajando.cuenta;
+    var pendiente = U.cuentaCorreoPendiente;
+    if (pendiente) {
+      return '<div class="intro"><div class="intro-top centro">' + wm(true) + '</div><div class="intro-medio centro">' +
+        '<div class="icono p112" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div>' +
+        '<div class="titulo"><h1>Mira tu correo</h1><p>Te hemos mandado un enlace a <b>' + esc(pendiente) + '</b>. Púlsalo y vuelve aquí para entrar.</p></div>' +
+        '</div><div class="intro-bajo"><div class="fila-btn"><button class="negro grande" data-a="cuenta-ya-confirme">Ya lo he confirmado</button></div>' +
+        '<button class="inicio" data-a="cuenta-otro-correo">Usar otro correo</button></div></div>';
+    }
+    return '<div class="intro"><div class="intro-top centro">' + wm(true) + '</div><div class="intro-medio g24">' +
+      '<div style="display:flex;justify-content:center"><div class="icono p112" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div></div>' +
+      '<div class="titulo"><h1>' + (modo === 'entrar' ? 'Entra en Ghoosted' : 'Crea tu cuenta') + '</h1>' +
+      '<p>' + (modo === 'entrar' ? 'Con tu cuenta de Ghoosted. La de Instagram va después y es aparte.'
+                                 : 'Es la cuenta de Ghoosted, donde vive tu plan. No es la de Instagram.') + '</p></div>' +
+      segs([['entrar', 'Entrar'], ['crear', 'Crear cuenta']], modo, 'cuentamodo', true) +
+      '<div class="pasos-login">' +
+      '<label class="busca h50"><span class="sr">Correo</span><input type="email" id="cCorreo" inputmode="email" autocapitalize="off" autocomplete="email" placeholder="tu@correo.com" value="' + esc(U.cCorreo || '') + '"></label>' +
+      '<label class="busca h50"><span class="sr">Contraseña</span><input type="password" id="cClave" autocomplete="' + (modo === 'entrar' ? 'current-password' : 'new-password') + '" placeholder="Contraseña"></label>' +
+      (U.cuentaError ? '<p class="nota" style="color:var(--rosa-txt);padding:0 4px">' + esc(U.cuentaError) + '</p>' : '') +
+      '</div></div>' +
+      '<div class="intro-bajo"><div class="fila-btn"><button class="negro grande' + (esperar ? ' gira' : '') + '" data-a="cuenta-ir">' +
+      (modo === 'entrar' ? 'Entrar' : 'Crear cuenta') + '</button></div>' +
+      '<p class="nota" style="text-align:center">Tu contraseña de Ghoosted no tiene nada que ver con la de Instagram, y nunca te pedimos la suya.</p></div></div>';
+  }
+
   function sinSesion() {
     // Antes de abrir Instagram se explica que va a pasar: sin esto, la app
     // saltaba a la pagina de Instagram sin decir nada.
@@ -756,6 +791,7 @@
     var yo = S.followers ? '' : '';
     return '<div class="hoja-velo" data-a="cerrar-hoja"></div><div class="hoja" role="dialog" aria-label="Ajustes"><div class="asa"><span></span></div>' +
       '<div class="h-cab"><h2>Ajustes</h2></div><div>' +
+      '<div class="ajuste"><span>Cuenta</span><span class="valor">' + esc(C.estado.correo || '—') + '</span></div>' +
       '<div class="ajuste"><span>Plan</span>' + (M.esPro() ? '<span class="valor">Pro ✓</span>' : '<button class="enlace" data-a="pro" style="height:auto">Pasar a Pro</button>') + '</div>' +
       '<div class="ajuste"><span>Tema</span>' + segs([['sistema', 'Auto'], ['claro', 'Claro'], ['oscuro', 'Oscuro']], g || 'sistema', 'tema', true).replace('class="segs', 'style="width:190px" class="segs') + '</div>' +
       '<div class="ajuste"><span>Última revisión</span><span class="valor">' + (S.lastCheck ? 'hace ' + hace(S.lastCheck) : '—') + '</span></div>' +
@@ -768,7 +804,8 @@
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
       '<div class="ajuste"><span>Cuenta</span><button class="enlace" data-a="cambiar" style="height:auto">Cambiar de cuenta</button></div>' +
-      '<div class="ajuste"><span>Salir de Instagram</span><button class="rojo" data-a="salir">Cerrar sesión</button></div>' + yo +
+      '<div class="ajuste"><span>Salir de Instagram</span><button class="rojo" data-a="salir">Cerrar sesión</button></div>' +
+      '<div class="ajuste"><span>Salir de Ghoosted</span><button class="rojo" data-a="salir-cuenta">Cerrar mi cuenta</button></div>' + yo +
       '</div></div>';
   }
   function hojaDiag() {
@@ -874,9 +911,10 @@
     var S = M.estado;
     var act = document.activeElement;
     foco = act && act.id && act.tagName === 'INPUT' ? { id: act.id, pos: act.selectionStart } : null;
-    if (!S.intro || !S.yo || U.cargando) {
+    if (!C.dentro() || !S.intro || !S.yo || U.cargando) {
       conBarra = false;
-      $app.innerHTML = !S.intro ? intro() : !S.yo ? sinSesion() : cargando();
+      // La cuenta de Ghoosted va primero: es la que dice que plan tienes.
+      $app.innerHTML = !C.dentro() ? pantallaCuenta() : !S.intro ? intro() : !S.yo ? sinSesion() : cargando();
     } else {
       var cuerpo = ({ hoy: hoy, personas: personas, historias: historias, actividad: actividad, historial: historial })[U.tab]();
       if (!conBarra) {
@@ -1005,6 +1043,33 @@
     'intro-sig': function () { if (U.paso < 4) { U.paso++; pintar(); } else ACC['intro-fin'](); },
     'intro-fin': function () { M.estado.intro = true; M.guardar(); pintar(); scrollTo(0, 0); },
     'login': function () { P.nativo('mostrarInstagram', {}); },
+    'cuenta-ir': function () {
+      var correo = (valor('cCorreo') || '').trim(), clave = valor('cClave') || '';
+      U.cCorreo = correo; U.cuentaError = null;
+      if (!correo || correo.indexOf('@') < 1) { U.cuentaError = 'Escribe tu correo'; return pintar(); }
+      if (clave.length < 6) { U.cuentaError = 'La contraseña son 6 letras o más'; return pintar(); }
+      var crear = U.cuentaModo === 'crear';
+      trabajo('cuenta', async function () {
+        try {
+          var r = crear ? await C.registrar(correo, clave) : await C.entrar(correo, clave);
+          // Si el proyecto pide confirmar el correo, no hay sesion todavia.
+          if (!r.dentro) { U.cuentaCorreoPendiente = r.confirmar; return pintar(); }
+          U.cCorreo = ''; U.cuentaError = null;
+          pintar();
+        } catch (e) { U.cuentaError = C.texto(e); pintar(); }
+      });
+    },
+    'cuenta-ya-confirme': function () {
+      U.cuentaCorreoPendiente = null; U.cuentaModo = 'entrar'; U.cuentaError = null; pintar();
+    },
+    'cuenta-otro-correo': function () {
+      U.cuentaCorreoPendiente = null; U.cCorreo = ''; U.cuentaError = null; pintar();
+    },
+    'salir-cuenta': function () {
+      if (!confirm('¿Salir de tu cuenta de Ghoosted? Tus datos de Instagram se quedan en el móvil.')) return;
+      U.hojaAbierta = null;
+      C.salir().then(pintar);
+    },
     'ir-inicio': function () { U.cargando = false; U.tab = 'hoy'; pintar(); },
     'reanudar': function () {
       M.pausar(false);
@@ -1281,7 +1346,7 @@
   };
 
   document.addEventListener('click', function (ev) {
-    var t = ev.target.closest('[data-a],[data-tab],[data-seg],[data-act],[data-hist],[data-gen],[data-regla],[data-tema],[data-sel],[data-perfil]');
+    var t = ev.target.closest('[data-a],[data-tab],[data-seg],[data-act],[data-hist],[data-gen],[data-regla],[data-tema],[data-cuentamodo],[data-sel],[data-perfil]');
     if (!t) return;
     if (t.hasAttribute('data-a')) { var f = ACC[t.getAttribute('data-a')]; if (f) f(t); return; }
     if (t.hasAttribute('data-tab')) {
@@ -1299,6 +1364,7 @@
     if (t.hasAttribute('data-gen')) { U.gen = t.getAttribute('data-gen'); pintar(); return; }
     if (t.hasAttribute('data-hist')) { U.hist = t.getAttribute('data-hist'); pintar(); return; }
     if (t.hasAttribute('data-regla')) { if (!M.esPro() && t.getAttribute('data-regla') !== 'manual') return abrirPro('Aprobar solicitudes automáticamente'); M.regla(t.getAttribute('data-regla')); return; }
+    if (t.hasAttribute('data-cuentamodo')) { U.cuentaModo = t.getAttribute('data-cuentamodo'); U.cuentaError = null; pintar(); return; }
     if (t.hasAttribute('data-tema')) { var v = t.getAttribute('data-tema'); if (v === 'sistema') { try { localStorage.removeItem('ghd_tema'); } catch (e) {} tema(); } else tema(v); pintar(); return; }
     if (t.hasAttribute('data-sel')) { var pk = t.getAttribute('data-sel'); U.sel[pk] = !U.sel[pk]; pintar(); return; }
     if (t.hasAttribute('data-perfil')) abrirPerfil(t.getAttribute('data-perfil'));
