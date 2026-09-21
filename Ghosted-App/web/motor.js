@@ -54,6 +54,26 @@ window.Motor = (function () {
       cata: { historia: 0, persona: 0 }
     }, s || {});
   }
+  /* REPARAR A QUIEN YA SE COMIO EL FALLO DE ARRIBA.
+     Su primer seguidor no dejo evento y no hay forma de que aparezca solo:
+     la proxima revision comparara 1 con 1 y no vera ningun cambio. Pero no
+     hay que inventar nada para arreglarlo — sabemos QUIENES son (la lista
+     guardada) y CUANDO nos enteramos (la marca de tiempo de esa lista).
+     Se hace una sola vez y solo en el caso exacto del fallo: hay seguidores
+     guardados, no hay ni un evento, y el historial empieza en cero. Quien
+     instalo la app con seguidores ya tiene su historial empezando en otro
+     numero, asi que no le toca nada. */
+  function repararNuevos() {
+    if (!S.followers || !(S.followers.users || []).length) return;
+    if ((S.events || []).length) return;
+    if (!(S.history || []).length || S.history[0].followers !== 0) return;
+    S.events = S.followers.users.map(function (u) {
+      return Object.assign({ type: 'new', ts: S.followers.ts || Date.now() }, u);
+    });
+    registrar('nuevos rehechos', { message: 'n=' + S.events.length });
+    guardar();
+  }
+
   var guardarT = 0;
   function guardar() {
     clearTimeout(guardarT);
@@ -199,7 +219,18 @@ window.Motor = (function () {
         return;
       }
       var se = [], llegan = [];
-      if (ant && ant.length) {
+      /* OJO CON ESTE IF. Antes decia `ant && ant.length`, y ahi estaba el
+         fallo: una cuenta que empieza con CERO seguidores guarda una lista
+         vacia, y `[].length` es 0, o sea falso. Resultado: el primer
+         seguidor de tu vida no generaba evento y "Nuevos" seguia diciendo 0
+         mientras la portada ya decia 1. Justo en el momento en que la app
+         tiene que funcionar.
+         Lo que hay que mirar no es si la lista de antes tenia gente, sino si
+         hubo una revision antes. Y eso lo dice S.followers: si es null no
+         hemos mirado nunca (y no se compara, o el primer escaneo anunciaria
+         a TODOS tus seguidores como nuevos); si es una lista vacia, si
+         miramos, y no habia nadie. De 0 a 1 es un seguidor nuevo. */
+      if (ant) {
         var hoyM = new Map(nuevos.map(function (u) { return [u.pk, u]; }));
         var antM = new Map(ant.map(function (u) { return [u.pk, u]; }));
         antM.forEach(function (u, pk) { if (!hoyM.has(pk)) se.push(u); });
@@ -457,6 +488,9 @@ window.Motor = (function () {
     var ba = await ig('checkFollows', [ub.pk, ua.username]).catch(function (e) { if (e && e.kind === 'rate') throw e; return null; });
     return { a: persona(ua), b: persona(ub), ab: ab, ba: ba };
   }
+
+  // Al arrancar, una sola vez: rehacer los "Nuevos" que se perdio el fallo.
+  repararNuevos();
 
   /* ---------------- reloj ---------------- */
   /* Por defecto la app NO revisa sola: solo cuando tu pulsas. Las revisiones
