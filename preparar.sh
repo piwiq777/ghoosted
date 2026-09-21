@@ -24,16 +24,15 @@ ade=$(git rev-list --count origin/"$r".."$r" 2>/dev/null || echo 0)
 
 echo
 echo "== Opcionales (NO van en el repositorio) =="
-echo "   Para escribir codigo, la web y los tests NO hacen falta.
+echo "   Para escribir codigo, tocar la web y pasar los tests NO hace falta ninguno."
+opc() { echo "  -    $1"; }
 [ -f Ghosted-Landing/.env.local ] && si "Ghosted-Landing/.env.local" \
-  || echo "  -    Ghosted-Landing/.env.local — solo para levantar la web con pagos. Se copia del panel de Vercel."
-[ -d Ghosted-Landing/.vercel ]    && si "Ghosted-Landing/.vercel" \
-  || echo "  -    Ghosted-Landing/.vercel — se rehace con 'vercel link'."
+  || opc "Ghosted-Landing/.env.local - solo para levantar la web con pagos. Se copia del panel de Vercel."
+[ -d Ghosted-Landing/.vercel ] && si "Ghosted-Landing/.vercel" \
+  || opc "Ghosted-Landing/.vercel - se rehace con: vercel link"
 [ -f "$HOME/.android/debug.keystore" ] && si "~/.android/debug.keystore" \
-  || echo "  -    ~/.android/debug.keystore — SOLO para compilar el APK. Sin el, compila el APK en el ordenador de casa;
-        la app se actualiza sola por internet sin tocar el APK."
+  || opc "~/.android/debug.keystore - SOLO para compilar el APK. Sin el, compila el APK en el otro ordenador: la app se actualiza sola por internet."
 
-echo
 echo "== Para compilar el APK (solo si vas a tocar la app) =="
 [ -d "$HOME/Android/Sdk" ] && si "Android SDK" || no "Android SDK (no hace falta para la web ni los tests)"
 [ -d "$HOME/.local/opt/jdk21" ] && si "JDK 21" || no "JDK 21 (no hace falta para la web ni los tests)"
