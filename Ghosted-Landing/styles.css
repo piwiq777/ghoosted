@@ -997,8 +997,12 @@ img,svg{display:block;max-width:100%}
 /* Los ojos son del color de las letras —la doble O sigue leyendose como
    dos oes— y lo que lleva color es la pupila. Con los discos enteros en
    degradado, naranja uno y morado el otro, parecian dos ojos rojos. */
-.wm-ojos i{position:relative;width:.7em;height:.7em;border-radius:50%;background:currentColor}
-.wm-ojos i::after{content:"";position:absolute;width:.3em;height:.3em;border-radius:50%;background:linear-gradient(135deg,#e1306c,#833ab4);top:.2em;left:.32em}
+/* Los ojos, como en la app: el disco lleva el color y la pupila es oscura.
+   Al reves —disco negro y pupila de color— se veian apagados. */
+.wm-ojos i{position:relative;width:.72em;height:.72em;border-radius:50%}
+.wm-ojos i:first-child{background:linear-gradient(135deg,#FF9A3D,#F0507A)}
+.wm-ojos i:last-child{background:linear-gradient(135deg,#D62976,#6E4BE0)}
+.wm-ojos i::after{content:"";position:absolute;width:.3em;height:.3em;border-radius:50%;background:#161616;top:.21em;left:.33em}
 @media (prefers-reduced-motion:no-preference){
   /* De vez en cuando miran a un lado y vuelven. Solo eso. */
   .wm-ojos i::after{animation:mira 7s var(--ease) infinite}
@@ -1162,4 +1166,31 @@ img,svg{display:block;max-width:100%}
 @media (max-width:560px){
   .nav .brand .wm{font-size:17px}
   .nav .lang-caret{display:none}
+}
+
+/* ---------- BAJAR: el bloque de descarga ----------
+   La app va primero y la extension al lado, no al reves: lo que se vende
+   ahora es el movil. Un solo bloque, centrado, sin nada mas que decidir. */
+.bajar{padding:0 var(--gut) 90px}
+.bajar-caja{max-width:var(--max);margin:0 auto;padding:64px 32px 56px;border-radius:44px;text-align:center;
+  background:var(--ig);color:#fff;box-shadow:0 40px 80px -50px rgba(214,41,118,.8);
+  display:flex;flex-direction:column;align-items:center;gap:0}
+.bajar-icono{display:block;width:76px;height:76px;margin-bottom:22px;filter:drop-shadow(0 16px 30px rgba(0,0,0,.28))}
+.bajar-icono svg{width:100%;height:100%;display:block;border-radius:22px}
+.bajar-t{margin:0;font-family:var(--marca);font-weight:800;letter-spacing:-.04em;line-height:1.02;
+  font-size:clamp(32px,4.6vw,56px)}
+.bajar-s{margin:16px auto 0;max-width:46ch;font-size:clamp(15px,1.5vw,17px);line-height:1.5;color:rgba(255,255,255,.88)}
+.bajar-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:30px}
+.bajar-b{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border-radius:100px;font-weight:600;
+  font-size:15.5px;letter-spacing:-.01em;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.bajar-b svg{width:19px;height:19px;flex:none}
+.bajar-b1{background:#fff;color:#161616;box-shadow:0 16px 30px -16px rgba(0,0,0,.5)}
+.bajar-b2{border:1px solid rgba(255,255,255,.55);color:#fff}
+.bajar-b:hover{transform:translateY(-2px)}
+.bajar-nota{margin:18px 0 0;font-size:13px;color:rgba(255,255,255,.78)}
+@media (max-width:700px){
+  .bajar{padding-bottom:64px}
+  .bajar-caja{padding:46px 20px 40px;border-radius:34px}
+  .bajar-btns{flex-direction:column;align-self:stretch}
+  .bajar-b{justify-content:center}
 }
