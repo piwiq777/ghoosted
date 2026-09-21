@@ -40,20 +40,37 @@ window.Generos = (function () {
   function limpio(t) {
     return String(t || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z\s._-]/g, ' ');
   }
+  function trozos(p) {
+    return limpio(p.full_name).trim().split(/[\s._-]+/).filter(function (x) { return x.length > 1; });
+  }
   function candidato(p) {
-    var n = limpio(p.full_name).trim().split(/[\s._-]+/).filter(function (x) { return x.length > 1; })[0];
+    var n = trozos(p)[0];
     if (!n) n = limpio(p.username).split(/[\s._\-0-9]+/).filter(function (x) { return x.length > 2; })[0];
     return n || '';
+  }
+  /* ¿Esto parece una PERSONA? La terminacion -a / -o solo vale si lo es.
+     "Biloba" es una discoteca y acababa contada como mujer, porque termina
+     en -a y tiene seis letras. Un nombre y un apellido son dos palabras; un
+     negocio suele ser una sola, o lleva algo que lo delata. */
+  var NEGOCIO = /(oficial|official|store|shop|club|bar|cafe|caf|studio|estudio|salon|clinic|clinica|center|centro|team|crew|agency|agencia|company|events|eventos|music|media|fit|gym|hotel|restaurant|tattoo|beauty|nails|hair|barber|academy|academia|school|escuela|photo|foto|design|art|records|radio|tv|news|shoes|moda|boutique|pizzeria|burger|disco|lounge)/;
+  function pareceGente(p) {
+    var t = trozos(p);
+    if (t.length < 2) return false;                 // un nombre suelto no basta
+    if (t.length > 4) return false;                 // eso ya es una frase
+    if (NEGOCIO.test(limpio(p.full_name) + ' ' + limpio(p.username))) return false;
+    return t.every(function (x) { return x.length > 1 && x.length < 14; });
   }
   function de(p) {
     var n = candidato(p);
     if (!n) return null;
+    // La lista de nombres manda: "Marta" es Marta aunque vaya sola.
     if (HOMBRE[n]) return 'h';
     if (MUJER[n]) return 'm';
     if (EXC_M[n]) return 'h';
     if (EXC_F[n]) return 'm';
-    // Solo nombres "de verdad": una palabra corta sin mas; los @ tipo
-    // "fcbarcelona" o "memesdiarios" no se clasifican.
+    // Fuera de la lista, adivinar por la terminacion solo si detras hay una
+    // persona. Si no, a "sin clasificar", que para eso esta.
+    if (!pareceGente(p)) return null;
     if (n.length < 3 || n.length > 9) return null;
     if (/[aeiou](a)$/.test(n) || /[^aeiou]a$/.test(n)) return 'm';
     if (/[^aeiou]o$/.test(n)) return 'h';
