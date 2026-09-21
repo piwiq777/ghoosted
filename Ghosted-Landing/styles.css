@@ -910,16 +910,11 @@ img,svg{display:block;max-width:100%}
 /* El movil: la tarjeta en blanco. El telefono dibujado sigue oscuro, que es
    como es un telefono. */
 
-/* El pie, claro. */
-.footer{background:#fff;border-top:1px solid var(--line)}
-.foot-brand b{color:var(--ink)}
-.foot-tag,.foot-col h4{color:var(--ink-3)}
-.foot-col a{color:var(--ink-2)}
-.foot-col a:hover{color:var(--ink)}
-.foot-col a:focus-visible{outline-color:var(--ink)}
-.indep{border-top-color:var(--line)}
-.indep-lead{color:var(--ink-2)}
-.indep-sub,.foot-disclaimer,.foot-rights{color:var(--ink-3)}
+/* El pie se queda negro. En blanco no se separaba del crema de la pagina:
+   el sitio parecia acabarse a media altura, sin suelo. Los colores del texto
+   son los de arriba (blancos sobre tinta), asi que aqui no hay nada que
+   decir; solo el logo, que por defecto es del color de la tinta. */
+.footer .wm{color:#F7F5F0}
 /* La banda del final no se toca: su boton recupera la sombra de antes, que
    la regla de .btn-primary de arriba le cambiaria por la rosa. */
 .cta-band .btn-primary{box-shadow:0 6px 22px rgba(20,18,16,.18)}
