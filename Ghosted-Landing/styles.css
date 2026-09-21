@@ -885,9 +885,18 @@ img,svg{display:block;max-width:100%}
    ========================================================================== */
 :root{
   --boton:linear-gradient(100deg,#e1306c,#c13584 40%,#833ab4 75%,#5851db);
-  --ig-texto:linear-gradient(95deg,#f56040,#e1306c 32%,#c13584 58%,#833ab4 82%,#5851db);
+  --ig-plano:#C4256E;   /* el magenta de la marca, oscurecido para que lea sobre el crema */
 }
-.hero-title .grad{background:var(--ig-texto);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* La linea de color del titular, en color plano.
+   Estaba con el degradado recortado sobre el texto (background-clip:text).
+   El hero es position:sticky y lleva dentro el campo de fotos con
+   will-change:transform, asi que el navegador lo pinta en su propia capa; en
+   esa capa Chrome vuelve a rasterizar el degradado y el texto sale lavado,
+   casi blanco sobre el crema. Las lineas negras salian bien y esta no: el
+   problema era el recorte, no el color. En plano se ve siempre, en cualquier
+   maquina, y ademas pesa menos. El degradado sigue donde no molesta: los
+   botones, la pegatina y los ojos del logo. */
+.hero-title .grad{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ig-plano)}
 .pega{background:var(--boton)}
 
 /* Botones */

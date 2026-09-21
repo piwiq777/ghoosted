@@ -102,6 +102,9 @@ a{color:inherit;text-decoration:none}
 .negro{display:flex;align-items:center;justify-content:center;gap:8px;flex:1 1 0;height:56px;padding:0 20px;border-radius:999px;font-size:16px;font-weight:600;letter-spacing:-0.02em;background:var(--b-bg);color:var(--b-ink);box-shadow:var(--b-sombra)}
 .negro.h50{height:50px} .negro.h48{height:48px} .negro.h46{flex:0 0 auto;height:46px}
 .negro.grande{height:56px;font-size:17px;box-shadow:var(--b2-sombra)}
+/* Ya revisado hoy: el boton sigue ahi y sigue diciendo cuanto falta, pero
+   apagado. Esconderlo dejaba la pantalla sin saber que hacer. */
+.negro.espera{background:var(--b-espera,rgba(120,120,128,.16));color:var(--tinta-2);box-shadow:none;font-weight:550}
 .claro{display:flex;align-items:center;justify-content:center;gap:8px;flex:1 1 0;height:50px;padding:0 18px;border-radius:999px;font-size:15px;font-weight:600;color:var(--ink)}
 .claro.h48{height:48px}
 .gira svg{animation:gira .8s linear infinite}

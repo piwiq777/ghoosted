@@ -16,6 +16,14 @@
     if (m < 1) return 'ahora'; if (m < 60) return m + ' min'; if (h < 24) return h + ' h'; if (d < 7) return d + ' d';
     return Math.floor(d / 7) + ' sem';
   }
+  /* "3 h" o "12 min": lo que falta, en la unidad que se entiende de un
+     vistazo. Por debajo de un minuto no se dice nada, ya casi esta. */
+  function queda(ms) {
+    var m = Math.ceil(ms / 60000);
+    if (m >= 120) return Math.round(m / 60) + ' h';
+    if (m >= 60) return Math.floor(m / 60) + ' h ' + (m % 60 ? (m % 60) + ' min' : '');
+    return Math.max(1, m) + ' min';
+  }
   function hora(ts) { var d = new Date(ts); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); }
   function iniciales(p) {
     var w = String(p.full_name || '').trim().split(/\s+/).filter(Boolean);
@@ -277,7 +285,12 @@
   function hoy() {
     var S = M.estado, L = M.listas(), c = S.counts;
     var ocup = M.ocupado;
-    var btn = '<div class="fila-btn"><button class="negro' + (ocup ? ' gira' : '') + '" data-a="revisar">' + ico(I.revisar, 19, 2) + (ocup ? 'Revisando…' : 'Revisar ahora') + '</button></div>';
+    // Una revision al dia: el boton lo dice en vez de no hacer nada al
+    // pulsarlo, que es lo que lleva a pulsarlo diez veces.
+    var falta = M.faltaParaRevisar();
+    var btn = '<div class="fila-btn"><button class="negro' + (ocup ? ' gira' : '') + (falta && !ocup ? ' espera' : '') + '" data-a="revisar">' +
+      ico(falta && !ocup ? I.reloj_arena : I.revisar, 19, 2) +
+      (ocup ? 'Revisando…' : falta ? 'Ya revisado hoy · ' + queda(falta) : 'Revisar ahora') + '</button></div>';
     var cab = '<div class="arriba"><div class="wm-caja">' + wm() + '</div>';
     var banda = U.actu ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b><span>' +
       (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div><button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>' : '';
@@ -519,7 +532,7 @@
       '<div class="ajuste"><span>Versión' + (U.ver ? ' <span class="valor">' + U.ver.web + '·' + U.ver.apk + '</span>' : '') + '</span><button class="enlace" data-a="buscar-act" style="height:auto">' + (U.buscando ? 'Buscando…' : 'Buscar actualización') + '</button></div>' +
       '<div class="ajuste"><span>Peticiones a Instagram<span class="valor"> · tope por hora</span></span><span class="valor">' +
         (U.gasto ? U.gasto.hora + '/' + U.gasto.topeHora + ' · hoy ' + U.gasto.dia + '/' + U.gasto.topeDia : '—') + '</span></div>' +
-      '<div class="ajuste"><span>Revisar sola cada 6 h<span class="valor"> · con la app abierta</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
+      '<div class="ajuste"><span>Revisar sola una vez al día<span class="valor"> · con la app abierta</span></span><button class="enlace" data-a="auto" style="height:auto">' + (S.auto ? 'Sí, activado' : 'No, solo a mano') + '</button></div>' +
       '<div class="ajuste"><span>Pedir datos a Instagram</span><button class="enlace" data-a="' + (M.esPro() && false ? '' : 'pausa') + '" style="height:auto">' + (S.pausa ? 'Está en pausa · reanudar' : 'Pausar') + '</button></div>' +
       '<div class="ajuste"><span>Diagnóstico</span><button class="enlace" data-a="diag" style="height:auto">Ver</button></div>' +
       '<div class="ajuste"><span>Borrar los datos guardados</span><button class="enlace" data-a="borrar" style="height:auto">Borrar</button></div>' +
@@ -738,6 +751,8 @@
       if (M.estado.pausa) return toast('La app está en pausa');
       var r = M.estado.rate;
       if (r && Date.now() < r.until) return toast('Instagram pidió esperar. Lo vuelvo a intentar solo a las ' + hora(r.until));
+      var f = M.faltaParaRevisar();
+      if (f) return toast('Ya has revisado hoy. Vuelve en ' + queda(f) + ' — es lo que evita que Instagram te marque');
       M.revisar(true);
     },
     'buscar-act': function () {
@@ -754,7 +769,7 @@
     },
     'aplicar-act': function () { U.actu = null; P.nativo('aplicarActualizacion', {}); },
     'instalar-apk': function () { toast('Descargando la app nueva…'); P.nativo('instalarApk', {}); },
-    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola cada 6 h' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
+    'auto': function () { M.automatico(!M.estado.auto); toast(M.estado.auto ? 'Revisará sola una vez al día' : 'Solo cuando pulses «Revisar ahora»'); pintar(); },
     'pausa': function () { M.pausar(!M.estado.pausa); toast(M.estado.pausa ? 'En pausa: no le pido nada a Instagram' : 'Reanudada'); pintar(); },
     'diag': function () { U.diag = null; abrir('diag'); },
     'probar': function () {
