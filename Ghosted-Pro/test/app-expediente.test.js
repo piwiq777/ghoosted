@@ -90,5 +90,18 @@ module.exports = () => {
 
   s.ok('tocar una publicacion la abre en el visor', /'ver-post': function/.test(app));
 
+  /* LA HOJA APLASTABA LO QUE LLEVA DENTRO.
+     Es un flex en columna CON altura maxima, asi que el navegador encogia a
+     los hijos para que cupieran: los botones se quedaban en una rayita de
+     8 px, las destacadas cortadas por la mitad y las filas de datos
+     enseñaban el titulo sin el valor. Cada bloque tiene que mantener su alto
+     y dejar que la hoja haga scroll, que para eso lo tiene. */
+  const css = fs.readFileSync(path.join(APP, 'web', 'app.css'), 'utf8');
+  const noAplastar = css.slice(css.indexOf('.hoja > .pf-cab'), css.indexOf('.hoja > .pf-cab') + 260);
+  for (const bloque of ['pf-cab', 'pf-etqs', 'pf-acciones', 'pf-cifras', 'pf-bio', 'pf-datos', 'pf-sec', 'pf-dest', 'pf-posts']) {
+    s.ok('la hoja no aplasta ' + bloque, new RegExp('\\.hoja > \\.' + bloque + '[,{ ]').test(noAplastar));
+  }
+  s.ok('  y lo hace con flex:0 0 auto, no con alturas a dedo', /\{flex:0 0 auto\}/.test(noAplastar));
+
   return s;
 };
