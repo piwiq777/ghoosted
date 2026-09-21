@@ -9,8 +9,54 @@
 </head>
 <body>
   <div class="manchas" aria-hidden="true"><i class="m1"></i><i class="m2"></i><i class="m3"></i><i class="m4"></i><i class="m5"></i></div>
+  <!-- ARRANQUE. Hasta ahora, al abrir la app se veia el fondo vacio hasta
+       que el navegador terminaba de leer los cinco guiones: un par de
+       segundos en blanco en los que parece que no ha abierto. Esto es HTML y
+       CSS puros, o sea que se pinta ANTES de que exista una sola linea de
+       codigo, y app.js lo quita en cuanto tiene algo que enseñar. -->
+  <div id="arranque">
+    <div class="ar-icono" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div>
+    <div class="ar-wm" role="img" aria-label="ghoosted">gh<i class="ar-ojos"><b></b><b></b></i>sted</div>
+    <div class="ar-barra" aria-hidden="true"><i></i></div>
+  </div>
   <div id="app"></div>
   <div class="toast vidrio" id="toast" role="status" aria-live="polite"></div>
+  <!-- EL ULTIMO RECURSO. Si uno de los guiones de abajo revienta al leerse,
+       no hay app: te quedas mirando la pantalla de arranque para siempre y
+       sin saber por que. Esto va ANTES que ellos, no depende de nada, y
+       convierte ese cuelgue en una pantalla que dice lo que pasa y deja
+       reintentar. -->
+  <script>
+  (function () {
+    var puesto = false;
+    function morir(motivo) {
+      if (puesto) return;
+      puesto = true;
+      var a = document.getElementById('arranque');
+      if (!a) return;
+      a.className = 'ar-error';
+      a.innerHTML =
+        '<div class="ar-e-ico" aria-hidden="true">!</div>' +
+        '<div class="ar-e-t">Ghoosted no ha podido abrir</div>' +
+        '<div class="ar-e-d">Algo se ha roto al arrancar. Con reintentar suele bastar; si no, actualiza la app desde Ajustes.</div>' +
+        '<button class="ar-e-b" onclick="location.reload()">Reintentar</button>' +
+        '<div class="ar-e-m">' + String(motivo || '').slice(0, 160).replace(/[<>&]/g, ' ') + '</div>';
+    }
+    window.addEventListener('error', function (e) {
+      // Una imagen que no carga no es que la app este rota.
+      if (e && e.target && e.target !== window && e.target.tagName === 'IMG') return;
+      morir(e && (e.message || (e.target && e.target.src)));
+    }, true);
+    window.addEventListener('unhandledrejection', function (e) {
+      morir(e && e.reason && (e.reason.message || e.reason));
+    });
+    // Y si nada revienta pero tampoco arranca: a los 20 s, lo mismo.
+    setTimeout(function () {
+      var a = document.getElementById('arranque');
+      if (a && !a.classList.contains('fuera')) morir('la app no ha llegado a arrancar');
+    }, 20000);
+  })();
+  </script>
   <script src="demo.js"></script>
   <script src="puente.js"></script>
   <script src="generos.js"></script>

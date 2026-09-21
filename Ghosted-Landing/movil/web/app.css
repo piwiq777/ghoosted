@@ -118,6 +118,43 @@ button:active,a.btn:active{opacity:.75}
 .bloque{display:flex;flex-direction:column;gap:12px}
 .nota{margin:0;font-size:13px;line-height:1.45;color:var(--ink-2);padding:0 4px}
 
+/* ---------- el arranque ----------
+   Lo primero que se ve al abrir, antes de que exista nada de codigo. Se
+   quita solo (con .fuera) cuando la app ya tiene algo que pintar. */
+#arranque{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  background:var(--bg);transition:opacity .34s ease,visibility .34s}
+#arranque.fuera{opacity:0;visibility:hidden;pointer-events:none}
+.ar-icono{position:relative;width:104px;height:104px;border-radius:31px;background:var(--ig);display:flex;align-items:center;justify-content:center;gap:5px;overflow:hidden;
+  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,0.5),0 22px 44px rgba(214,41,118,0.32);
+  animation:arLatido 1.8s ease-in-out infinite}
+.ar-icono > div{position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,0.35) 0%,rgba(255,255,255,0) 40%)}
+.ar-icono > span{position:relative;width:31px;height:31px;border-radius:999px;background:#FFFFFF;display:flex;align-items:center;justify-content:flex-end;padding-right:3px}
+.ar-icono > span > span{width:14px;height:14px;border-radius:999px;background:#161616;animation:arMira 2.6s ease-in-out infinite}
+.ar-wm{display:flex;align-items:center;font-family:var(--marca);font-weight:800;font-size:23px;letter-spacing:-0.02em;color:var(--ink)}
+.ar-ojos{display:flex;gap:1px;margin:0 1px;font-style:normal}
+.ar-ojos b{width:18px;height:18px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1.4px currentColor;
+  display:flex;align-items:center;justify-content:flex-end;padding-right:2px;box-sizing:border-box}
+.ar-ojos b::after{content:"";width:7px;height:7px;border-radius:999px;background:var(--pupila)}
+.ar-barra{width:132px;height:4px;border-radius:999px;background:var(--fill);overflow:hidden}
+.ar-barra i{display:block;width:40%;height:100%;border-radius:999px;background:var(--ig);animation:arBarra 1.25s ease-in-out infinite}
+@keyframes arLatido{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+@keyframes arMira{0%,58%,100%{transform:none}66%,82%{transform:translateX(-5px)}}
+@keyframes arBarra{0%{transform:translateX(-120%)}100%{transform:translateX(330%)}}
+
+/* La pantalla de "no ha podido abrir". Nada de vidrio aqui: esto tiene que
+   leerse si o si, que es justo el momento en que algo ha ido mal. */
+.ar-error{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:32px 28px;text-align:center;background:var(--bg);color:var(--ink)}
+.ar-e-ico{width:66px;height:66px;border-radius:22px;background:var(--ig);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--marca);font-weight:800;font-size:32px;
+  box-shadow:0 18px 36px -14px rgba(214,41,118,.5)}
+.ar-e-t{font-family:var(--marca);font-weight:800;font-size:22px;letter-spacing:-0.035em;line-height:1.2;text-wrap:balance}
+.ar-e-d{font-size:14.5px;line-height:1.5;color:var(--ink-2);max-width:32ch}
+.ar-e-b{margin-top:6px;height:50px;padding:0 30px;border-radius:999px;background:var(--ink);color:var(--bg);
+  font-size:16px;font-weight:600}
+.ar-e-b:active{transform:scale(.97)}
+.ar-e-m{margin-top:10px;font-size:11.5px;line-height:1.4;color:var(--ink-2);opacity:.75;max-width:36ch;word-break:break-word}
+
 /* ---------- el logo en letra ---------- */
 .wm{display:flex;align-items:center;font-family:var(--marca);font-weight:800;font-size:22px;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
 .wm .ojos{display:flex;gap:1px;margin:0 1px}
@@ -504,7 +541,22 @@ button:active,a.btn:active{opacity:.75}
   font-style:normal;font-size:10.5px;font-weight:700}
 
 /* aviso flotante */
-.toast{position:fixed;left:50%;top:calc(var(--sa-top) + 12px);transform:translateX(-50%) translateY(-120%);z-index:90;max-width:calc(100% - 32px);padding:12px 18px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;visibility:hidden;transition:transform .35s cubic-bezier(.32,1.25,.46,1),opacity .2s,visibility .35s}
+/* EL AVISO FLOTANTE.
+   Estaba en vidrio, y el vidrio deja pasar lo que hay debajo: sobre una
+   foto, sobre el degradado o sobre una lista, el texto se perdia. Un aviso
+   que no se lee no sirve de nada, y este es el que cuenta lo que ha pasado.
+   Se queda opaco y al reves que la pantalla: tinta sobre claro si el tema es
+   oscuro, y claro sobre tinta si es claro. Contraste garantizado en los dos,
+   caiga encima de lo que caiga. El desenfoque se queda solo de adorno en los
+   bordes. */
+.toast{position:fixed;left:50%;top:calc(var(--sa-top) + 12px);transform:translateX(-50%) translateY(-120%);z-index:90;
+  max-width:calc(100% - 32px);padding:13px 20px;border-radius:22px;font-size:14.5px;font-weight:600;line-height:1.35;
+  text-align:center;text-wrap:balance;
+  background:var(--ink)!important;color:var(--bg)!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  border:none!important;
+  box-shadow:0 18px 40px -14px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.14)!important;
+  opacity:0;visibility:hidden;transition:transform .35s cubic-bezier(.32,1.25,.46,1),opacity .2s,visibility .35s}
 .toast.ver{transform:translateX(-50%) translateY(0);opacity:1;visibility:visible}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
