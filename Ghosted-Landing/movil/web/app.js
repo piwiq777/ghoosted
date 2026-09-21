@@ -1400,5 +1400,16 @@
   setInterval(function () { if (!U.visor && !(document.activeElement && document.activeElement.tagName === 'INPUT')) pintar(); }, 30000);
 
   pintar();
+  /* Fuera la pantalla de arranque: ya hay algo que mirar. Se hace despues
+     del primer pintar() y no antes, para que no haya ni un fotograma en
+     blanco entre una cosa y la otra. */
+  (function quitarArranque() {
+    var a = document.getElementById('arranque');
+    if (!a) return;
+    requestAnimationFrame(function () {
+      a.classList.add('fuera');
+      setTimeout(function () { if (a.parentNode) a.parentNode.removeChild(a); }, 400);
+    });
+  })();
   P.nativo('listo', {});
 })();
