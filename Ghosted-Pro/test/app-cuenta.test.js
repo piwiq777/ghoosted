@@ -75,5 +75,17 @@ module.exports = () => {
   s.ok('  y con poca altura se deja de centrar y se desplaza',
     /@media \(max-height:620px\)/.test(css) && /\.intro\{overflow-y:auto/.test(css));
 
+  /* LA SALIDA DE EMERGENCIA.
+     Poner la cuenta delante de todo dejo el boton de actualizar DETRAS de
+     ella. O sea que un fallo en esta pantalla no se podia arreglar
+     actualizando, que es como se arregla todo lo demas: la app quedaba
+     encerrada. Paso de verdad — el registro se quedo sin correos que mandar
+     y no habia forma de salir. */
+  s.ok('desde la pantalla de cuenta se puede buscar actualizacion',
+    /function salidaEmergencia/.test(app) && /data-a="buscar-act"/.test(app));
+  s.ok('  y el aviso de version nueva tambien se ve ahi', /U\.actu/.test(app.slice(app.indexOf('function salidaEmergencia'), app.indexOf('function pantallaCuenta'))));
+  s.ok('  esta en las DOS variantes de la pantalla',
+    (app.slice(app.indexOf('function pantallaCuenta'), app.indexOf('function sinSesion')).match(/salidaEmergencia\(\)/g) || []).length === 2);
+
   return s;
 };

@@ -195,6 +195,22 @@
      Registrarse y entrar son la MISMA pantalla con un interruptor: son dos
      campos iguales y separarlas en dos pantallas solo hace que la gente se
      equivoque de sitio y crea que no tiene cuenta. */
+  /* LA SALIDA DE EMERGENCIA.
+     Si esta pantalla se atasca —y se atasco: el registro se quedo sin
+     correos que mandar— la app entera queda encerrada detras de ella, con el
+     boton de actualizar dentro. O sea que un fallo aqui no se puede arreglar
+     actualizando, que es justo como se arregla todo lo demas. Nunca mas: el
+     aviso de version nueva y el boton de buscarla viven tambien aqui. */
+  function salidaEmergencia() {
+    var banda = U.actu
+      ? '<div class="gratis vidrio"><div><b>' + (U.actu.apk ? 'Hay una versión nueva de la app' : 'Versión nueva lista') + '</b>' +
+        '<span>' + (U.actu.apk ? 'Se descarga e instala desde aquí' : 'Pulsa para usarla ya') + '</span></div>' +
+        '<button data-a="' + (U.actu.apk ? 'instalar-apk' : 'aplicar-act') + '">Actualizar</button></div>'
+      : '';
+    return banda + '<button class="inicio" data-a="buscar-act">' +
+      (U.buscando ? 'Buscando…' : '¿Algo no va? Buscar actualización') + '</button>';
+  }
+
   function pantallaCuenta() {
     var modo = U.cuentaModo || 'entrar';
     var esperar = !!U.trabajando.cuenta;
@@ -204,7 +220,7 @@
         '<div class="icono p112" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div>' +
         '<div class="titulo"><h1>Mira tu correo</h1><p>Te hemos mandado un enlace a <b>' + esc(pendiente) + '</b>. Púlsalo y vuelve aquí para entrar.</p></div>' +
         '</div><div class="intro-bajo"><div class="fila-btn"><button class="negro grande" data-a="cuenta-ya-confirme">Ya lo he confirmado</button></div>' +
-        '<button class="inicio" data-a="cuenta-otro-correo">Usar otro correo</button></div></div>';
+        '<button class="inicio" data-a="cuenta-otro-correo">Usar otro correo</button>' + salidaEmergencia() + '</div></div>';
     }
     return '<div class="intro"><div class="intro-top centro">' + wm(true) + '</div><div class="intro-medio g24">' +
       '<div style="display:flex;justify-content:center"><div class="icono p112" aria-hidden="true"><div></div><span><span></span></span><span><span></span></span></div></div>' +
@@ -221,7 +237,8 @@
       '</div></div>' +
       '<div class="intro-bajo"><div class="fila-btn"><button class="negro grande' + (esperar ? ' gira' : '') + '" data-a="cuenta-ir">' +
       (modo === 'entrar' ? 'Entrar' : 'Crear cuenta') + '</button></div>' +
-      '<p class="nota" style="text-align:center">Tu contraseña de Ghoosted no tiene nada que ver con la de Instagram, y nunca te pedimos la suya.</p></div></div>';
+      '<p class="nota" style="text-align:center">Tu contraseña de Ghoosted no tiene nada que ver con la de Instagram, y nunca te pedimos la suya.</p>' +
+      salidaEmergencia() + '</div></div>';
   }
 
   function sinSesion() {
