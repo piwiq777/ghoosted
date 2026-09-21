@@ -25,7 +25,23 @@ window.Demo = (function () {
     if (m === 'rateLeftMs') return 0;
     if (m === 'fetchReelsTray') return ['luke.tattooer', 'cornelia.rn', 'alvaro.carrillloo', 'david_epila_04', 'jr.fisiru_07', 'samixprivxd', 'braedencarterrr', 'isaac__ba', '_sara_p.f', 'marcc__10', 'fresh_izzy', 'aitorrrhdz']
       .map(function (n, i) { return Object.assign(u(200 + i, n, ''), { reelId: String(200 + i), count: [6, 1, 3, 1, 1, 1, 3, 1, 1, 1, 1, 1][i], latestTs: ahora - i * H, unseen: i % 3 !== 2 }); });
-    if (m === 'fetchStoriesMany') { var o = {}; a[0].forEach(function (id) { o[id] = []; }); return o; }
+    /* Historias de mentira, pero de verdad: con esto vacio no se podia
+       probar el visor en el navegador y un fallo suyo no se veia hasta
+       tenerlo en el movil. Son cuadros de color, sin pedir nada fuera. */
+    if (m === 'fetchStoriesMany') {
+      var o = {};
+      a[0].forEach(function (id, j) {
+        var n = 1 + (Number(id) % 3);
+        o[id] = [];
+        for (var q = 0; q < n; q++) {
+          var c = ['%23FF9A3D', '%23D62976', '%236E4BE0', '%23F0507A'][(Number(id) + q) % 4];
+          var img = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="405" height="720">' +
+            '<rect width="405" height="720" fill="' + c + '"/></svg>';
+          o[id].push({ mediaId: id + '_' + q, url: img, img: img, isVideo: false, takenAt: ahora - q * H });   // en ms, como los de verdad
+        }
+      });
+      return o;
+    }
     if (m === 'pendingRequests') return { users: [u(301, 'rihab.mzn_', 'rihab'), u(302, 'adriiana_nieves', 'adriana'), u(303, 'elvispresleyyy_', 'elvispresleyyy_')] };
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
     if (m === 'fetchUserByUsername' || m === 'fetchUserProfile') return u(400 + String(a[0]).length, String(a[0]).replace(/^@/, ''), String(a[0]).replace(/^@/, ''));

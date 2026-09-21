@@ -242,10 +242,18 @@ window.Motor = (function () {
       se.forEach(function (u) { evs.push(Object.assign({ type: 'unfollow', ts: ahora }, u)); });
       llegan.forEach(function (u) { evs.push(Object.assign({ type: 'new', ts: ahora }, u)); });
       if (evs.length) S.events = evs.concat(S.events).slice(0, 3000);
+      /* El aviso. Solo lo habia de bajas: si alguien te empezaba a seguir no
+         se enteraba nadie, y esa es justo la que apetece mirar. */
       if (se.length && esPro()) {
         Puente.nativo('notificar', {
           titulo: se.length === 1 ? '1 persona te dejó de seguir' : se.length + ' personas te dejaron de seguir',
           texto: se.slice(0, 5).map(function (u) { return '@' + u.username; }).join(', ')
+        });
+      }
+      if (llegan.length && esPro()) {
+        Puente.nativo('notificar', {
+          titulo: llegan.length === 1 ? '@' + llegan[0].username + ' te sigue' : llegan.length + ' personas nuevas te siguen',
+          texto: llegan.slice(0, 5).map(function (u) { return '@' + u.username; }).join(', ')
         });
       }
 
