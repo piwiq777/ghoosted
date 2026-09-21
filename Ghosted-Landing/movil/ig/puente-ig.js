@@ -12,6 +12,25 @@
  * no haga ya la extension. */
 (function () {
   'use strict';
+
+  /* SI FALTA LA API, SE BORRA TODO EL RASTRO Y SE SALE.
+     El codigo que carga page-api.js e ig-api.js va envuelto en
+     `if(!window.__ghdCargado){window.__ghdCargado=1; ...}` — o sea que la
+     marca se pone ANTES de ejecutar nada. Si esos dos ficheros reventaban a
+     mitad (Instagram cambia algo, la pagina no estaba lista, lo que sea), la
+     marca se quedaba puesta para siempre y window.GhostedIG no se definia
+     NUNCA mas en esa pagina. Todas las llamadas contestaban "ig_no_listo",
+     que en la app se lee como "Instagram no contesta". Y no habia forma de
+     salir de ahi salvo recargando Instagram a mano.
+     Aqui se detecta y se limpia: sin la marca y sin este puente, la proxima
+     inyeccion vuelve a cargarlo todo desde cero. */
+  if (!window.GhostedIG) {
+    try { delete window.__ghdCargado; } catch (e) { window.__ghdCargado = 0; }
+    try { delete window.GhdIGRecibir; } catch (e) { window.GhdIGRecibir = null; }
+    window.__ghdPuenteIG = false;
+    return;
+  }
+
   if (window.__ghdPuenteIG) return;
   window.__ghdPuenteIG = true;
 

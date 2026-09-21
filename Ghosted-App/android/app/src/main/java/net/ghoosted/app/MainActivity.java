@@ -235,7 +235,15 @@ public class MainActivity extends Activity {
         String h = ig.getUrl() == null ? "" : Uri.parse(ig.getUrl()).getHost();
         if (h == null || !h.endsWith("instagram.com")) return;
         if (scriptsIg == null) {
-            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:2500,hora:60,dia:600};\nif(!window.__ghdCargado){window.__ghdCargado=1;\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
+            /* La condicion mira si existe GhostedIG, no una marca aparte.
+               Antes era `if(!__ghdCargado){__ghdCargado=1; ...}`: la marca se
+               ponia ANTES de ejecutar los dos ficheros, asi que si alguno
+               reventaba a mitad, la marca se quedaba puesta y GhostedIG no se
+               definia nunca mas en esa pagina. Todas las llamadas contestaban
+               "ig_no_listo" y no habia salida salvo recargar a mano.
+               Mirando lo que de verdad hace falta, un fallo se arregla solo en
+               la siguiente inyeccion. */
+            scriptsIg = "window.__ghdAppId=window.__ghdAppId||'1217981644879628';window.__ghdTope={min:2500,hora:60,dia:600};\nif(!window.GhostedIG){\n" + leer("ig/page-api.js") + "\n" + leer("ig/ig-api.js") + "\n}\n" + leer("ig/puente-ig.js");
         }
         ig.evaluateJavascript(scriptsIg, null);
     }
@@ -260,7 +268,10 @@ public class MainActivity extends Activity {
                         // Si Instagram ha recargado la pagina y el motor no esta, se
                         // vuelve a meter antes de pedirle nada.
                         String llamada = "window.GhdIGRecibir ? GhdIGRecibir(" + q + ") : GhdNativoIG.aApp(" + falla + ")";
-                        ig.evaluateJavascript("!!window.GhdIGRecibir", v -> {
+                        // Se comprueban LAS DOS: el puente y la API. Con solo
+                        // el puente, la pagina contestaba "no listo" sin que
+                        // nadie volviera a inyectar nada.
+                        ig.evaluateJavascript("!!(window.GhdIGRecibir && window.GhostedIG)", v -> {
                             if (!"true".equals(v)) inyectar();
                             ig.evaluateJavascript(llamada, null);
                         });
