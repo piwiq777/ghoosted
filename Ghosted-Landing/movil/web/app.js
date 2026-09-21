@@ -655,6 +655,41 @@
       if (extra.length) h += '<div class="pf-datos">' + extra.map(function (x) {
         return '<div><span>' + esc(x[0]) + '</span><b>' + esc(x[1]) + '</b></div>';
       }).join('') + '</div>';
+
+      /* Destacadas: las portadas, en fila. */
+      var dst = d.destacadas || [];
+      if (dst.length) h += '<div class="pf-sec">Destacadas</div><div class="pf-dest">' + dst.map(function (x) {
+        return '<div class="pf-d"><div class="aro"><div>' + (foto(x.full) || x.full ? '<img alt="" src="' + esc(foto(x.full) || x.full) + '" loading="lazy" onerror="this.remove()">' : '') + '</div></div>' +
+          '<span>' + esc(x.title || '·') + '</span></div>';
+      }).join('') + '</div>';
+
+      /* Publicaciones, y con ellas el engagement: los me gusta y los
+         comentarios vienen DENTRO de cada publicacion, asi que la media no
+         cuesta ninguna peticion mas. */
+      var ps = d.posts_lista || [];
+      if (ps.length) {
+        var conDatos = ps.filter(function (x) { return !x.likesHidden; });
+        if (conDatos.length) {
+          var ml = Math.round(conDatos.reduce(function (a, x) { return a + (x.likes || 0); }, 0) / conDatos.length);
+          var mc = Math.round(conDatos.reduce(function (a, x) { return a + (x.comments || 0); }, 0) / conDatos.length);
+          var tasa = d.followers ? (ml + mc) / d.followers * 100 : 0;
+          h += '<div class="pf-sec">Sus números</div><div class="pf-cifras">' +
+            '<div><b>' + num(ml) + '</b><span>me gusta de media</span></div>' +
+            '<div><b>' + num(mc) + '</b><span>comentarios</span></div>' +
+            (d.followers ? '<div><b>' + (tasa >= 10 ? Math.round(tasa) : tasa.toFixed(1)) + '%</b><span>de sus seguidores</span></div>' : '') +
+            '</div>';
+        } else {
+          h += '<div class="pf-sec">Sus números</div><p class="nota" style="padding:0">Esconde los me gusta de sus publicaciones.</p>';
+        }
+        h += '<div class="pf-sec">Publicaciones · ' + num(ps.length) + '</div><div class="pf-posts">' + ps.map(function (x, i) {
+          return '<button class="pf-post" data-a="ver-post" data-i="' + i + '">' +
+            (foto(x.thumb) || x.thumb ? '<img alt="" src="' + esc(foto(x.thumb) || x.thumb) + '" loading="lazy" onerror="this.remove()">' : '') +
+            (x.isVideo ? '<i class="pf-mark">' + ico(I.play, 14) + '</i>' : x.multi ? '<i class="pf-mark">' + num(x.slides) + '</i>' : '') +
+            '</button>';
+        }).join('') + '</div>';
+      } else if (d.is_private) {
+        h += '<div class="pf-sec">Publicaciones</div><p class="nota" style="padding:0">Es privada y no la sigues: Instagram no enseña nada.</p>';
+      }
     }
 
     if (s && s.historias) h += '<div class="pf-datos"><div><span>Tus historias</span><b>' +
@@ -1010,6 +1045,17 @@
         .then(function (r) { toast(r && r.ok ? 'Guardada en ' + (r.donde || 'tu galería') : 'No se pudo guardar: ' + String(r && r.error || '').slice(0, 40)); })
         .catch(function () { toast('No se pudo guardar'); })
         .finally(function () { U.bajando = false; pintar(); });
+    },
+    /* Tocar una publicacion la abre en el mismo visor de las historias. */
+    'ver-post': function (el) {
+      var p = U.perfil, d = p && p.pk && M.expedienteGuardado(p.pk);
+      if (!d) return;
+      var x = (d.posts_lista || [])[Number(el.getAttribute('data-i'))];
+      if (!x) return;
+      U.hojaAbierta = null;
+      U.visor = { grupos: [{ user: { username: d.username, full_name: d.full_name, pic: d.pic },
+        items: [{ url: x.full || x.thumb, img: x.thumb, isVideo: !!x.isVideo, takenAt: x.ts }] }], g: 0, i: 0 };
+      pintar(); temporizar();
     },
     'abrir-ig': function () {
       var u = U.perfil && U.perfil.username; if (!u) return;

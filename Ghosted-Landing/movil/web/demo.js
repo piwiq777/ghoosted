@@ -44,12 +44,15 @@ window.Demo = (function () {
     }
     if (m === 'pendingRequests') return { users: [u(301, 'rihab.mzn_', 'rihab'), u(302, 'adriiana_nieves', 'adriana'), u(303, 'elvispresleyyy_', 'elvispresleyyy_')] };
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
+    if (m === 'fetchHighlights') return [0,1,2,3].map(function (i) {
+      return { id: 'h' + i, mediaId: 'm' + i, title: ['Viajes','Gym','2024','Amigos'][i], covers: [], full: '', count: 3 + i };
+    });
     if (m === 'fetchDossier') {
       var n = String(a[1] || a[0] || 'alguien').replace(/^@/, '');
       return { pk: String(a[0] || 400), username: n, full_name: n, bio: 'Bio de mentira para el navegador.\nSegunda linea.',
         bio_links: [], external_url: 'https://ejemplo.com', pic: '', pic_hd: '',
         followers: 1234, following: 567, posts: 89, is_private: false, is_verified: true,
-        is_business: false, is_pro: false, category: '', public_email: 'hola@ejemplo.com', public_phone: '' };
+        is_business: false, is_pro: false, category: '', has_highlights: true, public_email: 'hola@ejemplo.com', public_phone: '' };
     }
     if (m === 'guardarMedia') return { ok: false, error: 'en el navegador no se guarda' };
     if (m === 'searchUsers') {
@@ -60,7 +63,13 @@ window.Demo = (function () {
     if (m === 'checkFollows') return { follows: Math.random() > .5, complete: true };
     if (m === 'fetchFollowingOf') { var k = Math.floor(Date.now() / 1000) % 3; return { users: base.slice(k, k + 40), complete: true }; }
     if (m === 'getMyStoryItems') return [];
-    if (m === 'fetchUserPosts') return [];
+    if (m === 'fetchUserPosts') return [0,1,2,3,4,5,6,7,8].map(function (i) {
+      var c = ['%23FF9A3D','%23D62976','%236E4BE0','%23F0507A'][i % 4];
+      var img = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><rect width="300" height="300" fill="' + c + '"/></svg>';
+      return { id: 'p' + i, code: 'C' + i, thumb: img, full: img, isVideo: i % 3 === 0,
+        likes: 120 + i * 37, comments: 4 + i, likesHidden: false, ts: ahora - i * 86400000,
+        multi: i % 4 === 2, slides: i % 4 === 2 ? 3 : 1 };
+    });
     return null;
   }
   async function nativo(orden, datos) {

@@ -510,6 +510,25 @@ window.Motor = (function () {
     if (expedientesHoy() >= EXP_DIA) throw { kind: 'tope_exp' };
     var d = await ig('fetchDossier', [pk || null, username || null]);
     if (!d || !d.username) throw { kind: 'no_existe' };
+    /* Las publicaciones y las destacadas, en el MISMO boton: son dos
+       peticiones mas, pero pedirlas por separado significaria que el usuario
+       tiene que volver a pulsar y volver a esperar para ver media ficha.
+       Con calma entre una y otra, que es lo que las hace parecer humanas.
+       Si la cuenta es privada no dan nada, y no pasa nada: se enseña lo que
+       haya.
+       El "engagement" NO se pide: los me gusta y los comentarios vienen
+       dentro de cada publicacion. Sale gratis. */
+    var posts = [], destacadas = [];
+    if (!d.is_private || (S.following && (S.following.users || []).some(function (u) { return String(u.pk) === String(d.pk); }))) {
+      await espera(azar(700, 1400));
+      posts = await ig('fetchUserPosts', [String(d.pk), 12]).catch(function () { return []; });
+      if (d.has_highlights) {
+        await espera(azar(700, 1400));
+        destacadas = await ig('fetchHighlights', [String(d.pk)]).catch(function () { return []; });
+      }
+    }
+    d.posts_lista = (posts || []).slice(0, 12);
+    d.destacadas = (destacadas || []).slice(0, 10);
     if (!S.exp) S.exp = {};
     S.exp[String(pk || d.pk)] = { ts: Date.now(), datos: d };
     // No se guardan para siempre: se tiran los de mas de dos dias.
