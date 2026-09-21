@@ -6,11 +6,14 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -34,7 +37,10 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -350,6 +356,10 @@ public class MainActivity extends Activity {
                     aUi(sesionJson());
                 });
                 break;
+            case "guardarMedia":
+                // Contesta cuando termina de bajarlo: puede tardar.
+                guardarMedia(id, d);
+                return;
             case "salirApp":
                 moveTaskToBack(true);
                 break;
@@ -359,6 +369,91 @@ public class MainActivity extends Activity {
         try {
             aUi(new JSONObject().put("tipo", "resultado").put("id", id).put("ok", true).put("valor", valor == null ? JSONObject.NULL : valor).toString());
         } catch (Exception e) { /* nada */ }
+    }
+
+    /** GUARDAR UNA HISTORIA EN LA GALERIA.
+        Se baja aqui y no en la vista web porque un WebView no puede escribir
+        en el telefono: el atributo `download` de un enlace no hace nada sin
+        un DownloadListener, y las URL de Instagram no se abren desde fuera.
+        Se piden con la misma cabecera que las fotos (ver foto()), que es lo
+        que hace que su CDN las de.
+        En Android 10 y posteriores se escribe por MediaStore y no hace falta
+        ningun permiso; en los anteriores, a la carpeta publica de imagenes,
+        con el permiso de siempre. */
+    private void guardarMedia(String id, JSONObject d) {
+        final String url = d == null ? "" : d.optString("url");
+        final boolean video = d != null && d.optBoolean("video");
+        final String quien = d == null ? "" : d.optString("de", "historia");
+        new Thread(() -> {
+            String error = null, donde = null;
+            try {
+                Uri u = Uri.parse(url);
+                String h = u.getHost();
+                if (!"https".equals(u.getScheme()) || h == null
+                        || !(h.endsWith(".cdninstagram.com") || h.endsWith(".fbcdn.net"))) {
+                    throw new Exception("origen no permitido");
+                }
+                HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
+                c.setConnectTimeout(15000);
+                c.setReadTimeout(60000);
+                c.setRequestProperty("User-Agent", WebSettings.getDefaultUserAgent(this));
+                c.setRequestProperty("Referer", IG);
+                if (c.getResponseCode() != 200) throw new Exception("HTTP " + c.getResponseCode());
+
+                String limpio = quien.replaceAll("[^A-Za-z0-9._-]", "");
+                if (limpio.isEmpty()) limpio = "historia";
+                String nombre = "ghoosted-" + limpio + "-" + System.currentTimeMillis() + (video ? ".mp4" : ".jpg");
+                String tipo = video ? "video/mp4" : "image/jpeg";
+
+                if (Build.VERSION.SDK_INT >= 29) {
+                    ContentValues v = new ContentValues();
+                    v.put(MediaStore.MediaColumns.DISPLAY_NAME, nombre);
+                    v.put(MediaStore.MediaColumns.MIME_TYPE, tipo);
+                    v.put(MediaStore.MediaColumns.RELATIVE_PATH,
+                            (video ? Environment.DIRECTORY_MOVIES : Environment.DIRECTORY_PICTURES) + "/Ghoosted");
+                    v.put(MediaStore.MediaColumns.IS_PENDING, 1);
+                    Uri destino = getContentResolver().insert(
+                            video ? MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                                  : MediaStore.Images.Media.EXTERNAL_CONTENT_URI, v);
+                    if (destino == null) throw new Exception("no se pudo crear el archivo");
+                    try (InputStream in = c.getInputStream();
+                         OutputStream out = getContentResolver().openOutputStream(destino)) {
+                        copiar(in, out);
+                    }
+                    v.clear();
+                    v.put(MediaStore.MediaColumns.IS_PENDING, 0);
+                    getContentResolver().update(destino, v, null, null);
+                } else {
+                    File carpeta = new File(Environment.getExternalStoragePublicDirectory(
+                            video ? Environment.DIRECTORY_MOVIES : Environment.DIRECTORY_PICTURES), "Ghoosted");
+                    if (!carpeta.exists() && !carpeta.mkdirs()) throw new Exception("sin permiso para guardar");
+                    File f = new File(carpeta, nombre);
+                    try (InputStream in = c.getInputStream(); OutputStream out = new FileOutputStream(f)) {
+                        copiar(in, out);
+                    }
+                    // Para que salga en la galeria sin reiniciar el telefono.
+                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(f)));
+                }
+                donde = video ? "Vídeos/Ghoosted" : "Fotos/Ghoosted";
+            } catch (Exception e) {
+                error = String.valueOf(e.getMessage());
+            }
+            final String err = error, dnd = donde;
+            runOnUiThread(() -> {
+                try {
+                    JSONObject v = new JSONObject();
+                    if (err == null) v.put("ok", true).put("donde", dnd); else v.put("ok", false).put("error", err);
+                    aUi(new JSONObject().put("tipo", "resultado").put("id", id).put("ok", true).put("valor", v).toString());
+                } catch (Exception e) { /* nada */ }
+            });
+        }).start();
+    }
+
+    private static void copiar(InputStream in, OutputStream out) throws Exception {
+        byte[] b = new byte[16384];
+        int n;
+        while ((n = in.read(b)) > 0) out.write(b, 0, n);
+        out.flush();
     }
 
     /** Mira si hay version nueva. Si es de la web, la baja y la deja lista;

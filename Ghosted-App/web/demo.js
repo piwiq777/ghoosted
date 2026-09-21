@@ -44,6 +44,7 @@ window.Demo = (function () {
     }
     if (m === 'pendingRequests') return { users: [u(301, 'rihab.mzn_', 'rihab'), u(302, 'adriiana_nieves', 'adriana'), u(303, 'elvispresleyyy_', 'elvispresleyyy_')] };
     if (m === 'approveRequest' || m === 'ignoreRequest' || m === 'unfollow') return { status: 'ok' };
+    if (m === 'guardarMedia') return { ok: false, error: 'en el navegador no se guarda' };
     if (m === 'searchUsers') {
       var q = String(a[0] || '').toLowerCase();
       return base.filter(function (x) { return (x.username + ' ' + x.full_name).toLowerCase().indexOf(q) >= 0; }).slice(0, 8);

@@ -4,6 +4,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- Guardar historias en la galeria. En Android 10 y posteriores se hace
+         por MediaStore y no hace falta permiso ninguno; solo en los
+         anteriores, de ahi el maxSdkVersion. -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
 
     <application
         android:label="Ghoosted"
