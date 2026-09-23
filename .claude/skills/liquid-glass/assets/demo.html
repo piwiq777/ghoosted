@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" data-lg-forzar="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liquid Glass</title>
+<link rel="stylesheet" href="liquid-glass.css">
+<style>
+  /* Lo de esta página de ejemplo: el fondo con manchas de color. El vidrio
+     necesita algo de color detrás; sobre blanco liso no se ve nada. */
+  body{margin:0;min-height:100vh;background:var(--lg-fondo);color:var(--lg-tinta);
+    font:16px/1.4 -apple-system,BlinkMacSystemFont,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .manchas{position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(180px 180px at 20% 0%,rgba(255,154,61,.55),transparent 70%),
+      radial-gradient(200px 200px at 85% 5%,rgba(142,68,214,.5),transparent 70%),
+      radial-gradient(200px 200px at 10% 80%,rgba(110,75,224,.35),transparent 70%),
+      radial-gradient(180px 180px at 95% 60%,rgba(240,80,122,.3),transparent 70%)}
+  [data-lg-tema="oscuro"] .manchas{opacity:.4}
+  main{position:relative;z-index:1;max-width:430px;margin:0 auto;padding:24px 20px 140px;display:flex;flex-direction:column;gap:22px}
+  h1{margin:0;font-size:27px;font-weight:700;letter-spacing:-.02em}
+  h2{margin:0 4px;font-size:20px;font-weight:700;letter-spacing:-.025em}
+  .fila{display:flex;align-items:center;gap:12px;padding:14px 0}
+  .fila + .fila{border-top:.5px solid var(--lg-borde-fino)}
+  .av{width:46px;height:46px;border-radius:999px;background:var(--lg-degradado);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:600}
+  .quien b{display:block;font-size:16px}
+  .quien span{display:block;font-size:14px;color:var(--lg-tinta-2)}
+  .tabs-abajo{position:fixed;left:14px;right:14px;bottom:max(22px,env(safe-area-inset-bottom,0px));z-index:50}
+  .arriba{display:flex;align-items:center;justify-content:space-between;gap:12px}
+</style>
+</head>
+<body>
+<div class="manchas" aria-hidden="true"></div>
+
+<main id="vista">
+  <div class="arriba">
+    <h1>Liquid Glass</h1>
+    <div style="display:flex;gap:8px">
+      <button class="lg-redondo" id="lento" aria-label="Cámara lenta" title="Cámara lenta">🐢</button>
+      <button class="lg-redondo" id="tema" aria-label="Cambiar tema">◐</button>
+    </div>
+  </div>
+
+  <!-- selector de arriba: la misma cápsula, versión plana -->
+  <div class="lg-segs lg-plano" data-lg-segs="filtro" role="group">
+    <button class="on" data-lg-valor="todos">Todos<span style="opacity:.6">12</span></button>
+    <button data-lg-valor="nuevos">Nuevos<span style="opacity:.6">3</span></button>
+    <button data-lg-valor="idos">Se fueron<span style="opacity:.6">1</span></button>
+  </div>
+
+  <!-- selector en vidrio -->
+  <div class="lg-segs lg-vidrio" data-lg-segs="orden" role="group">
+    <button class="on" data-lg-valor="recientes">Recientes</button>
+    <button data-lg-valor="az">A-Z</button>
+  </div>
+
+  <h2 id="titulo">Todos</h2>
+  <div class="lg-lista" id="lista"></div>
+
+  <button class="lg-boton lg-color" id="abrir">Abrir una hoja</button>
+  <p style="color:var(--lg-tinta-2);font-size:13px;margin:0 4px">
+    Toca las pestañas de abajo y los selectores: la pieza blanca viaja y se
+    estira por el camino. Con la tortuga lo ves a cámara lenta. La hoja se
+    arrastra hacia abajo con el dedo para cerrarla.
+  </p>
+</main>
+
+<nav class="lg-tabs lg-vidrio tabs-abajo" data-lg-tabs="principal" aria-label="Secciones">
+  <button class="on" data-lg-valor="hoy"><i class="lg-ico">👀</i><span>Hoy</span></button>
+  <button data-lg-valor="personas"><i class="lg-ico">🧑‍🤝‍🧑</i><span>Personas</span></button>
+  <button data-lg-valor="historias"><i class="lg-ico">◎</i><span>Historias</span></button>
+  <button data-lg-valor="actividad"><i class="lg-ico">📈</i><span>Actividad</span></button>
+  <button data-lg-valor="historial"><i class="lg-ico">🕘</i><span>Historial</span></button>
+</nav>
+
+<script src="liquid-glass.js"></script>
+<script>
+  var GENTE = [['LT','Luke','@luke.tattooer'],['CR','Cornelia','@cornelia.rn'],['AC','Álvaro','@alvaro.c'],['DE','David','@david_e']];
+  function pintarLista(n) {
+    document.getElementById('lista').innerHTML = GENTE.slice(0, n).map(function (p) {
+      return '<div class="fila"><div class="av">' + p[0] + '</div><div class="quien"><b>' + p[1] + '</b><span>' + p[2] + '</span></div></div>';
+    }).join('');
+  }
+  pintarLista(4);
+
+  // Los selectores avisan con un evento: aquí se repinta la lista y se vuelve
+  // a colocar la cápsula (el HTML nuevo estrena elementos).
+  document.addEventListener('lg:cambio', function (e) {
+    var g = e.target.getAttribute('data-lg-segs') || e.target.getAttribute('data-lg-tabs');
+    if (g === 'filtro') {
+      document.getElementById('titulo').textContent = e.detail.boton.childNodes[0].textContent;
+      pintarLista({ todos: 4, nuevos: 3, idos: 1 }[e.detail.valor] || 4);
+    }
+    if (g === 'principal') LiquidGlass.entra(document.getElementById('vista'));
+  });
+
+  document.getElementById('abrir').addEventListener('click', function () {
+    LiquidGlass.hoja(
+      '<div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">' +
+      '<h2 style="margin:0;font-size:26px">Una hoja de vidrio</h2>' +
+      '<p style="margin:0;color:var(--lg-tinta-2)">Sube desde abajo, se arrastra con el dedo y se cierra tocando fuera.</p></div>' +
+      '<div class="lg-segs lg-plano" data-lg-segs="hoja"><button class="on">Auto</button><button>Claro</button><button>Oscuro</button></div>' +
+      '<button class="lg-boton" onclick="LiquidGlass.cerrarHoja()">Cerrar</button>',
+      { titulo: 'Ejemplo' }
+    );
+    LiquidGlass.init();   // los selectores recién creados dentro de la hoja
+  });
+
+  // Cámara lenta, para ver el estirado con calma.
+  document.getElementById('lento').addEventListener('click', function () {
+    var h = document.documentElement;
+    h.setAttribute('data-lg-lento', h.getAttribute('data-lg-lento') === '1' ? '0' : '1');
+    this.style.background = h.getAttribute('data-lg-lento') === '1' ? 'var(--lg-degradado)' : '';
+  });
+
+  document.getElementById('tema').addEventListener('click', function () {
+    var h = document.documentElement;
+    h.setAttribute('data-lg-tema', h.getAttribute('data-lg-tema') === 'oscuro' ? 'claro' : 'oscuro');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+/* ==========================================================================
+   LIQUID GLASS — el vidrio de iOS, tal cual quedó en la app de Ghoosted.
+   --------------------------------------------------------------------------
+   Sin dependencias. Dos cosas:
+     1. Vidrio: fondos translúcidos con luz propia (claro y oscuro).
+     2. Movimiento: la pieza que marca lo elegido VIAJA y se ESTIRA por el
+        camino, en vez de encenderse y apagarse; y las hojas suben desde
+        abajo y se arrastran con el dedo.
+
+   Todo va con variables: cambia --lg-acento y los tonos y ya es de otra app.
+   ========================================================================== */
+
+:root{
+  /* --- colores base --- */
+  --lg-fondo:#F6F5F8;
+  --lg-tinta:#161616;
+  --lg-tinta-2:#63636B;
+  --lg-relleno:rgba(22,22,22,0.06);
+  --lg-borde-fino:rgba(22,22,22,0.07);
+  --lg-acento:#D62976;
+  --lg-degradado:linear-gradient(135deg,#FF9A3D 0%,#F0507A 38%,#D62976 55%,#8E44D6 82%,#5B5BE6 100%);
+
+  /* --- vidrio: lo que flota (barras, botones redondos, tarjetas) --- */
+  --lg-vidrio:linear-gradient(135deg,rgba(255,255,255,0.66) 0%,rgba(255,255,255,0.26) 48%,rgba(255,255,255,0.46) 100%);
+  --lg-filtro:blur(22px) saturate(210%) brightness(1.06);
+  --lg-sombra:inset 1.5px 1.5px 0 rgba(255,255,255,0.98),inset -1px -1px 0 rgba(255,255,255,0.5),
+              inset 0 12px 24px rgba(255,255,255,0.35),inset 0 -8px 18px rgba(255,255,255,0.18),
+              0 1px 2px rgba(30,10,50,0.06),0 16px 38px rgba(60,20,90,0.14);
+  --lg-borde:0.5px solid rgba(255,255,255,0.55);
+
+  /* --- vidrio de listas: más lechoso, para leer encima --- */
+  --lg-lista:rgba(255,255,255,0.62);
+  --lg-lista-filtro:blur(26px) saturate(200%);
+  --lg-lista-sombra:inset 1.5px 1.5px 0 #FFFFFF,inset -1px -1px 0 rgba(255,255,255,0.5),
+                    0 1px 2px rgba(22,22,22,0.04),0 12px 30px rgba(60,20,90,0.08);
+  --lg-lista-borde:0.5px solid rgba(255,255,255,0.6);
+
+  /* --- la cápsula: la pieza que marca lo elegido --- */
+  --lg-capsula:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(255,255,255,0.62));
+  --lg-capsula-sombra:inset 0 1px 0 #FFFFFF,inset 0 -1px 0 rgba(22,22,22,0.05),0 4px 14px rgba(60,20,90,0.16);
+  --lg-capsula-plana:#FFFFFF;
+  --lg-capsula-plana-sombra:0 2px 8px rgba(0,0,0,0.1);
+
+  /* --- hojas --- */
+  --lg-hoja:linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,255,255,0.72));
+  --lg-hoja-filtro:blur(30px) saturate(180%);
+  --lg-hoja-sombra:inset 1.5px 1.5px 0 #FFFFFF,inset -1px -1px 0 rgba(255,255,255,0.5),0 -20px 60px rgba(60,20,90,0.18);
+  --lg-hoja-borde:0.5px solid rgba(255,255,255,0.8);
+  --lg-velo:rgba(246,245,248,0.45);
+  --lg-asa:rgba(22,22,22,0.10);
+
+  /* --- el muelle: la curva que hace que parezca líquido --- */
+  --lg-muelle:cubic-bezier(.34,1.32,.5,1);
+  --lg-muelle-fuerte:cubic-bezier(.34,1.5,.5,1);
+  --lg-suave:cubic-bezier(.22,1,.3,1);
+}
+
+/* Oscuro: mismo dibujo, vidrio ahumado. Se activa con [data-tema="oscuro"]
+   o solo con el ajuste del sistema si no se ha elegido nada. */
+[data-lg-tema="oscuro"],
+:root:not([data-lg-tema="claro"]) [data-lg-auto]{
+  --lg-fondo:#09090B;
+  --lg-tinta:#F5F5F7;
+  --lg-tinta-2:rgba(245,245,247,0.58);
+  --lg-relleno:rgba(255,255,255,0.07);
+  --lg-borde-fino:rgba(255,255,255,0.07);
+  --lg-acento:#FF5E9C;
+  --lg-vidrio:linear-gradient(135deg,rgba(255,255,255,0.11) 0%,rgba(255,255,255,0.035) 50%,rgba(255,255,255,0.07) 100%);
+  --lg-filtro:blur(24px) saturate(120%);
+  --lg-sombra:inset 1px 1px 0 rgba(255,255,255,0.22),inset -1px -1px 0 rgba(255,255,255,0.05),
+              inset 0 10px 22px rgba(255,255,255,0.03),0 18px 40px rgba(0,0,0,0.6);
+  --lg-borde:0.5px solid rgba(255,255,255,0.10);
+  --lg-lista:rgba(255,255,255,0.045);
+  --lg-lista-filtro:blur(24px);
+  --lg-lista-sombra:inset 1px 1px 0 rgba(255,255,255,0.10),0 14px 34px rgba(0,0,0,0.45);
+  --lg-lista-borde:0.5px solid rgba(255,255,255,0.07);
+  --lg-capsula:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.07));
+  --lg-capsula-sombra:inset 1px 1px 0 rgba(255,255,255,0.28),0 4px 12px rgba(0,0,0,0.4);
+  --lg-capsula-plana:rgba(255,255,255,0.14);
+  --lg-capsula-plana-sombra:none;
+  --lg-hoja:linear-gradient(180deg,rgba(40,40,44,0.86),rgba(24,24,27,0.80));
+  --lg-hoja-sombra:inset 1px 1px 0 rgba(255,255,255,0.18),0 -20px 60px rgba(0,0,0,0.6);
+  --lg-hoja-borde:0.5px solid rgba(255,255,255,0.1);
+  --lg-velo:rgba(9,9,11,0.45);
+  --lg-asa:rgba(255,255,255,0.14);
+}
+
+/* ---------- piezas ---------- */
+.lg-vidrio{
+  background:var(--lg-vidrio);
+  -webkit-backdrop-filter:var(--lg-filtro);backdrop-filter:var(--lg-filtro);
+  box-shadow:var(--lg-sombra);border:var(--lg-borde);
+}
+.lg-lista{
+  border-radius:28px;padding:4px 16px;background:var(--lg-lista);
+  -webkit-backdrop-filter:var(--lg-lista-filtro);backdrop-filter:var(--lg-lista-filtro);
+  box-shadow:var(--lg-lista-sombra);border:var(--lg-lista-borde);
+}
+.lg-redondo{
+  width:44px;height:44px;flex-shrink:0;border-radius:999px;display:flex;align-items:center;justify-content:center;
+  color:var(--lg-tinta);background:var(--lg-vidrio);
+  -webkit-backdrop-filter:var(--lg-filtro);backdrop-filter:var(--lg-filtro);
+  box-shadow:var(--lg-sombra);border:var(--lg-borde);
+  transition:transform .18s ease;
+}
+.lg-redondo:active{transform:scale(.93)}
+
+/* ---------- barra de pestañas y selectores: la cápsula que viaja ----------
+   La cápsula es UNA pieza que se mueve con transform. Los botones NO llevan
+   fondo: el fondo es ella. Si cada botón se encendiera y apagara, no habría
+   animación posible y además el navegador repinta de más. */
+.lg-tabs,.lg-segs{position:relative;display:flex;gap:2px;padding:5px;border-radius:999px}
+.lg-segs{padding:4px}
+.lg-tabs > button,.lg-segs > button{
+  position:relative;z-index:1;flex:1 1 0;min-width:0;border:0;margin:0;cursor:pointer;
+  background:transparent;box-shadow:none;color:var(--lg-tinta-2);font:inherit;
+  transition:color .3s ease;
+}
+.lg-tabs > button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:58px;border-radius:999px;font-size:11px;font-weight:600}
+.lg-segs > button{display:flex;align-items:center;justify-content:center;gap:5px;height:40px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+.lg-tabs > button.on,.lg-segs > button.on{color:var(--lg-tinta);font-weight:600}
+.lg-tabs > button svg,.lg-segs > button svg{width:22px;height:22px}
+
+.lg-capsula{
+  position:absolute;z-index:0;top:5px;bottom:5px;left:5px;border-radius:999px;
+  background:var(--lg-capsula);box-shadow:var(--lg-capsula-sombra);
+  transition:transform .46s var(--lg-muelle);
+  will-change:transform;
+}
+.lg-segs .lg-capsula{top:4px;bottom:4px;left:4px}
+.lg-segs.lg-plano{background:var(--lg-relleno);border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.lg-segs.lg-plano .lg-capsula{background:var(--lg-capsula-plana);box-shadow:var(--lg-capsula-plana-sombra)}
+
+/* El "líquido": al viajar se estira en el sentido de la marcha y al llegar
+   se recoge. Es esto, y no el desenfoque, lo que da la sensación.
+   Estos números son los de la app de Ghoosted: tocarlos al alza hace que
+   parezca un chicle, no vidrio. */
+.lg-capsula.lg-viaja{animation:lg-liquida .46s var(--lg-muelle)}
+@keyframes lg-liquida{
+  0%{scale:1 1}
+  35%{scale:1.1 .88}
+  70%{scale:.97 1.05}
+  100%{scale:1 1}
+}
+/* El icono elegido crece un poco y da un rebote al cambiar. */
+.lg-tabs > button .lg-ico{display:block;line-height:0;transition:transform .42s var(--lg-muelle-fuerte)}
+.lg-tabs > button.on .lg-ico{transform:scale(1.14) translateY(-1px)}
+.lg-tabs > button.lg-salta .lg-ico{animation:lg-salta .5s var(--lg-muelle-fuerte)}
+@keyframes lg-salta{
+  0%{transform:scale(.88)}
+  45%{transform:scale(1.26) translateY(-2px)}
+  100%{transform:scale(1.14) translateY(-1px)}
+}
+
+/* ---------- el cuerpo entra al cambiar de sección ---------- */
+.lg-entra{animation:lg-entra .34s var(--lg-suave)}
+@keyframes lg-entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- hojas: suben, se arrastran, bajan ---------- */
+.lg-velo{position:fixed;inset:0;z-index:70;background:var(--lg-velo);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .3s ease}
+.lg-hoja{
+  position:fixed;left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom,0px));z-index:71;
+  max-width:414px;margin:0 auto;border-radius:42px;padding:12px 24px 18px;
+  display:flex;flex-direction:column;gap:20px;max-height:calc(100vh - 40px);overflow:auto;
+  background:var(--lg-hoja);
+  -webkit-backdrop-filter:var(--lg-hoja-filtro);backdrop-filter:var(--lg-hoja-filtro);
+  box-shadow:var(--lg-hoja-sombra);border:var(--lg-hoja-borde);color:var(--lg-tinta);
+  transform:translateY(102%);transition:transform .42s var(--lg-suave);
+  touch-action:pan-y;will-change:transform;
+}
+.lg-abierta .lg-velo{opacity:1}
+.lg-abierta .lg-hoja{transform:none}
+.lg-cerrando .lg-velo{opacity:0}
+.lg-cerrando .lg-hoja{transform:translateY(102%)}
+.lg-asa{display:flex;justify-content:center;cursor:grab;padding:2px 0 4px;margin:-4px 0 0}
+.lg-asa > span{width:38px;height:5px;border-radius:999px;background:var(--lg-asa)}
+
+/* ---------- botones ---------- */
+.lg-boton{
+  display:flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 20px;border:0;
+  border-radius:999px;font-size:16px;font-weight:600;letter-spacing:-0.02em;cursor:pointer;
+  background:var(--lg-tinta);color:var(--lg-fondo);
+  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,0.3),inset -1px -1px 0 rgba(0,0,0,0.18),
+             inset 0 10px 18px rgba(255,255,255,0.08),0 12px 26px rgba(0,0,0,0.18);
+  transition:transform .18s ease;
+}
+.lg-boton.lg-color{background:var(--lg-degradado);color:#FFFFFF;
+  box-shadow:inset 1.5px 1.5px 0 rgba(255,255,255,0.45),0 14px 30px rgba(214,41,118,0.35)}
+.lg-boton:active{transform:scale(.97)}
+
+/* ---------- respeta a quien no quiere movimiento ---------- */
+@media (prefers-reduced-motion: reduce){
+  :root:not([data-lg-forzar]) .lg-capsula,
+  :root:not([data-lg-forzar]) .lg-hoja,:root:not([data-lg-forzar]) .lg-velo,
+  :root:not([data-lg-forzar]) .lg-tabs > button .lg-ico,
+  :root:not([data-lg-forzar]) .lg-boton,:root:not([data-lg-forzar]) .lg-redondo{transition:none!important}
+  :root:not([data-lg-forzar]) .lg-capsula.lg-viaja,
+  :root:not([data-lg-forzar]) .lg-tabs > button.lg-salta .lg-ico,
+  :root:not([data-lg-forzar]) .lg-entra{animation:none!important}
+}
+/* Para verlo despacio mientras se ajusta: data-lg-lento="1" en <html>. */
+[data-lg-lento="1"]{--lg-muelle:cubic-bezier(.34,1.32,.5,1)}
+[data-lg-lento="1"] .lg-capsula{transition-duration:1.8s}
+[data-lg-lento="1"] .lg-capsula.lg-viaja{animation-duration:1.8s}
+[data-lg-lento="1"] .lg-tabs > button.lg-salta .lg-ico{animation-duration:1.6s}
+[data-lg-lento="1"] .lg-hoja,[data-lg-lento="1"] .lg-velo{transition-duration:1.4s}
+
+/* ---------- Android: el desenfoque de verdad va a tirones ----------
+   En un WebView de Android, varias capas con backdrop-filter se recalculan
+   en cada scroll. Pon data-lg-ligero="1" en <html> y el vidrio se queda sin
+   desenfoque (se ve casi igual sobre un fondo suave) pero va fluido. */
+[data-lg-ligero="1"] .lg-vidrio,[data-lg-ligero="1"] .lg-lista,[data-lg-ligero="1"] .lg-redondo{
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+}
