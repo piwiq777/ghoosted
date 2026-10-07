@@ -60,7 +60,7 @@
     // herramienta de captura -- el visitante ve una pagina en blanco con el
     // contenido perfectamente presente en el DOM. Ya nos ha pasado. Asi que el
     // efecto es un adorno y va montado como tal: se apaga solo ante la duda.
-    const targets = document.querySelectorAll('.features-head,.section-head,.stats,.film,.worlds,.pcard,.faq-list,.fb-grid,.show,.pair-card');
+    const targets = document.querySelectorAll('.features-head,.section-head,.stats,.film,.worlds,.pcard,.faq-list,.fb-grid,.show');
     // Al rendirse se QUITA la clase 'reveal', no se anade 'in'. Anadir 'in'
     // deja el elemento dependiendo de una transicion de opacidad, y una
     // transicion no avanza en una pestana en segundo plano: se queda 'running'
@@ -145,7 +145,7 @@
     // Deliberately NOT gated on prefers-reduced-motion: this timer is the
     // only thing that shows a visitor the second slide exists at all, and
     // killing it leaves the section stuck on slide 1 with no story (same
-    // reasoning as the pair-section loop above). Reduced motion instead
+    // reasoning). Reduced motion instead
     // drops just the kinetic bits — the photo's scale-drift (styles.css) and
     // the progress-bar fill going instant instead of animated (below).
     const showStage = document.getElementById('showStage');
@@ -199,44 +199,6 @@
         onScreen = true; sync();
       }
       paint();
-    }
-
-    // Pair section — real QR (same vendored generator qr.js the extension
-    // itself uses), pointing at this very section rather than a live pairing
-    // session: a static marketing page can't mint a real channel+key like the
-    // extension does at click-time, and /pair no longer exists as a page.
-    const pairQrSlot = document.getElementById('pairQrSlot');
-    if (pairQrSlot && window.GhostedQR) {
-      pairQrSlot.innerHTML = GhostedQR.svg('https://ghoosted.net/#pair', {
-        scale: 6, margin: 2, dark: '#0a0a0f', light: '#ffffff',
-      });
-    }
-
-    // Pair section — loops the illustration between "scanning" and "linked" so
-    // a visitor sees the whole flow without a real device. Ships is-linked by
-    // default (see the class in the HTML) so a no-JS visitor still gets the
-    // finished state rather than a stuck mid-scan frame.
-    //
-    // Deliberately NOT gated on prefers-reduced-motion: this loop is the only
-    // thing that explains what pairing does, and killing it leaves the panel
-    // frozen on a checkmark with no story. That setting asks for less MOTION,
-    // so the CSS drops the two genuinely kinetic bits instead (the sweeping
-    // scanline and the travelling connector dot) and keeps the crossfade.
-    const pairStage = document.getElementById('pairStage');
-    if (pairStage) {
-      const SCAN_MS = 5600, LINK_MS = 3400;
-      const labels = [document.getElementById('pairLabel'), document.getElementById('pairLabel2')].filter(Boolean);
-      const setStage = (linked) => {
-        pairStage.classList.toggle('is-linked', linked);
-        pairStage.classList.toggle('is-scanning', !linked);
-        const text = GhostedI18n.t(linked ? 'pair_badge_linked' : 'pair_badge_scanning', linked ? 'Linked' : 'Waiting for scan');
-        labels.forEach((el) => { el.textContent = text; });
-      };
-      const loop = () => {
-        setStage(false);
-        setTimeout(() => { setStage(true); setTimeout(loop, LINK_MS); }, SCAN_MS);
-      };
-      setTimeout(loop, 1200); // hold the finished state a beat before the first demo pass
     }
 
     // A phone visitor literally cannot run a Chrome extension — iOS has no
@@ -388,6 +350,19 @@
         const canon = document.querySelector('link[rel="canonical"]');
         const ENLACE = (canon && canon.href) || (location.origin + '/');
         const T = function (k, d) { return window.GhostedI18n ? window.GhostedI18n.t(k, d) : d; };
+
+        /* Android puede instalar la app: eso es lo util que se le ofrece.
+           En un iPhone todavia no hay app, asi que se queda lo de siempre —
+           mandarse el enlace para abrirlo en el ordenador. */
+        const android = /android/i.test(navigator.userAgent || '');
+        const botonApp = document.getElementById('movilApp');
+        if (android && botonApp) {
+          botonApp.hidden = false;
+          const titulo = aviso.querySelector('.movil-h');
+          const parrafo = aviso.querySelector('.movil-p');
+          if (titulo) { titulo.setAttribute('data-i18n', 'mob_h_and'); titulo.textContent = T('mob_h_and', 'Ghoosted for Android'); }
+          if (parrafo) { parrafo.setAttribute('data-i18n', 'mob_p_and'); parrafo.textContent = T('mob_p_and', 'Download the app and check your Instagram from the phone. On a computer it is a Chrome extension.'); }
+        }
 
         const ok = document.getElementById('movilOk');
         let borrar = null;

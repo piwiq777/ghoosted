@@ -39,7 +39,9 @@
   --maxw:1180px;
 
   --font:'Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,system-ui,sans-serif;
-  --display:'Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,system-ui,sans-serif;
+  /* Los titulares van todos con la letra de la marca (Unbounded). Antes
+     habia dos: Inter en unas secciones y Unbounded en otras, y se notaba. */
+  --display:'Unbounded','Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,system-ui,sans-serif;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;min-width:0}
@@ -418,6 +420,11 @@ img,svg{display:block;max-width:100%}
   .show{padding:136px 24px 132px}
   .show-stage{height:min(58vh,540px)}
 }
+@media (max-width:860px){
+}
+/* El boton de descarga, a todo el ancho del movil. */
+@media (max-width:700px){
+}
 @media (max-width:700px){
   /* Las flechas dejan de robar ancho y se ponen ENCIMA de la foto, en sus dos
      bordes. En un movil, 52px por lado son 104px menos de imagen — el ancho
@@ -629,163 +636,6 @@ img,svg{display:block;max-width:100%}
 .cta-band .btn-primary{background:#F7F5F0;color:var(--ink)}
 .cta-band .btn-primary:hover{background:#fff}
 
-/* ---------- pair phone (index.html — desktop-to-phone handoff, design 4b) ---------- */
-.pair{max-width:1288px;margin:0 auto;padding:var(--sec) 24px 0}
-.pair-card{position:relative;background:var(--ink);border-radius:28px;overflow:hidden}
-.pair-glow{position:absolute;top:-180px;left:50%;transform:translateX(-50%);width:900px;height:520px;
-  border-radius:50%;pointer-events:none;
-  background:radial-gradient(ellipse,rgba(124,58,237,.28),rgba(20,18,16,0) 70%)}
-.pair-inner{position:relative;max-width:1100px;margin:0 auto;padding:100px 40px 104px}
-
-.pair-head{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;margin-bottom:64px}
-.pair-badge{display:flex;align-items:center;gap:9px;font-size:11.5px;font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.16);
-  border-radius:100px;padding:7px 16px}
-.pair-badge .pair-dot{width:5px;height:5px;border-radius:50%;background:#A49B8E;transition:background .5s ease}
-.pair-card.is-linked .pair-badge .pair-dot{background:#7C3AED}
-.pair-head h2{font-family:var(--display);font-size:clamp(38px,6vw,64px);font-weight:380;letter-spacing:-.048em;
-  line-height:1;color:#FFFFFF;margin:0;text-wrap:balance}
-.pair-head p{font-size:17.5px;line-height:1.55;color:rgba(255,255,255,.6);margin:0;max-width:480px;text-wrap:pretty}
-
-.pair-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:center}
-
-/* Both objects sit a little smaller than the design's raw sizes and lean in
-   under the cursor — same "grow into place" gesture as the showcase shot at
-   the top of the page. transform only, so nothing reflows around them. */
-.pair-qr-card,.pair-phone-wrap{transition:transform .5s var(--ease)}
-.pair-qr-card:hover,.pair-phone-wrap:hover{transform:scale(1.07)}
-
-/* QR card — reads as the extension's own popup window */
-.pair-qr-side{display:flex;justify-content:flex-end}
-.pair-qr-card{width:100%;max-width:330px;border-radius:16px;overflow:hidden;background:#0B0A09;
-  border:1px solid rgba(255,255,255,.11)}
-.pair-qr-titlebar{display:flex;align-items:center;gap:7px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.09)}
-.pair-qr-titlebar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
-.pair-qr-titlebar span{margin-left:10px;font-size:11.5px;color:rgba(255,255,255,.34)}
-.pair-qr-body{padding:28px 26px 30px;display:flex;flex-direction:column;gap:20px}
-.pair-qr-label{font-size:14px;font-weight:550;letter-spacing:-.015em;color:#FFFFFF}
-.pair-qr-window{position:relative;background:#FFFFFF;border-radius:14px;padding:18px;aspect-ratio:1/1;
-  display:flex;align-items:center;justify-content:center;overflow:hidden}
-.pair-qr-slot{width:100%;height:100%;opacity:.25;transition:opacity .6s ease}
-.pair-qr-slot svg{width:100%;height:100%;display:block}
-.pair-card.is-scanning .pair-qr-slot{opacity:1}
-/* real QR (rendered by qr.js, same generator the extension uses); it points
-   at this page, not a live pairing session — a static page can't mint one */
-.pair-scanline{position:absolute;left:10px;right:10px;height:2px;top:12%;
-  background:linear-gradient(90deg,rgba(124,58,237,0),#7C3AED,#F0522F,rgba(240,82,47,0));
-  box-shadow:0 0 24px 7px rgba(124,58,237,.4);opacity:0;pointer-events:none;
-  transition:opacity .45s ease}
-.pair-card.is-scanning .pair-scanline{animation:pairSweep 5.6s ease-in-out}
-/* the sweep fades itself in and out at the ends, so the beam never blinks on
-   at the top or cuts off dead at the bottom the instant the read completes */
-@keyframes pairSweep{
-  0%{top:12%;opacity:0}
-  8%{opacity:1}
-  86%{opacity:1}
-  100%{top:88%;opacity:0}
-}
-.pair-done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:#FFFFFF;opacity:0;transition:opacity .55s ease;pointer-events:none}
-.pair-card.is-linked .pair-done{opacity:1}
-/* the tick settles in rather than appearing at full size with the backdrop */
-.pair-done i{width:46px;height:46px;border-radius:50%;background:linear-gradient(100deg,#7C3AED,#F0522F);
-  display:flex;align-items:center;justify-content:center;
-  transform:scale(.82);transition:transform .55s cubic-bezier(.2,.9,.3,1.3)}
-.pair-card.is-linked .pair-done i{transform:scale(1)}
-.pair-done svg{width:18px;height:18px;color:#FFFFFF}
-/* Two labels on one row inside a narrow card. Longer translations ("Tersambung",
-   "Привязано") clipped the right-hand one, so the left label is allowed to
-   shrink and the status label keeps its full width. */
-.pair-qr-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.pair-qr-foot span:first-child{font-size:12.5px;color:rgba(255,255,255,.42);min-width:0;flex:1 1 auto}
-.pair-qr-foot span:last-child{font-size:12.5px;font-weight:500;color:#FFFFFF;flex:0 0 auto}
-
-/* connector */
-.pair-connector{position:relative;display:flex;align-items:center;height:2px;width:120px;padding:0 26px}
-.pair-connector::before{content:"";position:absolute;left:26px;right:26px;top:50%;height:1px;background:rgba(255,255,255,.14)}
-.pair-connector-dot{position:absolute;top:50%;left:26px;transform:translate(-50%,-50%);width:7px;height:7px;
-  border-radius:50%;background:#F0522F;box-shadow:0 0 16px 4px rgba(240,82,47,.5);opacity:0;
-  transition:opacity .45s ease}
-.pair-card.is-scanning .pair-connector-dot{animation:pairTravel 5.6s ease-in-out}
-/* fades at both ends like the beam, so the dot doesn't pop out of existence
-   the moment it reaches the phone */
-@keyframes pairTravel{
-  0%{left:26px;opacity:0}
-  10%{opacity:1}
-  88%{opacity:1}
-  100%{left:94px;opacity:0}
-}
-
-/* phone mockup */
-.pair-phone-side{display:flex;justify-content:flex-start}
-/* definite width, not min(240px,100%): the column shrink-wraps to its content,
-   so a percentage here resolves against itself and collapses the phone */
-.pair-phone-wrap{position:relative;width:240px;max-width:100%}
-.pair-phone-glow{position:absolute;inset:-56px;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,rgba(240,82,47,.2),rgba(20,18,16,0) 68%);opacity:.42;transition:opacity .8s ease}
-.pair-card.is-linked .pair-phone-glow{opacity:1}
-.pair-phone{position:relative;border-radius:46px;padding:3px;opacity:.42;transform:translateY(10px);
-  background:linear-gradient(150deg,#3A3733,#151311 42%,#2A2724);
-  box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.09);
-  transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
-.pair-card.is-linked .pair-phone{opacity:1;transform:translateY(0)}
-.pair-phone-screen{position:relative;border-radius:43px;overflow:hidden;background:#08070d;aspect-ratio:9/19.5;
-  box-shadow:inset 0 0 0 3px #0B0A09}
-.pair-phone-notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:78px;height:22px;
-  border-radius:100px;background:#0B0A09;z-index:3}
-.pair-phone-sheen{position:absolute;inset:0;border-radius:43px;pointer-events:none;mix-blend-mode:overlay;
-  background:linear-gradient(122deg,rgba(255,255,255,.5) 0%,rgba(255,255,255,0) 26%,rgba(255,255,255,0) 72%,rgba(255,255,255,.14) 100%)}
-.pair-phone-home{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);width:96px;height:4px;
-  border-radius:100px;background:rgba(255,255,255,.4)}
-.pair-mirrored-pill{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;
-  gap:7px;background:rgba(20,18,16,.78);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border-radius:100px;padding:6px 13px;opacity:0;transition:opacity .6s ease;z-index:3}
-.pair-mirrored-pill i{width:5px;height:5px;border-radius:50%;background:#F0522F}
-.pair-mirrored-pill span{font-size:10.5px;font-weight:500;letter-spacing:-.01em;color:#FFFFFF}
-.pair-card.is-linked .pair-mirrored-pill{opacity:1}
-
-/* phone screen contents, per design 4b: brand wallpaper + real status bar, with
-   the panel capture floating centred as a sheet — not a full-bleed screenshot */
-.pair-phone-os{position:absolute;inset:0;display:flex;flex-direction:column;
-  background:linear-gradient(165deg,#241C33 0%,#141210 46%,#2A1A16 100%)}
-.pair-phone-status{flex:none;display:flex;align-items:center;justify-content:space-between;
-  padding:13px 22px 0;font-size:11px;font-weight:600;letter-spacing:-.01em;color:#FFFFFF}
-.pair-phone-icons{display:flex;align-items:center;gap:5px}
-.pair-phone-icons svg:first-child{width:15px;height:9px;color:#FFFFFF}
-.pair-phone-icons svg:last-child{width:17px;height:9px;color:#FFFFFF}
-.pair-phone-sheet{flex:1;display:flex;align-items:center;padding:14px 10px 22px}
-.pair-phone-sheet img{width:100%;height:auto;display:block;border-radius:18px;
-  box-shadow:0 18px 40px rgba(0,0,0,.45)}
-
-
-
-@media (max-width:960px){
-  .pair-inner{padding:72px 28px 76px}
-  .pair-grid{grid-template-columns:1fr;gap:40px;justify-items:center}
-  .pair-qr-side,.pair-phone-side{width:100%;justify-content:center}
-  .pair-connector{display:none}
-}
-@media (max-width:560px){
-  .pair{padding-top:72px}
-  .pair-card{border-radius:var(--r-lg)}
-  .pair-inner{padding:56px 20px 60px}
-  .pair-head{margin-bottom:44px}
-}
-@media (prefers-reduced-motion:reduce){
-  /* Deliberately minimal here. The scanline sweep and the travelling dot ARE
-     the illustration — without them the panel just blinks between two static
-     frames and never shows a phone being read — so they keep running even
-     under reduced motion, on the owner's call. Both are small, contained and
-     confined to their own box: no parallax, nothing crossing the viewport.
-     The hover grow keeps its easing too; snapping is more jarring than easing. */
-  .pair-phone,.pair-phone-glow,.pair-mirrored-pill,.pair-qr-slot,.pair-done{transition:none}
-  /* The blanket `*{animation:none!important}` at the bottom of this file wins on
-     origin, so re-enabling these two takes !important plus more specificity —
-     scoped to exactly these elements so nothing else comes back with them. */
-  .pair-card.is-scanning .pair-scanline{animation:pairSweep 5.6s ease-in-out !important}
-  .pair-card.is-scanning .pair-connector-dot{animation:pairTravel 5.6s ease-in-out !important}
-}
-
 /* ---------- footer (full-bleed ink band; inner blocks keep the page grid) ---------- */
 .footer{background:var(--ink);padding:120px 24px 56px}
 .foot-inner{max-width:var(--maxw);margin:0 auto}
@@ -900,6 +750,7 @@ img,svg{display:block;max-width:100%}
   -webkit-tap-highlight-color:transparent}
 .movil-b:active{transform:scale(.97)}
 .movil-b1{border-color:transparent;background:var(--ig-2);color:#fff}
+.movil-b-app{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
 .movil-b:focus-visible{outline:2px solid #F7F5F0;outline-offset:2px}
 .movil-ok{margin:10px 0 0;font-size:12.5px;color:rgba(247,245,240,.72);min-height:1em}
 .movil-ok:empty{display:none}
@@ -924,4 +775,245 @@ img,svg{display:block;max-width:100%}
   .hero-cta{width:100%}
   .hero-cta .btn-lg{white-space:normal;line-height:1.25;text-align:center;
     max-width:100%;flex:1 1 auto}
+}
+
+/* ==========================================================================
+   MARCA · LOS OJOS
+   --------------------------------------------------------------------------
+   La doble O de Ghoosted son dos ojos que miran: el nombre ya dice lo que
+   hace. Los ojos llevan el degradado de siempre y las pupilas miran a la
+   derecha, hacia el resto de la palabra.
+
+   Unbounded (OFL), alojada aqui, es la letra de la casa: la marca y TODOS
+   los titulares. --display apunta a ella, asi que no queda ningun titular
+   con la letra de antes. El texto corrido sigue en Geist, que es la que se
+   lee comoda en parrafos largos.
+   ========================================================================== */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-cyrillic-ext.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-cyrillic.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-latin-ext.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url(assets/fonts/unbounded-latin.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root{--marca:'Unbounded','Inter',-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+
+/* El logo en letra. */
+.wm{font-family:var(--marca);font-weight:800;letter-spacing:-.05em;display:inline-flex;align-items:center;line-height:1;color:var(--ink);white-space:nowrap}
+.wm-ojos{display:inline-flex;gap:.04em;margin:0 .02em;transform:translateY(.04em)}
+/* Los ojos son blancos, como unos ojos de verdad: el disco blanco, el
+   aro del color de las letras (para que se vean sobre fondo claro) y la
+   pupila oscura. Sobre la banda oscura el aro es blanco y lo unico que
+   se ve es la pupila, que es justo lo que se quiere. */
+.wm-ojos i{position:relative;width:.72em;height:.72em;border-radius:50%;
+  background:#fff;box-shadow:inset 0 0 0 .075em currentColor}
+.wm-ojos i::after{content:"";position:absolute;width:.3em;height:.3em;border-radius:50%;background:#161616;top:.21em;left:.33em}
+@media (prefers-reduced-motion:no-preference){
+  /* De vez en cuando miran a un lado y vuelven. Solo eso. */
+  .wm-ojos i::after{animation:mira 7s var(--ease) infinite}
+}
+@keyframes mira{0%,62%,100%{transform:none}68%,80%{transform:translate(-.2em,-.02em)}86%{transform:translate(.02em,.03em)}}
+
+/* El icono: los ojos solos, en blanco, sobre el degradado. */
+.brand-mark{border-radius:30%}
+.brand{font-family:var(--marca);font-weight:800;letter-spacing:-.05em}
+/* El logo en letra, arriba y en el pie, con tamaño de logo y no de enlace. */
+.nav .brand .wm{font-size:22px}
+.foot-wm .wm{font-size:26px}
+
+/* Los titulares rehechos. Unbounded es ancha: va un punto mas pequeña que
+   la Inter de antes para que quepa lo mismo en el mismo sitio. */
+.hero-title{font-family:var(--marca);font-weight:800;font-size:clamp(30px,4.7vw,62px);line-height:1.04;letter-spacing:-.05em}
+.hero-title .grad{font-style:normal;font-weight:800;letter-spacing:-.05em;background:var(--ig);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.show-lede h3{font-family:var(--marca);font-weight:800;font-size:clamp(24px,2.9vw,36px);letter-spacing:-.045em}
+.price-title{font-family:var(--marca);font-weight:800;font-size:clamp(32px,4.8vw,56px);letter-spacing:-.05em}
+.pcard-now{font-family:var(--marca);font-weight:800;font-size:clamp(44px,5.4vw,58px);letter-spacing:-.06em}
+/* Unbounded ocupa bastante mas que Inter: los titulares que quedaban se
+   bajan de cuerpo y suben de peso para que pesen lo mismo en la pagina. */
+.worlds-title{font-family:var(--marca);font-weight:800;font-size:clamp(28px,4.4vw,54px);letter-spacing:-.05em}
+.stat b{font-family:var(--marca);font-weight:800;font-size:clamp(25px,3.7vw,41px);letter-spacing:-.055em}
+.section-title{font-family:var(--marca);font-weight:800;font-size:clamp(27px,4.3vw,47px);letter-spacing:-.05em}
+.show-title{font-family:var(--marca);font-weight:800;font-size:clamp(27px,3.7vw,45px);letter-spacing:-.05em}
+.cta-band h2{font-family:var(--marca);font-weight:800;font-size:clamp(29px,4.8vw,55px);letter-spacing:-.05em}
+.movil-h{font-family:var(--marca);font-weight:700;font-size:17px;letter-spacing:-.03em}
+
+
+/* La pegatina del hero, al estilo de las de una historia: girada, en
+   degradado, pegada al titular. */
+.pega{display:inline-block;position:relative;z-index:2;margin-bottom:16px;padding:9px 15px;border-radius:14px;background:var(--ig-2);color:#fff;
+  font-family:var(--marca);font-weight:700;font-size:13px;letter-spacing:-.02em;transform:rotate(-4deg);box-shadow:0 12px 24px -12px rgba(122,63,242,.7)}
+@media (prefers-reduced-motion:no-preference){.pega{animation:pega .7s var(--ease) .5s both}}
+@keyframes pega{from{opacity:0;transform:rotate(-14deg) scale(.6)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
+
+/* ==========================================================================
+   MARCA · PRIMERA VERSION EN CLARO
+   --------------------------------------------------------------------------
+   Lo negro pasa a blanco o al degradado: los botones, la tarjeta de Pro, el
+   bloque del movil y el pie. El fondo crema se queda, que es el de siempre
+   y el de las secciones que no se tocan; la banda oscura del final tambien
+   se queda como esta.
+
+   Sobre fondo claro el degradado no empieza en el amarillo palido: con el,
+   la palabra de color del titular se lavaba y casi no se leia, y el texto
+   blanco de un boton quedaba sin contraste. Para letra y botones va la mitad
+   intensa del degradado, del naranja al azul.
+   ========================================================================== */
+:root{
+  --boton:linear-gradient(100deg,#e1306c,#c13584 40%,#833ab4 75%,#5851db);
+  --ig-plano:#C4256E;   /* el magenta de la marca, oscurecido para que lea sobre el crema */
+}
+/* La linea de color del titular, en color plano.
+   Estaba con el degradado recortado sobre el texto (background-clip:text).
+   El hero es position:sticky y lleva dentro el campo de fotos con
+   will-change:transform, asi que el navegador lo pinta en su propia capa; en
+   esa capa Chrome vuelve a rasterizar el degradado y el texto sale lavado,
+   casi blanco sobre el crema. Las lineas negras salian bien y esta no: el
+   problema era el recorte, no el color. En plano se ve siempre, en cualquier
+   maquina, y ademas pesa menos. El degradado sigue donde no molesta: los
+   botones, la pegatina y los ojos del logo. */
+.hero-title .grad{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ig-plano)}
+
+/* Los distintivos de tienda. El formato es el de siempre — rectangulo
+   oscuro, icono a la izquierda, linea pequeña arriba y nombre grande abajo —
+   porque es el que la gente reconoce sin leerlo: "esto es una app". */
+.tiendas{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.tienda{display:inline-flex;align-items:center;gap:11px;padding:11px 20px 11px 17px;border-radius:13px;
+  background:var(--ink);color:#F7F5F0;transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+  box-shadow:0 14px 28px -16px rgba(20,18,16,.7)}
+.tienda:hover{transform:translateY(-2px);box-shadow:0 18px 34px -16px rgba(20,18,16,.8)}
+.tienda svg{width:25px;height:25px;flex:none}
+.tienda > span{display:flex;flex-direction:column;gap:2px;line-height:1.05;text-align:left}
+.tienda i{font-style:normal;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;opacity:.72}
+.tienda b{font-family:var(--marca);font-weight:700;font-size:16px;letter-spacing:-.025em}
+/* El de iPhone no lleva a ningun sitio porque todavia no hay app: no es un
+   enlace, no se puede pulsar y se nota a simple vista que esta apagado. */
+.tienda.pronto{background:none;color:var(--ink-2);border:1px solid var(--line);box-shadow:none;cursor:default}
+.tienda.pronto:hover{transform:none}
+/* "Ver que hace" baja a enlace de texto: con dos distintivos al lado, un
+   tercer boton competia con ellos y ninguno ganaba. */
+.hero-ver{display:inline-block;margin-top:18px;font-size:14.5px;color:var(--ink-2);
+  text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-2)}
+.hero-ver:hover{color:var(--ink)}
+@media (max-width:420px){
+  .tiendas{width:100%}
+  .tienda{flex:1 1 100%;justify-content:flex-start}
+}
+.pega{background:var(--boton)}
+
+/* Botones */
+.btn-primary{background:var(--boton);color:#fff;box-shadow:0 10px 26px -10px rgba(193,53,132,.55)}
+.btn-primary:hover{box-shadow:0 16px 34px -12px rgba(193,53,132,.65)}
+
+/* Pro: blanca, con el borde en degradado en vez de toda negra. */
+.pcard-pro{position:relative;background:#fff;box-shadow:0 34px 70px -40px rgba(193,53,132,.5)}
+.pcard-pro::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:var(--boton);pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.pcard-pro .pcard-name{color:var(--ink)}
+.pcard-pro .pcard-tier{color:#fff;background:var(--boton)}
+.pcard-pro .pcard-later,.pcard-pro .pcard-period,.pcard-pro .pcard-all{color:var(--ink-2)}
+.pcard-pro .pcard-feats{border-top-color:var(--line)}
+.pcard-pro .pcard-feats li{color:var(--ink)}
+.pcard-pro .pcard-cta{background:var(--boton);color:#fff}
+.pcard-pro .pcard-cta:hover{background:var(--boton);filter:brightness(1.07)}
+.pcard-pro .pcard-cta:focus-visible{outline-color:var(--ink)}
+
+/* El movil: la tarjeta en blanco. El telefono dibujado sigue oscuro, que es
+   como es un telefono. */
+
+/* El pie se queda negro. En blanco no se separaba del crema de la pagina:
+   el sitio parecia acabarse a media altura, sin suelo. Los colores del texto
+   son los de arriba (blancos sobre tinta), asi que aqui no hay nada que
+   decir; solo el logo, que por defecto es del color de la tinta. */
+.footer .wm{color:#F7F5F0}
+/* La banda del final no se toca: su boton recupera la sombra de antes, que
+   la regla de .btn-primary de arriba le cambiaria por la rosa. */
+.cta-band .btn-primary{box-shadow:0 6px 22px rgba(20,18,16,.18)}
+.cta-band .btn-primary:hover{box-shadow:0 14px 34px rgba(20,18,16,.28)}
+/* Mientras "escanea", el telefono esperaba apagado al 42 % y se encendia al
+   emparejarse. Sobre la tarjeta negra eso lo hacia retroceder; sobre blanco
+   lo volvia un fantasma gris translucido. Aqui espera entero pero en gris, y
+   al emparejarse recupera el color: el mismo "se enciende", sin transparencia. */
+
+/* ==========================================================================
+   MARCA · CABECERA A DOS COLUMNAS Y COMO FUNCIONA
+   El texto grande a la izquierda y las fotos inclinadas a la derecha, con
+   etiquetas y un bocadillo: la pantalla habla como una red social.
+   ========================================================================== */
+.hero-grid{position:relative;z-index:20;width:100%;max-width:var(--maxw);margin:0 auto;padding:40px 24px;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:center}
+.hero-grid .hero-center{text-align:left;max-width:none;pointer-events:auto}
+.hero-grid .hero-center::before{display:none}
+.hero-grid .hero-title{font-size:clamp(34px,4.7vw,66px);line-height:1.02}
+.hero-grid .hero-title .grad{display:block}
+.hero-grid .hero-sub{margin-left:0;max-width:40ch}
+.hero-grid .hero-cta{justify-content:flex-start}
+.hero-grid .hero-trust{margin-left:0}
+.hero-grid .pega{transform-origin:left center}
+
+.hero-fotos{position:relative;height:clamp(380px,40vw,520px)}
+.hf{position:absolute;margin:0;width:56%;aspect-ratio:3/4;border-radius:26px;overflow:hidden;background:#e9e6e0;
+  border:4px solid #fff;box-shadow:0 30px 60px -26px rgba(20,18,16,.45)}
+.hf img{width:100%;height:100%;object-fit:cover;display:block}
+.hf1{left:2%;top:12%;transform:rotate(-6deg)}
+.hf2{right:0;top:2%;transform:rotate(5deg)}
+.hf-etq{position:absolute;left:12px;bottom:12px;padding:6px 12px;border-radius:99px;background:rgba(20,18,16,.7);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;font:600 13px/1 var(--font);white-space:nowrap}
+.hf-bocadillo{position:absolute;right:6%;bottom:4%;z-index:2;padding:14px 20px;border-radius:22px;background:#feda75;color:var(--ink);
+  font-family:var(--marca);font-weight:800;font-size:clamp(15px,1.5vw,19px);letter-spacing:-.03em;transform:rotate(-4deg);
+  box-shadow:0 16px 30px -14px rgba(20,18,16,.45);white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){
+  .hf1{animation:hfEntra1 .9s var(--ease) .15s both}
+  .hf2{animation:hfEntra2 .9s var(--ease) .3s both}
+  .hf-bocadillo{animation:pega .7s var(--ease) .7s both}
+}
+@keyframes hfEntra1{from{opacity:0;transform:translateY(30px) rotate(-12deg)}to{opacity:1;transform:rotate(-6deg)}}
+@keyframes hfEntra2{from{opacity:0;transform:translateY(30px) rotate(11deg)}to{opacity:1;transform:rotate(5deg)}}
+
+/* Como funciona */
+.como{max-width:var(--maxw);margin:0 auto;padding:var(--sec) 24px 0}
+.como-titulo{font-family:var(--marca);font-weight:800;font-size:clamp(30px,4.4vw,52px);letter-spacing:-.05em;line-height:1.04;margin:0 0 36px}
+.como-pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.como-paso{padding:30px 28px 32px;border-radius:26px;background:#fff;box-shadow:0 0 0 1px var(--line)}
+.como-paso b{display:block;font-family:var(--marca);font-weight:800;font-size:44px;letter-spacing:-.05em;line-height:1;
+  background:var(--boton);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:26px}
+.como-paso h3{font-family:var(--marca);font-weight:700;font-size:20px;letter-spacing:-.035em;line-height:1.15;margin:0 0 10px;color:var(--ink)}
+.como-paso p{margin:0;font-size:15px;line-height:1.55;color:var(--ink-2)}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:28px;padding-top:24px}
+  .hero-fotos{height:340px;max-width:420px;width:100%;margin:0 auto}
+  .como-pasos{grid-template-columns:1fr}
+}
+[dir="rtl"] .hero-grid .hero-center{text-align:right}
+[dir="rtl"] .hero-grid .hero-cta{justify-content:flex-start}
+/* En un movil la barra lleva menu, logo, idioma y boton en 375px: con el
+   logo a 22px la bandera del idioma se le montaba encima de la "d". */
+@media (max-width:560px){
+  .nav .brand .wm{font-size:17px}
+  .nav .lang-caret{display:none}
 }
